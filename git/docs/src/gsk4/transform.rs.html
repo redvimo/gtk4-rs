@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/transform.rs`."><title>transform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/transform.rs`."><title>transform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gsk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gsk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -323,12 +323,12 @@
 <a href="#250" id="250">250</a>
 <a href="#251" id="251">251</a>
 <a href="#252" id="252">252</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use </span><span class="kw">crate</span>::Transform;
-<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, IntoGStr};
+</span><span class="kw">use </span><a href="auto/transform.rs.html#9-27"><span class="kw">crate</span>::Transform</a>;
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>};
 
-<span class="kw">impl </span>Transform {
+<span class="kw">impl </span><a href="auto/transform.rs.html#9-27">Transform</a> {
     <span class="doccomment">/// Parses the given @string into a transform and puts it in
     /// @out_transform.
     ///
@@ -347,19 +347,19 @@
     /// ## `out_transform`
     /// The location to put the transform in
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_parse&quot;</span>)]
-    </span><span class="kw">pub fn </span>parse(string: <span class="kw">impl </span>IntoGStr) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, glib::BoolError&gt; {
+    </span><span class="kw">pub fn </span>parse(string: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.BoolError.html">glib::BoolError</a>&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{
-            string.run_with_gstr(|string| {
+            <a href="#25">string</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|string| {
                 <span class="kw">let </span><span class="kw-2">mut </span>out_transform = std::ptr::null_mut();
                 <span class="kw">let </span>ret = from_glib(ffi::gsk_transform_parse(
-                    string.as_ptr(),
-                    <span class="kw-2">&amp;mut </span>out_transform,
+                    <a href="#28">string</a>.as_ptr(),
+                    <span class="kw-2">&amp;mut </span><a href="#29">out_transform</a>,
                 ));
                 <span class="kw">if </span>ret {
-                    <span class="prelude-val">Ok</span>(from_glib_full(out_transform))
+                    <span class="prelude-val">Ok</span>(from_glib_full(<a href="#29">out_transform</a>))
                 } <span class="kw">else </span>{
-                    <span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(<span class="string">&quot;Can&#39;t parse Transform&quot;</span>))
+                    <span class="prelude-val">Err</span>(<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.bool_error.html">glib::bool_error!</a>(<span class="string">&quot;Can&#39;t parse Transform&quot;</span>))
                 }
             })
         }
@@ -377,15 +377,15 @@
     ///
     /// The inverted transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_invert&quot;</span>)]
-    </span><span class="kw">pub fn </span>invert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, glib::BoolError&gt; {
+    </span><span class="kw">pub fn </span>invert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.BoolError.html">glib::BoolError</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>matrix = <span class="self">self</span>.to_matrix();
+            <span class="kw">let </span>matrix = <a class="self" href="#55">self</a>.<a href="auto/transform.rs.html#311-317">to_matrix</a>();
             <span class="kw">if </span>matrix == graphene::Matrix::new_identity() {
-                <span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">self</span>);
+                <span class="kw">return </span><span class="prelude-val">Ok</span>(<a class="self" href="#55">self</a>);
             }
 
-            <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_invert(<span class="self">self</span>.into_glib_ptr()));
-            res.ok_or_else(|| <span class="macro">glib::bool_error!</span>(<span class="string">&quot;Failed to invert the transform&quot;</span>))
+            <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_invert(<a class="self" href="#55">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()));
+            <a href="#62">res</a>.ok_or_else(|| <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.bool_error.html">glib::bool_error!</a>(<span class="string">&quot;Failed to invert the transform&quot;</span>))
         }
     }
 
@@ -398,11 +398,11 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_rotate&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>rotate(<span class="self">self</span>, angle: f32) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>rotate(<span class="self">self</span>, angle: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; =
-                from_glib_full(ffi::gsk_transform_rotate(<span class="self">self</span>.into_glib_ptr(), angle));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+                from_glib_full(ffi::gsk_transform_rotate(<a class="self" href="#76">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(), <a href="#76">angle</a>));
+            <a href="#78">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -419,14 +419,14 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_rotate_3d&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>rotate_3d(<span class="self">self</span>, angle: f32, axis: <span class="kw-2">&amp;</span>graphene::Vec3) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>rotate_3d(<span class="self">self</span>, angle: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, axis: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/vec3/struct.Vec3.html">graphene::Vec3</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_rotate_3d(
-                <span class="self">self</span>.into_glib_ptr(),
-                angle,
-                axis.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#97">angle</a>,
+                <a href="#97">axis</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#99">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -443,14 +443,14 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_scale&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>scale(<span class="self">self</span>, factor_x: f32, factor_y: f32) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>scale(<span class="self">self</span>, factor_x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_scale(
-                <span class="self">self</span>.into_glib_ptr(),
-                factor_x,
-                factor_y,
+                <a class="self" href="#121">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#121">factor_x</a>,
+                <a href="#121">factor_y</a>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#123">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -467,15 +467,15 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_scale_3d&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>scale_3d(<span class="self">self</span>, factor_x: f32, factor_y: f32, factor_z: f32) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>scale_3d(<span class="self">self</span>, factor_x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_z: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_scale_3d(
-                <span class="self">self</span>.into_glib_ptr(),
-                factor_x,
-                factor_y,
-                factor_z,
+                <a class="self" href="#145">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#145">factor_x</a>,
+                <a href="#145">factor_y</a>,
+                <a href="#145">factor_z</a>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#147">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -488,18 +488,18 @@
     /// # Returns
     ///
     /// The new transform
-    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+    </span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[doc(alias = <span class="string">&quot;gsk_transform_skew&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>skew(<span class="self">self</span>, skew_x: f32, skew_y: f32) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>skew(<span class="self">self</span>, skew_x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, skew_y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_skew(
-                <span class="self">self</span>.into_glib_ptr(),
-                skew_x,
-                skew_y,
+                <a class="self" href="#170">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#170">skew_x</a>,
+                <a href="#170">skew_y</a>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#172">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -515,10 +515,10 @@
     </span><span class="kw">pub fn </span>transform(<span class="self">self</span>, other: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="self">Self</span>&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_transform(
-                <span class="self">self</span>.into_glib_ptr(),
-                other.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#190">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#190">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#192">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -531,13 +531,13 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_translate&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>translate(<span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>translate(<span class="self">self</span>, point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_translate(
-                <span class="self">self</span>.into_glib_ptr(),
-                point.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#209">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#209">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#211">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 
@@ -550,22 +550,22 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_translate_3d&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>translate_3d(<span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point3D) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>translate_3d(<span class="self">self</span>, point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point3_d/struct.Point3D.html">graphene::Point3D</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>res: <span class="prelude-ty">Option</span>&lt;<span class="self">Self</span>&gt; = from_glib_full(ffi::gsk_transform_translate_3d(
-                <span class="self">self</span>.into_glib_ptr(),
-                point.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#228">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#228">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ));
-            res.unwrap_or_else(<span class="self">Self</span>::new)
+            <a href="#230">res</a>.unwrap_or_else(<span class="self">Self</span>::new)
         }
     }
 }
 
-<span class="kw">impl </span>std::str::FromStr <span class="kw">for </span>Transform {
-    <span class="kw">type </span><span class="prelude-val">Err </span>= glib::BoolError;
-    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/str/traits/trait.FromStr.html">std::str::FromStr</a> <span class="kw">for </span><a href="auto/transform.rs.html#9-27">Transform</a> {
+    <span class="kw">type </span><span class="prelude-val">Err </span>= <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.BoolError.html">glib::BoolError</a>;
+    <span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, <span class="self">Self</span>::Err&gt; {
         <span class="macro">skip_assert_initialized!</span>();
-        <span class="self">Self</span>::parse(s)
+        <span class="self">Self</span>::parse(<a href="#241">s</a>)
     }
 }
 
@@ -575,5 +575,4 @@
     <span class="kw">let </span>output = transform.clone().invert();
     <span class="macro">assert_eq!</span>(output.unwrap(), transform);
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

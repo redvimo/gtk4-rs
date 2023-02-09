@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -161,11 +186,11 @@ Let's look at one example.</p>
 <pre><code class="language-rust  no_run noplayground">use std::time::Duration;
 
 use gtk::prelude::*;
-use gtk::{self, Application, ApplicationWindow, Button};
+use gtk::{self, glib, Application, ApplicationWindow, Button};
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -173,7 +198,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -214,11 +239,11 @@ but it is not unusual wanting to run a slightly longer operation in one go.</p>
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{self, Application, ApplicationWindow, Button};
+</span><span class="boring">use gtk::{self, glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop2&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -226,7 +251,7 @@ but it is not unusual wanting to run a slightly longer operation in one go.</p>
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -277,13 +302,13 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
-</span><span class="boring">use glib::{clone, Continue, MainContext, PRIORITY_DEFAULT};
+</span><span class="boring">use glib::{clone, Continue, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop3&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -291,7 +316,7 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -304,7 +329,7 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 </span><span class="boring">        .margin_end(12)
 </span><span class="boring">        .build();
 </span><span class="boring">
-</span>    let (sender, receiver) = MainContext::channel(PRIORITY_DEFAULT);
+</span>    let (sender, receiver) = MainContext::channel(Priority::default());
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
         let sender = sender.clone();
@@ -356,13 +381,13 @@ You can also let the main loop take care of running <a href="https://rust-lang.g
 If you do that from the main thread use <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn_local"><code>spawn_local</code></a>, from other threads <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn"><code>spawn</code></a> has to be used.
 The converted code looks and behaves very similar to the multi-threaded code.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/4/main.rs">listings/main_event_loop/4/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, timeout_future_seconds, Continue, MainContext, PRIORITY_DEFAULT};
+<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, timeout_future_seconds, Continue, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop4&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -370,7 +395,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -383,7 +408,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">        .margin_end(12)
 </span><span class="boring">        .build();
 </span><span class="boring">
-</span>    let (sender, receiver) = MainContext::channel(PRIORITY_DEFAULT);
+</span>    let (sender, receiver) = MainContext::channel(Priority::default());
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
         let main_context = MainContext::default();
@@ -426,7 +451,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop5&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -434,7 +459,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -590,5 +615,6 @@ help: within `gtk4::Button`, the trait `Sync` is not implemented for `NonNull&lt
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

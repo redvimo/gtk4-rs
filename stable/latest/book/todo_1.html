@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -235,7 +260,7 @@ As usual, we have to list all <a href="https://docs.gtk.org/gtk4/class.Applicati
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with selection and pass it to the list view
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;self.tasks()));
+</span><span class="boring">        let selection_model = NoSelection::new(Some(self.tasks()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">    }
 </span><span class="boring">
@@ -258,7 +283,7 @@ As usual, we have to list all <a href="https://docs.gtk.org/gtk4/class.Applicati
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -330,7 +355,6 @@ We only have to assure that the <code>class</code> attribute of the template in 
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, ListView};
 </span><span class="boring">
@@ -391,10 +415,10 @@ impl ObjectSubclass for Window {
 </span><span class="boring">mod window;
 </span><span class="boring">
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{gio, Application};
+</span><span class="boring">use gtk::{gio, glib, Application};
 </span><span class="boring">use window::Window;
 </span><span class="boring">
-</span>fn main() {
+</span>fn main() -&gt; glib::ExitCode {
     // Register and include resources
     gio::resources_register_include!(&quot;todo_1.gresource&quot;)
         .expect(&quot;Failed to register resources.&quot;);
@@ -408,7 +432,7 @@ impl ObjectSubclass for Window {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -427,7 +451,7 @@ Here, they already include <code>task_row.ui</code> which we will handle later i
   &lt;/gresource&gt;
 &lt;/gresources&gt;
 </code></pre>
-<h2 id="to-do-object"><a class="header" href="#to-do-object">To-Do Object</a></h2>
+<h2 id="task-object"><a class="header" href="#task-object">Task Object</a></h2>
 <p>So far so good.
 The main user interface is done, but the entry does not react to input yet.
 Also, where would the input go?
@@ -491,24 +515,26 @@ pub struct TaskData {
     pub completed: bool,
     pub content: String,
 }</code></pre>
-<p>Exposing <code>completed</code> and <code>content</code> as properties does not become much different that way, so we will not discuss it further.
-If you are curious, you can press on the small eye symbol on the top right of the code snippet to read the implementation.</p>
+<p>We are going to expose <code>completed</code> and <code>content</code> as properties.
+Since the data is now inside a struct rather than individual member variables we have to add more annotations.
+For each property we additionally specify the name, the type and which member variable of <code>TaskData</code> we want to access.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/imp.rs">listings/todo/1/task_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
-</span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, ParamSpecBoolean, ParamSpecString, Value};
+</span><span class="boring">use glib::{ParamSpec, Properties, Value};
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
-</span><span class="boring">use once_cell::sync::Lazy;
 </span><span class="boring">
 </span><span class="boring">use super::TaskData;
 </span><span class="boring">
 </span>// Object holding the state
-#[derive(Default)]
+#[derive(Properties, Default)]
+#[properties(wrapper_type = super::TaskObject)]
 pub struct TaskObject {
-    pub data: Rc&lt;RefCell&lt;TaskData&gt;&gt;,
+    #[property(name = &quot;completed&quot;, get, set, type = bool, member = completed)]
+    #[property(name = &quot;content&quot;, get, set, type = String, member = content)]
+    pub data: RefCell&lt;TaskData&gt;,
 }
 
 // The central trait for subclassing a GObject
@@ -517,45 +543,22 @@ impl ObjectSubclass for TaskObject {
     const NAME: &amp;'static str = &quot;TodoTaskObject&quot;;
     type Type = super::TaskObject;
 }
-<span class="boring">
-</span><span class="boring">// Trait shared by all GObjects
-</span><span class="boring">impl ObjectImpl for TaskObject {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        static PROPERTIES: Lazy&lt;Vec&lt;ParamSpec&gt;&gt; = Lazy::new(|| {
-</span><span class="boring">            vec![
-</span><span class="boring">                ParamSpecBoolean::builder(&quot;completed&quot;).build(),
-</span><span class="boring">                ParamSpecString::builder(&quot;content&quot;).build(),
-</span><span class="boring">            ]
-</span><span class="boring">        });
-</span><span class="boring">        PROPERTIES.as_ref()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, _id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; {
-</span><span class="boring">                let input_value =
-</span><span class="boring">                    value.get().expect(&quot;The value needs to be of type `bool`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().completed = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            &quot;content&quot; =&gt; {
-</span><span class="boring">                let input_value = value
-</span><span class="boring">                    .get()
-</span><span class="boring">                    .expect(&quot;The value needs to be of type `String`.&quot;);
-</span><span class="boring">                self.data.borrow_mut().content = input_value;
-</span><span class="boring">            }
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, _id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        match pspec.name() {
-</span><span class="boring">            &quot;completed&quot; =&gt; self.data.borrow().completed.to_value(),
-</span><span class="boring">            &quot;content&quot; =&gt; self.data.borrow().content.to_value(),
-</span><span class="boring">            _ =&gt; unimplemented!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<h2 id="to-do-row"><a class="header" href="#to-do-row">To-Do Row</a></h2>
+
+// Trait shared by all GObjects
+impl ObjectImpl for TaskObject {
+    fn properties() -&gt; &amp;'static [ParamSpec] {
+        Self::derived_properties()
+    }
+
+    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
+        self.derived_set_property(id, value, pspec)
+    }
+
+    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
+        self.derived_property(id, pspec)
+    }
+}</code></pre>
+<h2 id="task-row"><a class="header" href="#task-row">Task Row</a></h2>
 <p>Let's move on to the individual tasks.
 The row of a task should look like this:</p>
 <div style="text-align:center"><img src="img/task_row.png" alt="A single task widget"/></div>
@@ -587,7 +590,7 @@ The row of a task should look like this:</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, Object};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, pango};
@@ -621,7 +624,8 @@ The row of a task should look like this:</p>
 </span><span class="boring">        // Bind `task_object.completed` to `task_row.completed_button.active`
 </span><span class="boring">        let completed_button_binding = task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;completed_button, &quot;active&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+</span><span class="boring">            .bidirectional()
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        // Save binding
 </span><span class="boring">        bindings.push(completed_button_binding);
@@ -629,7 +633,7 @@ The row of a task should look like this:</p>
 </span><span class="boring">        // Bind `task_object.content` to `task_row.content_label.label`
 </span><span class="boring">        let content_label_binding = task_object
 </span><span class="boring">            .bind_property(&quot;content&quot;, &amp;content_label, &quot;label&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        // Save binding
 </span><span class="boring">        bindings.push(content_label_binding);
@@ -637,7 +641,7 @@ The row of a task should look like this:</p>
 </span><span class="boring">        // Bind `task_object.completed` to `task_row.content_label.attributes`
 </span><span class="boring">        let content_label_binding = task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;content_label, &quot;attributes&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .transform_to(|_, active| {
 </span><span class="boring">                let attribute_list = AttrList::new();
 </span><span class="boring">                if active {
@@ -666,7 +670,6 @@ Why we need that will become clear as soon as we get to bind the state of <code>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::Binding;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CheckButton, CompositeTemplate, Label};
 </span><span class="boring">
@@ -713,7 +716,6 @@ We override the <code>imp::Window::constructed</code> in order to set up window 
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, ListView};
 </span><span class="boring">
@@ -811,7 +813,7 @@ Then we store a reference to the model in <code>imp::Window</code> as well as in
         self.imp().tasks.replace(Some(model));
 
         // Wrap model with selection and pass it to the list view
-        let selection_model = NoSelection::new(Some(&amp;self.tasks()));
+        let selection_model = NoSelection::new(Some(self.tasks()));
         self.imp().tasks_list.set_model(Some(&amp;selection_model));
     }
 <span class="boring">
@@ -834,7 +836,7 @@ Then we store a reference to the model in <code>imp::Window</code> as well as in
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -942,7 +944,7 @@ Finally, the entry will be cleared.</p>
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with selection and pass it to the list view
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;self.tasks()));
+</span><span class="boring">        let selection_model = NoSelection::new(Some(self.tasks()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">    }
 </span><span class="boring">
@@ -965,7 +967,7 @@ Finally, the entry will be cleared.</p>
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1079,7 +1081,7 @@ We will need to unbind them manually when they are no longer needed.</p>
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with selection and pass it to the list view
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;self.tasks()));
+</span><span class="boring">        let selection_model = NoSelection::new(Some(self.tasks()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">    }
 </span><span class="boring">
@@ -1102,7 +1104,7 @@ We will need to unbind them manually when they are no longer needed.</p>
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1173,7 +1175,7 @@ Unbinding will only work if it can access the stored <a href="https://gtk-rs.org
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, Object};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, pango};
@@ -1207,7 +1209,8 @@ Unbinding will only work if it can access the stored <a href="https://gtk-rs.org
         // Bind `task_object.completed` to `task_row.completed_button.active`
         let completed_button_binding = task_object
             .bind_property(&quot;completed&quot;, &amp;completed_button, &quot;active&quot;)
-            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+            .bidirectional()
+            .sync_create()
             .build();
         // Save binding
         bindings.push(completed_button_binding);
@@ -1215,7 +1218,7 @@ Unbinding will only work if it can access the stored <a href="https://gtk-rs.org
         // Bind `task_object.content` to `task_row.content_label.label`
         let content_label_binding = task_object
             .bind_property(&quot;content&quot;, &amp;content_label, &quot;label&quot;)
-            .flags(BindingFlags::SYNC_CREATE)
+            .sync_create()
             .build();
         // Save binding
         bindings.push(content_label_binding);
@@ -1223,7 +1226,7 @@ Unbinding will only work if it can access the stored <a href="https://gtk-rs.org
         // Bind `task_object.completed` to `task_row.content_label.attributes`
         let content_label_binding = task_object
             .bind_property(&quot;completed&quot;, &amp;content_label, &quot;attributes&quot;)
-            .flags(BindingFlags::SYNC_CREATE)
+            .sync_create()
             .transform_to(|_, active| {
                 let attribute_list = AttrList::new();
                 if active {
@@ -1251,7 +1254,7 @@ In the end, it clears the vector.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use glib::{BindingFlags, Object};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, pango};
@@ -1285,7 +1288,8 @@ In the end, it clears the vector.</p>
 </span><span class="boring">        // Bind `task_object.completed` to `task_row.completed_button.active`
 </span><span class="boring">        let completed_button_binding = task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;completed_button, &quot;active&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+</span><span class="boring">            .bidirectional()
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        // Save binding
 </span><span class="boring">        bindings.push(completed_button_binding);
@@ -1293,7 +1297,7 @@ In the end, it clears the vector.</p>
 </span><span class="boring">        // Bind `task_object.content` to `task_row.content_label.label`
 </span><span class="boring">        let content_label_binding = task_object
 </span><span class="boring">            .bind_property(&quot;content&quot;, &amp;content_label, &quot;label&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        // Save binding
 </span><span class="boring">        bindings.push(content_label_binding);
@@ -1301,7 +1305,7 @@ In the end, it clears the vector.</p>
 </span><span class="boring">        // Bind `task_object.completed` to `task_row.content_label.attributes`
 </span><span class="boring">        let content_label_binding = task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;content_label, &quot;attributes&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .transform_to(|_, active| {
 </span><span class="boring">                let attribute_list = AttrList::new();
 </span><span class="boring">                if active {
@@ -1380,5 +1384,6 @@ We will extend it with additional functionality in the following chapters.</p>
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

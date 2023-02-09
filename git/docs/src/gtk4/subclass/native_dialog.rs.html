@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/native_dialog.rs`."><title>native_dialog.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/native_dialog.rs`."><title>native_dialog.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -188,50 +188,78 @@
 <a href="#115" id="115">115</a>
 <a href="#116" id="116">116</a>
 <a href="#117" id="117">117</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+<a href="#118" id="118">118</a>
+<a href="#119" id="119">119</a>
+<a href="#120" id="120">120</a>
+<a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
+<a href="#127" id="127">127</a>
+<a href="#128" id="128">128</a>
+<a href="#129" id="129">129</a>
+<a href="#130" id="130">130</a>
+<a href="#131" id="131">131</a>
+<a href="#132" id="132">132</a>
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
 </span><span class="doccomment">//! Traits intended for subclassing [`NativeDialog`](crate::NativeDialog).
 
-</span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, subclass::prelude::<span class="kw-2">*</span>, NativeDialog, ResponseType};
-<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-185">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/native_dialog.rs.html#13-82">NativeDialog</a>, <a href="../response_type.rs.html#16-54">ResponseType</a>};
+<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span>NativeDialogImpl: NativeDialogImplExt + ObjectImpl {
-    <span class="kw">fn </span>response(<span class="kw-2">&amp;</span><span class="self">self</span>, response: ResponseType) {
-        <span class="self">self</span>.parent_response(response)
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/native_dialog/trait.NativeDialogImpl.html">NativeDialogImpl</a>: <a href="#46-92">NativeDialogImplExt</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
+    <span class="kw">fn </span>response(<span class="kw-2">&amp;</span><span class="self">self</span>, response: <a href="../response_type.rs.html#16-54">ResponseType</a>) {
+        <a class="self" href="#12">self</a>.<a href="#47-61">parent_response</a>(<a href="#12">response</a>)
     }
 
-    <span class="kw">fn </span>show(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.parent_show()
+    <span class="doccomment">/// Shows the dialog on the display.
+    ///
+    /// When the user accepts the state of the dialog the dialog will
+    /// be automatically hidden and the [`response`][struct@crate::NativeDialog#response]
+    /// signal will be emitted.
+    ///
+    /// Multiple calls while the dialog is visible will be ignored.
+    </span><span class="kw">fn </span>show(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <a class="self" href="#23">self</a>.<a href="#63-76">parent_show</a>()
     }
 
-    <span class="kw">fn </span>hide(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.parent_hide()
+    <span class="doccomment">/// Hides the dialog if it is visible, aborting any interaction.
+    ///
+    /// Once this is called the [`response`][struct@crate::NativeDialog#response] signal
+    /// will *not* be emitted until after the next call to
+    /// [`NativeDialogExt::show()`][crate::prelude::NativeDialogExt::show()].
+    ///
+    /// If the dialog is not visible this does nothing.
+    </span><span class="kw">fn </span>hide(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <a class="self" href="#34">self</a>.<a href="#78-91">parent_hide</a>()
     }
+}
+
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <a href="#46-92"><span class="kw">super</span>::NativeDialogImplExt</a>&gt; <a href="#40">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span>NativeDialogImplExt: ObjectSubclass {
-    <span class="kw">fn </span>parent_response(<span class="kw-2">&amp;</span><span class="self">self</span>, response: ResponseType);
-    <span class="kw">fn </span>parent_show(<span class="kw-2">&amp;</span><span class="self">self</span>);
-    <span class="kw">fn </span>parent_hide(<span class="kw-2">&amp;</span><span class="self">self</span>);
-}
-
-<span class="kw">impl</span>&lt;T: NativeDialogImpl&gt; NativeDialogImplExt <span class="kw">for </span>T {
-    <span class="kw">fn </span>parent_response(<span class="kw-2">&amp;</span><span class="self">self</span>, response: ResponseType) {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/native_dialog/trait.NativeDialogImplExt.html">NativeDialogImplExt</a>: <a href="#40">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+    <span class="kw">fn </span>parent_response(<span class="kw-2">&amp;</span><span class="self">self</span>, response: <a href="../response_type.rs.html#16-54">ResponseType</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkNativeDialogClass;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).response {
-                f(
-                    <span class="self">self</span>.obj()
-                        .unsafe_cast_ref::&lt;NativeDialog&gt;()
-                        .to_glib_none()
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#49">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialogClass.html">ffi::GtkNativeDialogClass</a>;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#50">parent_class</a>).response {
+                <a href="#51">f</a>(
+                    <a class="self" href="#47">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/native_dialog.rs.html#13-82">NativeDialog</a>&gt;()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    response.into_glib(),
+                    <a href="#47">response</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
                 )
             }
         }
@@ -239,71 +267,72 @@
 
     <span class="kw">fn </span>parent_show(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkNativeDialogClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#65">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialogClass.html">ffi::GtkNativeDialogClass</a>;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#66">parent_class</a>)
                 .show
                 .expect(<span class="string">&quot;No parent class impl for \&quot;show\&quot;&quot;</span>);
-            f(<span class="self">self
-                </span>.obj()
-                .unsafe_cast_ref::&lt;NativeDialog&gt;()
-                .to_glib_none()
+            <a href="#67">f</a>(<span class="self"><a href="#63">self</a>
+                </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/native_dialog.rs.html#13-82">NativeDialog</a>&gt;()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                 .<span class="number">0</span>)
         }
     }
 
     <span class="kw">fn </span>parent_hide(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkNativeDialogClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#80">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialogClass.html">ffi::GtkNativeDialogClass</a>;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#81">parent_class</a>)
                 .hide
                 .expect(<span class="string">&quot;No parent class impl for \&quot;hide\&quot;&quot;</span>);
-            f(<span class="self">self
-                </span>.obj()
-                .unsafe_cast_ref::&lt;NativeDialog&gt;()
-                .to_glib_none()
+            <a href="#82">f</a>(<span class="self"><a href="#78">self</a>
+                </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/native_dialog.rs.html#13-82">NativeDialog</a>&gt;()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                 .<span class="number">0</span>)
         }
     }
 }
 
-<span class="kw">unsafe impl</span>&lt;T: NativeDialogImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>NativeDialog {
+<span class="kw">impl</span>&lt;T: <a href="#11-37">NativeDialogImpl</a>&gt; <a href="#46-92">NativeDialogImplExt</a> <span class="kw">for </span>T {}
+
+<span class="kw">unsafe impl</span>&lt;T: <a href="#11-37">NativeDialogImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/native_dialog.rs.html#13-82">NativeDialog</a> {
     <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#97">class</a>);
 
-        <span class="macro">assert_initialized_main_thread!</span>();
+        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
 
-        <span class="kw">let </span>klass = class.as_mut();
-        klass.response = <span class="prelude-val">Some</span>(dialog_response::&lt;T&gt;);
-        klass.show = <span class="prelude-val">Some</span>(dialog_show::&lt;T&gt;);
-        klass.hide = <span class="prelude-val">Some</span>(dialog_hide::&lt;T&gt;);
+        <span class="kw">let </span>klass = <a href="#97">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <a href="#102">klass</a>.response = <span class="prelude-val">Some</span>(dialog_response::&lt;T&gt;);
+        <a href="#102">klass</a>.show = <span class="prelude-val">Some</span>(dialog_show::&lt;T&gt;);
+        <a href="#102">klass</a>.hide = <span class="prelude-val">Some</span>(dialog_hide::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_response&lt;T: NativeDialogImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkNativeDialog,
-    responseptr: i32,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_response&lt;T: <a href="#11-37">NativeDialogImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialog.html">ffi::GtkNativeDialog</a>,
+    responseptr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>res: ResponseType = from_glib(responseptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#110">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#113">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>res: <a href="../response_type.rs.html#16-54">ResponseType</a> = from_glib(<a href="#111">responseptr</a>);
 
-    imp.response(res)
+    <a href="#114">imp</a>.<a href="#12-14">response</a>(<a href="#115">res</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_show&lt;T: NativeDialogImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkNativeDialog) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_show&lt;T: <a href="#11-37">NativeDialogImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialog.html">ffi::GtkNativeDialog</a>) {
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#120">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#121">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.show()
+    <a href="#122">imp</a>.<a href="#23-25">show</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_hide&lt;T: NativeDialogImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkNativeDialog) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>dialog_hide&lt;T: <a href="#11-37">NativeDialogImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkNativeDialog.html">ffi::GtkNativeDialog</a>) {
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#127">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#128">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.hide()
+    <a href="#129">imp</a>.<a href="#34-36">hide</a>()
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

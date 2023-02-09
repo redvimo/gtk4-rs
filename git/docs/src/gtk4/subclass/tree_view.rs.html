@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/tree_view.rs`."><title>tree_view.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/tree_view.rs`."><title>tree_view.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -581,163 +581,135 @@
 <a href="#508" id="508">508</a>
 <a href="#509" id="509">509</a>
 <a href="#510" id="510">510</a>
-<a href="#511" id="511">511</a>
-<a href="#512" id="512">512</a>
-<a href="#513" id="513">513</a>
-<a href="#514" id="514">514</a>
-<a href="#515" id="515">515</a>
-<a href="#516" id="516">516</a>
-<a href="#517" id="517">517</a>
-<a href="#518" id="518">518</a>
-<a href="#519" id="519">519</a>
-<a href="#520" id="520">520</a>
-<a href="#521" id="521">521</a>
-<a href="#522" id="522">522</a>
-<a href="#523" id="523">523</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
 </span><span class="doccomment">//! Traits intended for subclassing [`TreeView`](crate::TreeView).
 
 </span><span class="kw">use crate</span>::{
-    prelude::<span class="kw-2">*</span>, subclass::prelude::<span class="kw-2">*</span>, MovementStep, TreeIter, TreePath, TreeView, TreeViewColumn,
+    <a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-185">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/enums.rs.html#7411-7444">MovementStep</a>, <a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, <a href="../auto/tree_path.rs.html#8-18">TreePath</a>, <a href="../auto/tree_view.rs.html#19-764">TreeView</a>, <a href="../auto/tree_view_column.rs.html#17-134">TreeViewColumn</a>,
 };
-<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span>TreeViewImpl: TreeViewImplExt + WidgetImpl {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_view/trait.TreeViewImpl.html">TreeViewImpl</a>: <a href="#91-324">TreeViewImplExt</a> + <a href="widget.rs.html#106-374">WidgetImpl</a> {
     <span class="kw">fn </span>columns_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.parent_columns_changed()
+        <a class="self" href="#14">self</a>.<a href="#92-101">parent_columns_changed</a>()
     }
 
     <span class="kw">fn </span>cursor_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.parent_cursor_changed()
+        <a class="self" href="#18">self</a>.<a href="#103-112">parent_cursor_changed</a>()
     }
 
-    <span class="kw">fn </span>expand_collapse_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, logical: bool, expand: bool, open_all: bool) -&gt; bool {
-        <span class="self">self</span>.parent_expand_collapse_cursor_row(logical, expand, open_all)
+    <span class="kw">fn </span>expand_collapse_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, logical: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, expand: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, open_all: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#22">self</a>.<a href="#114-135">parent_expand_collapse_cursor_row</a>(<a href="#22">logical</a>, <a href="#22">expand</a>, <a href="#22">open_all</a>)
     }
 
-    <span class="kw">fn </span>move_cursor(<span class="kw-2">&amp;</span><span class="self">self</span>, step: MovementStep, count: i32, expand: bool, modify: bool) -&gt; bool {
-        <span class="self">self</span>.parent_move_cursor(step, count, expand, modify)
+    <span class="kw">fn </span>move_cursor(<span class="kw-2">&amp;</span><span class="self">self</span>, step: <a href="../auto/enums.rs.html#7411-7444">MovementStep</a>, count: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, expand: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>, modify: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#26">self</a>.<a href="#137-161">parent_move_cursor</a>(<a href="#26">step</a>, <a href="#26">count</a>, <a href="#26">expand</a>, <a href="#26">modify</a>)
     }
 
-    <span class="kw">fn </span>row_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span>TreePath, column: <span class="kw-2">&amp;</span>TreeViewColumn) {
-        <span class="self">self</span>.parent_row_activated(path, column)
+    <span class="doccomment">/// Activates the cell determined by @path and @column.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// Use [`ListView`][crate::ListView] or [`ColumnView`][crate::ColumnView] instead
+    /// ## `path`
+    /// The [`TreePath`][crate::TreePath] to be activated.
+    /// ## `column`
+    /// The [`TreeViewColumn`][crate::TreeViewColumn] to be activated.
+    </span><span class="kw">fn </span>row_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>, column: <span class="kw-2">&amp;</span><a href="../auto/tree_view_column.rs.html#17-134">TreeViewColumn</a>) {
+        <a class="self" href="#39">self</a>.<a href="#163-176">parent_row_activated</a>(<a href="#39">path</a>, <a href="#39">column</a>)
     }
 
-    <span class="kw">fn </span>row_collapsed(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) {
-        <span class="self">self</span>.parent_row_collapsed(iter, path)
+    <span class="kw">fn </span>row_collapsed(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) {
+        <a class="self" href="#43">self</a>.<a href="#178-191">parent_row_collapsed</a>(<a href="#43">iter</a>, <a href="#43">path</a>)
     }
 
-    <span class="kw">fn </span>row_expanded(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) {
-        <span class="self">self</span>.parent_row_expanded(iter, path)
+    <span class="kw">fn </span>row_expanded(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) {
+        <a class="self" href="#47">self</a>.<a href="#193-206">parent_row_expanded</a>(<a href="#47">iter</a>, <a href="#47">path</a>)
     }
 
-    <span class="kw">fn </span>select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.parent_select_all()
+    <span class="kw">fn </span>select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#51">self</a>.<a href="#208-219">parent_select_all</a>()
     }
 
-    <span class="kw">fn </span>select_cursor_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.parent_select_cursor_parent()
+    <span class="kw">fn </span>select_cursor_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#55">self</a>.<a href="#221-232">parent_select_cursor_parent</a>()
     }
 
-    <span class="kw">fn </span>select_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, start_editing: bool) -&gt; bool {
-        <span class="self">self</span>.parent_select_cursor_row(start_editing)
+    <span class="kw">fn </span>select_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, start_editing: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#59">self</a>.<a href="#234-248">parent_select_cursor_row</a>(<a href="#59">start_editing</a>)
     }
 
-    <span class="kw">fn </span>start_interactive_search(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.parent_start_interactive_search()
+    <span class="kw">fn </span>start_interactive_search(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#63">self</a>.<a href="#250-261">parent_start_interactive_search</a>()
     }
 
-    <span class="kw">fn </span>test_collapse_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool {
-        <span class="self">self</span>.parent_test_collapse_row(iter, path)
+    <span class="kw">fn </span>test_collapse_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#67">self</a>.<a href="#263-279">parent_test_collapse_row</a>(<a href="#67">iter</a>, <a href="#67">path</a>)
     }
 
-    <span class="kw">fn </span>test_expand_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool {
-        <span class="self">self</span>.parent_test_expand_row(iter, path)
+    <span class="kw">fn </span>test_expand_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#71">self</a>.<a href="#281-297">parent_test_expand_row</a>(<a href="#71">iter</a>, <a href="#71">path</a>)
     }
 
-    <span class="kw">fn </span>toggle_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.parent_toggle_cursor_row()
+    <span class="kw">fn </span>toggle_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#75">self</a>.<a href="#299-310">parent_toggle_cursor_row</a>()
     }
 
-    <span class="kw">fn </span>unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="self">self</span>.parent_unselect_all()
+    <span class="kw">fn </span>unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a class="self" href="#79">self</a>.<a href="#312-323">parent_unselect_all</a>()
     }
+}
+
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <a href="#91-324"><span class="kw">super</span>::TreeViewImplExt</a>&gt; <a href="#85">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span>TreeViewImplExt: ObjectSubclass {
-    <span class="kw">fn </span>parent_columns_changed(<span class="kw-2">&amp;</span><span class="self">self</span>);
-    <span class="kw">fn </span>parent_cursor_changed(<span class="kw-2">&amp;</span><span class="self">self</span>);
-    <span class="kw">fn </span>parent_expand_collapse_cursor_row(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        logical: bool,
-        expand: bool,
-        open_all: bool,
-    ) -&gt; bool;
-    <span class="kw">fn </span>parent_move_cursor(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        step: MovementStep,
-        count: i32,
-        extend: bool,
-        modify: bool,
-    ) -&gt; bool;
-    <span class="kw">fn </span>parent_row_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span>TreePath, column: <span class="kw-2">&amp;</span>TreeViewColumn);
-    <span class="kw">fn </span>parent_row_collapsed(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath);
-    <span class="kw">fn </span>parent_row_expanded(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath);
-    <span class="kw">fn </span>parent_select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-    <span class="kw">fn </span>parent_select_cursor_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-    <span class="kw">fn </span>parent_select_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, start_editing: bool) -&gt; bool;
-    <span class="kw">fn </span>parent_start_interactive_search(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-    <span class="kw">fn </span>parent_test_collapse_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool;
-    <span class="kw">fn </span>parent_test_expand_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool;
-    <span class="kw">fn </span>parent_toggle_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-    <span class="kw">fn </span>parent_unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-}
-
-<span class="kw">impl</span>&lt;T: TreeViewImpl&gt; TreeViewImplExt <span class="kw">for </span>T {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_view/trait.TreeViewImplExt.html">TreeViewImplExt</a>: <a href="#85">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_columns_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#94">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// columns-changed is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).columns_changed {
-                f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>)
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#95">parent_class</a>).columns_changed {
+                <a href="#97">f</a>(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)
             }
         }
     }
 
     <span class="kw">fn </span>parent_cursor_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#105">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// cursor-changed is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).cursor_changed {
-                f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>)
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#106">parent_class</a>).cursor_changed {
+                <a href="#108">f</a>(<a class="self" href="#103">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)
             }
         }
     }
 
     <span class="kw">fn </span>parent_expand_collapse_cursor_row(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        logical: bool,
-        expand: bool,
-        open_all: bool,
-    ) -&gt; bool {
+        logical: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+        expand: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+        open_all: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    ) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#121">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// expand-collapse-cursor-row is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).expand_collapse_cursor_row {
-                from_glib(f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    logical.into_glib(),
-                    expand.into_glib(),
-                    open_all.into_glib(),
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#122">parent_class</a>).expand_collapse_cursor_row {
+                from_glib(<a href="#124">f</a>(
+                    <a class="self" href="#115">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#116">logical</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                    <a href="#117">expand</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                    <a href="#118">open_all</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
                 ))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
@@ -747,22 +719,22 @@
 
     <span class="kw">fn </span>parent_move_cursor(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        step: MovementStep,
-        count: i32,
-        extend: bool,
-        modify: bool,
-    ) -&gt; bool {
+        step: <a href="../auto/enums.rs.html#7411-7444">MovementStep</a>,
+        count: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+        extend: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+        modify: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>,
+    ) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#145">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// move-cursor is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).move_cursor {
-                from_glib(f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    step.into_glib(),
-                    count,
-                    extend.into_glib(),
-                    modify.into_glib(),
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#146">parent_class</a>).move_cursor {
+                from_glib(<a href="#148">f</a>(
+                    <a class="self" href="#138">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#139">step</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                    <a href="#140">count</a>,
+                    <a href="#141">extend</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                    <a href="#142">modify</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
                 ))
             } <span class="kw">else </span>{
                 <span class="comment">// return false if step is not supported
@@ -771,86 +743,86 @@
         }
     }
 
-    <span class="kw">fn </span>parent_row_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span>TreePath, column: <span class="kw-2">&amp;</span>TreeViewColumn) {
+    <span class="kw">fn </span>parent_row_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>, column: <span class="kw-2">&amp;</span><a href="../auto/tree_view_column.rs.html#17-134">TreeViewColumn</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#165">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// row-activated is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).row_activated {
-                f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    path.to_glib_none().<span class="number">0</span>,
-                    column.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#166">parent_class</a>).row_activated {
+                <a href="#168">f</a>(
+                    <a class="self" href="#163">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#163">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#163">column</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             }
         }
     }
 
-    <span class="kw">fn </span>parent_row_collapsed(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) {
+    <span class="kw">fn </span>parent_row_collapsed(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#180">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// row-collapsed is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).row_collapsed {
-                f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    iter.to_glib_none().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    path.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#181">parent_class</a>).row_collapsed {
+                <a href="#183">f</a>(
+                    <a class="self" href="#178">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#178">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#178">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             }
         }
     }
 
-    <span class="kw">fn </span>parent_row_expanded(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) {
+    <span class="kw">fn </span>parent_row_expanded(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#195">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// row-expanded is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).row_expanded {
-                f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    iter.to_glib_none().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    path.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#196">parent_class</a>).row_expanded {
+                <a href="#198">f</a>(
+                    <a class="self" href="#193">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#193">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#193">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             }
         }
     }
 
-    <span class="kw">fn </span>parent_select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">fn </span>parent_select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#210">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// select-all is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).select_all {
-                from_glib(f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>))
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#211">parent_class</a>).select_all {
+                from_glib(<a href="#213">f</a>(<a class="self" href="#208">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
             </span>}
         }
     }
 
-    <span class="kw">fn </span>parent_select_cursor_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">fn </span>parent_select_cursor_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#223">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// select-cursor-parent is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).select_cursor_parent {
-                from_glib(f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>))
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#224">parent_class</a>).select_cursor_parent {
+                from_glib(<a href="#226">f</a>(<a class="self" href="#221">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
             </span>}
         }
     }
 
-    <span class="kw">fn </span>parent_select_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, start_editing: bool) -&gt; bool {
+    <span class="kw">fn </span>parent_select_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>, start_editing: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#236">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// select-cursor-row is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).select_cursor_row {
-                from_glib(f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    start_editing.into_glib(),
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#237">parent_class</a>).select_cursor_row {
+                from_glib(<a href="#239">f</a>(
+                    <a class="self" href="#234">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#234">start_editing</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
                 ))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
@@ -858,29 +830,29 @@
         }
     }
 
-    <span class="kw">fn </span>parent_start_interactive_search(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">fn </span>parent_start_interactive_search(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#252">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// start-interactive-search is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).start_interactive_search {
-                from_glib(f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>))
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#253">parent_class</a>).start_interactive_search {
+                from_glib(<a href="#255">f</a>(<a class="self" href="#250">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
             </span>}
         }
     }
 
-    <span class="kw">fn </span>parent_test_collapse_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool {
+    <span class="kw">fn </span>parent_test_collapse_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#265">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// test-collapse-row is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).test_collapse_row {
-                from_glib(f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    iter.to_glib_none().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    path.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#266">parent_class</a>).test_collapse_row {
+                from_glib(<a href="#268">f</a>(
+                    <a class="self" href="#263">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#263">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#263">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 ))
             } <span class="kw">else </span>{
                 <span class="comment">// false to allow collapsing, true to reject it
@@ -889,16 +861,16 @@
         }
     }
 
-    <span class="kw">fn </span>parent_test_expand_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span>TreeIter, path: <span class="kw-2">&amp;</span>TreePath) -&gt; bool {
+    <span class="kw">fn </span>parent_test_expand_row(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>, path: <span class="kw-2">&amp;</span><a href="../auto/tree_path.rs.html#8-18">TreePath</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#283">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// test-expand-row is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).test_expand_row {
-                from_glib(f(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>,
-                    iter.to_glib_none().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    path.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#284">parent_class</a>).test_expand_row {
+                from_glib(<a href="#286">f</a>(
+                    <a class="self" href="#281">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#281">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#281">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 ))
             } <span class="kw">else </span>{
                 <span class="comment">// false to allow expanding, true to reject it
@@ -907,26 +879,26 @@
         }
     }
 
-    <span class="kw">fn </span>parent_toggle_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">fn </span>parent_toggle_cursor_row(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#301">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// toggle-cursor-row is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).toggle_cursor_row {
-                from_glib(f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>))
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#302">parent_class</a>).toggle_cursor_row {
+                from_glib(<a href="#304">f</a>(<a class="self" href="#299">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
             </span>}
         }
     }
 
-    <span class="kw">fn </span>parent_unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="kw">fn </span>parent_unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GtkTreeViewClass;
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#314">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewClass.html">ffi::GtkTreeViewClass</a>;
             <span class="comment">// unselect-all is a signal
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).unselect_all {
-                from_glib(f(<span class="self">self</span>.obj().unsafe_cast_ref::&lt;TreeView&gt;().to_glib_none().<span class="number">0</span>))
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#315">parent_class</a>).unselect_all {
+                from_glib(<a href="#317">f</a>(<a class="self" href="#312">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_view.rs.html#19-764">TreeView</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>))
             } <span class="kw">else </span>{
                 <span class="bool-val">false
             </span>}
@@ -934,188 +906,189 @@
     }
 }
 
-<span class="kw">unsafe impl</span>&lt;T: TreeViewImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>TreeView {
-    <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+<span class="kw">impl</span>&lt;T: <a href="#13-82">TreeViewImpl</a>&gt; <a href="#91-324">TreeViewImplExt</a> <span class="kw">for </span>T {}
 
-        <span class="kw">let </span>klass = class.as_mut();
-        klass.columns_changed = <span class="prelude-val">Some</span>(tree_view_columns_changed::&lt;T&gt;);
-        klass.cursor_changed = <span class="prelude-val">Some</span>(tree_view_cursor_changed::&lt;T&gt;);
-        klass.expand_collapse_cursor_row = <span class="prelude-val">Some</span>(tree_view_expand_collapse_cursor_row::&lt;T&gt;);
-        klass.move_cursor = <span class="prelude-val">Some</span>(tree_view_move_cursor::&lt;T&gt;);
-        klass.row_activated = <span class="prelude-val">Some</span>(tree_view_row_activated::&lt;T&gt;);
-        klass.row_collapsed = <span class="prelude-val">Some</span>(tree_view_row_collapsed::&lt;T&gt;);
-        klass.row_expanded = <span class="prelude-val">Some</span>(tree_view_row_expanded::&lt;T&gt;);
-        klass.select_all = <span class="prelude-val">Some</span>(tree_view_select_all::&lt;T&gt;);
-        klass.select_cursor_parent = <span class="prelude-val">Some</span>(tree_view_select_cursor_parent::&lt;T&gt;);
-        klass.select_cursor_row = <span class="prelude-val">Some</span>(tree_view_select_cursor_row::&lt;T&gt;);
-        klass.start_interactive_search = <span class="prelude-val">Some</span>(tree_view_start_interactive_search::&lt;T&gt;);
-        klass.test_collapse_row = <span class="prelude-val">Some</span>(tree_view_test_collapse_row::&lt;T&gt;);
-        klass.test_expand_row = <span class="prelude-val">Some</span>(tree_view_test_expand_row::&lt;T&gt;);
-        klass.toggle_cursor_row = <span class="prelude-val">Some</span>(tree_view_toggle_cursor_row::&lt;T&gt;);
-        klass.unselect_all = <span class="prelude-val">Some</span>(tree_view_unselect_all::&lt;T&gt;);
+<span class="kw">unsafe impl</span>&lt;T: <a href="#13-82">TreeViewImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/tree_view.rs.html#19-764">TreeView</a> {
+    <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
+        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#329">class</a>);
+
+        <span class="kw">let </span>klass = <a href="#329">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <a href="#332">klass</a>.columns_changed = <span class="prelude-val">Some</span>(tree_view_columns_changed::&lt;T&gt;);
+        <a href="#332">klass</a>.cursor_changed = <span class="prelude-val">Some</span>(tree_view_cursor_changed::&lt;T&gt;);
+        <a href="#332">klass</a>.expand_collapse_cursor_row = <span class="prelude-val">Some</span>(tree_view_expand_collapse_cursor_row::&lt;T&gt;);
+        <a href="#332">klass</a>.move_cursor = <span class="prelude-val">Some</span>(tree_view_move_cursor::&lt;T&gt;);
+        <a href="#332">klass</a>.row_activated = <span class="prelude-val">Some</span>(tree_view_row_activated::&lt;T&gt;);
+        <a href="#332">klass</a>.row_collapsed = <span class="prelude-val">Some</span>(tree_view_row_collapsed::&lt;T&gt;);
+        <a href="#332">klass</a>.row_expanded = <span class="prelude-val">Some</span>(tree_view_row_expanded::&lt;T&gt;);
+        <a href="#332">klass</a>.select_all = <span class="prelude-val">Some</span>(tree_view_select_all::&lt;T&gt;);
+        <a href="#332">klass</a>.select_cursor_parent = <span class="prelude-val">Some</span>(tree_view_select_cursor_parent::&lt;T&gt;);
+        <a href="#332">klass</a>.select_cursor_row = <span class="prelude-val">Some</span>(tree_view_select_cursor_row::&lt;T&gt;);
+        <a href="#332">klass</a>.start_interactive_search = <span class="prelude-val">Some</span>(tree_view_start_interactive_search::&lt;T&gt;);
+        <a href="#332">klass</a>.test_collapse_row = <span class="prelude-val">Some</span>(tree_view_test_collapse_row::&lt;T&gt;);
+        <a href="#332">klass</a>.test_expand_row = <span class="prelude-val">Some</span>(tree_view_test_expand_row::&lt;T&gt;);
+        <a href="#332">klass</a>.toggle_cursor_row = <span class="prelude-val">Some</span>(tree_view_toggle_cursor_row::&lt;T&gt;);
+        <a href="#332">klass</a>.unselect_all = <span class="prelude-val">Some</span>(tree_view_unselect_all::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_columns_changed&lt;T: TreeViewImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_columns_changed&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>) {
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#351">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#352">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.columns_changed()
+    <a href="#353">imp</a>.<a href="#14-16">columns_changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_cursor_changed&lt;T: TreeViewImpl&gt;(ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_cursor_changed&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>) {
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#358">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#359">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.cursor_changed()
+    <a href="#360">imp</a>.<a href="#18-20">cursor_changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_expand_collapse_cursor_row&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_expand_collapse_cursor_row&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
     logical: glib::ffi::gboolean,
     expand: glib::ffi::gboolean,
     open_all: glib::ffi::gboolean,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#366">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#371">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.expand_collapse_cursor_row(from_glib(logical), from_glib(expand), from_glib(open_all))
-        .into_glib()
+    <a href="#372">imp</a>.<a href="#22-24">expand_collapse_cursor_row</a>(from_glib(<a href="#367">logical</a>), from_glib(<a href="#368">expand</a>), from_glib(<a href="#369">open_all</a>))
+        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_move_cursor&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    step: ffi::GtkMovementStep,
-    count: i32,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_move_cursor&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    step: <a href="../../../gtk4_sys/type.GtkMovementStep.html">ffi::GtkMovementStep</a>,
+    count: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
     extend: glib::ffi::gboolean,
     modify: glib::ffi::gboolean,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#379">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#385">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.move_cursor(from_glib(step), count, from_glib(extend), from_glib(modify))
-        .into_glib()
+    <a href="#386">imp</a>.<a href="#26-28">move_cursor</a>(from_glib(<a href="#380">step</a>), <a href="#381">count</a>, from_glib(<a href="#382">extend</a>), from_glib(<a href="#383">modify</a>))
+        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_activated&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    pathptr: <span class="kw-2">*mut </span>ffi::GtkTreePath,
-    columnptr: <span class="kw-2">*mut </span>ffi::GtkTreeViewColumn,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_activated&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    pathptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreePath.html">ffi::GtkTreePath</a>,
+    columnptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeViewColumn.html">ffi::GtkTreeViewColumn</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>path: Borrowed&lt;TreePath&gt; = from_glib_borrow(pathptr);
-    <span class="kw">let </span>column: Borrowed&lt;TreeViewColumn&gt; = from_glib_borrow(columnptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#393">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#397">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>path: Borrowed&lt;<a href="../auto/tree_path.rs.html#8-18">TreePath</a>&gt; = from_glib_borrow(<a href="#394">pathptr</a>);
+    <span class="kw">let </span>column: Borrowed&lt;<a href="../auto/tree_view_column.rs.html#17-134">TreeViewColumn</a>&gt; = from_glib_borrow(<a href="#395">columnptr</a>);
 
-    imp.row_activated(<span class="kw-2">&amp;</span>path, <span class="kw-2">&amp;</span>column)
+    <a href="#398">imp</a>.<a href="#39-41">row_activated</a>(<span class="kw-2">&amp;</span><a href="#399">path</a>, <span class="kw-2">&amp;</span><a href="#400">column</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_collapsed&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    iterptr: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
-    pathptr: <span class="kw-2">*mut </span>ffi::GtkTreePath,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_collapsed&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
+    pathptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreePath.html">ffi::GtkTreePath</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>path: Borrowed&lt;TreePath&gt; = from_glib_borrow(pathptr);
-    <span class="kw">let </span>iter: Borrowed&lt;TreeIter&gt; = from_glib_borrow(iterptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#406">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#410">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>path: Borrowed&lt;<a href="../auto/tree_path.rs.html#8-18">TreePath</a>&gt; = from_glib_borrow(<a href="#408">pathptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>&gt; = from_glib_borrow(<a href="#407">iterptr</a>);
 
-    imp.row_collapsed(<span class="kw-2">&amp;</span>iter, <span class="kw-2">&amp;</span>path)
+    <a href="#411">imp</a>.<a href="#43-45">row_collapsed</a>(<span class="kw-2">&amp;</span><a href="#413">iter</a>, <span class="kw-2">&amp;</span><a href="#412">path</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_expanded&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    iterptr: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
-    pathptr: <span class="kw-2">*mut </span>ffi::GtkTreePath,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_row_expanded&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
+    pathptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreePath.html">ffi::GtkTreePath</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>path: Borrowed&lt;TreePath&gt; = from_glib_borrow(pathptr);
-    <span class="kw">let </span>iter: Borrowed&lt;TreeIter&gt; = from_glib_borrow(iterptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#419">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#423">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>path: Borrowed&lt;<a href="../auto/tree_path.rs.html#8-18">TreePath</a>&gt; = from_glib_borrow(<a href="#421">pathptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>&gt; = from_glib_borrow(<a href="#420">iterptr</a>);
 
-    imp.row_expanded(<span class="kw-2">&amp;</span>iter, <span class="kw-2">&amp;</span>path)
+    <a href="#424">imp</a>.<a href="#47-49">row_expanded</a>(<span class="kw-2">&amp;</span><a href="#426">iter</a>, <span class="kw-2">&amp;</span><a href="#425">path</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_all&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_all&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#432">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#434">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.select_all().into_glib()
+    <a href="#435">imp</a>.<a href="#51-53">select_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_cursor_parent&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_cursor_parent&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#441">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#443">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.select_cursor_parent().into_glib()
+    <a href="#444">imp</a>.<a href="#55-57">select_cursor_parent</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_cursor_row&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_select_cursor_row&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
     start_editing: glib::ffi::gboolean,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#450">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#453">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.select_cursor_row(from_glib(start_editing)).into_glib()
+    <a href="#454">imp</a>.<a href="#59-61">select_cursor_row</a>(from_glib(<a href="#451">start_editing</a>)).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_start_interactive_search&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_start_interactive_search&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#460">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#462">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.start_interactive_search().into_glib()
+    <a href="#463">imp</a>.<a href="#63-65">start_interactive_search</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_test_collapse_row&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    iterptr: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
-    pathptr: <span class="kw-2">*mut </span>ffi::GtkTreePath,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_test_collapse_row&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
+    pathptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreePath.html">ffi::GtkTreePath</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>path: Borrowed&lt;TreePath&gt; = from_glib_borrow(pathptr);
-    <span class="kw">let </span>iter: Borrowed&lt;TreeIter&gt; = from_glib_borrow(iterptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#469">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#473">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>path: Borrowed&lt;<a href="../auto/tree_path.rs.html#8-18">TreePath</a>&gt; = from_glib_borrow(<a href="#471">pathptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>&gt; = from_glib_borrow(<a href="#470">iterptr</a>);
 
-    imp.test_collapse_row(<span class="kw-2">&amp;</span>iter, <span class="kw-2">&amp;</span>path).into_glib()
+    <a href="#474">imp</a>.<a href="#67-69">test_collapse_row</a>(<span class="kw-2">&amp;</span><a href="#476">iter</a>, <span class="kw-2">&amp;</span><a href="#475">path</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_test_expand_row&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
-    iterptr: <span class="kw-2">*mut </span>ffi::GtkTreeIter,
-    pathptr: <span class="kw-2">*mut </span>ffi::GtkTreePath,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_test_expand_row&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
+    iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
+    pathptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreePath.html">ffi::GtkTreePath</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>path: Borrowed&lt;TreePath&gt; = from_glib_borrow(pathptr);
-    <span class="kw">let </span>iter: Borrowed&lt;TreeIter&gt; = from_glib_borrow(iterptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#482">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#486">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>path: Borrowed&lt;<a href="../auto/tree_path.rs.html#8-18">TreePath</a>&gt; = from_glib_borrow(<a href="#484">pathptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-21">TreeIter</a>&gt; = from_glib_borrow(<a href="#483">iterptr</a>);
 
-    imp.test_expand_row(<span class="kw-2">&amp;</span>iter, <span class="kw-2">&amp;</span>path).into_glib()
+    <a href="#487">imp</a>.<a href="#71-73">test_expand_row</a>(<span class="kw-2">&amp;</span><a href="#489">iter</a>, <span class="kw-2">&amp;</span><a href="#488">path</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_toggle_cursor_row&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_toggle_cursor_row&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#495">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#497">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.toggle_cursor_row().into_glib()
+    <a href="#498">imp</a>.<a href="#75-77">toggle_cursor_row</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_unselect_all&lt;T: TreeViewImpl&gt;(
-    ptr: <span class="kw-2">*mut </span>ffi::GtkTreeView,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_view_unselect_all&lt;T: <a href="#13-82">TreeViewImpl</a>&gt;(
+    ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeView.html">ffi::GtkTreeView</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#504">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#506">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.unselect_all().into_glib()
+    <a href="#507">imp</a>.<a href="#79-81">unselect_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/subclass/content_provider.rs`."><title>content_provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/subclass/content_provider.rs`."><title>content_provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -506,201 +506,209 @@
 <a href="#433" id="433">433</a>
 <a href="#434" id="434">434</a>
 <a href="#435" id="435">435</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+<a href="#436" id="436">436</a>
+<a href="#437" id="437">437</a>
+<a href="#438" id="438">438</a>
+<a href="#439" id="439">439</a>
+<a href="#440" id="440">440</a>
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
 </span><span class="doccomment">//! Traits intended for subclassing [`ContentProvider`](crate::ContentProvider).
 
-</span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, subclass::prelude::<span class="kw-2">*</span>, Clipboard, ContentFormats, ContentProvider};
-<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, Value};
-<span class="kw">use </span>std::{future::Future, pin::Pin};
+</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#78">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#11-19">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/clipboard.rs.html#13-72">Clipboard</a>, <a href="../auto/content_formats.rs.html#8-49">ContentFormats</a>, <a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>};
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/core/future/future/trait.Future.html">future::Future</a>, <a href="https://doc.rust-lang.org/nightly/core/pin/struct.Pin.html">pin::Pin</a>};
 
-<span class="kw">pub trait </span>ContentProviderImpl: ContentProviderImplExt + ObjectImpl {
-    <span class="kw">fn </span>content_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="self">self</span>.parent_content_changed()
+<span class="kw">pub trait </span><a href="../../../gdk4/subclass/content_provider/trait.ContentProviderImpl.html">ContentProviderImpl</a>: <a href="#81-290">ContentProviderImplExt</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
+    <span class="doccomment">/// Emits the ::content-changed signal.
+    </span><span class="kw">fn </span>content_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <a class="self" href="#12">self</a>.<a href="#82-94">parent_content_changed</a>()
     }
 
-    <span class="kw">fn </span>attach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard) {
-        <span class="self">self</span>.parent_attach_clipboard(clipboard)
+    <span class="kw">fn </span>attach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span><a href="../auto/clipboard.rs.html#13-72">Clipboard</a>) {
+        <a class="self" href="#16">self</a>.<a href="#96-110">parent_attach_clipboard</a>(<a href="#16">clipboard</a>)
     }
 
-    <span class="kw">fn </span>detach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard) {
-        <span class="self">self</span>.parent_detach_clipboard(clipboard)
+    <span class="kw">fn </span>detach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span><a href="../auto/clipboard.rs.html#13-72">Clipboard</a>) {
+        <a class="self" href="#20">self</a>.<a href="#112-126">parent_detach_clipboard</a>(<a href="#20">clipboard</a>)
     }
 
-    <span class="kw">fn </span>formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats {
-        <span class="self">self</span>.parent_formats()
+    <span class="doccomment">/// Gets the formats that the provider can provide its current contents in.
+    ///
+    /// # Returns
+    ///
+    /// The formats of the provider
+    </span><span class="kw">fn </span>formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/content_formats.rs.html#8-49">ContentFormats</a> {
+        <a class="self" href="#29">self</a>.<a href="#128-143">parent_formats</a>()
     }
 
-    <span class="kw">fn </span>storable_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats {
-        <span class="self">self</span>.parent_storable_formats()
+    <span class="doccomment">/// Gets the formats that the provider suggests other applications to store
+    /// the data in.
+    ///
+    /// An example of such an application would be a clipboard manager.
+    ///
+    /// This can be assumed to be a subset of [`ContentProviderExt::formats()`][crate::prelude::ContentProviderExt::formats()].
+    ///
+    /// # Returns
+    ///
+    /// The storable formats of the provider
+    </span><span class="kw">fn </span>storable_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/content_formats.rs.html#8-49">ContentFormats</a> {
+        <a class="self" href="#43">self</a>.<a href="#145-160">parent_storable_formats</a>()
     }
 
     <span class="kw">fn </span>write_mime_type_future(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        mime_type: <span class="kw-2">&amp;</span>str,
-        stream: <span class="kw-2">&amp;</span>gio::OutputStream,
-        io_priority: glib::Priority,
-    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
-        <span class="self">self</span>.parent_write_mime_type_future(mime_type, stream, io_priority)
+        mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+        stream: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a>,
+        io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>,
+    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+        <a class="self" href="#48">self</a>.<a href="#240-262">parent_write_mime_type_future</a>(<a href="#49">mime_type</a>, <a href="#50">stream</a>, <a href="#51">io_priority</a>)
     }
 
-    <span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>, type_: glib::Type) -&gt; <span class="prelude-ty">Result</span>&lt;Value, glib::Error&gt; {
-        <span class="self">self</span>.parent_value(type_)
+    <span class="doccomment">/// Gets the contents of @self stored in @value.
+    ///
+    /// The @value will have been initialized to the `GType` the value should be
+    /// provided in. This given `GType` does not need to be listed in the formats
+    /// returned by [`ContentProviderExt::formats()`][crate::prelude::ContentProviderExt::formats()]. However, if the
+    /// given `GType` is not supported, this operation can fail and
+    /// `G_IO_ERROR_NOT_SUPPORTED` will be reported.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the value was set successfully. Otherwise
+    ///   @error will be set to describe the failure.
+    ///
+    /// ## `value`
+    /// the `GValue` to fill
+    </span><span class="kw">fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>, type_: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">glib::Type</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt; {
+        <a class="self" href="#71">self</a>.<a href="#264-289">parent_value</a>(<a href="#71">type_</a>)
     }
 }
 
-<span class="kw">pub trait </span>ContentProviderImplExt: ObjectSubclass {
-    <span class="kw">fn </span>parent_content_changed(<span class="kw-2">&amp;</span><span class="self">self</span>);
-
-    <span class="kw">fn </span>parent_attach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard);
-
-    <span class="kw">fn </span>parent_detach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard);
-
-    <span class="kw">fn </span>parent_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats;
-
-    <span class="kw">fn </span>parent_storable_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats;
-
-    <span class="kw">fn </span>parent_write_mime_type_async&lt;
-        Q: IsA&lt;gio::Cancellable&gt;,
-        R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;) + <span class="lifetime">&#39;static</span>,
-    &gt;(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        mime_type: <span class="kw-2">&amp;</span>str,
-        stream: <span class="kw-2">&amp;</span>gio::OutputStream,
-        io_priority: glib::Priority,
-        cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Q&gt;,
-        callback: R,
-    );
-
-    <span class="kw">fn </span>parent_write_mime_type_future(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        mime_type: <span class="kw-2">&amp;</span>str,
-        stream: <span class="kw-2">&amp;</span>gio::OutputStream,
-        io_priority: glib::Priority,
-    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt;;
-
-    <span class="kw">fn </span>parent_value(<span class="kw-2">&amp;</span><span class="self">self</span>, type_: glib::Type) -&gt; <span class="prelude-ty">Result</span>&lt;Value, glib::Error&gt;;
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <a href="#81-290"><span class="kw">super</span>::ContentProviderImplExt</a>&gt; <a href="#77">Sealed</a> <span class="kw">for </span>T {}
 }
 
-<span class="kw">impl</span>&lt;T: ContentProviderImpl&gt; ContentProviderImplExt <span class="kw">for </span>T {
+<span class="kw">pub trait </span><a href="../../../gdk4/subclass/content_provider/trait.ContentProviderImplExt.html">ContentProviderImplExt</a>: <a href="#77">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_content_changed(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).content_changed {
-                f(<span class="self">self
-                    </span>.obj()
-                    .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                    .to_glib_none()
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#84">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#85">parent_class</a>).content_changed {
+                <a href="#86">f</a>(<span class="self"><a href="#82">self</a>
+                    </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>)
             }
         }
     }
 
-    <span class="kw">fn </span>parent_attach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard) {
+    <span class="kw">fn </span>parent_attach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span><a href="../auto/clipboard.rs.html#13-72">Clipboard</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).attach_clipboard {
-                f(
-                    <span class="self">self</span>.obj()
-                        .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                        .to_glib_none()
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#98">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#99">parent_class</a>).attach_clipboard {
+                <a href="#100">f</a>(
+                    <a class="self" href="#96">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    clipboard.to_glib_none().<span class="number">0</span>,
+                    <a href="#96">clipboard</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             }
         }
     }
 
-    <span class="kw">fn </span>parent_detach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span>Clipboard) {
+    <span class="kw">fn </span>parent_detach_clipboard(<span class="kw-2">&amp;</span><span class="self">self</span>, clipboard: <span class="kw-2">&amp;</span><a href="../auto/clipboard.rs.html#13-72">Clipboard</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span>parent_class).detach_clipboard {
-                f(
-                    <span class="self">self</span>.obj()
-                        .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                        .to_glib_none()
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#114">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#115">parent_class</a>).detach_clipboard {
+                <a href="#116">f</a>(
+                    <a class="self" href="#112">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    clipboard.to_glib_none().<span class="number">0</span>,
+                    <a href="#112">clipboard</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             }
         }
     }
 
-    <span class="kw">fn </span>parent_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats {
+    <span class="kw">fn </span>parent_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/content_formats.rs.html#8-49">ContentFormats</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#130">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#131">parent_class</a>)
                 .ref_formats
                 .expect(<span class="string">&quot;no parent \&quot;ref_formats\&quot; implementation&quot;</span>);
-            <span class="kw">let </span>ret = f(<span class="self">self
-                </span>.obj()
-                .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                .to_glib_none()
+            <span class="kw">let </span>ret = <a href="#132">f</a>(<span class="self"><a href="#128">self</a>
+                </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                 .<span class="number">0</span>);
 
-            from_glib_full(ret)
+            from_glib_full(<a href="#135">ret</a>)
         }
     }
 
-    <span class="kw">fn </span>parent_storable_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ContentFormats {
+    <span class="kw">fn </span>parent_storable_formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../auto/content_formats.rs.html#8-49">ContentFormats</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#147">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#148">parent_class</a>)
                 .ref_storable_formats
                 .expect(<span class="string">&quot;no parent \&quot;ref_storable_formats\&quot; implementation&quot;</span>);
-            <span class="kw">let </span>ret = f(<span class="self">self
-                </span>.obj()
-                .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                .to_glib_none()
+            <span class="kw">let </span>ret = <a href="#149">f</a>(<span class="self"><a href="#145">self</a>
+                </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                 .<span class="number">0</span>);
 
-            from_glib_full(ret)
+            from_glib_full(<a href="#152">ret</a>)
         }
     }
 
     <span class="attr">#[allow(clippy::type_complexity)]
     </span><span class="kw">fn </span>parent_write_mime_type_async&lt;
-        Q: IsA&lt;gio::Cancellable&gt;,
-        R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;) + <span class="lifetime">&#39;static</span>,
+        Q: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/cancellable/struct.Cancellable.html">gio::Cancellable</a>&gt;,
+        R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">&#39;static</span>,
     &gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        mime_type: <span class="kw-2">&amp;</span>str,
-        stream: <span class="kw-2">&amp;</span>gio::OutputStream,
-        io_priority: glib::Priority,
+        mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+        stream: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a>,
+        io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>,
         cancellable: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Q&gt;,
         callback: R,
     ) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>main_context = glib::MainContext::ref_thread_default();
-            <span class="kw">let </span>is_main_context_owner = main_context.is_owner();
-            <span class="kw">let </span>has_acquired_main_context = (!is_main_context_owner)
-                .then(|| main_context.acquire().ok())
+            <span class="kw">let </span>is_main_context_owner = <a href="#175">main_context</a>.is_owner();
+            <span class="kw">let </span>has_acquired_main_context = (!<a href="#176">is_main_context_owner</a>)
+                .then(|| <a href="#175">main_context</a>.acquire().ok())
                 .flatten();
-            <span class="macro">assert!</span>(
+            <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 is_main_context_owner || has_acquired_main_context.is_some(),
                 <span class="string">&quot;Async operations only allowed if the thread is owning the MainContext&quot;
             </span>);
 
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#185">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#186">parent_class</a>)
                 .write_mime_type_async
                 .expect(<span class="string">&quot;no parent \&quot;write_mime_type_async\&quot; implementation&quot;</span>);
-            <span class="kw">let </span>finish = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>finish = (<span class="kw-2">*</span><a href="#186">parent_class</a>)
                 .write_mime_type_finish
                 .expect(<span class="string">&quot;no parent \&quot;write_mime_type_finish\&quot; implementation&quot;</span>);
 
             <span class="kw">let </span>user_data: Box&lt;(glib::thread_guard::ThreadGuard&lt;R&gt;, <span class="kw">_</span>)&gt; =
-                Box::new((glib::thread_guard::ThreadGuard::new(callback), finish));
+                Box::new((glib::thread_guard::ThreadGuard::new(<a href="#172">callback</a>), <a href="#190">finish</a>));
 
             <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>parent_write_mime_type_async_trampoline&lt;
-                R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;) + <span class="lifetime">&#39;static</span>,
+                R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">&#39;static</span>,
             &gt;(
                 source_object_ptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
                 res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
@@ -714,152 +722,154 @@
                         <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
                         <span class="kw-2">*mut *mut </span>glib::ffi::GError,
                     ) -&gt; glib::ffi::gboolean,
-                )&gt; = Box::from_raw(user_data <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
-                cb.<span class="number">1</span>(source_object_ptr <span class="kw">as _</span>, res, <span class="kw-2">&amp;mut </span>error);
+                )&gt; = Box::from_raw(<a href="#202">user_data</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+                <a href="#205">cb</a>.<span class="number">1</span>(<a href="#200">source_object_ptr</a> <span class="kw">as _</span>, <a href="#201">res</a>, <span class="kw-2">&amp;mut </span><a href="#204">error</a>);
                 <span class="kw">let </span>result = <span class="kw">if </span>error.is_null() {
                     <span class="prelude-val">Ok</span>(())
                 } <span class="kw">else </span>{
-                    <span class="prelude-val">Err</span>(from_glib_full(error))
+                    <span class="prelude-val">Err</span>(from_glib_full(<a href="#204">error</a>))
                 };
-                <span class="kw">let </span>cb = cb.<span class="number">0</span>.into_inner();
-                cb(result);
+                <span class="kw">let </span>cb = <a href="#205">cb</a>.<span class="number">0</span>.into_inner();
+                <a href="#219">cb</a>(<a href="#214">result</a>);
             }
 
-            <span class="kw">let </span>cancellable = cancellable.map(|p| p.as_ref());
+            <span class="kw">let </span>cancellable = <a href="#171">cancellable</a>.map(|p| <a href="#223">p</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>());
             <span class="kw">let </span>callback = parent_write_mime_type_async_trampoline::&lt;R&gt;;
-            f(
-                <span class="self">self</span>.obj()
-                    .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                    .to_glib_none()
+            <a href="#187">f</a>(
+                <a class="self" href="#167">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                mime_type.to_glib_none().<span class="number">0</span>,
-                stream.to_glib_none().<span class="number">0</span>,
-                io_priority.into_glib(),
-                cancellable.to_glib_none().<span class="number">0</span>,
-                <span class="prelude-val">Some</span>(callback),
-                Box::into_raw(user_data) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <a href="#168">mime_type</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#169">stream</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#170">io_priority</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                <a href="#223">cancellable</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <span class="prelude-val">Some</span>(<a href="#224">callback</a>),
+                Box::into_raw(<a href="#194">user_data</a>) <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
             );
         }
     }
 
     <span class="kw">fn </span>parent_write_mime_type_future(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        mime_type: <span class="kw-2">&amp;</span>str,
-        stream: <span class="kw-2">&amp;</span>gio::OutputStream,
-        io_priority: glib::Priority,
-    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), glib::Error&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
-        <span class="kw">let </span>stream = stream.clone();
-        <span class="kw">let </span>mime_type = String::from(mime_type);
+        mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
+        stream: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a>,
+        io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>,
+    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+        <span class="kw">let </span>stream = <a href="#243">stream</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
+        <span class="kw">let </span>mime_type = String::from(<a href="#242">mime_type</a>);
         Box::pin(gio::GioFuture::new(
-            <span class="kw-2">&amp;</span><span class="self">self</span>.ref_counted(),
+            <span class="kw-2">&amp;</span><a class="self" href="#241">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">ref_counted</a>(),
             <span class="kw">move </span>|imp, cancellable, send| {
-                imp.parent_write_mime_type_async(
-                    <span class="kw-2">&amp;</span>mime_type,
-                    <span class="kw-2">&amp;</span>stream,
-                    io_priority,
-                    <span class="prelude-val">Some</span>(cancellable),
+                <a href="#250">imp</a>.<a href="#163-238">parent_write_mime_type_async</a>(
+                    <span class="kw-2">&amp;</span><a href="#247">mime_type</a>,
+                    <span class="kw-2">&amp;</span><a href="#246">stream</a>,
+                    <a href="#244">io_priority</a>,
+                    <span class="prelude-val">Some</span>(<a href="#250">cancellable</a>),
                     <span class="kw">move </span>|res| {
-                        send.resolve(res);
+                        <a href="#250">send</a>.resolve(<a href="#256">res</a>);
                     },
                 );
             },
         ))
     }
 
-    <span class="kw">fn </span>parent_value(<span class="kw-2">&amp;</span><span class="self">self</span>, type_: glib::Type) -&gt; <span class="prelude-ty">Result</span>&lt;Value, glib::Error&gt; {
+    <span class="kw">fn </span>parent_value(<span class="kw-2">&amp;</span><span class="self">self</span>, type_: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">glib::Type</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>data = T::type_data();
-            <span class="kw">let </span>parent_class = data.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span>parent_class)
+            <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
+            <span class="kw">let </span>parent_class = <a href="#266">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span>ffi::GdkContentProviderClass;
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#267">parent_class</a>)
                 .get_value
                 .expect(<span class="string">&quot;no parent \&quot;get_value\&quot; implementation&quot;</span>);
-            <span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(type_);
+            <span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(<a href="#264">type_</a>);
 
             <span class="kw">let </span><span class="kw-2">mut </span>error = std::ptr::null_mut();
-            f(
-                <span class="self">self</span>.obj()
-                    .unsafe_cast_ref::&lt;ContentProvider&gt;()
-                    .to_glib_none()
+            <a href="#268">f</a>(
+                <a class="self" href="#264">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
+                    .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                value.to_glib_none_mut().<span class="number">0</span>,
-                <span class="kw-2">&amp;mut </span>error,
+                <a href="#271">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
+                <span class="kw-2">&amp;mut </span><a href="#273">error</a>,
             );
 
             <span class="kw">if </span>error.is_null() {
-                <span class="prelude-val">Ok</span>(value)
+                <span class="prelude-val">Ok</span>(<a href="#271">value</a>)
             } <span class="kw">else </span>{
-                <span class="prelude-val">Err</span>(from_glib_full(error))
+                <span class="prelude-val">Err</span>(from_glib_full(<a href="#273">error</a>))
             }
         }
     }
 }
 
-<span class="kw">unsafe impl</span>&lt;T: ContentProviderImpl&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span>ContentProvider {
-    <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(class);
+<span class="kw">impl</span>&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt; <a href="#81-290">ContentProviderImplExt</a> <span class="kw">for </span>T {}
 
-        <span class="kw">let </span>klass = class.as_mut();
-        klass.content_changed = <span class="prelude-val">Some</span>(content_provider_content_changed::&lt;T&gt;);
-        klass.attach_clipboard = <span class="prelude-val">Some</span>(content_provider_attach_clipboard::&lt;T&gt;);
-        klass.detach_clipboard = <span class="prelude-val">Some</span>(content_provider_detach_clipboard::&lt;T&gt;);
-        klass.ref_formats = <span class="prelude-val">Some</span>(content_provider_formats::&lt;T&gt;);
-        klass.ref_storable_formats = <span class="prelude-val">Some</span>(content_provider_storable_formats::&lt;T&gt;);
-        klass.write_mime_type_async = <span class="prelude-val">Some</span>(content_provider_write_mime_type_async::&lt;T&gt;);
-        klass.write_mime_type_finish = <span class="prelude-val">Some</span>(content_provider_write_mime_type_finish::&lt;T&gt;);
-        klass.get_value = <span class="prelude-val">Some</span>(content_provider_get_value::&lt;T&gt;);
+<span class="kw">unsafe impl</span>&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/content_provider.rs.html#13-55">ContentProvider</a> {
+    <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
+        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#295">class</a>);
+
+        <span class="kw">let </span>klass = <a href="#295">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <a href="#298">klass</a>.content_changed = <span class="prelude-val">Some</span>(content_provider_content_changed::&lt;T&gt;);
+        <a href="#298">klass</a>.attach_clipboard = <span class="prelude-val">Some</span>(content_provider_attach_clipboard::&lt;T&gt;);
+        <a href="#298">klass</a>.detach_clipboard = <span class="prelude-val">Some</span>(content_provider_detach_clipboard::&lt;T&gt;);
+        <a href="#298">klass</a>.ref_formats = <span class="prelude-val">Some</span>(content_provider_formats::&lt;T&gt;);
+        <a href="#298">klass</a>.ref_storable_formats = <span class="prelude-val">Some</span>(content_provider_storable_formats::&lt;T&gt;);
+        <a href="#298">klass</a>.write_mime_type_async = <span class="prelude-val">Some</span>(content_provider_write_mime_type_async::&lt;T&gt;);
+        <a href="#298">klass</a>.write_mime_type_finish = <span class="prelude-val">Some</span>(<a href="#400-418">content_provider_write_mime_type_finish</a>);
+        <a href="#298">klass</a>.get_value = <span class="prelude-val">Some</span>(content_provider_get_value::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_content_changed&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_content_changed&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#311">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#313">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.content_changed()
+    <a href="#314">imp</a>.<a href="#12-14">content_changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_attach_clipboard&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_attach_clipboard&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
     clipboard_ptr: <span class="kw-2">*mut </span>ffi::GdkClipboard,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>clipboard = from_glib_borrow(clipboard_ptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#320">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#323">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>clipboard = from_glib_borrow(<a href="#321">clipboard_ptr</a>);
 
-    imp.attach_clipboard(<span class="kw-2">&amp;</span>clipboard)
+    <a href="#324">imp</a>.<a href="#16-18">attach_clipboard</a>(<span class="kw-2">&amp;</span><a href="#325">clipboard</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_detach_clipboard&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_detach_clipboard&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
     clipboard_ptr: <span class="kw-2">*mut </span>ffi::GdkClipboard,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>clipboard = from_glib_borrow(clipboard_ptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#331">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#334">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>clipboard = from_glib_borrow(<a href="#332">clipboard_ptr</a>);
 
-    imp.detach_clipboard(<span class="kw-2">&amp;</span>clipboard)
+    <a href="#335">imp</a>.<a href="#20-22">detach_clipboard</a>(<span class="kw-2">&amp;</span><a href="#336">clipboard</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_formats&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_formats&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
 ) -&gt; <span class="kw-2">*mut </span>ffi::GdkContentFormats {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#342">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#344">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.formats().into_glib_ptr()
+    <a href="#345">imp</a>.<a href="#29-31">formats</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_storable_formats&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_storable_formats&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
 ) -&gt; <span class="kw-2">*mut </span>ffi::GdkContentFormats {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#351">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#353">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.storable_formats().into_glib_ptr()
+    <a href="#354">imp</a>.<a href="#43-45">storable_formats</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_async&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_async&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
     mime_type_ptr: <span class="kw-2">*const </span>libc::c_char,
     stream_ptr: <span class="kw-2">*mut </span>gio::ffi::GOutputStream,
@@ -868,24 +878,24 @@
     callback: gio::ffi::GAsyncReadyCallback,
     user_data: glib::ffi::gpointer,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>wrap: ContentProvider = from_glib_none(ptr);
-    <span class="kw">let </span>cancellable: <span class="prelude-ty">Option</span>&lt;gio::Cancellable&gt; = from_glib_none(cancellable_ptr);
-    <span class="kw">let </span>mime_type: glib::GString = from_glib_none(mime_type_ptr);
-    <span class="kw">let </span>stream: gio::OutputStream = from_glib_none(stream_ptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#360">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#368">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>wrap: <a href="../auto/content_provider.rs.html#13-55">ContentProvider</a> = from_glib_none(<a href="#360">ptr</a>);
+    <span class="kw">let </span>cancellable: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/cancellable/struct.Cancellable.html">gio::Cancellable</a>&gt; = from_glib_none(<a href="#364">cancellable_ptr</a>);
+    <span class="kw">let </span>mime_type: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a> = from_glib_none(<a href="#361">mime_type_ptr</a>);
+    <span class="kw">let </span>stream: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a> = from_glib_none(<a href="#362">stream_ptr</a>);
 
-    <span class="kw">let </span>closure = <span class="kw">move </span>|task: gio::LocalTask&lt;bool&gt;, source_object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>glib::Object&gt;| {
+    <span class="kw">let </span>closure = <span class="kw">move </span>|task: gio::LocalTask&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;, source_object: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">glib::Object</a>&gt;| {
         <span class="kw">let </span>result: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult =
-            task.upcast_ref::&lt;gio::AsyncResult&gt;().to_glib_none().<span class="number">0</span>;
-        <span class="kw">let </span>source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject = source_object.to_glib_none().<span class="number">0</span>;
-        callback.unwrap()(source_object, result, user_data)
+            <a href="#375">task</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">upcast_ref</a>::&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/async_result/struct.AsyncResult.html">gio::AsyncResult</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
+        <span class="kw">let </span>source_object: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject = <a href="#375">source_object</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
+        <a href="#365">callback</a>.unwrap()(<a href="#378">source_object</a>, <a href="#376">result</a>, <a href="#366">user_data</a>)
     };
 
     <span class="kw">let </span>t = gio::LocalTask::new(
-        <span class="prelude-val">Some</span>(wrap.upcast_ref::&lt;glib::Object&gt;()),
-        cancellable.as_ref(),
-        closure,
+        <span class="prelude-val">Some</span>(<a href="#370">wrap</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">upcast_ref</a>::&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">glib::Object</a>&gt;()),
+        <a href="#371">cancellable</a>.as_ref(),
+        <a href="#375">closure</a>,
     );
 
     glib::MainContext::default().spawn_local(<span class="kw">async move </span>{
@@ -896,50 +906,49 @@
                 from_glib(priority),
             )
             .<span class="kw">await</span>;
-        t.return_result(res.map(|_t| <span class="bool-val">true</span>));
+        <a href="#382">t</a>.return_result(<a href="#389">res</a>.map(|_t| <span class="bool-val">true</span>));
     });
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_finish&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_finish(
     _ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
     res_ptr: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
     error_ptr: <span class="kw-2">*mut *mut </span>glib::ffi::GError,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>res: gio::AsyncResult = from_glib_none(res_ptr);
-    <span class="kw">let </span>t = res.downcast::&lt;gio::LocalTask&lt;bool&gt;&gt;().unwrap();
-    <span class="kw">let </span>ret = t.propagate();
-    <span class="kw">match </span>ret {
+    <span class="kw">let </span>res: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/async_result/struct.AsyncResult.html">gio::AsyncResult</a> = from_glib_none(<a href="#402">res_ptr</a>);
+    <span class="kw">let </span>t = <a href="#405">res</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast</a>::&lt;gio::LocalTask&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;&gt;().unwrap();
+    <span class="kw">let </span>ret = <a href="#406">t</a>.propagate();
+    <span class="kw">match </span><a href="#407">ret</a> {
         <span class="prelude-val">Ok</span>(v) =&gt; {
-            <span class="macro">debug_assert!</span>(v);
-            <span class="bool-val">true</span>.into_glib()
+            <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.debug_assert.html">debug_assert!</a>(v);
+            <span class="bool-val">true</span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
         }
         <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="kw-2">*</span>error_ptr = e.into_glib_ptr();
-            <span class="bool-val">false</span>.into_glib()
+            <span class="kw-2">*</span><a href="#403">error_ptr</a> = <a href="#413">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+            <span class="bool-val">false</span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
         }
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_get_value&lt;T: ContentProviderImpl&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_get_value&lt;T: <a href="#10-74">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span>ffi::GdkContentProvider,
     value_ptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GValue,
     error_ptr: <span class="kw-2">*mut *mut </span>glib::ffi::GError,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>value: Value = from_glib_none(value_ptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#421">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#425">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>value: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a> = from_glib_none(<a href="#422">value_ptr</a>);
 
-    <span class="kw">let </span>ret = imp.value(value.type_());
-    <span class="kw">match </span>ret {
+    <span class="kw">let </span>ret = <a href="#426">imp</a>.<a href="#71-73">value</a>(<a href="#427">value</a>.type_());
+    <span class="kw">match </span><a href="#429">ret</a> {
         <span class="prelude-val">Ok</span>(v) =&gt; {
-            glib::gobject_ffi::g_value_copy(v.to_glib_none().<span class="number">0</span>, value_ptr);
-            <span class="bool-val">true</span>.into_glib()
+            glib::gobject_ffi::g_value_copy(<a href="#431">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#422">value_ptr</a>);
+            <span class="bool-val">true</span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
         }
         <span class="prelude-val">Err</span>(e) =&gt; {
-            <span class="kw-2">*</span>error_ptr = e.into_glib_ptr();
-            <span class="bool-val">false</span>.into_glib()
+            <span class="kw-2">*</span><a href="#423">error_ptr</a> = <a href="#435">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+            <span class="bool-val">false</span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
         }
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -155,13 +180,13 @@ Let's start by installing Libadwaita and adding the <code>libadwaita</code> crat
 </span><span class="boring">mod utils;
 </span><span class="boring">mod window;
 </span><span class="boring">
-</span><span class="boring">use gtk::gio;
 </span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::{gio, glib};
 </span><span class="boring">use window::Window;
 </span><span class="boring">
 </span><span class="boring">static APP_ID: &amp;str = &quot;org.gtk_rs.Todo5&quot;;
 </span><span class="boring">
-</span>fn main() {
+</span>fn main() -&gt; glib::ExitCode {
     gio::resources_register_include!(&quot;todo_5.gresource&quot;)
         .expect(&quot;Failed to register resources.&quot;);
 
@@ -174,7 +199,7 @@ Let's start by installing Libadwaita and adding the <code>libadwaita</code> crat
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 //                       👇 changed
@@ -285,9 +310,8 @@ fn build_ui(app: &amp;adw::Application) {
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list view
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">
 </span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -336,7 +360,7 @@ fn build_ui(app: &amp;adw::Application) {
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -569,10 +593,9 @@ impl ObjectSubclass for Window {
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
 </span><span class="boring">            .tasks()
-</span><span class="boring">            .snapshot()
-</span><span class="boring">            .iter()
-</span><span class="boring">            .filter_map(Cast::downcast_ref::&lt;TaskObject&gt;)
-</span><span class="boring">            .map(TaskObject::task_data)
+</span><span class="boring">            .iter::&lt;TaskObject&gt;()
+</span><span class="boring">            .filter_map(Result::ok)
+</span><span class="boring">            .map(|task_object| task_object.task_data())
 </span><span class="boring">            .collect();
 </span><span class="boring">
 </span><span class="boring">        // Save state to file
@@ -601,7 +624,6 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">use adw::{prelude::*, ActionRow};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
-</span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{gio, glib, Align, CheckButton, CustomFilter, FilterListModel, NoSelection};
 </span><span class="boring">
 </span><span class="boring">use crate::task_object::{TaskData, TaskObject};
@@ -685,9 +707,8 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span>        // Wrap model with filter and selection and pass it to the list box
-        let filter_model =
-            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-        let selection_model = NoSelection::new(Some(&amp;filter_model));
+        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+        let selection_model = NoSelection::new(Some(filter_model.clone()));
         self.imp().tasks_list.bind_model(
             Some(&amp;selection_model),
             clone!(@weak self as window =&gt; @default-panic, move |obj| {
@@ -754,11 +775,12 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">        // Bind properties
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;check_button, &quot;active&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+</span><span class="boring">            .bidirectional()
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;content&quot;, &amp;row, &quot;title&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">
 </span><span class="boring">        // Return row
@@ -784,7 +806,7 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -837,7 +859,6 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">use adw::{prelude::*, ActionRow};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
-</span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{gio, glib, Align, CheckButton, CustomFilter, FilterListModel, NoSelection};
 </span><span class="boring">
 </span><span class="boring">use crate::task_object::{TaskData, TaskObject};
@@ -921,9 +942,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list box
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.bind_model(
 </span><span class="boring">            Some(&amp;selection_model),
 </span><span class="boring">            clone!(@weak self as window =&gt; @default-panic, move |obj| {
@@ -990,11 +1010,12 @@ That means we can just bind their properties without having to worry about unbin
         // Bind properties
         task_object
             .bind_property(&quot;completed&quot;, &amp;check_button, &quot;active&quot;)
-            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+            .bidirectional()
+            .sync_create()
             .build();
         task_object
             .bind_property(&quot;content&quot;, &amp;row, &quot;title&quot;)
-            .flags(BindingFlags::SYNC_CREATE)
+            .sync_create()
             .build();
 
         // Return row
@@ -1020,7 +1041,7 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1070,7 +1091,6 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">use adw::{prelude::*, ActionRow};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
-</span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{gio, glib, Align, CheckButton, CustomFilter, FilterListModel, NoSelection};
 </span><span class="boring">
 </span><span class="boring">use crate::task_object::{TaskData, TaskObject};
@@ -1154,9 +1174,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list box
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.bind_model(
 </span><span class="boring">            Some(&amp;selection_model),
 </span><span class="boring">            clone!(@weak self as window =&gt; @default-panic, move |obj| {
@@ -1223,11 +1242,12 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        // Bind properties
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;check_button, &quot;active&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+</span><span class="boring">            .bidirectional()
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;content&quot;, &amp;row, &quot;title&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">
 </span><span class="boring">        // Return row
@@ -1253,7 +1273,7 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1303,7 +1323,6 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">use adw::{prelude::*, ActionRow};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
-</span><span class="boring">use gtk::glib::BindingFlags;
 </span><span class="boring">use gtk::{gio, glib, Align, CheckButton, CustomFilter, FilterListModel, NoSelection};
 </span><span class="boring">
 </span><span class="boring">use crate::task_object::{TaskData, TaskObject};
@@ -1387,9 +1406,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list box
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.bind_model(
 </span><span class="boring">            Some(&amp;selection_model),
 </span><span class="boring">            clone!(@weak self as window =&gt; @default-panic, move |obj| {
@@ -1456,11 +1474,12 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        // Bind properties
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;check_button, &quot;active&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE | BindingFlags::BIDIRECTIONAL)
+</span><span class="boring">            .bidirectional()
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">        task_object
 </span><span class="boring">            .bind_property(&quot;content&quot;, &amp;row, &quot;title&quot;)
-</span><span class="boring">            .flags(BindingFlags::SYNC_CREATE)
+</span><span class="boring">            .sync_create()
 </span><span class="boring">            .build();
 </span><span class="boring">
 </span><span class="boring">        // Return row
@@ -1486,7 +1505,7 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1577,5 +1596,6 @@ That means we can just bind their properties without having to worry about unbin
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

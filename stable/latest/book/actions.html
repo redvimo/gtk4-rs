@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -159,7 +184,7 @@ Let's check out the simplest case where we activate an action without a paramete
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions1&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -170,7 +195,7 @@ Let's check out the simplest case where we activate an action without a paramete
 </span><span class="boring">    app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
@@ -201,7 +226,7 @@ We also connected a callback which closes the window.</p>
 </span><span class="boring">
 </span>const APP_ID: &amp;str = &quot;org.gtk_rs.Actions1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -212,7 +237,7 @@ fn main() {
     app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 
     // Run the application
-    app.run();
+    app.run()
 }
 <span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -254,7 +279,7 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions2&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -265,7 +290,7 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">    app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
@@ -313,7 +338,7 @@ Let's see how this works.</p>
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions3&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -321,13 +346,13 @@ Let's see how this works.</p>
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_ui(app: &amp;Application) {
     let original_state = 0;
     let label = Label::builder()
-        .label(&amp;format!(&quot;Counter: {original_state}&quot;))
+        .label(format!(&quot;Counter: {original_state}&quot;))
         .build();
 
     // Create a button with label
@@ -367,7 +392,7 @@ Let's see how this works.</p>
     let action_count = SimpleAction::new_stateful(
         &quot;count&quot;,
         Some(&amp;i32::static_variant_type()),
-        &amp;original_state.to_variant(),
+        original_state.to_variant(),
     );
     action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
         // Get state
@@ -385,7 +410,7 @@ Let's see how this works.</p>
 
         // Increase state by parameter and store state
         state += parameter;
-        action.set_state(&amp;state.to_variant());
+        action.set_state(state.to_variant());
 
         // Update label with new state
         label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -420,7 +445,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions4&quot;;
 </span><span class="boring">
-</span><span class="boring">fn main() {
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    // Create a new application
 </span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
 </span><span class="boring">
@@ -428,13 +453,13 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">    app.connect_activate(build_ui);
 </span><span class="boring">
 </span><span class="boring">    // Run the application
-</span><span class="boring">    app.run();
+</span><span class="boring">    app.run()
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn build_ui(app: &amp;Application) {
 </span><span class="boring">    let original_state = 0;
 </span><span class="boring">    let label = Label::builder()
-</span><span class="boring">        .label(&amp;format!(&quot;Counter: {original_state}&quot;))
+</span><span class="boring">        .label(format!(&quot;Counter: {original_state}&quot;))
 </span><span class="boring">        .build();
 </span>    // Create a button with label and action
     let button = Button::builder()
@@ -468,15 +493,15 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">    let action_count = SimpleAction::new_stateful(
 </span><span class="boring">        &quot;count&quot;,
 </span><span class="boring">        Some(&amp;i32::static_variant_type()),
-</span><span class="boring">        &amp;original_state.to_variant(),
+</span><span class="boring">        original_state.to_variant(),
 </span><span class="boring">    );
 </span><span class="boring">    action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
 </span><span class="boring">        // Get state
 </span><span class="boring">        let mut state = action
-</span><span class="boring">        .state()
-</span><span class="boring">        .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">        .get::&lt;i32&gt;()
-</span><span class="boring">        .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">            .state()
+</span><span class="boring">            .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">            .get::&lt;i32&gt;()
+</span><span class="boring">            .expect(&quot;The value needs to be of type `i32`.&quot;);
 </span><span class="boring">
 </span><span class="boring">        // Get parameter
 </span><span class="boring">        let parameter = parameter
@@ -486,7 +511,7 @@ With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuild
 </span><span class="boring">
 </span><span class="boring">        // Increase state by parameter and save state
 </span><span class="boring">        state += parameter;
-</span><span class="boring">        action.set_state(&amp;state.to_variant());
+</span><span class="boring">        action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">        // Update label with new state
 </span><span class="boring">        label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -562,7 +587,7 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
         let action_count = SimpleAction::new_stateful(
             &quot;count&quot;,
             Some(&amp;i32::static_variant_type()),
-            &amp;original_state.to_variant(),
+            original_state.to_variant(),
         );
 
         action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -581,7 +606,7 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 
             // Increase state by parameter and save state
             state += parameter;
-            action.set_state(&amp;state.to_variant());
+            action.set_state(state.to_variant());
 
             // Update label with new state
             label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -592,7 +617,6 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 <p>Finally, <code>setup_actions</code> will be called within <code>constructed</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/5/window/imp.rs">listings/actions/5/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CompositeTemplate, Label};
 </span><span class="boring">
@@ -653,7 +677,7 @@ Typically, a menu entry has an action fitting one of these three descriptions:</
 First we extend <code>setup_actions</code>.
 For the action without parameter or state, we can use the pre-defined &quot;window.close&quot; action.
 Therefore we don't have to add anything here.</p>
-<p>With the action &quot;sensitive-button&quot;, we manipulate the &quot;sensitive&quot; property of <code>button</code>.
+<p>With the action &quot;button-frame&quot;, we manipulate the &quot;has-frame&quot; property of <code>button</code>.
 Here, the convention is that actions with no parameter and boolean state should behave like toggle actions.
 This means that the caller can expect the boolean state to toggle after activating the action. Luckily for us, that is the default behavior for <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.PropertyAction.html"><code>gio::PropertyAction</code></a> with a boolean property.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/6/window/mod.rs">listings/actions/6/window/mod.rs</a></p>
@@ -687,7 +711,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -706,18 +730,18 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_count);
 </span><span class="boring">
-</span>        // Add property action &quot;sensitive-button&quot; to `window`
+</span>        // Add property action &quot;button-frame&quot; to `window`
         let button = self.imp().button.get();
-        let action_sensitive_button =
-            PropertyAction::new(&quot;sensitive-button&quot;, &amp;button, &quot;sensitive&quot;);
-        self.add_action(&amp;action_sensitive_button);
+        let action_button_frame =
+            PropertyAction::new(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;);
+        self.add_action(&amp;action_button_frame);
 <span class="boring">
 </span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;orientation&quot; to `window` taking a string as parameter
@@ -725,7 +749,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">        let action_orientation = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;orientation&quot;,
 </span><span class="boring">            Some(&amp;String::static_variant_type()),
-</span><span class="boring">            &amp;&quot;Vertical&quot;.to_variant(),
+</span><span class="boring">            &quot;Vertical&quot;.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
@@ -744,7 +768,7 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">
 </span><span class="boring">                // Set orientation and save state
 </span><span class="boring">                gtk_box.set_orientation(orientation);
-</span><span class="boring">                action.set_state(&amp;parameter.to_variant());
+</span><span class="boring">                action.set_state(parameter.to_variant());
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_orientation);
 </span><span class="boring">    }
@@ -791,7 +815,7 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
@@ -810,18 +834,18 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_count);
 </span><span class="boring">
-</span><span class="boring">        // Add property action &quot;sensitive-button&quot; to `window`
+</span><span class="boring">        // Add property action &quot;button-frame&quot; to `window`
 </span><span class="boring">        let button = self.imp().button.get();
-</span><span class="boring">        let action_sensitive_button =
-</span><span class="boring">            PropertyAction::new(&quot;sensitive-button&quot;, &amp;button, &quot;sensitive&quot;);
-</span><span class="boring">        self.add_action(&amp;action_sensitive_button);
+</span><span class="boring">        let action_button_frame =
+</span><span class="boring">            PropertyAction::new(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;);
+</span><span class="boring">        self.add_action(&amp;action_button_frame);
 </span><span class="boring">
 </span>
         // Add stateful action &quot;orientation&quot; to `window` taking a string as parameter
@@ -829,7 +853,7 @@ We don't need the action state to implement orientation switching, however it is
         let action_orientation = SimpleAction::new_stateful(
             &quot;orientation&quot;,
             Some(&amp;String::static_variant_type()),
-            &amp;&quot;Vertical&quot;.to_variant(),
+            &quot;Vertical&quot;.to_variant(),
         );
 
         action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
@@ -848,7 +872,7 @@ We don't need the action state to implement orientation switching, however it is
 
                 // Set orientation and save state
                 gtk_box.set_orientation(orientation);
-                action.set_state(&amp;parameter.to_variant());
+                action.set_state(parameter.to_variant());
         }));
         self.add_action(&amp;action_orientation);
 <span class="boring">    }
@@ -864,8 +888,8 @@ We do that by adding the menu in front of the template.</p>
 +      &lt;attribute name=&quot;action&quot;&gt;window.close&lt;/attribute&gt;
 +    &lt;/item&gt;
 +    &lt;item&gt;
-+      &lt;attribute name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_Sensitive button&lt;/attribute&gt;
-+      &lt;attribute name=&quot;action&quot;&gt;win.sensitive-button&lt;/attribute&gt;
++      &lt;attribute name=&quot;label&quot; translatable=&quot;yes&quot;&gt;_Toggle button frame&lt;/attribute&gt;
++      &lt;attribute name=&quot;action&quot;&gt;win.button-frame&lt;/attribute&gt;
 +    &lt;/item&gt;
 +    &lt;section&gt;
 +      &lt;attribute name=&quot;label&quot; translatable=&quot;yes&quot;&gt;Orientation&lt;/attribute&gt;
@@ -898,7 +922,7 @@ We do that by adding the menu in front of the template.</p>
        &lt;object class=&quot;GtkBox&quot; id=&quot;gtk_box&quot;&gt;
          &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
 </code></pre>
-<p>Since we connect the menu to the <a href="../docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> via the <a href="https://docs.gtk.org/gtk4/property.MenuButton.menu-model.html">menu-model</a> property, the <code>Menu</code> is expected to be a <a href="../docs/gtk4/struct.PopoverMenu.html"><code>gtk::PopoverMenu</code></a>.
+<p>Since we connect the menu to the <a href="../docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> via the <a href="../docs/gtk4/struct.MenuButton.html#menu-model">menu-model</a> property, the <code>Menu</code> is expected to be a <a href="../docs/gtk4/struct.PopoverMenu.html"><code>gtk::PopoverMenu</code></a>.
 The <a href="../docs/gtk4/struct.PopoverMenu.html">documentation</a> for <code>PopoverMenu</code> also explains its <code>xml</code> syntax for the interface builder.</p>
 <p>Also note how we specified the target:</p>
 <pre><code class="language-xml">&lt;attribute name=&quot;target&quot;&gt;Horizontal&lt;/attribute&gt;
@@ -928,9 +952,9 @@ First we create a schema with settings corresponding to the stateful actions we 
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;schemalist&gt;
   &lt;schema id=&quot;org.gtk_rs.Actions7&quot; path=&quot;/org/gtk_rs/Actions7/&quot;&gt;
-    &lt;key name=&quot;sensitive-button&quot; type=&quot;b&quot;&gt;
+    &lt;key name=&quot;button-frame&quot; type=&quot;b&quot;&gt;
       &lt;default&gt;true&lt;/default&gt;
-      &lt;summary&gt;Whether the button is sensitive&lt;/summary&gt;
+      &lt;summary&gt;Whether the button has a frame&lt;/summary&gt;
     &lt;/key&gt;
     &lt;key name=&quot;orientation&quot; type=&quot;s&quot;&gt;
       &lt;choices&gt;
@@ -949,7 +973,6 @@ Since <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Sett
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/imp.rs">listings/actions/7/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
 </span><span class="boring">use once_cell::sync::OnceCell;
@@ -1055,16 +1078,16 @@ pub struct Window {
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
 </span><span class="boring">            // Get state
 </span><span class="boring">            let mut state = action
-</span><span class="boring">            .state()
-</span><span class="boring">            .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">            .get::&lt;i32&gt;()
-</span><span class="boring">            .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                .state()
+</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                .get::&lt;i32&gt;()
+</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
 </span><span class="boring">            // Get parameter
 </span><span class="boring">            let parameter = parameter
@@ -1074,7 +1097,7 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1089,9 +1112,9 @@ pub struct Window {
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_close);
 </span><span class="boring">
-</span><span class="boring">        // Create action from key &quot;sensitive-button&quot; and add to action group &quot;win&quot;
-</span><span class="boring">        let action_sensitive_button = self.settings().create_action(&quot;sensitive-button&quot;);
-</span><span class="boring">        self.add_action(&amp;action_sensitive_button);
+</span><span class="boring">        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
+</span><span class="boring">        let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
+</span><span class="boring">        self.add_action(&amp;action_button_frame);
 </span><span class="boring">
 </span><span class="boring">        // Create action from key &quot;orientation&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_orientation = self.settings().create_action(&quot;orientation&quot;);
@@ -1101,10 +1124,10 @@ pub struct Window {
 </span><span class="boring">    fn bind_settings(&amp;self) {
 </span><span class="boring">        // Get state
 </span><span class="boring">
-</span><span class="boring">        // Bind setting &quot;sensitive-button&quot; to &quot;sensitive&quot; property of `button`
+</span><span class="boring">        // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
 </span><span class="boring">        let button = self.imp().button.get();
 </span><span class="boring">        self.settings()
-</span><span class="boring">            .bind(&quot;sensitive-button&quot;, &amp;button, &quot;sensitive&quot;)
+</span><span class="boring">            .bind(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;)
 </span><span class="boring">            .build();
 </span><span class="boring">
 </span><span class="boring">        // Bind setting &quot;orientation&quot; to &quot;orientation&quot; property of `button`
@@ -1177,16 +1200,16 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
 </span><span class="boring">            // Get state
 </span><span class="boring">            let mut state = action
-</span><span class="boring">            .state()
-</span><span class="boring">            .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">            .get::&lt;i32&gt;()
-</span><span class="boring">            .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                .state()
+</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                .get::&lt;i32&gt;()
+</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
 </span><span class="boring">            // Get parameter
 </span><span class="boring">            let parameter = parameter
@@ -1196,7 +1219,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1211,9 +1234,9 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_close);
 </span><span class="boring">
-</span>        // Create action from key &quot;sensitive-button&quot; and add to action group &quot;win&quot;
-        let action_sensitive_button = self.settings().create_action(&quot;sensitive-button&quot;);
-        self.add_action(&amp;action_sensitive_button);
+</span>        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
+        let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
+        self.add_action(&amp;action_button_frame);
 
         // Create action from key &quot;orientation&quot; and add to action group &quot;win&quot;
         let action_orientation = self.settings().create_action(&quot;orientation&quot;);
@@ -1223,10 +1246,10 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">    fn bind_settings(&amp;self) {
 </span><span class="boring">        // Get state
 </span><span class="boring">
-</span><span class="boring">        // Bind setting &quot;sensitive-button&quot; to &quot;sensitive&quot; property of `button`
+</span><span class="boring">        // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
 </span><span class="boring">        let button = self.imp().button.get();
 </span><span class="boring">        self.settings()
-</span><span class="boring">            .bind(&quot;sensitive-button&quot;, &amp;button, &quot;sensitive&quot;)
+</span><span class="boring">            .bind(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;)
 </span><span class="boring">            .build();
 </span><span class="boring">
 </span><span class="boring">        // Bind setting &quot;orientation&quot; to &quot;orientation&quot; property of `button`
@@ -1250,7 +1273,7 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Since actions from <code>create_action</code> follow the aforementioned conventions, we can keep further changes to a minimum.
-The action &quot;win.sensitive-button&quot; toggles its state with each activation and the state of the &quot;win.orientation&quot; action follows the given parameter.</p>
+The action &quot;win.button-frame&quot; toggles its state with each activation and the state of the &quot;win.orientation&quot; action follows the given parameter.</p>
 <p>We still have to specify what should happen when the actions are activated though.
 For the stateful actions, instead of adding callbacks to their &quot;activate&quot; signals we bind the settings to properties we want to manipulate.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
@@ -1301,16 +1324,16 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">        let action_count = SimpleAction::new_stateful(
 </span><span class="boring">            &quot;count&quot;,
 </span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
+</span><span class="boring">            original_state.to_variant(),
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
 </span><span class="boring">            // Get state
 </span><span class="boring">            let mut state = action
-</span><span class="boring">            .state()
-</span><span class="boring">            .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">            .get::&lt;i32&gt;()
-</span><span class="boring">            .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                .state()
+</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                .get::&lt;i32&gt;()
+</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
 </span><span class="boring">            // Get parameter
 </span><span class="boring">            let parameter = parameter
@@ -1320,7 +1343,7 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">
 </span><span class="boring">            // Increase state by parameter and save state
 </span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
+</span><span class="boring">            action.set_state(state.to_variant());
 </span><span class="boring">
 </span><span class="boring">            // Update label with new state
 </span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
@@ -1335,9 +1358,9 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">        }));
 </span><span class="boring">        self.add_action(&amp;action_close);
 </span><span class="boring">
-</span><span class="boring">        // Create action from key &quot;sensitive-button&quot; and add to action group &quot;win&quot;
-</span><span class="boring">        let action_sensitive_button = self.settings().create_action(&quot;sensitive-button&quot;);
-</span><span class="boring">        self.add_action(&amp;action_sensitive_button);
+</span><span class="boring">        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
+</span><span class="boring">        let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
+</span><span class="boring">        self.add_action(&amp;action_button_frame);
 </span><span class="boring">
 </span><span class="boring">        // Create action from key &quot;orientation&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_orientation = self.settings().create_action(&quot;orientation&quot;);
@@ -1347,10 +1370,10 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span>    fn bind_settings(&amp;self) {
         // Get state
 
-        // Bind setting &quot;sensitive-button&quot; to &quot;sensitive&quot; property of `button`
+        // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
         let button = self.imp().button.get();
         self.settings()
-            .bind(&quot;sensitive-button&quot;, &amp;button, &quot;sensitive&quot;)
+            .bind(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;)
             .build();
 
         // Bind setting &quot;orientation&quot; to &quot;orientation&quot; property of `button`
@@ -1377,7 +1400,6 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/imp.rs">listings/actions/7/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
 </span><span class="boring">use once_cell::sync::OnceCell;
@@ -1485,5 +1507,6 @@ If you want to learn more about them, the <a href="https://developer.gnome.org/d
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

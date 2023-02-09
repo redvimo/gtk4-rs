@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/rt.rs`."><title>rt.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/rt.rs`."><title>rt.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -240,12 +240,12 @@
 <a href="#167" id="167">167</a>
 <a href="#168" id="168">168</a>
 <a href="#169" id="169">169</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 <span class="kw">use </span>std::{
-    cell::Cell,
-    sync::atomic::{AtomicBool, Ordering},
+    <a href="https://doc.rust-lang.org/nightly/core/cell/struct.Cell.html">cell::Cell</a>,
+    sync::atomic::{<a href="https://doc.rust-lang.org/nightly/core/sync/atomic/struct.AtomicBool.html">AtomicBool</a>, <a href="https://doc.rust-lang.org/nightly/core/sync/atomic/enum.Ordering.html">Ordering</a>},
 };
 
 <span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
@@ -253,11 +253,11 @@
     <span class="kw">fn </span>pthread_main_np() -&gt; i32;
 }
 
-<span class="macro">thread_local! </span>{
+<a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.thread_local.html">thread_local! </a>{
     <span class="kw">static </span>IS_MAIN_THREAD: Cell&lt;bool&gt; = Cell::new(<span class="bool-val">false</span>)
 }
 
-<span class="kw">static </span>INITIALIZED: AtomicBool = AtomicBool::new(<span class="bool-val">false</span>);
+<span class="kw">static </span>INITIALIZED: <a href="https://doc.rust-lang.org/nightly/core/sync/atomic/struct.AtomicBool.html">AtomicBool</a> = AtomicBool::new(<span class="bool-val">false</span>);
 
 <span class="comment">// rustdoc-stripper-ignore-next
 </span><span class="doccomment">/// Asserts that this is the main thread and `gtk::init` has been called.
@@ -293,10 +293,10 @@
 
 <span class="doccomment">/// Returns `true` if GTK has been initialized.
 </span><span class="attr">#[inline]
-</span><span class="kw">pub fn </span>is_initialized() -&gt; bool {
+</span><span class="kw">pub fn </span><a href="../../gtk4/fn.is_initialized.html">is_initialized</a>() -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
     <span class="macro">skip_assert_initialized!</span>();
-    <span class="kw">if </span><span class="macro">cfg!</span>(not(feature = <span class="string">&quot;unsafe-assume-initialized&quot;</span>)) {
-        INITIALIZED.load(Ordering::Acquire)
+    <span class="kw">if </span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.cfg.html">cfg!</a>(not(feature = <span class="string">&quot;unsafe-assume-initialized&quot;</span>)) {
+        <a href="#18">INITIALIZED</a>.load(Ordering::Acquire)
     } <span class="kw">else </span>{
         <span class="bool-val">true
     </span>}
@@ -304,10 +304,10 @@
 
 <span class="doccomment">/// Returns `true` if GTK has been initialized and this is the main thread.
 </span><span class="attr">#[inline]
-</span><span class="kw">pub fn </span>is_initialized_main_thread() -&gt; bool {
+</span><span class="kw">pub fn </span><a href="../../gtk4/fn.is_initialized_main_thread.html">is_initialized_main_thread</a>() -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
     <span class="macro">skip_assert_initialized!</span>();
-    <span class="kw">if </span><span class="macro">cfg!</span>(not(feature = <span class="string">&quot;unsafe-assume-initialized&quot;</span>)) {
-        IS_MAIN_THREAD.with(|c| c.get())
+    <span class="kw">if </span><a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.cfg.html">cfg!</a>(not(feature = <span class="string">&quot;unsafe-assume-initialized&quot;</span>)) {
+        <a href="#14-16">IS_MAIN_THREAD</a>.with(|c| <a href="#68">c</a>.get())
     } <span class="kw">else </span>{
         <span class="bool-val">true
     </span>}
@@ -329,14 +329,14 @@
 /// 3. You ensure that this thread is the main thread for the process.
 </span><span class="attr">#[allow(unknown_lints)]
 #[allow(clippy::if_then_panic)]
-</span><span class="kw">pub unsafe fn </span>set_initialized() {
+</span><span class="kw">pub unsafe fn </span><a href="../../gtk4/fn.set_initialized.html">set_initialized</a>() {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">if </span>is_initialized_main_thread() {
         <span class="kw">return</span>;
     } <span class="kw">else if </span>is_initialized() {
-        <span class="macro">panic!</span>(<span class="string">&quot;Attempted to initialize GTK from two different threads.&quot;</span>);
+        <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;Attempted to initialize GTK from two different threads.&quot;</span>);
     } <span class="kw">else if </span>!{ from_glib(ffi::gtk_is_initialized()) } {
-        <span class="macro">panic!</span>(<span class="string">&quot;GTK was not actually initialized&quot;</span>);
+        <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;GTK was not actually initialized&quot;</span>);
     }
     <span class="comment">//  OS X has its own notion of the main thread and init must be called on that thread.
     </span><span class="attr">#[cfg(target_os = <span class="string">&quot;macos&quot;</span>)]
@@ -347,8 +347,8 @@
             <span class="string">&quot;Attempted to initialize GTK on OSX from non-main thread&quot;
         </span>);
     }
-    INITIALIZED.store(<span class="bool-val">true</span>, Ordering::Release);
-    IS_MAIN_THREAD.with(|c| c.set(<span class="bool-val">true</span>));
+    <a href="#18">INITIALIZED</a>.store(<span class="bool-val">true</span>, Ordering::Release);
+    <a href="#14-16">IS_MAIN_THREAD</a>.with(|c| <a href="#109">c</a>.set(<span class="bool-val">true</span>));
 }
 
 <span class="doccomment">/// Tries to initialize GTK.
@@ -365,13 +365,13 @@
 </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_init&quot;</span>)]
 #[allow(unknown_lints)]
 #[allow(clippy::if_then_panic)]
-</span><span class="kw">pub fn </span>init() -&gt; <span class="prelude-ty">Result</span>&lt;(), glib::BoolError&gt; {
+</span><span class="kw">pub fn </span><a href="../../gtk4/fn.init.html">init</a>() -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.BoolError.html">glib::BoolError</a>&gt; {
     <span class="macro">skip_assert_initialized!</span>();
     <span class="kw">if </span>is_initialized_main_thread() {
         <span class="kw">return </span><span class="prelude-val">Ok</span>(());
     } <span class="kw">else if </span>is_initialized() {
         <span class="attr">#[cfg(not(test))]
-        </span><span class="macro">panic!</span>(<span class="string">&quot;Attempted to initialize GTK from two different threads.&quot;</span>);
+        </span><a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;Attempted to initialize GTK from two different threads.&quot;</span>);
         <span class="attr">#[cfg(test)]
         </span><span class="macro">panic!</span>(<span class="string">&quot;Use #[gtk::test] instead of #[test]&quot;</span>);
     }
@@ -380,21 +380,21 @@
         <span class="kw">if </span>from_glib(ffi::gtk_init_check()) {
             <span class="comment">// See https://github.com/gtk-rs/gtk-rs-core/issues/186 for reasoning behind
             // acquiring and leaking the main context here.
-            </span><span class="kw">let </span>result: bool = from_glib(glib::ffi::g_main_context_acquire(
+            </span><span class="kw">let </span>result: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> = from_glib(glib::ffi::g_main_context_acquire(
                 glib::ffi::g_main_context_default(),
             ));
             <span class="kw">if </span>!result {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(<span class="string">&quot;Failed to acquire default main context&quot;</span>));
+                <span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.bool_error.html">glib::bool_error!</a>(<span class="string">&quot;Failed to acquire default main context&quot;</span>));
             }
 
             <span class="kw">if </span>!from_glib::&lt;glib::ffi::gboolean, bool&gt;(ffi::gtk_is_initialized()) {
-                <span class="kw">return </span><span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(<span class="string">&quot;GTK was not actually initialized&quot;</span>));
+                <span class="kw">return </span><span class="prelude-val">Err</span>(<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.bool_error.html">glib::bool_error!</a>(<span class="string">&quot;GTK was not actually initialized&quot;</span>));
             }
 
-            set_initialized();
+            <a href="#90-110">set_initialized</a>();
             <span class="prelude-val">Ok</span>(())
         } <span class="kw">else </span>{
-            <span class="prelude-val">Err</span>(<span class="macro">glib::bool_error!</span>(<span class="string">&quot;Failed to initialize GTK&quot;</span>))
+            <span class="prelude-val">Err</span>(<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.bool_error.html">glib::bool_error!</a>(<span class="string">&quot;Failed to initialize GTK&quot;</span>))
         }
     }
 }
@@ -409,5 +409,4 @@
         <span class="macro">assert!</span>(context.is_owner());
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

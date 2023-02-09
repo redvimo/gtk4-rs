@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/paintable.rs`."><title>paintable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/paintable.rs`."><title>paintable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -492,42 +492,19 @@
 <a href="#419" id="419">419</a>
 <a href="#420" id="420">420</a>
 <a href="#421" id="421">421</a>
-<a href="#422" id="422">422</a>
-<a href="#423" id="423">423</a>
-<a href="#424" id="424">424</a>
-<a href="#425" id="425">425</a>
-<a href="#426" id="426">426</a>
-<a href="#427" id="427">427</a>
-<a href="#428" id="428">428</a>
-<a href="#429" id="429">429</a>
-<a href="#430" id="430">430</a>
-<a href="#431" id="431">431</a>
-<a href="#432" id="432">432</a>
-<a href="#433" id="433">433</a>
-<a href="#434" id="434">434</a>
-<a href="#435" id="435">435</a>
-<a href="#436" id="436">436</a>
-<a href="#437" id="437">437</a>
-<a href="#438" id="438">438</a>
-<a href="#439" id="439">439</a>
-<a href="#440" id="440">440</a>
-<a href="#441" id="441">441</a>
-<a href="#442" id="442">442</a>
-<a href="#443" id="443">443</a>
-<a href="#444" id="444">444</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use crate</span>::{PaintableFlags, Snapshot};
+</span><span class="kw">use crate</span>::{<a href="flags.rs.html#733-751">PaintableFlags</a>, <a href="snapshot.rs.html#7-19">Snapshot</a>};
 <span class="kw">use </span>glib::{
-    prelude::<span class="kw-2">*</span>,
-    signal::{connect_raw, SignalHandlerId},
-    translate::<span class="kw-2">*</span>,
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>,
+    signal::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>},
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>,
 };
-<span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem, mem::transmute};
+<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">boxed::Box</a> <span class="kw">as </span>Box_, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>, <a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">mem::transmute</a>};
 
-<span class="macro">glib::wrapper! </span>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// [`Paintable`][crate::Paintable] is a simple interface used by GTK to represent content that
     /// can be painted.
     ///
@@ -553,7 +530,7 @@
     /// A [`Paintable`][crate::Paintable] may change its contents, meaning that it will now produce
     /// a different output with the same snapshot. Once that happens, it will call
     /// [`PaintableExt::invalidate_contents()`][crate::prelude::PaintableExt::invalidate_contents()] which will emit the
-    /// [`invalidate-contents`][struct@crate::GdkPaintable#invalidate-contents] signal. If a paintable is known
+    /// [`invalidate-contents`][struct@crate::Paintable#invalidate-contents] signal. If a paintable is known
     /// to never change its contents, it will set the [`PaintableFlags::CONTENTS`][crate::PaintableFlags::CONTENTS]
     /// flag. If a consumer cannot deal with changing contents, it may call
     /// [`PaintableExt::current_image()`][crate::prelude::PaintableExt::current_image()] which will return a static
@@ -564,7 +541,7 @@
     /// can use this information to layout thepaintable appropriately. Just like the
     /// contents, the size of a paintable can change. A paintable will indicate this
     /// by calling [`PaintableExt::invalidate_size()`][crate::prelude::PaintableExt::invalidate_size()] which will emit the
-    /// [`invalidate-size`][struct@crate::GdkPaintable#invalidate-size] signal. And just like for contents,
+    /// [`invalidate-size`][struct@crate::Paintable#invalidate-size] signal. And just like for contents,
     /// if a paintable is known to never change its size, it will set the
     /// [`PaintableFlags::SIZE`][crate::PaintableFlags::SIZE] flag.
     ///
@@ -604,15 +581,15 @@
     ///
     /// [`PaintableExt`][trait@crate::prelude::PaintableExt]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkPaintable&quot;</span>)]
-    </span><span class="kw">pub struct </span>Paintable(Interface&lt;ffi::GdkPaintable, ffi::GdkPaintableInterface&gt;);
+    </span><span class="kw">pub struct </span><a href="../../../gdk4/struct.Paintable.html">Paintable</a>(Interface&lt;ffi::GdkPaintable, ffi::GdkPaintableInterface&gt;);
 
     <span class="kw">match fn </span>{
         type_ =&gt; || ffi::gdk_paintable_get_type(),
     }
 }
 
-<span class="kw">impl </span>Paintable {
-    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Paintable&gt; = <span class="prelude-val">None</span>;
+<span class="kw">impl </span><a href="#13-95">Paintable</a> {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="#13-95">Paintable</a>&gt; = <span class="prelude-val">None</span>;
 
     <span class="doccomment">/// Returns a paintable that has the given intrinsic size and draws nothing.
     ///
@@ -629,15 +606,20 @@
     ///
     /// a [`Paintable`][crate::Paintable]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_new_empty&quot;</span>)]
-    </span><span class="kw">pub fn </span>new_empty(intrinsic_width: i32, intrinsic_height: i32) -&gt; Paintable {
+    </span><span class="kw">pub fn </span>new_empty(intrinsic_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, intrinsic_height: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a href="#13-95">Paintable</a> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gdk_paintable_new_empty(
-                intrinsic_width,
-                intrinsic_height,
+                <a href="#115">intrinsic_width</a>,
+                <a href="#115">intrinsic_height</a>,
             ))
         }
     }
+}
+
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="#13-95"><span class="kw">super</span>::Paintable</a>&gt;&gt; <a href="#127">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="doccomment">/// Trait containing all [`struct@Paintable`] methods.
@@ -645,7 +627,7 @@
 /// # Implementors
 ///
 /// [`GLTexture`][struct@crate::GLTexture], [`MemoryTexture`][struct@crate::MemoryTexture], [`Paintable`][struct@crate::Paintable], [`Texture`][struct@crate::Texture]
-</span><span class="kw">pub trait </span>PaintableExt: <span class="lifetime">&#39;static </span>{
+</span><span class="kw">pub trait </span><a href="../../../gdk4/prelude/trait.PaintableExt.html">PaintableExt</a>: IsA&lt;<a href="#13-95">Paintable</a>&gt; + <a href="#127">sealed::Sealed</a> + <span class="lifetime">&#39;static </span>{
     <span class="doccomment">/// Compute a concrete size for the [`Paintable`][crate::Paintable].
     ///
     /// Applies the sizing algorithm outlined in the
@@ -680,11 +662,26 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_compute_concrete_size&quot;</span>)]
     </span><span class="kw">fn </span>compute_concrete_size(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        specified_width: f64,
-        specified_height: f64,
-        default_width: f64,
-        default_height: f64,
-    ) -&gt; (f64, f64);
+        specified_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        specified_height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        default_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        default_height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    ) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) {
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span><span class="kw-2">mut </span>concrete_width = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>concrete_height = mem::MaybeUninit::uninit();
+            ffi::gdk_paintable_compute_concrete_size(
+                <a class="self" href="#170">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#171">specified_width</a>,
+                <a href="#172">specified_height</a>,
+                <a href="#173">default_width</a>,
+                <a href="#174">default_height</a>,
+                <a href="#177">concrete_width</a>.as_mut_ptr(),
+                <a href="#178">concrete_height</a>.as_mut_ptr(),
+            );
+            (<a href="#177">concrete_width</a>.assume_init(), <a href="#178">concrete_height</a>.assume_init())
+        }
+    }
 
     <span class="doccomment">/// Gets an immutable paintable for the current contents displayed by @self.
     ///
@@ -700,7 +697,13 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_get_current_image&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_current_image&quot;</span>)]
     #[must_use]
-    </span><span class="kw">fn </span>current_image(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Paintable;
+    </span><span class="kw">fn </span>current_image(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#13-95">Paintable</a> {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gdk_paintable_get_current_image(
+                <a class="self" href="#206">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            ))
+        }
+    }
 
     <span class="doccomment">/// Get flags for the paintable.
     ///
@@ -713,7 +716,9 @@
     /// The [`PaintableFlags`][crate::PaintableFlags] for this paintable
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_get_flags&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_flags&quot;</span>)]
-    </span><span class="kw">fn </span>flags(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; PaintableFlags;
+    </span><span class="kw">fn </span>flags(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="flags.rs.html#733-751">PaintableFlags</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_paintable_get_flags(<a class="self" href="#225">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    }
 
     <span class="doccomment">/// Gets the preferred aspect ratio the @self would like to be displayed at.
     ///
@@ -738,7 +743,9 @@
     /// the intrinsic aspect ratio of @self or 0 if none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_get_intrinsic_aspect_ratio&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_intrinsic_aspect_ratio&quot;</span>)]
-    </span><span class="kw">fn </span>intrinsic_aspect_ratio(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64;
+    </span><span class="kw">fn </span>intrinsic_aspect_ratio(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_aspect_ratio(<a class="self" href="#252">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+    }
 
     <span class="doccomment">/// Gets the preferred height the @self would like to be displayed at.
     ///
@@ -756,7 +763,9 @@
     /// the intrinsic height of @self or 0 if none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_get_intrinsic_height&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_intrinsic_height&quot;</span>)]
-    </span><span class="kw">fn </span>intrinsic_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
+    </span><span class="kw">fn </span>intrinsic_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_height(<a class="self" href="#272">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+    }
 
     <span class="doccomment">/// Gets the preferred width the @self would like to be displayed at.
     ///
@@ -774,7 +783,9 @@
     /// the intrinsic width of @self or 0 if none.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_get_intrinsic_width&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_intrinsic_width&quot;</span>)]
-    </span><span class="kw">fn </span>intrinsic_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32;
+    </span><span class="kw">fn </span>intrinsic_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_width(<a class="self" href="#292">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+    }
 
     <span class="doccomment">/// Called by implementations of [`Paintable`][crate::Paintable] to invalidate their contents.
     ///
@@ -787,7 +798,11 @@
     /// If a @self reports the [`PaintableFlags::CONTENTS`][crate::PaintableFlags::CONTENTS] flag,
     /// it must not call this function.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_invalidate_contents&quot;</span>)]
-    </span><span class="kw">fn </span>invalidate_contents(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    </span><span class="kw">fn </span>invalidate_contents(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_paintable_invalidate_contents(<a class="self" href="#307">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
     <span class="doccomment">/// Called by implementations of [`Paintable`][crate::Paintable] to invalidate their size.
     ///
@@ -800,7 +815,11 @@
     /// If a @self reports the [`PaintableFlags::SIZE`][crate::PaintableFlags::SIZE] flag,
     /// it must not call this function.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_invalidate_size&quot;</span>)]
-    </span><span class="kw">fn </span>invalidate_size(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    </span><span class="kw">fn </span>invalidate_size(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_paintable_invalidate_size(<a class="self" href="#324">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
     <span class="doccomment">/// Snapshots the given paintable with the given @width and @height.
     ///
@@ -814,14 +833,45 @@
     /// ## `height`
     /// height to snapshot in
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_paintable_snapshot&quot;</span>)]
-    </span><span class="kw">fn </span>snapshot(<span class="kw-2">&amp;</span><span class="self">self</span>, snapshot: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Snapshot&gt;, width: f64, height: f64);
+    </span><span class="kw">fn </span>snapshot(<span class="kw-2">&amp;</span><span class="self">self</span>, snapshot: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="snapshot.rs.html#7-19">Snapshot</a>&gt;, width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_paintable_snapshot(
+                <a class="self" href="#342">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#342">snapshot</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#342">width</a>,
+                <a href="#342">height</a>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Emitted when the contents of the @paintable change.
     ///
     /// Examples for such an event would be videos changing to the next frame or
     /// the icon theme for an icon changing.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;invalidate-contents&quot;</span>)]
-    </span><span class="kw">fn </span>connect_invalidate_contents&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
+    </span><span class="kw">fn </span>connect_invalidate_contents&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>invalidate_contents_trampoline&lt;
+            P: IsA&lt;<a href="#13-95">Paintable</a>&gt;,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+        &gt;(
+            this: <span class="kw-2">*mut </span>ffi::GdkPaintable,
+            f: glib::ffi::gpointer,
+        ) {
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#364">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#366">f</a>(Paintable::from_glib_borrow(<a href="#363">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
+        }
+        <span class="kw">unsafe </span>{
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#358">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#358">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                <span class="string">b&quot;invalidate-contents\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                    invalidate_contents_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
+                )),
+                Box_::into_raw(<a href="#370">f</a>),
+            )
+        }
+    }
 
     <span class="doccomment">/// Emitted when the intrinsic size of the @paintable changes.
     ///
@@ -834,130 +884,33 @@
     /// Examples for such an event would be a paintable displaying
     /// the contents of a toplevel surface being resized.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;invalidate-size&quot;</span>)]
-    </span><span class="kw">fn </span>connect_invalidate_size&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-}
-
-<span class="kw">impl</span>&lt;O: IsA&lt;Paintable&gt;&gt; PaintableExt <span class="kw">for </span>O {
-    <span class="kw">fn </span>compute_concrete_size(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        specified_width: f64,
-        specified_height: f64,
-        default_width: f64,
-        default_height: f64,
-    ) -&gt; (f64, f64) {
-        <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>concrete_width = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>concrete_height = mem::MaybeUninit::uninit();
-            ffi::gdk_paintable_compute_concrete_size(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                specified_width,
-                specified_height,
-                default_width,
-                default_height,
-                concrete_width.as_mut_ptr(),
-                concrete_height.as_mut_ptr(),
-            );
-            (concrete_width.assume_init(), concrete_height.assume_init())
-        }
-    }
-
-    <span class="kw">fn </span>current_image(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Paintable {
-        <span class="kw">unsafe </span>{
-            from_glib_full(ffi::gdk_paintable_get_current_image(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-            ))
-        }
-    }
-
-    <span class="kw">fn </span>flags(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; PaintableFlags {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_paintable_get_flags(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
-    }
-
-    <span class="kw">fn </span>intrinsic_aspect_ratio(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_aspect_ratio(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
-    }
-
-    <span class="kw">fn </span>intrinsic_height(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_height(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
-    }
-
-    <span class="kw">fn </span>intrinsic_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i32 {
-        <span class="kw">unsafe </span>{ ffi::gdk_paintable_get_intrinsic_width(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) }
-    }
-
-    <span class="kw">fn </span>invalidate_contents(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_paintable_invalidate_contents(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>invalidate_size(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_paintable_invalidate_size(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>snapshot(<span class="kw-2">&amp;</span><span class="self">self</span>, snapshot: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Snapshot&gt;, width: f64, height: f64) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_paintable_snapshot(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                snapshot.as_ref().to_glib_none().<span class="number">0</span>,
-                width,
-                height,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>connect_invalidate_contents&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>invalidate_contents_trampoline&lt;
-            P: IsA&lt;Paintable&gt;,
-            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
-        &gt;(
+    </span><span class="kw">fn </span>connect_invalidate_size&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>invalidate_size_trampoline&lt;P: IsA&lt;<a href="#13-95">Paintable</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkPaintable,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Paintable::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#396">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#398">f</a>(Paintable::from_glib_borrow(<a href="#395">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;invalidate-contents\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
-                    invalidate_contents_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
-                )),
-                Box_::into_raw(f),
-            )
-        }
-    }
-
-    <span class="kw">fn </span>connect_invalidate_size&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>invalidate_size_trampoline&lt;P: IsA&lt;Paintable&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
-            this: <span class="kw-2">*mut </span>ffi::GdkPaintable,
-            f: glib::ffi::gpointer,
-        ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Paintable::from_glib_borrow(this).unsafe_cast_ref())
-        }
-        <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#393">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#393">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;invalidate-size\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     invalidate_size_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#402">f</a>),
             )
         }
     }
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Paintable {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.write_str(<span class="string">&quot;Paintable&quot;</span>)
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="#13-95">Paintable</a>&gt;&gt; <a href="#136-413">PaintableExt</a> <span class="kw">for </span>O {}
+
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#13-95">Paintable</a> {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+        <a href="#418">f</a>.write_str(<span class="string">&quot;Paintable&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

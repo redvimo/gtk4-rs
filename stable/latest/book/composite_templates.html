@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -150,10 +175,10 @@
 As a reminder, that is how we used it to build our trusty &quot;Hello World!&quot; app.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow, Button};
+use gtk::{glib, Application, ApplicationWindow, Button};
 const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld3&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Create a new application
     let app = Application::builder().application_id(APP_ID).build();
 
@@ -161,7 +186,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn build_ui(app: &amp;Application) {
@@ -221,7 +246,7 @@ Then you start listing the elements you want to describe.
 In order to define a composite template, we specify the name <code>MyGtkAppWindow</code> of the custom widget we want to create and the parent <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> it derives of.
 These <code>xml</code> files are independent of the programming language, which is why the classes have the original names.
 Luckily, they all convert like this: <code>gtk::ApplicationWindow</code> → <code>GtkApplicationWindow</code>.
-Then we can specify properties which are listed <a href="https://docs.gtk.org/gtk4/class.ApplicationWindow.html">here</a> for <code>ApplicationWindow</code>.
+Then we can specify properties which are listed <a href="../docs/gtk4/struct.ApplicationWindow.html#properties">here</a> for <code>ApplicationWindow</code>.
 Since <code>ApplicationWindow</code> can contain other widgets we use the <code>&lt;child&gt;</code> tag to add a <code>gtk::Button</code>.
 We want to be able to refer to the button later on so we also set its <code>id</code>.</p>
 <h2 id="resources"><a class="header" href="#resources">Resources</a></h2>
@@ -246,7 +271,7 @@ This will compile the resources whenever we trigger a build with cargo and then 
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/build.rs">listings/build.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">fn main() {
     glib_build_tools::compile_resources(
-        &quot;composite_templates/1/resources&quot;,
+        &amp;[&quot;composite_templates/1/resources&quot;],
         &quot;composite_templates/1/resources/resources.gresource.xml&quot;,
         &quot;composite_templates_1.gresource&quot;,
     );
@@ -257,12 +282,12 @@ In your own apps take care to register the resources before creating the <code>g
 <pre><code class="language-rust  no_run noplayground">mod window;
 
 use gtk::prelude::*;
-use gtk::{gio, Application};
+use gtk::{gio, glib, Application};
 use window::Window;
 
 const APP_ID: &amp;str = &quot;org.gtk_rs.CompositeTemplates1&quot;;
 
-fn main() {
+fn main() -&gt; glib::ExitCode {
     // Register and include resources
     gio::resources_register_include!(&quot;composite_templates_1.gresource&quot;)
         .expect(&quot;Failed to register resources.&quot;);
@@ -274,7 +299,7 @@ fn main() {
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 fn build_ui(app: &amp;Application) {
     // Create new window and present it
@@ -680,7 +705,8 @@ impl Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.</p>
+<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
+We also need to remove the <code>button.connect_clicked</code> callback implemented in <code>window/imp.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
@@ -1067,5 +1093,6 @@ If a certain widget accepts additional element, then they are typically explaine
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

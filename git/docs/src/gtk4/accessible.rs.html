@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -433,15 +433,17 @@
 <a href="#360" id="360">360</a>
 <a href="#361" id="361">361</a>
 <a href="#362" id="362">362</a>
-<a href="#363" id="363">363</a>
-<a href="#364" id="364">364</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use crate</span>::{
-    prelude::<span class="kw-2">*</span>, Accessible, AccessibleAutocomplete, AccessibleInvalidState, AccessibleProperty,
-    AccessibleRelation, AccessibleSort, AccessibleState, AccessibleTristate, Orientation,
+    <a href="lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="auto/accessible.rs.html#19-69">Accessible</a>, <a href="auto/enums.rs.html#13-36">AccessibleAutocomplete</a>, <a href="auto/enums.rs.html#150-165">AccessibleInvalidState</a>, <a href="auto/enums.rs.html#413-500">AccessibleProperty</a>,
+    <a href="auto/enums.rs.html#665-747">AccessibleRelation</a>, <a href="auto/enums.rs.html#1526-1542">AccessibleSort</a>, <a href="auto/enums.rs.html#1651-1698">AccessibleState</a>, <a href="auto/enums.rs.html#1840-1852">AccessibleTristate</a>, <a href="auto/enums.rs.html#8103-8112">Orientation</a>,
 };
-<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, Value};
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/accessible.rs.html#19-69"><span class="kw">super</span>::Accessible</a>&gt;&gt; <a href="#9">Sealed</a> <span class="kw">for </span>T {}
+}
 
 <span class="comment">// rustdoc-stripper-ignore-next
 </span><span class="doccomment">/// Trait containing manually implemented methods of [`Accessible`](crate::Accessible).
@@ -462,7 +464,7 @@
 ///     gtk::accessible::State::Invalid(gtk::AccessibleInvalidState::Grammar),
 /// ]);
 /// ```
-</span><span class="kw">pub trait </span>AccessibleExtManual {
+</span><span class="kw">pub trait </span><a href="../../gtk4/accessible/trait.AccessibleExtManual.html">AccessibleExtManual</a>: <a href="#9">sealed::Sealed</a> + IsA&lt;<a href="auto/accessible.rs.html#19-69">Accessible</a>&gt; {
     <span class="doccomment">/// Updates an array of accessible properties.
     ///
     /// This function should be called by [`Widget`][crate::Widget] types whenever an accessible
@@ -475,7 +477,24 @@
     /// an array of `GValues`, one for each property
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_update_property&quot;</span>)]
     #[doc(alias = <span class="string">&quot;gtk_accessible_update_property_value&quot;</span>)]
-    </span><span class="kw">fn </span>update_property(<span class="kw-2">&amp;</span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[Property]);
+    </span><span class="kw">fn </span>update_property(<span class="kw-2">&amp;</span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[<a href="#133-153">Property</a>]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>properties_ptr = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
+        <span class="kw">for </span>prop <span class="kw">in </span>properties {
+            <span class="kw">let </span>(p, v) = prop.to_property_value();
+            properties_ptr.push(p.into_glib());
+            values.push(v);
+        }
+
+        <span class="kw">unsafe </span>{
+            ffi::gtk_accessible_update_property_value(
+                <a class="self" href="#45">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#45">properties</a>.len() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+                mut_override(<a href="#46">properties_ptr</a>.as_ptr()),
+                <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibContainerFromSlice.html">ToGlibContainerFromSlice::to_glib_none_from_slice</a>(<span class="kw-2">&amp;</span><a href="#47">values</a>).<span class="number">0</span>,
+            )
+        }
+    }
 
     <span class="doccomment">/// Updates an array of accessible relations.
     ///
@@ -489,7 +508,24 @@
     /// an array of `GValues`, one for each relation
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_update_relation&quot;</span>)]
     #[doc(alias = <span class="string">&quot;gtk_accessible_update_relation_value&quot;</span>)]
-    </span><span class="kw">fn </span>update_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relations: <span class="kw-2">&amp;</span>[Relation]);
+    </span><span class="kw">fn </span>update_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relations: <span class="kw-2">&amp;</span>[<a href="#187-206">Relation</a>]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>relations_ptr = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
+        <span class="kw">for </span>relation <span class="kw">in </span>relations {
+            <span class="kw">let </span>(r, v) = relation.to_relation_value();
+            relations_ptr.push(r.into_glib());
+            values.push(v);
+        }
+
+        <span class="kw">unsafe </span>{
+            ffi::gtk_accessible_update_relation_value(
+                <a class="self" href="#76">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#76">relations</a>.len() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+                mut_override(<a href="#77">relations_ptr</a>.as_ptr()),
+                <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibContainerFromSlice.html">ToGlibContainerFromSlice::to_glib_none_from_slice</a>(<span class="kw-2">&amp;</span><a href="#78">values</a>).<span class="number">0</span>,
+            )
+        }
+    }
 
     <span class="doccomment">/// Updates an array of accessible states.
     ///
@@ -503,51 +539,9 @@
     /// an array of `GValues`, one for each state
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_update_state&quot;</span>)]
     #[doc(alias = <span class="string">&quot;gtk_accessible_update_state_value&quot;</span>)]
-    </span><span class="kw">fn </span>update_state(<span class="kw-2">&amp;</span><span class="self">self</span>, states: <span class="kw-2">&amp;</span>[State]);
-}
-
-<span class="kw">impl</span>&lt;O: IsA&lt;Accessible&gt;&gt; AccessibleExtManual <span class="kw">for </span>O {
-    <span class="kw">fn </span>update_property(<span class="kw-2">&amp;</span><span class="self">self</span>, properties: <span class="kw-2">&amp;</span>[Property]) {
-        <span class="kw">let </span><span class="kw-2">mut </span>properties_ptr = <span class="macro">vec!</span>[];
-        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
-        <span class="kw">for </span>prop <span class="kw">in </span>properties {
-            <span class="kw">let </span>(p, v) = prop.to_property_value();
-            properties_ptr.push(p.into_glib());
-            values.push(v);
-        }
-
-        <span class="kw">unsafe </span>{
-            ffi::gtk_accessible_update_property_value(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                properties.len() <span class="kw">as </span>i32,
-                mut_override(properties_ptr.as_ptr()),
-                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
-            )
-        }
-    }
-
-    <span class="kw">fn </span>update_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relations: <span class="kw-2">&amp;</span>[Relation]) {
-        <span class="kw">let </span><span class="kw-2">mut </span>relations_ptr = <span class="macro">vec!</span>[];
-        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
-        <span class="kw">for </span>relation <span class="kw">in </span>relations {
-            <span class="kw">let </span>(r, v) = relation.to_relation_value();
-            relations_ptr.push(r.into_glib());
-            values.push(v);
-        }
-
-        <span class="kw">unsafe </span>{
-            ffi::gtk_accessible_update_relation_value(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                relations.len() <span class="kw">as </span>i32,
-                mut_override(relations_ptr.as_ptr()),
-                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
-            )
-        }
-    }
-
-    <span class="kw">fn </span>update_state(<span class="kw-2">&amp;</span><span class="self">self</span>, states: <span class="kw-2">&amp;</span>[State]) {
-        <span class="kw">let </span><span class="kw-2">mut </span>states_ptr = <span class="macro">vec!</span>[];
-        <span class="kw">let </span><span class="kw-2">mut </span>values = <span class="macro">vec!</span>[];
+    </span><span class="kw">fn </span>update_state(<span class="kw-2">&amp;</span><span class="self">self</span>, states: <span class="kw-2">&amp;</span>[<a href="#255-264">State</a>]) {
+        <span class="kw">let </span><span class="kw-2">mut </span>states_ptr = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
+        <span class="kw">let </span><span class="kw-2">mut </span>values = <a class="macro" href="https://doc.rust-lang.org/nightly/alloc/macro.vec.html">vec!</a>[];
         <span class="kw">for </span>state <span class="kw">in </span>states {
             <span class="kw">let </span>(s, v) = state.to_state_value();
             states_ptr.push(s.into_glib());
@@ -556,65 +550,67 @@
 
         <span class="kw">unsafe </span>{
             ffi::gtk_accessible_update_state_value(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                states.len() <span class="kw">as </span>i32,
-                mut_override(states_ptr.as_ptr()),
-                ToGlibContainerFromSlice::to_glib_none_from_slice(<span class="kw-2">&amp;</span>values).<span class="number">0</span>,
+                <a class="self" href="#107">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#107">states</a>.len() <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+                mut_override(<a href="#108">states_ptr</a>.as_ptr()),
+                <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibContainerFromSlice.html">ToGlibContainerFromSlice::to_glib_none_from_slice</a>(<span class="kw-2">&amp;</span><a href="#109">values</a>).<span class="number">0</span>,
             )
         }
     }
 }
 
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/accessible.rs.html#19-69">Accessible</a>&gt;&gt; <a href="#32-125">AccessibleExtManual</a> <span class="kw">for </span>O {}
+
 <span class="comment">// rustdoc-stripper-ignore-next
 </span><span class="doccomment">/// Type-safe enum container for [`AccessibleProperty`](crate::AccessibleProperty) values.
 </span><span class="attr">#[derive(Debug)]
 #[non_exhaustive]
-</span><span class="kw">pub enum </span>Property&lt;<span class="lifetime">&#39;p</span>&gt; {
-    Autocomplete(AccessibleAutocomplete),
-    Description(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
-    HasPopup(bool),
-    KeyShortcuts(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
-    Label(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
-    Level(i32),
-    Modal(bool),
-    MultiLine(bool),
-    MultiSelectable(bool),
-    Orientation(Orientation),
-    Placeholder(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
-    ReadOnly(bool),
-    Required(bool),
-    RoleDescription(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
-    Sort(AccessibleSort),
-    ValueMax(f64),
-    ValueMin(f64),
-    ValueNow(f64),
-    ValueText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span>str),
+</span><span class="kw">pub enum </span><a href="../../gtk4/accessible/enum.Property.html">Property</a>&lt;<span class="lifetime">&#39;p</span>&gt; {
+    Autocomplete(<a href="auto/enums.rs.html#13-36">AccessibleAutocomplete</a>),
+    Description(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    HasPopup(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    KeyShortcuts(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    Label(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    Level(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    Modal(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    MultiLine(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    MultiSelectable(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    Orientation(<a href="auto/enums.rs.html#8103-8112">Orientation</a>),
+    Placeholder(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    ReadOnly(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    Required(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    RoleDescription(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    Sort(<a href="auto/enums.rs.html#1526-1542">AccessibleSort</a>),
+    ValueMax(<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
+    ValueMin(<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
+    ValueNow(<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>),
+    ValueText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;p </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;p</span>&gt; Property&lt;<span class="lifetime">&#39;p</span>&gt; {
-    <span class="kw">fn </span>to_property_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleProperty, Value) {
-        <span class="kw">use </span>Property::<span class="kw-2">*</span>;
+    <span class="kw">fn </span>to_property_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="auto/enums.rs.html#413-500">AccessibleProperty</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
+        <span class="kw">use </span><a href="#133-153">Property</a>::<span class="kw-2">*</span>;
 
-        <span class="kw">match </span><span class="self">self </span>{
-            Autocomplete(v) =&gt; (AccessibleProperty::Autocomplete, v.into_glib().to_value()),
-            Description(v) =&gt; (AccessibleProperty::Description, v.to_value()),
-            HasPopup(v) =&gt; (AccessibleProperty::HasPopup, v.to_value()),
-            KeyShortcuts(v) =&gt; (AccessibleProperty::KeyShortcuts, v.to_value()),
-            Label(v) =&gt; (AccessibleProperty::Label, v.to_value()),
-            Level(v) =&gt; (AccessibleProperty::Level, v.to_value()),
-            Modal(v) =&gt; (AccessibleProperty::Modal, v.to_value()),
-            MultiLine(v) =&gt; (AccessibleProperty::MultiLine, v.to_value()),
-            MultiSelectable(v) =&gt; (AccessibleProperty::MultiSelectable, v.to_value()),
-            Orientation(v) =&gt; (AccessibleProperty::Orientation, v.into_glib().to_value()),
-            Placeholder(v) =&gt; (AccessibleProperty::Placeholder, v.to_value()),
-            ReadOnly(v) =&gt; (AccessibleProperty::ReadOnly, v.to_value()),
-            Required(v) =&gt; (AccessibleProperty::Required, v.to_value()),
-            RoleDescription(v) =&gt; (AccessibleProperty::RoleDescription, v.to_value()),
-            Sort(v) =&gt; (AccessibleProperty::Sort, v.into_glib().to_value()),
-            ValueMax(v) =&gt; (AccessibleProperty::ValueMax, v.to_value()),
-            ValueMin(v) =&gt; (AccessibleProperty::ValueMin, v.to_value()),
-            ValueNow(v) =&gt; (AccessibleProperty::ValueNow, v.to_value()),
-            ValueText(v) =&gt; (AccessibleProperty::ValueText, v.to_value()),
+        <span class="kw">match </span><span class="self"><a href="#156">self</a> </span>{
+            <a href="#134">Autocomplete</a>(v) =&gt; (<a href="auto/enums.rs.html#419">AccessibleProperty::Autocomplete</a>, <a href="#160">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#135">Description</a>(v) =&gt; (<a href="auto/enums.rs.html#423">AccessibleProperty::Description</a>, <a href="#161">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#136">HasPopup</a>(v) =&gt; (<a href="auto/enums.rs.html#428">AccessibleProperty::HasPopup</a>, <a href="#162">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#137">KeyShortcuts</a>(v) =&gt; (<a href="auto/enums.rs.html#433">AccessibleProperty::KeyShortcuts</a>, <a href="#163">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#138">Label</a>(v) =&gt; (<a href="auto/enums.rs.html#437">AccessibleProperty::Label</a>, <a href="#164">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#139">Level</a>(v) =&gt; (<a href="auto/enums.rs.html#441">AccessibleProperty::Level</a>, <a href="#165">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#140">Modal</a>(v) =&gt; (<a href="auto/enums.rs.html#445">AccessibleProperty::Modal</a>, <a href="#166">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#141">MultiLine</a>(v) =&gt; (<a href="auto/enums.rs.html#449">AccessibleProperty::MultiLine</a>, <a href="#167">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#142">MultiSelectable</a>(v) =&gt; (<a href="auto/enums.rs.html#454">AccessibleProperty::MultiSelectable</a>, <a href="#168">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#143">Orientation</a>(v) =&gt; (<a href="auto/enums.rs.html#459">AccessibleProperty::Orientation</a>, <a href="#169">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#144">Placeholder</a>(v) =&gt; (<a href="auto/enums.rs.html#465">AccessibleProperty::Placeholder</a>, <a href="#170">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#145">ReadOnly</a>(v) =&gt; (<a href="auto/enums.rs.html#469">AccessibleProperty::ReadOnly</a>, <a href="#171">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#146">Required</a>(v) =&gt; (<a href="auto/enums.rs.html#473">AccessibleProperty::Required</a>, <a href="#172">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#147">RoleDescription</a>(v) =&gt; (<a href="auto/enums.rs.html#477">AccessibleProperty::RoleDescription</a>, <a href="#173">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#148">Sort</a>(v) =&gt; (<a href="auto/enums.rs.html#481">AccessibleProperty::Sort</a>, <a href="#174">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#149">ValueMax</a>(v) =&gt; (<a href="auto/enums.rs.html#485">AccessibleProperty::ValueMax</a>, <a href="#175">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#150">ValueMin</a>(v) =&gt; (<a href="auto/enums.rs.html#489">AccessibleProperty::ValueMin</a>, <a href="#176">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#151">ValueNow</a>(v) =&gt; (<a href="auto/enums.rs.html#493">AccessibleProperty::ValueNow</a>, <a href="#177">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#152">ValueText</a>(v) =&gt; (<a href="auto/enums.rs.html#497">AccessibleProperty::ValueText</a>, <a href="#178">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
         }
     }
 }
@@ -623,66 +619,66 @@
 </span><span class="doccomment">/// Type-safe enum container for [`AccessibleRelation`](crate::AccessibleRelation) values.
 </span><span class="attr">#[derive(Debug)]
 #[non_exhaustive]
-</span><span class="kw">pub enum </span>Relation&lt;<span class="lifetime">&#39;r</span>&gt; {
-    ActiveDescendant(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible),
-    ColCount(i32),
-    ColIndex(i32),
-    ColIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>str),
-    ColSpan(i32),
-    Controls(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    DescribedBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    Details(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    ErrorMessage(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible),
-    FlowTo(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    LabelledBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    Owns(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>Accessible]),
-    PosInSet(i32),
-    RowCount(i32),
-    RowIndex(i32),
-    RowIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>str),
-    RowSpan(i32),
-    SetSize(i32),
+</span><span class="kw">pub enum </span><a href="../../gtk4/accessible/enum.Relation.html">Relation</a>&lt;<span class="lifetime">&#39;r</span>&gt; {
+    ActiveDescendant(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>),
+    ColCount(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    ColIndex(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    ColIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    ColSpan(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    Controls(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    DescribedBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    Details(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    ErrorMessage(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>),
+    FlowTo(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    LabelledBy(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    Owns(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span>[<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="auto/accessible.rs.html#19-69">Accessible</a>]),
+    PosInSet(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    RowCount(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    RowIndex(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    RowIndexText(<span class="kw-2">&amp;</span><span class="lifetime">&#39;r </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>),
+    RowSpan(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
+    SetSize(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>),
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;r</span>&gt; Relation&lt;<span class="lifetime">&#39;r</span>&gt; {
-    <span class="kw">fn </span>to_relation_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleRelation, Value) {
-        <span class="kw">use </span>Relation::<span class="kw-2">*</span>;
+    <span class="kw">fn </span>to_relation_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="auto/enums.rs.html#665-747">AccessibleRelation</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
+        <span class="kw">use </span><a href="#187-206">Relation</a>::<span class="kw-2">*</span>;
 
-        <span class="kw">fn </span>to_ref_list_value(objects: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span>Accessible]) -&gt; Value {
+        <span class="kw">fn </span>to_ref_list_value(objects: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><a href="auto/accessible.rs.html#19-69">Accessible</a>]) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a> {
             <span class="macro">skip_assert_initialized!</span>();
             <span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(glib::Type::POINTER);
             <span class="kw">let </span>list =
                 ToGlibContainerFromSlice::&lt;<span class="kw-2">*mut </span>glib::ffi::GList&gt;::to_glib_container_from_slice(
-                    objects,
+                    <a href="#212">objects</a>,
                 );
             <span class="kw">unsafe </span>{
                 glib::gobject_ffi::g_value_set_pointer(
-                    value.to_glib_none_mut().<span class="number">0</span>,
-                    list.<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span>std::ffi::c_void,
+                    <a href="#214">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
+                    <a href="#215">list</a>.<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><a href="https://doc.rust-lang.org/nightly/core/ffi/enum.c_void.html">std::ffi::c_void</a>,
                 );
             }
-            value
+            <a href="#214">value</a>
         }
 
-        <span class="kw">match </span><span class="self">self </span>{
-            ActiveDescendant(v) =&gt; (AccessibleRelation::ActiveDescendant, v.to_value()),
-            ColCount(v) =&gt; (AccessibleRelation::ColCount, v.to_value()),
-            ColIndex(v) =&gt; (AccessibleRelation::ColIndex, v.to_value()),
-            ColIndexText(v) =&gt; (AccessibleRelation::ColIndexText, v.to_value()),
-            ColSpan(v) =&gt; (AccessibleRelation::ColSpan, v.to_value()),
-            Controls(v) =&gt; (AccessibleRelation::Controls, to_ref_list_value(v)),
-            DescribedBy(v) =&gt; (AccessibleRelation::DescribedBy, to_ref_list_value(v)),
-            Details(v) =&gt; (AccessibleRelation::Details, to_ref_list_value(v)),
-            ErrorMessage(v) =&gt; (AccessibleRelation::ErrorMessage, v.to_value()),
-            FlowTo(v) =&gt; (AccessibleRelation::FlowTo, to_ref_list_value(v)),
-            LabelledBy(v) =&gt; (AccessibleRelation::LabelledBy, to_ref_list_value(v)),
-            Owns(v) =&gt; (AccessibleRelation::Owns, to_ref_list_value(v)),
-            PosInSet(v) =&gt; (AccessibleRelation::PosInSet, v.to_value()),
-            RowCount(v) =&gt; (AccessibleRelation::RowCount, v.to_value()),
-            RowIndex(v) =&gt; (AccessibleRelation::RowIndex, v.to_value()),
-            RowIndexText(v) =&gt; (AccessibleRelation::RowIndexText, v.to_value()),
-            RowSpan(v) =&gt; (AccessibleRelation::RowSpan, v.to_value()),
-            SetSize(v) =&gt; (AccessibleRelation::SetSize, v.to_value()),
+        <span class="kw">match </span><span class="self"><a href="#209">self</a> </span>{
+            <a href="#188">ActiveDescendant</a>(v) =&gt; (<a href="auto/enums.rs.html#670">AccessibleRelation::ActiveDescendant</a>, <a href="#229">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#189">ColCount</a>(v) =&gt; (<a href="auto/enums.rs.html#674">AccessibleRelation::ColCount</a>, <a href="#230">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#190">ColIndex</a>(v) =&gt; (<a href="auto/enums.rs.html#679">AccessibleRelation::ColIndex</a>, <a href="#231">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#191">ColIndexText</a>(v) =&gt; (<a href="auto/enums.rs.html#683">AccessibleRelation::ColIndexText</a>, <a href="#232">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#192">ColSpan</a>(v) =&gt; (<a href="auto/enums.rs.html#687">AccessibleRelation::ColSpan</a>, <a href="#233">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#193">Controls</a>(v) =&gt; (<a href="auto/enums.rs.html#691">AccessibleRelation::Controls</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#234">v</a>)),
+            <a href="#194">DescribedBy</a>(v) =&gt; (<a href="auto/enums.rs.html#695">AccessibleRelation::DescribedBy</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#235">v</a>)),
+            <a href="#195">Details</a>(v) =&gt; (<a href="auto/enums.rs.html#699">AccessibleRelation::Details</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#236">v</a>)),
+            <a href="#196">ErrorMessage</a>(v) =&gt; (<a href="auto/enums.rs.html#703">AccessibleRelation::ErrorMessage</a>, <a href="#237">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#197">FlowTo</a>(v) =&gt; (<a href="auto/enums.rs.html#709">AccessibleRelation::FlowTo</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#238">v</a>)),
+            <a href="#198">LabelledBy</a>(v) =&gt; (<a href="auto/enums.rs.html#713">AccessibleRelation::LabelledBy</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#239">v</a>)),
+            <a href="#199">Owns</a>(v) =&gt; (<a href="auto/enums.rs.html#719">AccessibleRelation::Owns</a>, <a href="#212-226">to_ref_list_value</a>(<a href="#240">v</a>)),
+            <a href="#200">PosInSet</a>(v) =&gt; (<a href="auto/enums.rs.html#723">AccessibleRelation::PosInSet</a>, <a href="#241">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#201">RowCount</a>(v) =&gt; (<a href="auto/enums.rs.html#727">AccessibleRelation::RowCount</a>, <a href="#242">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#202">RowIndex</a>(v) =&gt; (<a href="auto/enums.rs.html#732">AccessibleRelation::RowIndex</a>, <a href="#243">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#203">RowIndexText</a>(v) =&gt; (<a href="auto/enums.rs.html#736">AccessibleRelation::RowIndexText</a>, <a href="#244">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#204">RowSpan</a>(v) =&gt; (<a href="auto/enums.rs.html#740">AccessibleRelation::RowSpan</a>, <a href="#245">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#205">SetSize</a>(v) =&gt; (<a href="auto/enums.rs.html#744">AccessibleRelation::SetSize</a>, <a href="#246">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
         }
     }
 }
@@ -691,35 +687,35 @@
 </span><span class="doccomment">/// Type-safe enum container for [`AccessibleState`](crate::AccessibleState) values.
 </span><span class="attr">#[derive(Debug)]
 #[non_exhaustive]
-</span><span class="kw">pub enum </span>State {
-    Busy(bool),
-    Checked(AccessibleTristate),
-    Disabled(bool),
-    Expanded(<span class="prelude-ty">Option</span>&lt;bool&gt;),
-    Hidden(bool),
-    Invalid(AccessibleInvalidState),
-    Pressed(AccessibleTristate),
-    Selected(<span class="prelude-ty">Option</span>&lt;bool&gt;),
+</span><span class="kw">pub enum </span><a href="../../gtk4/accessible/enum.State.html">State</a> {
+    Busy(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    Checked(<a href="auto/enums.rs.html#1840-1852">AccessibleTristate</a>),
+    Disabled(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    Expanded(<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;),
+    Hidden(<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>),
+    Invalid(<a href="auto/enums.rs.html#150-165">AccessibleInvalidState</a>),
+    Pressed(<a href="auto/enums.rs.html#1840-1852">AccessibleTristate</a>),
+    Selected(<span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;),
 }
 
-<span class="kw">impl </span>State {
-    <span class="kw">fn </span>to_state_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (AccessibleState, Value) {
-        <span class="kw">use </span>State::<span class="kw-2">*</span>;
+<span class="kw">impl </span><a href="#255-264">State</a> {
+    <span class="kw">fn </span>to_state_value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="auto/enums.rs.html#1651-1698">AccessibleState</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
+        <span class="kw">use </span><a href="#255-264">State</a>::<span class="kw-2">*</span>;
 
-        <span class="kw">fn </span>to_optional_bool_value(b: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;bool&gt;) -&gt; Value {
+        <span class="kw">fn </span>to_optional_bool_value(b: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>&gt;) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a> {
             <span class="macro">skip_assert_initialized!</span>();
-            b.map(|b| b <span class="kw">as </span>i32).unwrap_or(-<span class="number">1</span>).to_value()
+            <a href="#270">b</a>.map(|b| <a href="#272">b</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>).unwrap_or(-<span class="number">1</span>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()
         }
 
-        <span class="kw">match </span><span class="self">self </span>{
-            Busy(v) =&gt; (AccessibleState::Busy, v.to_value()),
-            Checked(v) =&gt; (AccessibleState::Checked, v.into_glib().to_value()),
-            Disabled(v) =&gt; (AccessibleState::Disabled, v.to_value()),
-            Expanded(v) =&gt; (AccessibleState::Expanded, to_optional_bool_value(v)),
-            Hidden(v) =&gt; (AccessibleState::Hidden, v.to_value()),
-            Invalid(v) =&gt; (AccessibleState::Invalid, v.into_glib().to_value()),
-            Pressed(v) =&gt; (AccessibleState::Pressed, v.into_glib().to_value()),
-            Selected(v) =&gt; (AccessibleState::Selected, to_optional_bool_value(v)),
+        <span class="kw">match </span><span class="self"><a href="#267">self</a> </span>{
+            <a href="#256">Busy</a>(v) =&gt; (<a href="auto/enums.rs.html#1654">AccessibleState::Busy</a>, <a href="#276">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#257">Checked</a>(v) =&gt; (<a href="auto/enums.rs.html#1658">AccessibleState::Checked</a>, <a href="#277">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#258">Disabled</a>(v) =&gt; (<a href="auto/enums.rs.html#1663">AccessibleState::Disabled</a>, <a href="#278">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#259">Expanded</a>(v) =&gt; (<a href="auto/enums.rs.html#1668">AccessibleState::Expanded</a>, <a href="#270-273">to_optional_bool_value</a>(<a href="#279">v</a>)),
+            <a href="#260">Hidden</a>(v) =&gt; (<a href="auto/enums.rs.html#1675">AccessibleState::Hidden</a>, <a href="#280">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#261">Invalid</a>(v) =&gt; (<a href="auto/enums.rs.html#1679">AccessibleState::Invalid</a>, <a href="#281">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#262">Pressed</a>(v) =&gt; (<a href="auto/enums.rs.html#1684">AccessibleState::Pressed</a>, <a href="#282">v</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">to_value</a>()),
+            <a href="#263">Selected</a>(v) =&gt; (<a href="auto/enums.rs.html#1688">AccessibleState::Selected</a>, <a href="#270-273">to_optional_bool_value</a>(<a href="#283">v</a>)),
         }
     }
 }
@@ -799,5 +795,4 @@
         ]);
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/frame_clock.rs`."><title>frame_clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/frame_clock.rs`."><title>frame_clock.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -579,19 +579,19 @@
 <a href="#506" id="506">506</a>
 <a href="#507" id="507">507</a>
 <a href="#508" id="508">508</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use crate</span>::{FrameClockPhase, FrameTimings};
+</span><span class="kw">use crate</span>::{<a href="flags.rs.html#370-402">FrameClockPhase</a>, <a href="frame_timings.rs.html#7-24">FrameTimings</a>};
 <span class="kw">use </span>glib::{
-    prelude::<span class="kw-2">*</span>,
-    signal::{connect_raw, SignalHandlerId},
-    translate::<span class="kw-2">*</span>,
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>,
+    signal::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>},
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>,
 };
-<span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem, mem::transmute};
+<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">boxed::Box</a> <span class="kw">as </span>Box_, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>, <a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">mem::transmute</a>};
 
-<span class="macro">glib::wrapper! </span>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// A [`FrameClock`][crate::FrameClock] tells the application when to update and repaint
     /// a surface.
     ///
@@ -611,7 +611,7 @@
     /// for the synchronization being implemented, the clock will process a frame and
     /// emit signals for each phase that has been requested. (See the signals of the
     /// [`FrameClock`][crate::FrameClock] class for documentation of the phases.
-    /// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] and the [`update`][struct@crate::GdkFrameClock#update] signal
+    /// [`FrameClockPhase::UPDATE`][crate::FrameClockPhase::UPDATE] and the [`update`][struct@crate::FrameClock#update] signal
     /// are most interesting for application writers, and are used to update the
     /// animations, using the frame time given by [`frame_time()`][Self::frame_time()].
     ///
@@ -623,7 +623,7 @@
     /// are called at a “similar” time get the same value. This means that
     /// if different animations are timed by looking at the difference in
     /// time between an initial value from [`frame_time()`][Self::frame_time()]
-    /// and the value inside the [`update`][struct@crate::GdkFrameClock#update] signal of the clock,
+    /// and the value inside the [`update`][struct@crate::FrameClock#update] signal of the clock,
     /// they will stay exactly synchronized.
     ///
     /// This is an Abstract Base Class, you cannot instantiate it.
@@ -696,14 +696,14 @@
     ///
     ///
     </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkFrameClock&quot;</span>)]
-    </span><span class="kw">pub struct </span>FrameClock(Object&lt;ffi::GdkFrameClock, ffi::GdkFrameClockClass&gt;);
+    </span><span class="kw">pub struct </span><a href="../../../gdk4/struct.FrameClock.html">FrameClock</a>(Object&lt;ffi::GdkFrameClock, ffi::GdkFrameClockClass&gt;);
 
     <span class="kw">match fn </span>{
         type_ =&gt; || ffi::gdk_frame_clock_get_type(),
     }
 }
 
-<span class="kw">impl </span>FrameClock {
+<span class="kw">impl </span><a href="#13-123">FrameClock</a> {
     <span class="doccomment">/// Starts updates for an animation.
     ///
     /// Until a matching call to [`end_updating()`][Self::end_updating()] is made,
@@ -714,7 +714,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_begin_updating&quot;</span>)]
     </span><span class="kw">pub fn </span>begin_updating(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gdk_frame_clock_begin_updating(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
+            ffi::gdk_frame_clock_begin_updating(<a class="self" href="#134">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -724,7 +724,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_end_updating&quot;</span>)]
     </span><span class="kw">pub fn </span>end_updating(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gdk_frame_clock_end_updating(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
+            ffi::gdk_frame_clock_end_updating(<a class="self" href="#144">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -738,10 +738,10 @@
     ///   processed, returns [`None`].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_current_timings&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_current_timings&quot;</span>)]
-    </span><span class="kw">pub fn </span>current_timings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;FrameTimings&gt; {
+    </span><span class="kw">pub fn </span>current_timings(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="frame_timings.rs.html#7-24">FrameTimings</a>&gt; {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_frame_clock_get_current_timings(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#160">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -754,8 +754,8 @@
     /// the current fps, as a `double`
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_fps&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_fps&quot;</span>)]
-    </span><span class="kw">pub fn </span>fps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
-        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_fps(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>fps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_fps(<a class="self" href="#176">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// [`FrameClock`][crate::FrameClock] maintains a 64-bit counter that increments for
@@ -768,8 +768,8 @@
     ///   counter for the last frame.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_frame_counter&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_frame_counter&quot;</span>)]
-    </span><span class="kw">pub fn </span>frame_counter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
-        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_counter(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>frame_counter(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_counter(<a class="self" href="#190">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Gets the time that should currently be used for animations.
@@ -786,8 +786,8 @@
     ///  of g_get_monotonic_time().
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_frame_time&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_frame_time&quot;</span>)]
-    </span><span class="kw">pub fn </span>frame_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
-        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_time(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>frame_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_frame_time(<a class="self" href="#208">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Returns the frame counter for the oldest frame available in history.
@@ -806,8 +806,8 @@
     ///  [`FrameClock`][crate::FrameClock]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_history_start&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_history_start&quot;</span>)]
-    </span><span class="kw">pub fn </span>history_start(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; i64 {
-        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_history_start(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>history_start(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a> {
+        <span class="kw">unsafe </span>{ ffi::gdk_frame_clock_get_history_start(<a class="self" href="#228">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Predicts a presentation time, based on history.
@@ -834,19 +834,19 @@
     ///   0 will be will be stored if no history is present.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_refresh_info&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_refresh_info&quot;</span>)]
-    </span><span class="kw">pub fn </span>refresh_info(<span class="kw-2">&amp;</span><span class="self">self</span>, base_time: i64) -&gt; (i64, i64) {
+    </span><span class="kw">pub fn </span>refresh_info(<span class="kw-2">&amp;</span><span class="self">self</span>, base_time: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>refresh_interval_return = mem::MaybeUninit::uninit();
             <span class="kw">let </span><span class="kw-2">mut </span>presentation_time_return = mem::MaybeUninit::uninit();
             ffi::gdk_frame_clock_get_refresh_info(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                base_time,
-                refresh_interval_return.as_mut_ptr(),
-                presentation_time_return.as_mut_ptr(),
+                <a class="self" href="#256">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#256">base_time</a>,
+                <a href="#258">refresh_interval_return</a>.as_mut_ptr(),
+                <a href="#259">presentation_time_return</a>.as_mut_ptr(),
             );
             (
-                refresh_interval_return.assume_init(),
-                presentation_time_return.assume_init(),
+                <a href="#258">refresh_interval_return</a>.assume_init(),
+                <a href="#259">presentation_time_return</a>.assume_init(),
             )
         }
     }
@@ -867,11 +867,11 @@
     ///   for the specified frame, or [`None`] if it is not available
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_get_timings&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_timings&quot;</span>)]
-    </span><span class="kw">pub fn </span>timings(<span class="kw-2">&amp;</span><span class="self">self</span>, frame_counter: i64) -&gt; <span class="prelude-ty">Option</span>&lt;FrameTimings&gt; {
+    </span><span class="kw">pub fn </span>timings(<span class="kw-2">&amp;</span><span class="self">self</span>, frame_counter: <a href="https://doc.rust-lang.org/nightly/std/primitive.i64.html">i64</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="frame_timings.rs.html#7-24">FrameTimings</a>&gt; {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_frame_clock_get_timings(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                frame_counter,
+                <a class="self" href="#289">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#289">frame_counter</a>,
             ))
         }
     }
@@ -890,9 +890,9 @@
     /// ## `phase`
     /// the phase that is requested
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_frame_clock_request_phase&quot;</span>)]
-    </span><span class="kw">pub fn </span>request_phase(<span class="kw-2">&amp;</span><span class="self">self</span>, phase: FrameClockPhase) {
+    </span><span class="kw">pub fn </span>request_phase(<span class="kw-2">&amp;</span><span class="self">self</span>, phase: <a href="flags.rs.html#370-402">FrameClockPhase</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gdk_frame_clock_request_phase(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, phase.into_glib());
+            ffi::gdk_frame_clock_request_phase(<a class="self" href="#312">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#312">phase</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
         }
     }
 
@@ -900,23 +900,23 @@
     ///
     /// Applications should generally not handle this signal.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;after-paint&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_after_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>after_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_after_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>after_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#325">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#327">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#324">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#322">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#322">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;after-paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     after_paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#331">f</a>),
             )
         }
     }
@@ -925,23 +925,23 @@
     ///
     /// Applications should generally not handle this signal.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;before-paint&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_before_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>before_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_before_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>before_paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#350">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#352">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#349">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#347">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#347">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;before-paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     before_paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#356">f</a>),
             )
         }
     }
@@ -951,23 +951,23 @@
     ///
     /// Applications should not handle this signal.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;flush-events&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_flush_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>flush_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_flush_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>flush_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#376">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#378">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#375">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#373">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#373">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;flush-events\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     flush_events_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#382">f</a>),
             )
         }
     }
@@ -978,23 +978,23 @@
     /// Any work to update sizes and positions of application elements
     /// should be performed. GTK normally handles this internally.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;layout&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_layout&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>layout_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_layout&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>layout_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#403">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#405">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#402">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#400">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#400">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;layout\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     layout_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#409">f</a>),
             )
         }
     }
@@ -1006,23 +1006,23 @@
     /// emits [`render`][struct@crate::Surface#render] signals which are turned into
     /// [`snapshot`][struct@crate::Gtk::Widget#snapshot] signals by GTK.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;paint&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_paint&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>paint_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#431">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#433">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#430">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#428">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#428">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;paint\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     paint_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#437">f</a>),
             )
         }
     }
@@ -1032,23 +1032,23 @@
     /// This signal is handled internally by GTK to resume normal
     /// event processing. Applications should not handle this signal.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;resume-events&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_resume_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>resume_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_resume_events&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>resume_events_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#457">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#459">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#456">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#454">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#454">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;resume-events\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     resume_events_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#463">f</a>),
             )
         }
     }
@@ -1060,32 +1060,31 @@
     /// Applications can connect directly to this signal, or use
     /// `Gtk::Widget::add_tick_callback()` as a more convenient interface.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;update&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_update&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>update_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span>FrameClock) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="kw">pub fn </span>connect_update&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>update_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#13-123">FrameClock</a>) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkFrameClock,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(<span class="kw-2">&amp;</span>from_glib_borrow(this))
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#485">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#487">f</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#484">this</a>))
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#482">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#482">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;update\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     update_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#491">f</a>),
             )
         }
     }
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>FrameClock {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.write_str(<span class="string">&quot;FrameClock&quot;</span>)
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#13-123">FrameClock</a> {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+        <a href="#505">f</a>.write_str(<span class="string">&quot;FrameClock&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

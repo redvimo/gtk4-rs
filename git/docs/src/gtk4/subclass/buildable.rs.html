@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/buildable.rs`."><title>buildable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/buildable.rs`."><title>buildable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -383,43 +383,38 @@
 <a href="#310" id="310">310</a>
 <a href="#311" id="311">311</a>
 <a href="#312" id="312">312</a>
-<a href="#313" id="313">313</a>
-<a href="#314" id="314">314</a>
-<a href="#315" id="315">315</a>
-<a href="#316" id="316">316</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
 </span><span class="doccomment">//! Traits intended for implementing the [`Buildable`](crate::Buildable) interface.
 
-</span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, subclass::prelude::<span class="kw-2">*</span>, Buildable, Builder};
-<span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
-<span class="kw">use </span>glib::{GString, Object, Quark, Value};
-<span class="kw">use </span>once_cell::sync::Lazy;
+</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-185">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/buildable.rs.html#8-32">Buildable</a>, <a href="../auto/builder.rs.html#13-339">Builder</a>};
+<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+<span class="kw">use </span>glib::{once_cell::sync::Lazy, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/quark/struct.Quark.html">Quark</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
 
-<span class="kw">use </span><span class="kw">super</span>::PtrHolder;
+<span class="kw">use </span><a href="mod.rs.html#8"><span class="kw">super</span>::PtrHolder</a>;
 
-<span class="kw">pub trait </span>BuildableImpl: ObjectImpl {
-    <span class="kw">fn </span>set_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) {
-        <span class="self">self</span>.parent_set_id(id)
+<span class="kw">pub trait </span><a href="../../../gtk4/subclass/buildable/trait.BuildableImpl.html">BuildableImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
+    <span class="kw">fn </span>set_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
+        <a class="self" href="#13">self</a>.<a href="#68-83">parent_set_id</a>(<a href="#13">id</a>)
     }
-    <span class="kw">fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;GString&gt; {
-        <span class="self">self</span>.parent_id()
+    <span class="kw">fn </span>id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt; {
+        <a class="self" href="#16">self</a>.<a href="#85-99">parent_id</a>()
     }
-    <span class="kw">fn </span>add_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, child: <span class="kw-2">&amp;</span>Object, type_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
-        <span class="self">self</span>.parent_add_child(builder, child, type_)
+    <span class="kw">fn </span>add_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, child: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a>, type_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) {
+        <a class="self" href="#19">self</a>.<a href="#101-118">parent_add_child</a>(<a href="#19">builder</a>, <a href="#19">child</a>, <a href="#19">type_</a>)
     }
-    <span class="kw">fn </span>set_buildable_property(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Value) {
-        <span class="self">self</span>.parent_set_buildable_property(builder, name, value)
+    <span class="kw">fn </span>set_buildable_property(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
+        <a class="self" href="#22">self</a>.<a href="#120-138">parent_set_buildable_property</a>(<a href="#22">builder</a>, <a href="#22">name</a>, <a href="#22">value</a>)
     }
-    <span class="kw">fn </span>parser_finished(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder) {
-        <span class="self">self</span>.parent_parser_finished(builder)
+    <span class="kw">fn </span>parser_finished(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>) {
+        <a class="self" href="#25">self</a>.<a href="#140-153">parent_parser_finished</a>(<a href="#25">builder</a>)
     }
-    <span class="kw">fn </span>internal_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Object&gt; {
-        <span class="self">self</span>.parent_internal_child(builder, name)
+    <span class="kw">fn </span>internal_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a>&gt; {
+        <a class="self" href="#28">self</a>.<a href="#155-171">parent_internal_child</a>(<a href="#28">builder</a>, <a href="#28">name</a>)
     }
-    <span class="kw">fn </span>construct_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; Object {
-        <span class="self">self</span>.parent_construct_child(builder, name)
+    <span class="kw">fn </span>construct_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a> {
+        <a class="self" href="#31">self</a>.<a href="#173-189">parent_construct_child</a>(<a href="#31">builder</a>, <a href="#31">name</a>)
     }
     <span class="comment">/*
     Only useful for custom tags, not something the application developer has to often implement
@@ -449,115 +444,110 @@
     */
 </span>}
 
-<span class="kw">pub trait </span>BuildableImplExt: ObjectSubclass {
-    <span class="kw">fn </span>parent_set_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str);
-    <span class="kw">fn </span>parent_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;GString&gt;;
-    <span class="kw">fn </span>parent_add_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, child: <span class="kw-2">&amp;</span>Object, type_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;);
-    <span class="kw">fn </span>parent_set_buildable_property(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Value);
-    <span class="kw">fn </span>parent_parser_finished(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder);
-    <span class="kw">fn </span>parent_internal_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Object&gt;;
-    <span class="kw">fn </span>parent_construct_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; Object;
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <a href="#67-190"><span class="kw">super</span>::BuildableImplExt</a>&gt; <a href="#63">Sealed</a> <span class="kw">for </span>T {}
 }
 
-<span class="kw">impl</span>&lt;T: BuildableImpl&gt; BuildableImplExt <span class="kw">for </span>T {
-    <span class="kw">fn </span>parent_set_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span>str) {
+<span class="kw">pub trait </span><a href="../../../gtk4/subclass/buildable/trait.BuildableImplExt.html">BuildableImplExt</a>: <a href="#63">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+    <span class="kw">fn </span>parent_set_id(<span class="kw-2">&amp;</span><span class="self">self</span>, id: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#70">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span>parent_iface)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#71">parent_iface</a>)
                 .set_id
                 .expect(<span class="string">&quot;no parent \&quot;set_id\&quot; implementation&quot;</span>);
 
-            func(
-                <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                id.to_glib_none().<span class="number">0</span>,
+            <a href="#74">func</a>(
+                <a class="self" href="#68">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#68">id</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             )
         }
     }
 
-    <span class="kw">fn </span>parent_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;GString&gt; {
+    <span class="kw">fn </span>parent_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#87">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span>parent_iface)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#88">parent_iface</a>)
                 .get_id
                 .expect(<span class="string">&quot;no parent \&quot;get_id\&quot; implementation&quot;</span>);
 
-            from_glib_none(func(
-                <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
+            from_glib_none(<a href="#91">func</a>(
+                <a class="self" href="#85">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn </span>parent_add_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, child: <span class="kw-2">&amp;</span>Object, type_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt;) {
+    <span class="kw">fn </span>parent_add_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, child: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a>, type_: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#103">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span>parent_iface)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#104">parent_iface</a>)
                 .add_child
                 .expect(<span class="string">&quot;no parent \&quot;add_child\&quot; implementation&quot;</span>);
 
-            func(
-                <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                builder.to_glib_none().<span class="number">0</span>,
-                child.to_glib_none().<span class="number">0</span>,
-                type_.to_glib_none().<span class="number">0</span>,
+            <a href="#107">func</a>(
+                <a class="self" href="#101">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#101">builder</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#101">child</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#101">type_</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             )
         }
     }
 
-    <span class="kw">fn </span>parent_set_buildable_property(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str, value: <span class="kw-2">&amp;</span>Value) {
+    <span class="kw">fn </span>parent_set_buildable_property(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#122">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
             <span class="comment">// gtk::Builder falls back to using ObjectExt::set_property if the method is not implemented
-            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span>parent_iface).set_buildable_property {
-                func(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                    builder.to_glib_none().<span class="number">0</span>,
-                    name.to_glib_none().<span class="number">0</span>,
-                    value.to_glib_none().<span class="number">0</span>,
+            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#123">parent_iface</a>).set_buildable_property {
+                <a href="#127">func</a>(
+                    <a class="self" href="#120">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#120">builder</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#120">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#120">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             } <span class="kw">else </span>{
-                <span class="self">self</span>.obj().set_property_from_value(name, value);
+                <a class="self" href="#120">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_property_from_value</a>(<a href="#120">name</a>, <a href="#120">value</a>);
             }
         }
     }
 
-    <span class="kw">fn </span>parent_parser_finished(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder) {
+    <span class="kw">fn </span>parent_parser_finished(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#142">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span>parent_iface).parser_finished {
-                func(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                    builder.to_glib_none().<span class="number">0</span>,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#143">parent_iface</a>).parser_finished {
+                <a href="#146">func</a>(
+                    <a class="self" href="#140">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#140">builder</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 )
             }
         }
     }
 
-    <span class="kw">fn </span>parent_internal_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;Object&gt; {
+    <span class="kw">fn </span>parent_internal_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#157">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span>parent_iface).get_internal_child {
-                from_glib_none(func(
-                    <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                    builder.to_glib_none().<span class="number">0</span>,
-                    name.to_glib_none().<span class="number">0</span>,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#158">parent_iface</a>).get_internal_child {
+                from_glib_none(<a href="#161">func</a>(
+                    <a class="self" href="#155">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#155">builder</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#155">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 ))
             } <span class="kw">else </span>{
                 <span class="prelude-val">None
@@ -565,36 +555,38 @@
         }
     }
 
-    <span class="kw">fn </span>parent_construct_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span>Builder, name: <span class="kw-2">&amp;</span>str) -&gt; Object {
+    <span class="kw">fn </span>parent_construct_child(<span class="kw-2">&amp;</span><span class="self">self</span>, builder: <span class="kw-2">&amp;</span><a href="../auto/builder.rs.html#13-339">Builder</a>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/struct.Object.html">Object</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_iface =
-                type_data.as_ref().parent_interface::&lt;Buildable&gt;() <span class="kw">as </span><span class="kw-2">*const </span>ffi::GtkBuildableIface;
+                <a href="#175">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;() <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkBuildableIface.html">ffi::GtkBuildableIface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span>parent_iface)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#176">parent_iface</a>)
                 .construct_child
                 .expect(<span class="string">&quot;no parent \&quot;construct_child\&quot; implementation&quot;</span>);
 
-            from_glib_full(func(
-                <span class="self">self</span>.obj().unsafe_cast_ref::&lt;Buildable&gt;().to_glib_none().<span class="number">0</span>,
-                builder.to_glib_none().<span class="number">0</span>,
-                name.to_glib_none().<span class="number">0</span>,
+            from_glib_full(<a href="#179">func</a>(
+                <a class="self" href="#173">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/buildable.rs.html#8-32">Buildable</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#173">builder</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#173">name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 }
 
-<span class="kw">unsafe impl</span>&lt;T: BuildableImpl&gt; IsImplementable&lt;T&gt; <span class="kw">for </span>Buildable {
-    <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">let </span>iface = iface.as_mut();
+<span class="kw">impl</span>&lt;T: <a href="#12-60">BuildableImpl</a>&gt; <a href="#67-190">BuildableImplExt</a> <span class="kw">for </span>T {}
 
-        iface.set_id = <span class="prelude-val">Some</span>(buildable_set_id::&lt;T&gt;);
-        iface.get_id = <span class="prelude-val">Some</span>(buildable_get_id::&lt;T&gt;);
-        iface.add_child = <span class="prelude-val">Some</span>(buildable_add_child::&lt;T&gt;);
-        iface.set_buildable_property = <span class="prelude-val">Some</span>(buildable_set_buildable_property::&lt;T&gt;);
-        iface.construct_child = <span class="prelude-val">Some</span>(buildable_construct_child::&lt;T&gt;);
-        iface.parser_finished = <span class="prelude-val">Some</span>(buildable_parser_finished::&lt;T&gt;);
-        iface.get_internal_child = <span class="prelude-val">Some</span>(buildable_get_internal_child::&lt;T&gt;);
+<span class="kw">unsafe impl</span>&lt;T: <a href="#12-60">BuildableImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/buildable.rs.html#8-32">Buildable</a> {
+    <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
+        <span class="kw">let </span>iface = <a href="#195">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+
+        <a href="#196">iface</a>.set_id = <span class="prelude-val">Some</span>(buildable_set_id::&lt;T&gt;);
+        <a href="#196">iface</a>.get_id = <span class="prelude-val">Some</span>(buildable_get_id::&lt;T&gt;);
+        <a href="#196">iface</a>.add_child = <span class="prelude-val">Some</span>(buildable_add_child::&lt;T&gt;);
+        <a href="#196">iface</a>.set_buildable_property = <span class="prelude-val">Some</span>(buildable_set_buildable_property::&lt;T&gt;);
+        <a href="#196">iface</a>.construct_child = <span class="prelude-val">Some</span>(buildable_construct_child::&lt;T&gt;);
+        <a href="#196">iface</a>.parser_finished = <span class="prelude-val">Some</span>(buildable_parser_finished::&lt;T&gt;);
+        <a href="#196">iface</a>.get_internal_child = <span class="prelude-val">Some</span>(buildable_get_internal_child::&lt;T&gt;);
         <span class="comment">/* for the future
         iface.custom_tag_start = Some(buildable_custom_tag_start::&lt;T&gt;);
         iface.custom_tag_end = Some(buildable_custom_tag_end::&lt;T&gt;);
@@ -603,105 +595,104 @@
     </span>}
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_set_id&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_set_id&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
     id: <span class="kw-2">*const </span>libc::c_char,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>id = from_glib_borrow::&lt;<span class="kw">_</span>, GString&gt;(id);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#214">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#217">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>id = from_glib_borrow::&lt;<span class="kw">_</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt;(<a href="#215">id</a>);
 
-    imp.set_id(<span class="kw-2">&amp;</span>id)
+    <a href="#218">imp</a>.<a href="#13-15">set_id</a>(<span class="kw-2">&amp;</span><a href="#219">id</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_get_id&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_get_id&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
 ) -&gt; <span class="kw-2">*const </span>libc::c_char {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#225">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#227">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.id().into_glib_ptr()
+    <a href="#228">imp</a>.<a href="#16-18">id</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_add_child&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
-    builderptr: <span class="kw-2">*mut </span>ffi::GtkBuilder,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_add_child&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
+    builderptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuilder.html">ffi::GtkBuilder</a>,
     objectptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
     typeptr: <span class="kw-2">*const </span>libc::c_char,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>type_ = from_glib_borrow::&lt;<span class="kw">_</span>, <span class="prelude-ty">Option</span>&lt;GString&gt;&gt;(typeptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#234">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#239">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>type_ = from_glib_borrow::&lt;<span class="kw">_</span>, <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt;&gt;(<a href="#237">typeptr</a>);
 
-    imp.add_child(
-        <span class="kw-2">&amp;</span>from_glib_borrow(builderptr),
-        <span class="kw-2">&amp;</span>from_glib_borrow(objectptr),
-        type_.as_ref().as_ref().map(|s| s.as_ref()),
+    <a href="#240">imp</a>.<a href="#19-21">add_child</a>(
+        <span class="kw-2">&amp;</span>from_glib_borrow(<a href="#235">builderptr</a>),
+        <span class="kw-2">&amp;</span>from_glib_borrow(<a href="#236">objectptr</a>),
+        <a href="#241">type_</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().as_ref().map(|s| <a href="#246">s</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()),
     )
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_set_buildable_property&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
-    builderptr: <span class="kw-2">*mut </span>ffi::GtkBuilder,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_set_buildable_property&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
+    builderptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuilder.html">ffi::GtkBuilder</a>,
     nameptr: <span class="kw-2">*const </span>libc::c_char,
     valueptr: <span class="kw-2">*const </span>glib::gobject_ffi::GValue,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, GString&gt;(nameptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#251">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#256">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt;(<a href="#253">nameptr</a>);
 
-    imp.set_buildable_property(
-        <span class="kw-2">&amp;</span>from_glib_borrow(builderptr),
-        <span class="kw-2">&amp;</span>name,
-        <span class="kw-2">&amp;</span>from_glib_none(valueptr),
+    <a href="#257">imp</a>.<a href="#22-24">set_buildable_property</a>(
+        <span class="kw-2">&amp;</span>from_glib_borrow(<a href="#252">builderptr</a>),
+        <span class="kw-2">&amp;</span><a href="#258">name</a>,
+        <span class="kw-2">&amp;</span>from_glib_none(<a href="#254">valueptr</a>),
     )
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_construct_child&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
-    builderptr: <span class="kw-2">*mut </span>ffi::GtkBuilder,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_construct_child&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
+    builderptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuilder.html">ffi::GtkBuilder</a>,
     nameptr: <span class="kw-2">*const </span>libc::c_char,
 ) -&gt; <span class="kw-2">*mut </span>glib::gobject_ffi::GObject {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, GString&gt;(nameptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#268">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#272">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt;(<a href="#270">nameptr</a>);
 
-    imp.construct_child(<span class="kw-2">&amp;</span>from_glib_borrow(builderptr), <span class="kw-2">&amp;</span>name)
-        .into_glib_ptr()
+    <a href="#273">imp</a>.<a href="#31-33">construct_child</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#269">builderptr</a>), <span class="kw-2">&amp;</span><a href="#274">name</a>)
+        .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_parser_finished&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
-    builderptr: <span class="kw-2">*mut </span>ffi::GtkBuilder,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_parser_finished&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
+    builderptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuilder.html">ffi::GtkBuilder</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#281">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#284">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    imp.parser_finished(<span class="kw-2">&amp;</span>from_glib_borrow(builderptr))
+    <a href="#285">imp</a>.<a href="#25-27">parser_finished</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#282">builderptr</a>))
 }
 
-<span class="kw">static </span>BUILDABLE_GET_INTERNAL_CHILD_QUARK: Lazy&lt;Quark&gt; =
+<span class="kw">static </span>BUILDABLE_GET_INTERNAL_CHILD_QUARK: Lazy&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/quark/struct.Quark.html">Quark</a>&gt; =
     Lazy::new(|| Quark::from_str(<span class="string">&quot;gtk4-rs-subclass-buildable-get-internal-child&quot;</span>));
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_get_internal_child&lt;T: BuildableImpl&gt;(
-    buildable: <span class="kw-2">*mut </span>ffi::GtkBuildable,
-    builderptr: <span class="kw-2">*mut </span>ffi::GtkBuilder,
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>buildable_get_internal_child&lt;T: <a href="#12-60">BuildableImpl</a>&gt;(
+    buildable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuildable.html">ffi::GtkBuildable</a>,
+    builderptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBuilder.html">ffi::GtkBuilder</a>,
     nameptr: <span class="kw-2">*const </span>libc::c_char,
 ) -&gt; <span class="kw-2">*mut </span>glib::gobject_ffi::GObject {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(buildable <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = instance.imp();
-    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, GString&gt;(nameptr);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#293">buildable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#297">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>name = from_glib_borrow::&lt;<span class="kw">_</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt;(<a href="#295">nameptr</a>);
 
-    <span class="kw">let </span>ret = imp.internal_child(<span class="kw-2">&amp;</span>from_glib_borrow(builderptr), <span class="kw-2">&amp;</span>name);
+    <span class="kw">let </span>ret = <a href="#298">imp</a>.<a href="#28-30">internal_child</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#294">builderptr</a>), <span class="kw-2">&amp;</span><a href="#299">name</a>);
 
     <span class="comment">// transfer none: ensure the internal child stays alive for as long as the object building it
-    </span><span class="kw">let </span>ret = ret.into_glib_ptr();
-    imp.obj().set_qdata(
-        <span class="kw-2">*</span>BUILDABLE_GET_INTERNAL_CHILD_QUARK,
-        PtrHolder(ret, |ptr| {
-            glib::gobject_ffi::g_object_unref(ptr <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+    </span><span class="kw">let </span>ret = <a href="#301">ret</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+    <a href="#298">imp</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_qdata</a>(
+        <span class="kw-2">*</span><a href="#290-291">BUILDABLE_GET_INTERNAL_CHILD_QUARK</a>,
+        <a href="mod.rs.html#8">PtrHolder</a>(<a href="#304">ret</a>, |ptr| {
+            glib::gobject_ffi::g_object_unref(<a href="#307">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
         }),
     );
-    ret
+    <a href="#304">ret</a>
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

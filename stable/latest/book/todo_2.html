@@ -33,6 +33,7 @@
 
     </head>
     <body>
+    <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
             var path_to_root = "";
@@ -70,10 +71,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -86,11 +89,33 @@
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                                 <div id="menu-bar-hover-placeholder"></div>
-                <div id="menu-bar" class="menu-bar sticky bordered">
+                <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
@@ -226,7 +251,7 @@ Again, the &quot;filter&quot; setting correspond to the stateful actions called 
 &lt;/schemalist&gt;
 </code></pre>
 <p>We install the schema as described in the settings <a href="./settings.html">chapter</a>
-Then we add a reference to <code>settings</code> and a reference to <code>clear_button</code> to <code>imp::Window</code>.</p>
+Then we add a reference to <code>settings</code> to <code>imp::Window</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/2/window/imp.rs">listings/todo/2/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
@@ -234,7 +259,6 @@ Then we add a reference to <code>settings</code> and a reference to <code>clear_
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::glib::Cast;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, ListView};
@@ -299,10 +323,9 @@ pub struct Window {
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
 </span><span class="boring">            .tasks()
-</span><span class="boring">            .snapshot()
-</span><span class="boring">            .iter()
-</span><span class="boring">            .filter_map(Cast::downcast_ref::&lt;TaskObject&gt;)
-</span><span class="boring">            .map(TaskObject::task_data)
+</span><span class="boring">            .iter::&lt;TaskObject&gt;()
+</span><span class="boring">            .filter_map(Result::ok)
+</span><span class="boring">            .map(|task_object| task_object.task_data())
 </span><span class="boring">            .collect();
 </span><span class="boring">
 </span><span class="boring">        // Save state to file
@@ -417,9 +440,8 @@ pub struct Window {
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list view
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">
 </span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -468,7 +490,7 @@ pub struct Window {
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -702,9 +724,8 @@ We also add an action which allows us to remove done tasks. </p>
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list view
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">
 </span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -753,7 +774,7 @@ We also add an action which allows us to remove done tasks. </p>
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -949,9 +970,8 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list view
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">
 </span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -1000,7 +1020,7 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1194,9 +1214,8 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
         self.imp().tasks.replace(Some(model));
 
         // Wrap model with filter and selection and pass it to the list view
-        let filter_model =
-            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-        let selection_model = NoSelection::new(Some(&amp;filter_model));
+        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+        let selection_model = NoSelection::new(Some(filter_model.clone()));
         self.imp().tasks_list.set_model(Some(&amp;selection_model));
 
         // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -1245,7 +1264,7 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1347,12 +1366,12 @@ Since this has to be done at the application level, <code>setup_shortcuts</code>
 </span><span class="boring">mod window;
 </span><span class="boring">
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{gio, Application};
+</span><span class="boring">use gtk::{gio, glib, Application};
 </span><span class="boring">use window::Window;
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Todo2&quot;;
 </span><span class="boring">
-</span>fn main() {
+</span>fn main() -&gt; glib::ExitCode {
     // Register and include resources
     gio::resources_register_include!(&quot;todo_2.gresource&quot;)
         .expect(&quot;Failed to register resources.&quot;);
@@ -1365,7 +1384,7 @@ Since this has to be done at the application level, <code>setup_shortcuts</code>
     app.connect_activate(build_ui);
 
     // Run the application
-    app.run();
+    app.run()
 }
 
 fn setup_shortcuts(app: &amp;Application) {
@@ -1538,7 +1557,6 @@ Then we serialize the <code>Vec</code> and store the data as a json file.</p>
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::glib::Cast;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, ListView};
@@ -1603,10 +1621,9 @@ impl WindowImpl for Window {
         let backup_data: Vec&lt;TaskData&gt; = self
             .obj()
             .tasks()
-            .snapshot()
-            .iter()
-            .filter_map(Cast::downcast_ref::&lt;TaskObject&gt;)
-            .map(TaskObject::task_data)
+            .iter::&lt;TaskObject&gt;()
+            .filter_map(Result::ok)
+            .map(|task_object| task_object.task_data())
             .collect();
 
         // Save state to file
@@ -1751,9 +1768,8 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
 </span><span class="boring">
 </span><span class="boring">        // Wrap model with filter and selection and pass it to the list view
-</span><span class="boring">        let filter_model =
-</span><span class="boring">            FilterListModel::new(Some(&amp;self.tasks()), self.filter().as_ref());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(&amp;filter_model));
+</span><span class="boring">        let filter_model = FilterListModel::new(Some(self.tasks()), self.filter());
+</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
 </span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
 </span><span class="boring">
 </span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
@@ -1802,7 +1818,7 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">    fn new_task(&amp;self) {
 </span><span class="boring">        // Get content from entry and clear it
 </span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text();
+</span><span class="boring">        let content = buffer.text().to_string();
 </span><span class="boring">        if content.is_empty() {
 </span><span class="boring">            return;
 </span><span class="boring">        }
@@ -1902,7 +1918,6 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
-</span><span class="boring">use gtk::glib::Cast;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, ListView};
@@ -1967,10 +1982,9 @@ impl ObjectImpl for Window {
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
 </span><span class="boring">            .tasks()
-</span><span class="boring">            .snapshot()
-</span><span class="boring">            .iter()
-</span><span class="boring">            .filter_map(Cast::downcast_ref::&lt;TaskObject&gt;)
-</span><span class="boring">            .map(TaskObject::task_data)
+</span><span class="boring">            .iter::&lt;TaskObject&gt;()
+</span><span class="boring">            .filter_map(Result::ok)
+</span><span class="boring">            .map(|task_object| task_object.task_data())
 </span><span class="boring">            .collect();
 </span><span class="boring">
 </span><span class="boring">        // Save state to file
@@ -2037,5 +2051,6 @@ Not only can we filter tasks, we also retain our tasks between sessions.</p>
         <!-- Custom JS scripts -->
 
 
+    </div>
     </body>
 </html>

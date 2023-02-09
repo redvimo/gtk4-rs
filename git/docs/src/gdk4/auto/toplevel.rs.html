@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/toplevel.rs`."><title>toplevel.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/toplevel.rs`."><title>toplevel.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gdk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -950,77 +950,24 @@
 <a href="#877" id="877">877</a>
 <a href="#878" id="878">878</a>
 <a href="#879" id="879">879</a>
-<a href="#880" id="880">880</a>
-<a href="#881" id="881">881</a>
-<a href="#882" id="882">882</a>
-<a href="#883" id="883">883</a>
-<a href="#884" id="884">884</a>
-<a href="#885" id="885">885</a>
-<a href="#886" id="886">886</a>
-<a href="#887" id="887">887</a>
-<a href="#888" id="888">888</a>
-<a href="#889" id="889">889</a>
-<a href="#890" id="890">890</a>
-<a href="#891" id="891">891</a>
-<a href="#892" id="892">892</a>
-<a href="#893" id="893">893</a>
-<a href="#894" id="894">894</a>
-<a href="#895" id="895">895</a>
-<a href="#896" id="896">896</a>
-<a href="#897" id="897">897</a>
-<a href="#898" id="898">898</a>
-<a href="#899" id="899">899</a>
-<a href="#900" id="900">900</a>
-<a href="#901" id="901">901</a>
-<a href="#902" id="902">902</a>
-<a href="#903" id="903">903</a>
-<a href="#904" id="904">904</a>
-<a href="#905" id="905">905</a>
-<a href="#906" id="906">906</a>
-<a href="#907" id="907">907</a>
-<a href="#908" id="908">908</a>
-<a href="#909" id="909">909</a>
-<a href="#910" id="910">910</a>
-<a href="#911" id="911">911</a>
-<a href="#912" id="912">912</a>
-<a href="#913" id="913">913</a>
-<a href="#914" id="914">914</a>
-<a href="#915" id="915">915</a>
-<a href="#916" id="916">916</a>
-<a href="#917" id="917">917</a>
-<a href="#918" id="918">918</a>
-<a href="#919" id="919">919</a>
-<a href="#920" id="920">920</a>
-<a href="#921" id="921">921</a>
-<a href="#922" id="922">922</a>
-<a href="#923" id="923">923</a>
-<a href="#924" id="924">924</a>
-<a href="#925" id="925">925</a>
-<a href="#926" id="926">926</a>
-<a href="#927" id="927">927</a>
-<a href="#928" id="928">928</a>
-<a href="#929" id="929">929</a>
-<a href="#930" id="930">930</a>
-<a href="#931" id="931">931</a>
-<a href="#932" id="932">932</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-#[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-</span><span class="kw">use </span><span class="kw">crate</span>::TitlebarGesture;
+</span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+</span><span class="kw">use </span><a href="enums.rs.html#2966-2975"><span class="kw">crate</span>::TitlebarGesture</a>;
 <span class="kw">use crate</span>::{
-    Device, Event, FullscreenMode, Surface, SurfaceEdge, Texture, ToplevelLayout, ToplevelState,
+    <a href="device.rs.html#13-168">Device</a>, <a href="event.rs.html#12-28">Event</a>, <a href="enums.rs.html#1017-1026">FullscreenMode</a>, <a href="surface.rs.html#17-128">Surface</a>, <a href="enums.rs.html#2647-2674">SurfaceEdge</a>, <a href="texture.rs.html#12-54">Texture</a>, <a href="toplevel_layout.rs.html#9-27">ToplevelLayout</a>, <a href="flags.rs.html#945-1005">ToplevelState</a>,
 };
 <span class="kw">use </span>glib::{
-    prelude::<span class="kw-2">*</span>,
-    signal::{connect_raw, SignalHandlerId},
-    translate::<span class="kw-2">*</span>,
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>,
+    signal::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>},
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>,
 };
-<span class="kw">use </span>std::{boxed::Box <span class="kw">as </span>Box_, fmt, mem::transmute};
+<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">boxed::Box</a> <span class="kw">as </span>Box_, <a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/intrinsics/fn.transmute.html">mem::transmute</a>};
 
-<span class="macro">glib::wrapper! </span>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// A [`Toplevel`][crate::Toplevel] is a freestanding toplevel surface.
     ///
     /// The [`Toplevel`][crate::Toplevel] interface provides useful APIs for interacting with
@@ -1124,8 +1071,17 @@
     /// Readable
     ///
     ///
+    /// #### `scale`
+    ///  The scale of the surface.
+    ///
+    /// Readable
+    ///
+    ///
     /// #### `scale-factor`
     ///  The scale factor of the surface.
+    ///
+    /// The scale factor is the next larger integer,
+    /// compared to [`scale`][struct@crate::Surface#scale].
     ///
     /// Readable
     ///
@@ -1143,10 +1099,11 @@
     ///  Emitted when the size for the surface needs to be computed, when
     /// it is present.
     ///
-    /// It will normally be emitted during or after [`ToplevelExt::present()`][crate::prelude::ToplevelExt::present()],
-    /// depending on the configuration received by the windowing system.
-    /// It may also be emitted at any other point in time, in response
-    /// to the windowing system spontaneously changing the configuration.
+    /// This signal will normally be emitted during or after a call to
+    /// [`ToplevelExt::present()`][crate::prelude::ToplevelExt::present()], depending on the configuration
+    /// received by the windowing system. It may also be emitted at any
+    /// other point in time, in response to the windowing system
+    /// spontaneously changing the configuration of the toplevel surface.
     ///
     /// It is the responsibility of the toplevel user to handle this signal
     /// and compute the desired size of the toplevel, given the information
@@ -1195,15 +1152,20 @@
     ///
     /// [`ToplevelExt`][trait@crate::prelude::ToplevelExt], [`SurfaceExt`][trait@crate::prelude::SurfaceExt], [`ToplevelExtManual`][trait@crate::prelude::ToplevelExtManual], [`SurfaceExtManual`][trait@crate::prelude::SurfaceExtManual]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkToplevel&quot;</span>)]
-    </span><span class="kw">pub struct </span>Toplevel(Interface&lt;ffi::GdkToplevel, ffi::GdkToplevelInterface&gt;) @requires Surface;
+    </span><span class="kw">pub struct </span><a href="../../../gdk4/struct.Toplevel.html">Toplevel</a>(Interface&lt;ffi::GdkToplevel, ffi::GdkToplevelInterface&gt;) @requires <a href="surface.rs.html#17-128">Surface</a>;
 
     <span class="kw">match fn </span>{
         type_ =&gt; || ffi::gdk_toplevel_get_type(),
     }
 }
 
-<span class="kw">impl </span>Toplevel {
-    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Toplevel&gt; = <span class="prelude-val">None</span>;
+<span class="kw">impl </span><a href="#18-208">Toplevel</a> {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="#18-208">Toplevel</a>&gt; = <span class="prelude-val">None</span>;
+}
+
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="#18-208"><span class="kw">super</span>::Toplevel</a>&gt;&gt; <a href="#215">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="doccomment">/// Trait containing all [`struct@Toplevel`] methods.
@@ -1211,7 +1173,7 @@
 /// # Implementors
 ///
 /// [`Toplevel`][struct@crate::Toplevel]
-</span><span class="kw">pub trait </span>ToplevelExt: <span class="lifetime">&#39;static </span>{
+</span><span class="kw">pub trait </span><a href="../../../gdk4/prelude/trait.ToplevelExt.html">ToplevelExt</a>: IsA&lt;<a href="#18-208">Toplevel</a>&gt; + <a href="#215">sealed::Sealed</a> + <span class="lifetime">&#39;static </span>{
     <span class="doccomment">/// Begins an interactive move operation.
     ///
     /// You might use this function to implement draggable titlebars.
@@ -1227,7 +1189,18 @@
     /// timestamp of mouse click that began the drag (use
     ///   [`Event::time()`][crate::Event::time()])
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_begin_move&quot;</span>)]
-    </span><span class="kw">fn </span>begin_move(<span class="kw-2">&amp;</span><span class="self">self</span>, device: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;, button: i32, x: f64, y: f64, timestamp: u32);
+    </span><span class="kw">fn </span>begin_move(<span class="kw-2">&amp;</span><span class="self">self</span>, device: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="device.rs.html#13-168">Device</a>&gt;, button: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, timestamp: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_begin_move(
+                <a class="self" href="#240">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#240">device</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#240">button</a>,
+                <a href="#240">x</a>,
+                <a href="#240">y</a>,
+                <a href="#240">timestamp</a>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Begins an interactive resize operation.
     ///
@@ -1248,13 +1221,25 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_begin_resize&quot;</span>)]
     </span><span class="kw">fn </span>begin_resize(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        edge: SurfaceEdge,
-        device: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;&gt;,
-        button: i32,
-        x: f64,
-        y: f64,
-        timestamp: u32,
-    );
+        edge: <a href="enums.rs.html#2647-2674">SurfaceEdge</a>,
+        device: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="device.rs.html#13-168">Device</a>&gt;&gt;,
+        button: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        timestamp: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_begin_resize(
+                <a class="self" href="#271">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#272">edge</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                <a href="#273">device</a>.map(|p| <a href="#283">p</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#274">button</a>,
+                <a href="#275">x</a>,
+                <a href="#276">y</a>,
+                <a href="#277">timestamp</a>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Sets keyboard focus to @surface.
     ///
@@ -1263,7 +1248,11 @@
     /// ## `timestamp`
     /// timestamp of the event triggering the surface focus
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_focus&quot;</span>)]
-    </span><span class="kw">fn </span>focus(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: u32);
+    </span><span class="kw">fn </span>focus(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_focus(<a class="self" href="#299">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#299">timestamp</a>);
+        }
+    }
 
     <span class="doccomment">/// Gets the bitwise or of the currently active surface state flags,
     /// from the [`ToplevelState`][crate::ToplevelState] enumeration.
@@ -1273,7 +1262,9 @@
     /// surface state bitfield
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_get_state&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_state&quot;</span>)]
-    </span><span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ToplevelState;
+    </span><span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="flags.rs.html#945-1005">ToplevelState</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_get_state(<a class="self" href="#313">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    }
 
     <span class="doccomment">/// Requests that the @self inhibit the system shortcuts.
     ///
@@ -1300,7 +1291,14 @@
     /// the [`Event`][crate::Event] that is triggering the inhibit
     ///   request, or [`None`] if none is available
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_inhibit_system_shortcuts&quot;</span>)]
-    </span><span class="kw">fn </span>inhibit_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>AsRef&lt;Event&gt;&gt;);
+    </span><span class="kw">fn </span>inhibit_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>AsRef&lt;<a href="event.rs.html#12-28">Event</a>&gt;&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_inhibit_system_shortcuts(
+                <a class="self" href="#342">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#342">event</a>.as_ref().map(|p| <a href="#346">p</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Asks to lower the @self below other windows.
     ///
@@ -1310,7 +1308,9 @@
     ///
     /// [`true`] if the surface was lowered
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_lower&quot;</span>)]
-    </span><span class="kw">fn </span>lower(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
+    </span><span class="kw">fn </span>lower(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_lower(<a class="self" href="#359">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    }
 
     <span class="doccomment">/// Asks to minimize the @self.
     ///
@@ -1320,7 +1320,9 @@
     ///
     /// [`true`] if the surface was minimized
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_minimize&quot;</span>)]
-    </span><span class="kw">fn </span>minimize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
+    </span><span class="kw">fn </span>minimize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_minimize(<a class="self" href="#371">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    }
 
     <span class="doccomment">/// Present @self after having processed the [`ToplevelLayout`][crate::ToplevelLayout] rules.
     ///
@@ -1336,14 +1338,22 @@
     /// ## `layout`
     /// the [`ToplevelLayout`][crate::ToplevelLayout] object used to layout
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_present&quot;</span>)]
-    </span><span class="kw">fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>ToplevelLayout);
+    </span><span class="kw">fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span><a href="toplevel_layout.rs.html#9-27">ToplevelLayout</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_present(<a class="self" href="#389">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#389">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
     <span class="doccomment">/// Restore default system keyboard shortcuts which were previously
     /// inhibited.
     ///
     /// This undoes the effect of [`inhibit_system_shortcuts()`][Self::inhibit_system_shortcuts()].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_restore_system_shortcuts&quot;</span>)]
-    </span><span class="kw">fn </span>restore_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    </span><span class="kw">fn </span>restore_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_restore_system_shortcuts(<a class="self" href="#400">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
     <span class="doccomment">/// Sets the toplevel to be decorated.
     ///
@@ -1353,7 +1363,11 @@
     /// ## `decorated`
     /// [`true`] to request decorations
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_decorated&quot;</span>)]
-    </span><span class="kw">fn </span>set_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>, decorated: bool);
+    </span><span class="kw">fn </span>set_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>, decorated: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_decorated(<a class="self" href="#414">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#414">decorated</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+        }
+    }
 
     <span class="doccomment">/// Sets the toplevel to be deletable.
     ///
@@ -1362,7 +1376,11 @@
     /// ## `deletable`
     /// [`true`] to request a delete button
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_deletable&quot;</span>)]
-    </span><span class="kw">fn </span>set_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>, deletable: bool);
+    </span><span class="kw">fn </span>set_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>, deletable: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_deletable(<a class="self" href="#427">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#427">deletable</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+        }
+    }
 
     <span class="doccomment">/// Sets a list of icons for the surface.
     ///
@@ -1377,7 +1395,14 @@
     ///
     ///   A list of textures to use as icon, of different sizes
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_icon_list&quot;</span>)]
-    </span><span class="kw">fn </span>set_icon_list(<span class="kw-2">&amp;</span><span class="self">self</span>, surfaces: <span class="kw-2">&amp;</span>[Texture]);
+    </span><span class="kw">fn </span>set_icon_list(<span class="kw-2">&amp;</span><span class="self">self</span>, surfaces: <span class="kw-2">&amp;</span>[<a href="texture.rs.html#12-54">Texture</a>]) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_icon_list(
+                <a class="self" href="#446">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#446">surfaces</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Sets the toplevel to be modal.
     ///
@@ -1391,7 +1416,11 @@
     /// ## `modal`
     /// [`true`] if the surface is modal, [`false`] otherwise.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_modal&quot;</span>)]
-    </span><span class="kw">fn </span>set_modal(<span class="kw-2">&amp;</span><span class="self">self</span>, modal: bool);
+    </span><span class="kw">fn </span>set_modal(<span class="kw-2">&amp;</span><span class="self">self</span>, modal: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_modal(<a class="self" href="#467">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#467">modal</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+        }
+    }
 
     <span class="doccomment">/// Sets the startup notification ID.
     ///
@@ -1401,7 +1430,14 @@
     /// ## `startup_id`
     /// a string with startup-notification identifier
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_startup_id&quot;</span>)]
-    </span><span class="kw">fn </span>set_startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span>str);
+    </span><span class="kw">fn </span>set_startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_startup_id(
+                <a class="self" href="#481">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#481">startup_id</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Sets the title of a toplevel surface.
     ///
@@ -1410,7 +1446,11 @@
     /// ## `title`
     /// title of @surface
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_title&quot;</span>)]
-    </span><span class="kw">fn </span>set_title(<span class="kw-2">&amp;</span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str);
+    </span><span class="kw">fn </span>set_title(<span class="kw-2">&amp;</span><span class="self">self</span>, title: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_title(<a class="self" href="#497">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#497">title</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
     <span class="doccomment">/// Sets a transient-for parent.
     ///
@@ -1424,7 +1464,14 @@
     /// ## `parent`
     /// another toplevel [`Surface`][crate::Surface]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_set_transient_for&quot;</span>)]
-    </span><span class="kw">fn </span>set_transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Surface&gt;);
+    </span><span class="kw">fn </span>set_transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="surface.rs.html#17-128">Surface</a>&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gdk_toplevel_set_transient_for(
+                <a class="self" href="#515">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#515">parent</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Asks the windowing system to show the window menu.
     ///
@@ -1439,501 +1486,347 @@
     ///
     /// [`true`] if the window menu was shown and [`false`] otherwise.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_show_window_menu&quot;</span>)]
-    </span><span class="kw">fn </span>show_window_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; bool;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_supports_edge_constraints&quot;</span>)]
-    </span><span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_toplevel_titlebar_gesture&quot;</span>)]
-    </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool;
-
-    <span class="kw">fn </span>is_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-
-    <span class="kw">fn </span>is_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
-    </span><span class="kw">fn </span>fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; FullscreenMode;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
-    </span><span class="kw">fn </span>set_fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, fullscreen_mode: FullscreenMode);
-
-    <span class="comment">//#[doc(alias = &quot;icon-list&quot;)]
-    //fn icon_list(&amp;self) -&gt; /*Unimplemented*/Basic: Pointer;
-
-    </span><span class="kw">fn </span>is_modal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
-    </span><span class="kw">fn </span>is_shortcuts_inhibited(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
-    </span><span class="kw">fn </span>startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt;;
-
-    <span class="kw">fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt;;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
-    </span><span class="kw">fn </span>transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Surface&gt;;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;decorated&quot;</span>)]
-    </span><span class="kw">fn </span>connect_decorated_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;deletable&quot;</span>)]
-    </span><span class="kw">fn </span>connect_deletable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
-    </span><span class="kw">fn </span>connect_fullscreen_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;icon-list&quot;</span>)]
-    </span><span class="kw">fn </span>connect_icon_list_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;modal&quot;</span>)]
-    </span><span class="kw">fn </span>connect_modal_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
-    </span><span class="kw">fn </span>connect_shortcuts_inhibited_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
-    </span><span class="kw">fn </span>connect_startup_id_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;state&quot;</span>)]
-    </span><span class="kw">fn </span>connect_state_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;title&quot;</span>)]
-    </span><span class="kw">fn </span>connect_title_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
-    </span><span class="kw">fn </span>connect_transient_for_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId;
-}
-
-<span class="kw">impl</span>&lt;O: IsA&lt;Toplevel&gt;&gt; ToplevelExt <span class="kw">for </span>O {
-    <span class="kw">fn </span>begin_move(<span class="kw-2">&amp;</span><span class="self">self</span>, device: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;, button: i32, x: f64, y: f64, timestamp: u32) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_begin_move(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                device.as_ref().to_glib_none().<span class="number">0</span>,
-                button,
-                x,
-                y,
-                timestamp,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>begin_resize(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        edge: SurfaceEdge,
-        device: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Device&gt;&gt;,
-        button: i32,
-        x: f64,
-        y: f64,
-        timestamp: u32,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_begin_resize(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                edge.into_glib(),
-                device.map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
-                button,
-                x,
-                y,
-                timestamp,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>focus(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: u32) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_focus(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, timestamp);
-        }
-    }
-
-    <span class="kw">fn </span>state(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; ToplevelState {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_get_state(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
-    }
-
-    <span class="kw">fn </span>inhibit_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw">impl </span>AsRef&lt;Event&gt;&gt;) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_inhibit_system_shortcuts(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                event.as_ref().map(|p| p.as_ref()).to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>lower(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_lower(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
-    }
-
-    <span class="kw">fn </span>minimize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gdk_toplevel_minimize(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>)) }
-    }
-
-    <span class="kw">fn </span>present(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>ToplevelLayout) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_present(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, layout.to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>restore_system_shortcuts(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_restore_system_shortcuts(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>set_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>, decorated: bool) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_decorated(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, decorated.into_glib());
-        }
-    }
-
-    <span class="kw">fn </span>set_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>, deletable: bool) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_deletable(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, deletable.into_glib());
-        }
-    }
-
-    <span class="kw">fn </span>set_icon_list(<span class="kw-2">&amp;</span><span class="self">self</span>, surfaces: <span class="kw-2">&amp;</span>[Texture]) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_icon_list(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                surfaces.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>set_modal(<span class="kw-2">&amp;</span><span class="self">self</span>, modal: bool) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_modal(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, modal.into_glib());
-        }
-    }
-
-    <span class="kw">fn </span>set_startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_startup_id(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                startup_id.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>set_title(<span class="kw-2">&amp;</span><span class="self">self</span>, title: <span class="kw-2">&amp;</span>str) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_title(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, title.to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>set_transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;Surface&gt;) {
-        <span class="kw">unsafe </span>{
-            ffi::gdk_toplevel_set_transient_for(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                parent.as_ref().to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>show_window_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; bool {
+    </span><span class="kw">fn </span>show_window_menu(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;<a href="event.rs.html#12-28">Event</a>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_toplevel_show_window_menu(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                event.as_ref().to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#537">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#537">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
+    <span class="doccomment">/// Returns whether the desktop environment supports
+    /// tiled window states.
+    ///
+    /// # Returns
+    ///
+    /// [`true`] if the desktop environment supports tiled window states
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_toplevel_supports_edge_constraints&quot;</span>)]
+    </span><span class="kw">fn </span>supports_edge_constraints(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_toplevel_supports_edge_constraints(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#553">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_4&quot;</span>, feature = <span class="string">&quot;dox&quot;</span>))]
-    #[cfg_attr(feature = <span class="string">&quot;dox&quot;</span>, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: TitlebarGesture) -&gt; bool {
+    <span class="doccomment">/// ## `gesture`
+    /// a [`TitlebarGesture`][crate::TitlebarGesture]
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gdk_toplevel_titlebar_gesture&quot;</span>)]
+    </span><span class="kw">fn </span>titlebar_gesture(<span class="kw-2">&amp;</span><span class="self">self</span>, gesture: <a href="enums.rs.html#2966-2975">TitlebarGesture</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_toplevel_titlebar_gesture(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                gesture.into_glib(),
+                <a class="self" href="#566">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#566">gesture</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
             ))
         }
     }
 
-    <span class="kw">fn </span>is_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;decorated&quot;</span>)
+    <span class="doccomment">/// Whether the window manager should add decorations.
+    </span><span class="kw">fn </span>is_decorated(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#576">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;decorated&quot;</span>)
     }
 
-    <span class="kw">fn </span>is_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;deletable&quot;</span>)
+    <span class="doccomment">/// Whether the window manager should allow to close the surface.
+    </span><span class="kw">fn </span>is_deletable(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#581">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;deletable&quot;</span>)
     }
 
-    <span class="kw">fn </span>fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; FullscreenMode {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fullscreen-mode&quot;</span>)
+    <span class="doccomment">/// The fullscreen mode of the surface.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#1017-1026">FullscreenMode</a> {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#587">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;fullscreen-mode&quot;</span>)
     }
 
-    <span class="kw">fn </span>set_fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, fullscreen_mode: FullscreenMode) {
-        glib::ObjectExt::set_property(<span class="self">self</span>.as_ref(), <span class="string">&quot;fullscreen-mode&quot;</span>, <span class="kw-2">&amp;</span>fullscreen_mode)
+    <span class="doccomment">/// The fullscreen mode of the surface.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>set_fullscreen_mode(<span class="kw-2">&amp;</span><span class="self">self</span>, fullscreen_mode: <a href="enums.rs.html#1017-1026">FullscreenMode</a>) {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::set_property</a>(<a class="self" href="#593">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;fullscreen-mode&quot;</span>, <a href="#593">fullscreen_mode</a>)
     }
 
-    <span class="comment">//fn icon_list(&amp;self) -&gt; /*Unimplemented*/Basic: Pointer {
-    //    glib::ObjectExt::property(self.as_ref(), &quot;icon-list&quot;)
+    <span class="comment">//#[doc(alias = &quot;icon-list&quot;)]
+    //fn icon_list(&amp;self) -&gt; /*Unimplemented*/Basic: Pointer {
+    //    ObjectExt::property(self.as_ref(), &quot;icon-list&quot;)
     //}
 
-    </span><span class="kw">fn </span>is_modal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;modal&quot;</span>)
+    </span><span class="doccomment">/// Whether the surface is modal.
+    </span><span class="kw">fn </span>is_modal(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#603">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;modal&quot;</span>)
     }
 
-    <span class="kw">fn </span>is_shortcuts_inhibited(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;shortcuts-inhibited&quot;</span>)
+    <span class="doccomment">/// Whether the surface should inhibit keyboard shortcuts.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
+    </span><span class="kw">fn </span>is_shortcuts_inhibited(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#609">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;shortcuts-inhibited&quot;</span>)
     }
 
-    <span class="kw">fn </span>startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;startup-id&quot;</span>)
+    <span class="doccomment">/// The startup ID of the surface.
+    ///
+    /// See [`AppLaunchContext`][crate::AppLaunchContext] for more information about
+    /// startup feedback.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
+    </span><span class="kw">fn </span>startup_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#618">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;startup-id&quot;</span>)
     }
 
-    <span class="kw">fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;glib::GString&gt; {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;title&quot;</span>)
+    <span class="doccomment">/// The title of the surface.
+    </span><span class="kw">fn </span>title(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt; {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#623">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;title&quot;</span>)
     }
 
-    <span class="kw">fn </span>transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;Surface&gt; {
-        glib::ObjectExt::property(<span class="self">self</span>.as_ref(), <span class="string">&quot;transient-for&quot;</span>)
+    <span class="doccomment">/// The transient parent of the surface.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
+    </span><span class="kw">fn </span>transient_for(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="surface.rs.html#17-128">Surface</a>&gt; {
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::property</a>(<a class="self" href="#629">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;transient-for&quot;</span>)
     }
 
-    <span class="kw">fn </span>connect_decorated_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_decorated_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;decorated&quot;</span>)]
+    </span><span class="kw">fn </span>connect_decorated_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_decorated_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#638">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#640">f</a>(Toplevel::from_glib_borrow(<a href="#636">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#634">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#634">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::decorated\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_decorated_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#644">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_deletable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_deletable_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;deletable&quot;</span>)]
+    </span><span class="kw">fn </span>connect_deletable_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_deletable_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#661">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#663">f</a>(Toplevel::from_glib_borrow(<a href="#659">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#657">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#657">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::deletable\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_deletable_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#667">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_fullscreen_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+    <span class="attr">#[doc(alias = <span class="string">&quot;fullscreen-mode&quot;</span>)]
+    </span><span class="kw">fn </span>connect_fullscreen_mode_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_fullscreen_mode_trampoline&lt;
-            P: IsA&lt;Toplevel&gt;,
+            P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;,
             F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#687">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#689">f</a>(Toplevel::from_glib_borrow(<a href="#685">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#680">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#680">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::fullscreen-mode\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_fullscreen_mode_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#693">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_icon_list_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_icon_list_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;icon-list&quot;</span>)]
+    </span><span class="kw">fn </span>connect_icon_list_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_icon_list_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#710">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#712">f</a>(Toplevel::from_glib_borrow(<a href="#708">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#706">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#706">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::icon-list\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_icon_list_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#716">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_modal_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_modal_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;modal&quot;</span>)]
+    </span><span class="kw">fn </span>connect_modal_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_modal_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#733">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#735">f</a>(Toplevel::from_glib_borrow(<a href="#731">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#729">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#729">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::modal\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_modal_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#739">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_shortcuts_inhibited_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+    <span class="attr">#[doc(alias = <span class="string">&quot;shortcuts-inhibited&quot;</span>)]
+    </span><span class="kw">fn </span>connect_shortcuts_inhibited_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_shortcuts_inhibited_trampoline&lt;
-            P: IsA&lt;Toplevel&gt;,
+            P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;,
             F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#759">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#761">f</a>(Toplevel::from_glib_borrow(<a href="#757">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#752">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#752">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::shortcuts-inhibited\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_shortcuts_inhibited_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#765">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_startup_id_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_startup_id_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;startup-id&quot;</span>)]
+    </span><span class="kw">fn </span>connect_startup_id_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_startup_id_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#782">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#784">f</a>(Toplevel::from_glib_borrow(<a href="#780">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#778">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#778">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::startup-id\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_startup_id_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#788">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_state_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_state_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;state&quot;</span>)]
+    </span><span class="kw">fn </span>connect_state_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_state_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#805">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#807">f</a>(Toplevel::from_glib_borrow(<a href="#803">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#801">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#801">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::state\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_state_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#811">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_title_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_title_trampoline&lt;P: IsA&lt;Toplevel&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">&quot;title&quot;</span>)]
+    </span><span class="kw">fn </span>connect_title_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_title_trampoline&lt;P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#828">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#830">f</a>(Toplevel::from_glib_borrow(<a href="#826">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#824">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#824">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::title\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_title_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#834">f</a>),
             )
         }
     }
 
-    <span class="kw">fn </span>connect_transient_for_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; SignalHandlerId {
+    <span class="attr">#[doc(alias = <span class="string">&quot;transient-for&quot;</span>)]
+    </span><span class="kw">fn </span>connect_transient_for_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_transient_for_trampoline&lt;
-            P: IsA&lt;Toplevel&gt;,
+            P: IsA&lt;<a href="#18-208">Toplevel</a>&gt;,
             F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span>ffi::GdkToplevel,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
         ) {
-            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(f <span class="kw">as </span><span class="kw-2">*const </span>F);
-            f(Toplevel::from_glib_borrow(this).unsafe_cast_ref())
+            <span class="kw">let </span>f: <span class="kw-2">&amp;</span>F = <span class="kw-2">&amp;*</span>(<a href="#854">f</a> <span class="kw">as </span><span class="kw-2">*const </span>F);
+            <a href="#856">f</a>(Toplevel::from_glib_borrow(<a href="#852">this</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>())
         }
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(f);
-            connect_raw(
-                <span class="self">self</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+            <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#847">f</a>);
+            <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
+                <a class="self" href="#847">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 <span class="string">b&quot;notify::transient-for\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
                 <span class="prelude-val">Some</span>(transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
                     notify_transient_for_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
-                Box_::into_raw(f),
+                Box_::into_raw(<a href="#860">f</a>),
             )
         }
     }
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Toplevel {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.write_str(<span class="string">&quot;Toplevel&quot;</span>)
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="#18-208">Toplevel</a>&gt;&gt; <a href="#224-871">ToplevelExt</a> <span class="kw">for </span>O {}
+
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#18-208">Toplevel</a> {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+        <a href="#876">f</a>.write_str(<span class="string">&quot;Toplevel&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -924,16 +924,229 @@
 <a href="#851" id="851">851</a>
 <a href="#852" id="852">852</a>
 <a href="#853" id="853">853</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+<a href="#854" id="854">854</a>
+<a href="#855" id="855">855</a>
+<a href="#856" id="856">856</a>
+<a href="#857" id="857">857</a>
+<a href="#858" id="858">858</a>
+<a href="#859" id="859">859</a>
+<a href="#860" id="860">860</a>
+<a href="#861" id="861">861</a>
+<a href="#862" id="862">862</a>
+<a href="#863" id="863">863</a>
+<a href="#864" id="864">864</a>
+<a href="#865" id="865">865</a>
+<a href="#866" id="866">866</a>
+<a href="#867" id="867">867</a>
+<a href="#868" id="868">868</a>
+<a href="#869" id="869">869</a>
+<a href="#870" id="870">870</a>
+<a href="#871" id="871">871</a>
+<a href="#872" id="872">872</a>
+<a href="#873" id="873">873</a>
+<a href="#874" id="874">874</a>
+<a href="#875" id="875">875</a>
+<a href="#876" id="876">876</a>
+<a href="#877" id="877">877</a>
+<a href="#878" id="878">878</a>
+<a href="#879" id="879">879</a>
+<a href="#880" id="880">880</a>
+<a href="#881" id="881">881</a>
+<a href="#882" id="882">882</a>
+<a href="#883" id="883">883</a>
+<a href="#884" id="884">884</a>
+<a href="#885" id="885">885</a>
+<a href="#886" id="886">886</a>
+<a href="#887" id="887">887</a>
+<a href="#888" id="888">888</a>
+<a href="#889" id="889">889</a>
+<a href="#890" id="890">890</a>
+<a href="#891" id="891">891</a>
+<a href="#892" id="892">892</a>
+<a href="#893" id="893">893</a>
+<a href="#894" id="894">894</a>
+<a href="#895" id="895">895</a>
+<a href="#896" id="896">896</a>
+<a href="#897" id="897">897</a>
+<a href="#898" id="898">898</a>
+<a href="#899" id="899">899</a>
+<a href="#900" id="900">900</a>
+<a href="#901" id="901">901</a>
+<a href="#902" id="902">902</a>
+<a href="#903" id="903">903</a>
+<a href="#904" id="904">904</a>
+<a href="#905" id="905">905</a>
+<a href="#906" id="906">906</a>
+<a href="#907" id="907">907</a>
+<a href="#908" id="908">908</a>
+<a href="#909" id="909">909</a>
+<a href="#910" id="910">910</a>
+<a href="#911" id="911">911</a>
+<a href="#912" id="912">912</a>
+<a href="#913" id="913">913</a>
+<a href="#914" id="914">914</a>
+<a href="#915" id="915">915</a>
+<a href="#916" id="916">916</a>
+<a href="#917" id="917">917</a>
+<a href="#918" id="918">918</a>
+<a href="#919" id="919">919</a>
+<a href="#920" id="920">920</a>
+<a href="#921" id="921">921</a>
+<a href="#922" id="922">922</a>
+<a href="#923" id="923">923</a>
+<a href="#924" id="924">924</a>
+<a href="#925" id="925">925</a>
+<a href="#926" id="926">926</a>
+<a href="#927" id="927">927</a>
+<a href="#928" id="928">928</a>
+<a href="#929" id="929">929</a>
+<a href="#930" id="930">930</a>
+<a href="#931" id="931">931</a>
+<a href="#932" id="932">932</a>
+<a href="#933" id="933">933</a>
+<a href="#934" id="934">934</a>
+<a href="#935" id="935">935</a>
+<a href="#936" id="936">936</a>
+<a href="#937" id="937">937</a>
+<a href="#938" id="938">938</a>
+<a href="#939" id="939">939</a>
+<a href="#940" id="940">940</a>
+<a href="#941" id="941">941</a>
+<a href="#942" id="942">942</a>
+<a href="#943" id="943">943</a>
+<a href="#944" id="944">944</a>
+<a href="#945" id="945">945</a>
+<a href="#946" id="946">946</a>
+<a href="#947" id="947">947</a>
+<a href="#948" id="948">948</a>
+<a href="#949" id="949">949</a>
+<a href="#950" id="950">950</a>
+<a href="#951" id="951">951</a>
+<a href="#952" id="952">952</a>
+<a href="#953" id="953">953</a>
+<a href="#954" id="954">954</a>
+<a href="#955" id="955">955</a>
+<a href="#956" id="956">956</a>
+<a href="#957" id="957">957</a>
+<a href="#958" id="958">958</a>
+<a href="#959" id="959">959</a>
+<a href="#960" id="960">960</a>
+<a href="#961" id="961">961</a>
+<a href="#962" id="962">962</a>
+<a href="#963" id="963">963</a>
+<a href="#964" id="964">964</a>
+<a href="#965" id="965">965</a>
+<a href="#966" id="966">966</a>
+<a href="#967" id="967">967</a>
+<a href="#968" id="968">968</a>
+<a href="#969" id="969">969</a>
+<a href="#970" id="970">970</a>
+<a href="#971" id="971">971</a>
+<a href="#972" id="972">972</a>
+<a href="#973" id="973">973</a>
+<a href="#974" id="974">974</a>
+<a href="#975" id="975">975</a>
+<a href="#976" id="976">976</a>
+<a href="#977" id="977">977</a>
+<a href="#978" id="978">978</a>
+<a href="#979" id="979">979</a>
+<a href="#980" id="980">980</a>
+<a href="#981" id="981">981</a>
+<a href="#982" id="982">982</a>
+<a href="#983" id="983">983</a>
+<a href="#984" id="984">984</a>
+<a href="#985" id="985">985</a>
+<a href="#986" id="986">986</a>
+<a href="#987" id="987">987</a>
+<a href="#988" id="988">988</a>
+<a href="#989" id="989">989</a>
+<a href="#990" id="990">990</a>
+<a href="#991" id="991">991</a>
+<a href="#992" id="992">992</a>
+<a href="#993" id="993">993</a>
+<a href="#994" id="994">994</a>
+<a href="#995" id="995">995</a>
+<a href="#996" id="996">996</a>
+<a href="#997" id="997">997</a>
+<a href="#998" id="998">998</a>
+<a href="#999" id="999">999</a>
+<a href="#1000" id="1000">1000</a>
+<a href="#1001" id="1001">1001</a>
+<a href="#1002" id="1002">1002</a>
+<a href="#1003" id="1003">1003</a>
+<a href="#1004" id="1004">1004</a>
+<a href="#1005" id="1005">1005</a>
+<a href="#1006" id="1006">1006</a>
+<a href="#1007" id="1007">1007</a>
+<a href="#1008" id="1008">1008</a>
+<a href="#1009" id="1009">1009</a>
+<a href="#1010" id="1010">1010</a>
+<a href="#1011" id="1011">1011</a>
+<a href="#1012" id="1012">1012</a>
+<a href="#1013" id="1013">1013</a>
+<a href="#1014" id="1014">1014</a>
+<a href="#1015" id="1015">1015</a>
+<a href="#1016" id="1016">1016</a>
+<a href="#1017" id="1017">1017</a>
+<a href="#1018" id="1018">1018</a>
+<a href="#1019" id="1019">1019</a>
+<a href="#1020" id="1020">1020</a>
+<a href="#1021" id="1021">1021</a>
+<a href="#1022" id="1022">1022</a>
+<a href="#1023" id="1023">1023</a>
+<a href="#1024" id="1024">1024</a>
+<a href="#1025" id="1025">1025</a>
+<a href="#1026" id="1026">1026</a>
+<a href="#1027" id="1027">1027</a>
+<a href="#1028" id="1028">1028</a>
+<a href="#1029" id="1029">1029</a>
+<a href="#1030" id="1030">1030</a>
+<a href="#1031" id="1031">1031</a>
+<a href="#1032" id="1032">1032</a>
+<a href="#1033" id="1033">1033</a>
+<a href="#1034" id="1034">1034</a>
+<a href="#1035" id="1035">1035</a>
+<a href="#1036" id="1036">1036</a>
+<a href="#1037" id="1037">1037</a>
+<a href="#1038" id="1038">1038</a>
+<a href="#1039" id="1039">1039</a>
+<a href="#1040" id="1040">1040</a>
+<a href="#1041" id="1041">1041</a>
+<a href="#1042" id="1042">1042</a>
+<a href="#1043" id="1043">1043</a>
+<a href="#1044" id="1044">1044</a>
+<a href="#1045" id="1045">1045</a>
+<a href="#1046" id="1046">1046</a>
+<a href="#1047" id="1047">1047</a>
+<a href="#1048" id="1048">1048</a>
+<a href="#1049" id="1049">1049</a>
+<a href="#1050" id="1050">1050</a>
+<a href="#1051" id="1051">1051</a>
+<a href="#1052" id="1052">1052</a>
+<a href="#1053" id="1053">1053</a>
+<a href="#1054" id="1054">1054</a>
+<a href="#1055" id="1055">1055</a>
+<a href="#1056" id="1056">1056</a>
+<a href="#1057" id="1057">1057</a>
+<a href="#1058" id="1058">1058</a>
+<a href="#1059" id="1059">1059</a>
+<a href="#1060" id="1060">1060</a>
+<a href="#1061" id="1061">1061</a>
+<a href="#1062" id="1062">1062</a>
+<a href="#1063" id="1063">1063</a>
+<a href="#1064" id="1064">1064</a>
+<a href="#1065" id="1065">1065</a>
+<a href="#1066" id="1066">1066</a>
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 </span><span class="attr">#![allow(deprecated)]
 
-</span><span class="kw">use </span><span class="kw">crate</span>::StyleContext;
-<span class="kw">use </span>glib::{prelude::<span class="kw-2">*</span>, translate::<span class="kw-2">*</span>};
-<span class="kw">use </span>std::fmt;
+</span><span class="kw">use </span><a href="style_context.rs.html#14-71"><span class="kw">crate</span>::StyleContext</a>;
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>};
+<span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">std::fmt</a>;
 
-<span class="macro">glib::wrapper! </span>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// [`Snapshot`][crate::Snapshot] assists in creating [`gsk::RenderNode`][crate::gsk::RenderNode]s for widgets.
     ///
     /// It functions in a similar way to a cairo context, and maintains a stack
@@ -944,22 +1157,22 @@
     /// [`SnapshotExt::pop()`][crate::prelude::SnapshotExt::pop()] to change the current node.
     ///
     /// The typical way to obtain a [`Snapshot`][crate::Snapshot] object is as an argument to
-    /// the `vfunc::Gtk::Widget::snapshot` vfunc. If you need to create your own
+    /// the [`WidgetImpl::snapshot()`][crate::subclass::prelude::WidgetImpl::snapshot()] vfunc. If you need to create your own
     /// [`Snapshot`][crate::Snapshot], use [`new()`][Self::new()].
     ///
     /// # Implements
     ///
     /// [`SnapshotExt`][trait@crate::prelude::SnapshotExt], [`trait@gdk::prelude::SnapshotExt`], [`trait@glib::ObjectExt`], [`SnapshotExtManual`][trait@crate::prelude::SnapshotExtManual]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;GtkSnapshot&quot;</span>)]
-    </span><span class="kw">pub struct </span>Snapshot(Object&lt;ffi::GtkSnapshot, ffi::GtkSnapshotClass&gt;) @extends gdk::Snapshot;
+    </span><span class="kw">pub struct </span><a href="../../../gtk4/struct.Snapshot.html">Snapshot</a>(Object&lt;<a href="../../../gtk4_sys/struct.GtkSnapshot.html">ffi::GtkSnapshot</a>, <a href="../../../gtk4_sys/type.GtkSnapshotClass.html">ffi::GtkSnapshotClass</a>&gt;) @extends <a href="../../../gdk4/auto/snapshot/struct.Snapshot.html">gdk::Snapshot</a>;
 
     <span class="kw">match fn </span>{
         type_ =&gt; || ffi::gtk_snapshot_get_type(),
     }
 }
 
-<span class="kw">impl </span>Snapshot {
-    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>Snapshot&gt; = <span class="prelude-val">None</span>;
+<span class="kw">impl </span><a href="#10-33">Snapshot</a> {
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="#10-33">Snapshot</a>&gt; = <span class="prelude-val">None</span>;
 
     <span class="doccomment">/// Creates a new [`Snapshot`][crate::Snapshot].
     ///
@@ -967,16 +1180,21 @@
     ///
     /// a newly-allocated [`Snapshot`][crate::Snapshot]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_new&quot;</span>)]
-    </span><span class="kw">pub fn </span>new() -&gt; Snapshot {
-        <span class="macro">assert_initialized_main_thread!</span>();
+    </span><span class="kw">pub fn </span>new() -&gt; <a href="#10-33">Snapshot</a> {
+        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_snapshot_new()) }
     }
 }
 
-<span class="kw">impl </span>Default <span class="kw">for </span>Snapshot {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="#10-33">Snapshot</a> {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::new()
     }
+}
+
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="#10-33"><span class="kw">super</span>::Snapshot</a>&gt;&gt; <a href="#57">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="doccomment">/// Trait containing all [`struct@Snapshot`] methods.
@@ -984,7 +1202,7 @@
 /// # Implementors
 ///
 /// [`Snapshot`][struct@crate::Snapshot]
-</span><span class="kw">pub trait </span>SnapshotExt: <span class="lifetime">&#39;static </span>{
+</span><span class="kw">pub trait </span><a href="../../../gtk4/prelude/trait.SnapshotExt.html">SnapshotExt</a>: IsA&lt;<a href="#10-33">Snapshot</a>&gt; + <a href="#57">sealed::Sealed</a> + <span class="lifetime">&#39;static </span>{
     <span class="doccomment">/// Creates a new [`gsk::CairoNode`][crate::gsk::CairoNode] and appends it to the current
     /// render node of @self, without changing the current node.
     /// ## `bounds`
@@ -995,7 +1213,14 @@
     /// a [`cairo::Context`][crate::cairo::Context] suitable for drawing the contents of
     ///   the newly created render node
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_cairo&quot;</span>)]
-    </span><span class="kw">fn </span>append_cairo(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect) -&gt; cairo::Context;
+    </span><span class="kw">fn </span>append_cairo(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/cairo/context/struct.Context.html">cairo::Context</a> {
+        <span class="kw">unsafe </span>{
+            from_glib_full(ffi::gtk_snapshot_append_cairo(
+                <a class="self" href="#77">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#77">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            ))
+        }
+    }
 
     <span class="doccomment">/// Creates a new render node drawing the @color into the
     /// given @bounds and appends it to the current render node
@@ -1008,7 +1233,15 @@
     /// ## `bounds`
     /// the bounds for the new node
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_color&quot;</span>)]
-    </span><span class="kw">fn </span>append_color(<span class="kw-2">&amp;</span><span class="self">self</span>, color: <span class="kw-2">&amp;</span>gdk::RGBA, bounds: <span class="kw-2">&amp;</span>graphene::Rect);
+    </span><span class="kw">fn </span>append_color(<span class="kw-2">&amp;</span><span class="self">self</span>, color: <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/rgba/struct.RGBA.html">gdk::RGBA</a>, bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_color(
+                <a class="self" href="#97">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#97">color</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#97">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Appends a conic gradient node with the given stops to @self.
     /// ## `bounds`
@@ -1023,11 +1256,23 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_conic_gradient&quot;</span>)]
     </span><span class="kw">fn </span>append_conic_gradient(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        rotation: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    );
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        center: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        rotation: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        stops: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/color_stop/struct.ColorStop.html">gsk::ColorStop</a>],
+    ) {
+        <span class="kw">let </span>n_stops = <a href="#123">stops</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_conic_gradient(
+                <a class="self" href="#119">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#120">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#121">center</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#122">rotation</a>,
+                <a href="#123">stops</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#125">n_stops</a>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Appends an inset shadow into the box given by @outline.
     /// ## `outline`
@@ -1045,16 +1290,36 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_inset_shadow&quot;</span>)]
     </span><span class="kw">fn </span>append_inset_shadow(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        outline: <span class="kw-2">&amp;</span>gsk::RoundedRect,
-        color: <span class="kw-2">&amp;</span>gdk::RGBA,
-        dx: f32,
-        dy: f32,
-        spread: f32,
-        blur_radius: f32,
-    );
+        outline: <span class="kw-2">&amp;</span><a href="../../../gsk4/rounded_rect/struct.RoundedRect.html">gsk::RoundedRect</a>,
+        color: <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/rgba/struct.RGBA.html">gdk::RGBA</a>,
+        dx: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        dy: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        spread: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        blur_radius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_inset_shadow(
+                <a class="self" href="#153">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#154">outline</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#155">color</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#156">dx</a>,
+                <a href="#157">dy</a>,
+                <a href="#158">spread</a>,
+                <a href="#159">blur_radius</a>,
+            );
+        }
+    }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_layout&quot;</span>)]
-    </span><span class="kw">fn </span>append_layout(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>pango::Layout, color: <span class="kw-2">&amp;</span>gdk::RGBA);
+    </span><span class="kw">fn </span>append_layout(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/layout/struct.Layout.html">pango::Layout</a>, color: <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/rgba/struct.RGBA.html">gdk::RGBA</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_layout(
+                <a class="self" href="#175">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#175">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#175">color</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Appends a linear gradient node with the given stops to @self.
     /// ## `bounds`
@@ -1068,11 +1333,23 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_linear_gradient&quot;</span>)]
     </span><span class="kw">fn </span>append_linear_gradient(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        start_point: <span class="kw-2">&amp;</span>graphene::Point,
-        end_point: <span class="kw-2">&amp;</span>graphene::Point,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    );
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        start_point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        end_point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        stops: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/color_stop/struct.ColorStop.html">gsk::ColorStop</a>],
+    ) {
+        <span class="kw">let </span>n_stops = <a href="#200">stops</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_linear_gradient(
+                <a class="self" href="#196">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#197">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#198">start_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#199">end_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#200">stops</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#202">n_stops</a>,
+            );
+        }
+    }
 
     <span class="doccomment">/// Appends @node to the current render node of @self,
     /// without changing the current node.
@@ -1082,700 +1359,848 @@
     /// ## `node`
     /// a [`gsk::RenderNode`][crate::gsk::RenderNode]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_node&quot;</span>)]
-    </span><span class="kw">fn </span>append_node(<span class="kw-2">&amp;</span><span class="self">self</span>, node: <span class="kw">impl </span>AsRef&lt;gsk::RenderNode&gt;);
+    </span><span class="kw">fn </span>append_node(<span class="kw-2">&amp;</span><span class="self">self</span>, node: <span class="kw">impl </span>AsRef&lt;<a href="../../../gsk4/auto/render_node/struct.RenderNode.html">gsk::RenderNode</a>&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_node(
+                <a class="self" href="#223">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#223">node</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_outset_shadow&quot;</span>)]
+    <span class="doccomment">/// Appends an outset shadow node around the box given by @outline.
+    /// ## `outline`
+    /// outline of the region surrounded by shadow
+    /// ## `color`
+    /// color of the shadow
+    /// ## `dx`
+    /// horizontal offset of shadow
+    /// ## `dy`
+    /// vertical offset of shadow
+    /// ## `spread`
+    /// how far the shadow spreads towards the outside
+    /// ## `blur_radius`
+    /// how much blur to apply to the shadow
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_outset_shadow&quot;</span>)]
     </span><span class="kw">fn </span>append_outset_shadow(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        outline: <span class="kw-2">&amp;</span>gsk::RoundedRect,
-        color: <span class="kw-2">&amp;</span>gdk::RGBA,
-        dx: f32,
-        dy: f32,
-        spread: f32,
-        blur_radius: f32,
-    );
+        outline: <span class="kw-2">&amp;</span><a href="../../../gsk4/rounded_rect/struct.RoundedRect.html">gsk::RoundedRect</a>,
+        color: <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/rgba/struct.RGBA.html">gdk::RGBA</a>,
+        dx: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        dy: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        spread: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        blur_radius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_outset_shadow(
+                <a class="self" href="#247">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#248">outline</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#249">color</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#250">dx</a>,
+                <a href="#251">dy</a>,
+                <a href="#252">spread</a>,
+                <a href="#253">blur_radius</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_radial_gradient&quot;</span>)]
+    <span class="doccomment">/// Appends a radial gradient node with the given stops to @self.
+    /// ## `bounds`
+    /// the rectangle to render the readial gradient into
+    /// ## `center`
+    /// the center point for the radial gradient
+    /// ## `hradius`
+    /// the horizontal radius
+    /// ## `vradius`
+    /// the vertical radius
+    /// ## `start`
+    /// the start position (on the horizontal axis)
+    /// ## `end`
+    /// the end position (on the horizontal axis)
+    /// ## `stops`
+    /// the color stops defining the gradient
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_radial_gradient&quot;</span>)]
     </span><span class="kw">fn </span>append_radial_gradient(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        hradius: f32,
-        vradius: f32,
-        start: f32,
-        end: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    );
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        center: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        hradius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        vradius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        start: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        end: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        stops: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/color_stop/struct.ColorStop.html">gsk::ColorStop</a>],
+    ) {
+        <span class="kw">let </span>n_stops = <a href="#292">stops</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_radial_gradient(
+                <a class="self" href="#285">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#286">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#287">center</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#288">hradius</a>,
+                <a href="#289">vradius</a>,
+                <a href="#290">start</a>,
+                <a href="#291">end</a>,
+                <a href="#292">stops</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#294">n_stops</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_repeating_linear_gradient&quot;</span>)]
+    <span class="doccomment">/// Appends a repeating linear gradient node with the given stops to @self.
+    /// ## `bounds`
+    /// the rectangle to render the linear gradient into
+    /// ## `start_point`
+    /// the point at which the linear gradient will begin
+    /// ## `end_point`
+    /// the point at which the linear gradient will finish
+    /// ## `stops`
+    /// the color stops defining the gradient
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_repeating_linear_gradient&quot;</span>)]
     </span><span class="kw">fn </span>append_repeating_linear_gradient(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        start_point: <span class="kw-2">&amp;</span>graphene::Point,
-        end_point: <span class="kw-2">&amp;</span>graphene::Point,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    );
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        start_point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        end_point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        stops: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/color_stop/struct.ColorStop.html">gsk::ColorStop</a>],
+    ) {
+        <span class="kw">let </span>n_stops = <a href="#325">stops</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_repeating_linear_gradient(
+                <a class="self" href="#321">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#322">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#323">start_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#324">end_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#325">stops</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#327">n_stops</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_repeating_radial_gradient&quot;</span>)]
+    <span class="doccomment">/// Appends a repeating radial gradient node with the given stops to @self.
+    /// ## `bounds`
+    /// the rectangle to render the readial gradient into
+    /// ## `center`
+    /// the center point for the radial gradient
+    /// ## `hradius`
+    /// the horizontal radius
+    /// ## `vradius`
+    /// the vertical radius
+    /// ## `start`
+    /// the start position (on the horizontal axis)
+    /// ## `end`
+    /// the end position (on the horizontal axis)
+    /// ## `stops`
+    /// the color stops defining the gradient
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_repeating_radial_gradient&quot;</span>)]
     </span><span class="kw">fn </span>append_repeating_radial_gradient(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        hradius: f32,
-        vradius: f32,
-        start: f32,
-        end: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    );
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        center: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>,
+        hradius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        vradius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        start: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        end: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+        stops: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/color_stop/struct.ColorStop.html">gsk::ColorStop</a>],
+    ) {
+        <span class="kw">let </span>n_stops = <a href="#364">stops</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_repeating_radial_gradient(
+                <a class="self" href="#357">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#358">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#359">center</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#360">hradius</a>,
+                <a href="#361">vradius</a>,
+                <a href="#362">start</a>,
+                <a href="#363">end</a>,
+                <a href="#364">stops</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#366">n_stops</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_texture&quot;</span>)]
-    </span><span class="kw">fn </span>append_texture(<span class="kw-2">&amp;</span><span class="self">self</span>, texture: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Texture&gt;, bounds: <span class="kw-2">&amp;</span>graphene::Rect);
+    <span class="doccomment">/// Creates a new render node drawing the @texture
+    /// into the given @bounds and appends it to the
+    /// current render node of @self.
+    ///
+    /// In contrast to [`append_texture()`][Self::append_texture()],
+    /// this function provides control about how the filter
+    /// that is used when scaling.
+    /// ## `texture`
+    /// the texture to render
+    /// ## `filter`
+    /// the filter to use
+    /// ## `bounds`
+    /// the bounds for the new node
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gtk_snapshot_append_scaled_texture&quot;</span>)]
+    </span><span class="kw">fn </span>append_scaled_texture(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        texture: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="../../../gdk4/auto/texture/struct.Texture.html">gdk::Texture</a>&gt;,
+        filter: <a href="../../../gsk4/auto/enums/enum.ScalingFilter.html">gsk::ScalingFilter</a>,
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_scaled_texture(
+                <a class="self" href="#399">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#400">texture</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#401">filter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                <a href="#402">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_gl_shader_pop_texture&quot;</span>)]
-    </span><span class="kw">fn </span>gl_shader_pop_texture(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Creates a new render node drawing the @texture
+    /// into the given @bounds and appends it to the
+    /// current render node of @self.
+    ///
+    /// If the texture needs to be scaled to fill @bounds,
+    /// linear filtering is used. See [`append_scaled_texture()`][Self::append_scaled_texture()]
+    /// if you need other filtering, such as nearest-neighbour.
+    /// ## `texture`
+    /// the texture to render
+    /// ## `bounds`
+    /// the bounds for the new node
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_append_texture&quot;</span>)]
+    </span><span class="kw">fn </span>append_texture(<span class="kw-2">&amp;</span><span class="self">self</span>, texture: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="../../../gdk4/auto/texture/struct.Texture.html">gdk::Texture</a>&gt;, bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_append_texture(
+                <a class="self" href="#426">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#426">texture</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#426">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_perspective&quot;</span>)]
-    </span><span class="kw">fn </span>perspective(<span class="kw-2">&amp;</span><span class="self">self</span>, depth: f32);
+    <span class="doccomment">/// Removes the top element from the stack of render nodes and
+    /// adds it to the nearest [`gsk::GLShaderNode`][crate::gsk::GLShaderNode] below it.
+    ///
+    /// This must be called the same number of times as the number
+    /// of textures is needed for the shader in
+    /// [`push_gl_shader()`][Self::push_gl_shader()].
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_gl_shader_pop_texture&quot;</span>)]
+    </span><span class="kw">fn </span>gl_shader_pop_texture(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_gl_shader_pop_texture(<a class="self" href="#443">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_pop&quot;</span>)]
-    </span><span class="kw">fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>);
+    <span class="doccomment">/// Applies a perspective projection transform.
+    ///
+    /// See [`gsk::Transform::perspective()`][crate::gsk::Transform::perspective()] for a discussion on the details.
+    /// ## `depth`
+    /// distance of the z=0 plane
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_perspective&quot;</span>)]
+    </span><span class="kw">fn </span>perspective(<span class="kw-2">&amp;</span><span class="self">self</span>, depth: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_perspective(<a class="self" href="#455">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#455">depth</a>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_blend&quot;</span>)]
-    </span><span class="kw">fn </span>push_blend(<span class="kw-2">&amp;</span><span class="self">self</span>, blend_mode: gsk::BlendMode);
+    <span class="doccomment">/// Removes the top element from the stack of render nodes,
+    /// and appends it to the node underneath it.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_pop&quot;</span>)]
+    </span><span class="kw">fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_pop(<a class="self" href="#464">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_blur&quot;</span>)]
-    </span><span class="kw">fn </span>push_blur(<span class="kw-2">&amp;</span><span class="self">self</span>, radius: f64);
+    <span class="doccomment">/// Blends together two images with the given blend mode.
+    ///
+    /// Until the first call to [`pop()`][Self::pop()], the
+    /// bottom image for the blend operation will be recorded.
+    /// After that call, the top image to be blended will be
+    /// recorded until the second call to [`pop()`][Self::pop()].
+    ///
+    /// Calling this function requires two subsequent calls
+    /// to [`pop()`][Self::pop()].
+    /// ## `blend_mode`
+    /// blend mode to use
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_blend&quot;</span>)]
+    </span><span class="kw">fn </span>push_blend(<span class="kw-2">&amp;</span><span class="self">self</span>, blend_mode: <a href="../../../gsk4/auto/enums/enum.BlendMode.html">gsk::BlendMode</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_blend(<a class="self" href="#482">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#482">blend_mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_clip&quot;</span>)]
-    </span><span class="kw">fn </span>push_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect);
+    <span class="doccomment">/// Blurs an image.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `radius`
+    /// the blur radius to use. Must be positive
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_blur&quot;</span>)]
+    </span><span class="kw">fn </span>push_blur(<span class="kw-2">&amp;</span><span class="self">self</span>, radius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_blur(<a class="self" href="#494">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#494">radius</a>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_color_matrix&quot;</span>)]
-    </span><span class="kw">fn </span>push_color_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, color_matrix: <span class="kw-2">&amp;</span>graphene::Matrix, color_offset: <span class="kw-2">&amp;</span>graphene::Vec4);
+    <span class="doccomment">/// Clips an image to a rectangle.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `bounds`
+    /// the rectangle to clip to
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_clip&quot;</span>)]
+    </span><span class="kw">fn </span>push_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_clip(<a class="self" href="#506">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#506">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_cross_fade&quot;</span>)]
-    </span><span class="kw">fn </span>push_cross_fade(<span class="kw-2">&amp;</span><span class="self">self</span>, progress: f64);
+    <span class="doccomment">/// Modifies the colors of an image by applying an affine transformation
+    /// in RGB space.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `color_matrix`
+    /// the color matrix to use
+    /// ## `color_offset`
+    /// the color offset to use
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_color_matrix&quot;</span>)]
+    </span><span class="kw">fn </span>push_color_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, color_matrix: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/matrix/struct.Matrix.html">graphene::Matrix</a>, color_offset: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/vec4/struct.Vec4.html">graphene::Vec4</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_color_matrix(
+                <a class="self" href="#521">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#521">color_matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#521">color_offset</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_gl_shader&quot;</span>)]
+    <span class="doccomment">/// Snapshots a cross-fade operation between two images with the
+    /// given @progress.
+    ///
+    /// Until the first call to [`pop()`][Self::pop()], the start image
+    /// will be snapshot. After that call, the end image will be recorded
+    /// until the second call to [`pop()`][Self::pop()].
+    ///
+    /// Calling this function requires two subsequent calls
+    /// to [`pop()`][Self::pop()].
+    /// ## `progress`
+    /// progress between 0.0 and 1.0
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_cross_fade&quot;</span>)]
+    </span><span class="kw">fn </span>push_cross_fade(<span class="kw-2">&amp;</span><span class="self">self</span>, progress: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_cross_fade(<a class="self" href="#543">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#543">progress</a>);
+        }
+    }
+
+    <span class="doccomment">/// Push a [`gsk::GLShaderNode`][crate::gsk::GLShaderNode].
+    ///
+    /// The node uses the given [`gsk::GLShader`][crate::gsk::GLShader] and uniform values
+    /// Additionally this takes a list of @n_children other nodes
+    /// which will be passed to the [`gsk::GLShaderNode`][crate::gsk::GLShaderNode].
+    ///
+    /// The @take_args argument is a block of data to use for uniform
+    /// arguments, as per types and offsets defined by the @shader.
+    /// Normally this is generated by `Gsk::GLShader::format_args()`
+    /// or `Gsk::ShaderArgsBuilder`.
+    ///
+    /// The snapshotter takes ownership of @take_args, so the caller should
+    /// not free it after this.
+    ///
+    /// If the renderer doesn&#39;t support GL shaders, or if there is any
+    /// problem when compiling the shader, then the node will draw pink.
+    /// You should use [`GLShader::compile()`][crate::gsk::GLShader::compile()] to ensure the @shader
+    /// will work for the renderer before using it.
+    ///
+    /// If the shader requires textures (see [`GLShader::n_textures()`][crate::gsk::GLShader::n_textures()]),
+    /// then it is expected that you call [`gl_shader_pop_texture()`][Self::gl_shader_pop_texture()]
+    /// the number of times that are required. Each of these calls will generate
+    /// a node that is added as a child to the [`gsk::GLShaderNode`][crate::gsk::GLShaderNode], which in turn
+    /// will render these offscreen and pass as a texture to the shader.
+    ///
+    /// Once all textures (if any) are pop:ed, you must call the regular
+    /// [`pop()`][Self::pop()].
+    ///
+    /// If you want to use pre-existing textures as input to the shader rather
+    /// than rendering new ones, use [`append_texture()`][Self::append_texture()] to
+    /// push a texture node. These will be used directly rather than being
+    /// re-rendered.
+    ///
+    /// For details on how to write shaders, see [`gsk::GLShader`][crate::gsk::GLShader].
+    /// ## `shader`
+    /// The code to run
+    /// ## `bounds`
+    /// the rectangle to render into
+    /// ## `take_args`
+    /// Data block with arguments for the shader.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_gl_shader&quot;</span>)]
     </span><span class="kw">fn </span>push_gl_shader(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        shader: <span class="kw-2">&amp;</span>gsk::GLShader,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        take_args: glib::Bytes,
-    );
+        shader: <span class="kw-2">&amp;</span><a href="../../../gsk4/auto/gl_shader/struct.GLShader.html">gsk::GLShader</a>,
+        bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>,
+        take_args: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/bytes/struct.Bytes.html">glib::Bytes</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_gl_shader(
+                <a class="self" href="#591">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#592">shader</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#593">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#594">take_args</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_opacity&quot;</span>)]
-    </span><span class="kw">fn </span>push_opacity(<span class="kw-2">&amp;</span><span class="self">self</span>, opacity: f64);
+    <span class="doccomment">/// Until the first call to [`pop()`][Self::pop()], the
+    /// mask image for the mask operation will be recorded.
+    ///
+    /// After that call, the source image will be recorded until
+    /// the second call to [`pop()`][Self::pop()].
+    ///
+    /// Calling this function requires 2 subsequent calls to gtk_snapshot_pop().
+    /// ## `mask_mode`
+    /// mask mode to use
+    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+    #[doc(alias = <span class="string">&quot;gtk_snapshot_push_mask&quot;</span>)]
+    </span><span class="kw">fn </span>push_mask(<span class="kw-2">&amp;</span><span class="self">self</span>, mask_mode: <a href="../../../gsk4/auto/enums/enum.MaskMode.html">gsk::MaskMode</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_mask(<a class="self" href="#618">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#618">mask_mode</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_repeat&quot;</span>)]
-    </span><span class="kw">fn </span>push_repeat(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect, child_bounds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>graphene::Rect&gt;);
+    <span class="doccomment">/// Modifies the opacity of an image.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `opacity`
+    /// the opacity to use
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_opacity&quot;</span>)]
+    </span><span class="kw">fn </span>push_opacity(<span class="kw-2">&amp;</span><span class="self">self</span>, opacity: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_opacity(<a class="self" href="#630">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#630">opacity</a>);
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_rounded_clip&quot;</span>)]
-    </span><span class="kw">fn </span>push_rounded_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>gsk::RoundedRect);
+    <span class="doccomment">/// Creates a node that repeats the child node.
+    ///
+    /// The child is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `bounds`
+    /// the bounds within which to repeat
+    /// ## `child_bounds`
+    /// the bounds of the child or [`None`]
+    ///   to use the full size of the collected child node
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_repeat&quot;</span>)]
+    </span><span class="kw">fn </span>push_repeat(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>, child_bounds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>&gt;) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_repeat(
+                <a class="self" href="#645">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#645">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#645">child_bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_shadow&quot;</span>)]
-    </span><span class="kw">fn </span>push_shadow(<span class="kw-2">&amp;</span><span class="self">self</span>, shadow: <span class="kw-2">&amp;</span>[gsk::Shadow]);
+    <span class="doccomment">/// Clips an image to a rounded rectangle.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `bounds`
+    /// the rounded rectangle to clip to
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_rounded_clip&quot;</span>)]
+    </span><span class="kw">fn </span>push_rounded_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span><a href="../../../gsk4/rounded_rect/struct.RoundedRect.html">gsk::RoundedRect</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_rounded_clip(
+                <a class="self" href="#661">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#661">bounds</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            );
+        }
+    }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    <span class="doccomment">/// Applies a shadow to an image.
+    ///
+    /// The image is recorded until the next call to [`pop()`][Self::pop()].
+    /// ## `shadow`
+    /// the first shadow specification
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_shadow&quot;</span>)]
+    </span><span class="kw">fn </span>push_shadow(<span class="kw-2">&amp;</span><span class="self">self</span>, shadow: <span class="kw-2">&amp;</span>[<a href="../../../gsk4/shadow/struct.Shadow.html">gsk::Shadow</a>]) {
+        <span class="kw">let </span>n_shadows = <a href="#676">shadow</a>.len() <span class="kw">as _</span>;
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_push_shadow(
+                <a class="self" href="#676">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#676">shadow</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#677">n_shadows</a>,
+            );
+        }
+    }
+
+    <span class="doccomment">/// Creates a render node for the CSS background according to @context,
+    /// and appends it to the current node of @self, without changing
+    /// the current node.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// ## `context`
+    /// the style context that defines the background
+    /// ## `x`
+    /// X origin of the rectangle
+    /// ## `y`
+    /// Y origin of the rectangle
+    /// ## `width`
+    /// rectangle width
+    /// ## `height`
+    /// rectangle height
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     #[allow(deprecated)]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_render_background&quot;</span>)]
     </span><span class="kw">fn </span>render_background(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    );
+        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="style_context.rs.html#14-71">StyleContext</a>&gt;,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_render_background(
+                <a class="self" href="#707">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#708">context</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#709">x</a>,
+                <a href="#710">y</a>,
+                <a href="#711">width</a>,
+                <a href="#712">height</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    <span class="doccomment">/// Creates a render node for the focus outline according to @context,
+    /// and appends it to the current node of @self, without changing
+    /// the current node.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// ## `context`
+    /// the style context that defines the focus ring
+    /// ## `x`
+    /// X origin of the rectangle
+    /// ## `y`
+    /// Y origin of the rectangle
+    /// ## `width`
+    /// rectangle width
+    /// ## `height`
+    /// rectangle height
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     #[allow(deprecated)]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_render_focus&quot;</span>)]
     </span><span class="kw">fn </span>render_focus(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    );
+        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="style_context.rs.html#14-71">StyleContext</a>&gt;,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_render_focus(
+                <a class="self" href="#746">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#747">context</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#748">x</a>,
+                <a href="#749">y</a>,
+                <a href="#750">width</a>,
+                <a href="#751">height</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    <span class="doccomment">/// Creates a render node for the CSS border according to @context,
+    /// and appends it to the current node of @self, without changing
+    /// the current node.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// ## `context`
+    /// the style context that defines the frame
+    /// ## `x`
+    /// X origin of the rectangle
+    /// ## `y`
+    /// Y origin of the rectangle
+    /// ## `width`
+    /// rectangle width
+    /// ## `height`
+    /// rectangle height
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     #[allow(deprecated)]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_render_frame&quot;</span>)]
     </span><span class="kw">fn </span>render_frame(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    );
+        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="style_context.rs.html#14-71">StyleContext</a>&gt;,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        height: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_render_frame(
+                <a class="self" href="#785">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#786">context</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#787">x</a>,
+                <a href="#788">y</a>,
+                <a href="#789">width</a>,
+                <a href="#790">height</a>,
+            );
+        }
+    }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    <span class="doccomment">/// Draws a text caret using @self at the specified index of @layout.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// ## `context`
+    /// a [`StyleContext`][crate::StyleContext]
+    /// ## `x`
+    /// X origin
+    /// ## `y`
+    /// Y origin
+    /// ## `layout`
+    /// the [`pango::Layout`][crate::pango::Layout] of the text
+    /// ## `index`
+    /// the index in the [`pango::Layout`][crate::pango::Layout]
+    /// ## `direction`
+    /// the [`pango::Direction`][crate::pango::Direction] of the text
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     #[allow(deprecated)]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_render_insertion_cursor&quot;</span>)]
     </span><span class="kw">fn </span>render_insertion_cursor(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        layout: <span class="kw-2">&amp;</span>pango::Layout,
-        index: i32,
-        direction: pango::Direction,
-    );
+        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="style_context.rs.html#14-71">StyleContext</a>&gt;,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        layout: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/layout/struct.Layout.html">pango::Layout</a>,
+        index: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
+        direction: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/enums/enum.Direction.html">pango::Direction</a>,
+    ) {
+        <span class="kw">unsafe </span>{
+            ffi::gtk_snapshot_render_insertion_cursor(
+                <a class="self" href="#824">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#825">context</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#826">x</a>,
+                <a href="#827">y</a>,
+                <a href="#828">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#829">index</a>,
+                <a href="#830">direction</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+            );
+        }
+    }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    <span class="doccomment">/// Creates a render node for rendering @layout according to the style
+    /// information in @context, and appends it to the current node of @self,
+    /// without changing the current node.
+    ///
+    /// # Deprecated since 4.10
+    ///
+    /// ## `context`
+    /// the style context that defines the text
+    /// ## `x`
+    /// X origin of the rectangle
+    /// ## `y`
+    /// Y origin of the rectangle
+    /// ## `layout`
+    /// the [`pango::Layout`][crate::pango::Layout] to render
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
     #[allow(deprecated)]
     #[doc(alias = <span class="string">&quot;gtk_snapshot_render_layout&quot;</span>)]
     </span><span class="kw">fn </span>render_layout(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        layout: <span class="kw-2">&amp;</span>pango::Layout,
-    );
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_restore&quot;</span>)]
-    </span><span class="kw">fn </span>restore(<span class="kw-2">&amp;</span><span class="self">self</span>);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_rotate&quot;</span>)]
-    </span><span class="kw">fn </span>rotate(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: f32);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_rotate_3d&quot;</span>)]
-    </span><span class="kw">fn </span>rotate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: f32, axis: <span class="kw-2">&amp;</span>graphene::Vec3);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_save&quot;</span>)]
-    </span><span class="kw">fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_scale&quot;</span>)]
-    </span><span class="kw">fn </span>scale(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: f32, factor_y: f32);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_scale_3d&quot;</span>)]
-    </span><span class="kw">fn </span>scale_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: f32, factor_y: f32, factor_z: f32);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_to_node&quot;</span>)]
-    </span><span class="kw">fn </span>to_node(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gsk::RenderNode&gt;;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_to_paintable&quot;</span>)]
-    </span><span class="kw">fn </span>to_paintable(<span class="self">self</span>, size: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>graphene::Size&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::Paintable&gt;;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_transform&quot;</span>)]
-    </span><span class="kw">fn </span>transform(<span class="kw-2">&amp;</span><span class="self">self</span>, transform: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gsk::Transform&gt;);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_transform_matrix&quot;</span>)]
-    </span><span class="kw">fn </span>transform_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, matrix: <span class="kw-2">&amp;</span>graphene::Matrix);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_translate&quot;</span>)]
-    </span><span class="kw">fn </span>translate(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_translate_3d&quot;</span>)]
-    </span><span class="kw">fn </span>translate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point3D);
-}
-
-<span class="kw">impl</span>&lt;O: IsA&lt;Snapshot&gt;&gt; SnapshotExt <span class="kw">for </span>O {
-    <span class="kw">fn </span>append_cairo(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect) -&gt; cairo::Context {
-        <span class="kw">unsafe </span>{
-            from_glib_full(ffi::gtk_snapshot_append_cairo(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-            ))
-        }
-    }
-
-    <span class="kw">fn </span>append_color(<span class="kw-2">&amp;</span><span class="self">self</span>, color: <span class="kw-2">&amp;</span>gdk::RGBA, bounds: <span class="kw-2">&amp;</span>graphene::Rect) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_color(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                color.to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_conic_gradient(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        rotation: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    ) {
-        <span class="kw">let </span>n_stops = stops.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_conic_gradient(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                center.to_glib_none().<span class="number">0</span>,
-                rotation,
-                stops.to_glib_none().<span class="number">0</span>,
-                n_stops,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_inset_shadow(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        outline: <span class="kw-2">&amp;</span>gsk::RoundedRect,
-        color: <span class="kw-2">&amp;</span>gdk::RGBA,
-        dx: f32,
-        dy: f32,
-        spread: f32,
-        blur_radius: f32,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_inset_shadow(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                outline.to_glib_none().<span class="number">0</span>,
-                color.to_glib_none().<span class="number">0</span>,
-                dx,
-                dy,
-                spread,
-                blur_radius,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_layout(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span>pango::Layout, color: <span class="kw-2">&amp;</span>gdk::RGBA) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_layout(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                layout.to_glib_none().<span class="number">0</span>,
-                color.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_linear_gradient(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        start_point: <span class="kw-2">&amp;</span>graphene::Point,
-        end_point: <span class="kw-2">&amp;</span>graphene::Point,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    ) {
-        <span class="kw">let </span>n_stops = stops.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_linear_gradient(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                start_point.to_glib_none().<span class="number">0</span>,
-                end_point.to_glib_none().<span class="number">0</span>,
-                stops.to_glib_none().<span class="number">0</span>,
-                n_stops,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_node(<span class="kw-2">&amp;</span><span class="self">self</span>, node: <span class="kw">impl </span>AsRef&lt;gsk::RenderNode&gt;) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_node(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                node.as_ref().to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_outset_shadow(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        outline: <span class="kw-2">&amp;</span>gsk::RoundedRect,
-        color: <span class="kw-2">&amp;</span>gdk::RGBA,
-        dx: f32,
-        dy: f32,
-        spread: f32,
-        blur_radius: f32,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_outset_shadow(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                outline.to_glib_none().<span class="number">0</span>,
-                color.to_glib_none().<span class="number">0</span>,
-                dx,
-                dy,
-                spread,
-                blur_radius,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_radial_gradient(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        hradius: f32,
-        vradius: f32,
-        start: f32,
-        end: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    ) {
-        <span class="kw">let </span>n_stops = stops.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_radial_gradient(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                center.to_glib_none().<span class="number">0</span>,
-                hradius,
-                vradius,
-                start,
-                end,
-                stops.to_glib_none().<span class="number">0</span>,
-                n_stops,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_repeating_linear_gradient(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        start_point: <span class="kw-2">&amp;</span>graphene::Point,
-        end_point: <span class="kw-2">&amp;</span>graphene::Point,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    ) {
-        <span class="kw">let </span>n_stops = stops.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_repeating_linear_gradient(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                start_point.to_glib_none().<span class="number">0</span>,
-                end_point.to_glib_none().<span class="number">0</span>,
-                stops.to_glib_none().<span class="number">0</span>,
-                n_stops,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_repeating_radial_gradient(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        center: <span class="kw-2">&amp;</span>graphene::Point,
-        hradius: f32,
-        vradius: f32,
-        start: f32,
-        end: f32,
-        stops: <span class="kw-2">&amp;</span>[gsk::ColorStop],
-    ) {
-        <span class="kw">let </span>n_stops = stops.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_repeating_radial_gradient(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                center.to_glib_none().<span class="number">0</span>,
-                hradius,
-                vradius,
-                start,
-                end,
-                stops.to_glib_none().<span class="number">0</span>,
-                n_stops,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>append_texture(<span class="kw-2">&amp;</span><span class="self">self</span>, texture: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;gdk::Texture&gt;, bounds: <span class="kw-2">&amp;</span>graphene::Rect) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_append_texture(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                texture.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>gl_shader_pop_texture(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_gl_shader_pop_texture(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>perspective(<span class="kw-2">&amp;</span><span class="self">self</span>, depth: f32) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_perspective(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, depth);
-        }
-    }
-
-    <span class="kw">fn </span>pop(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_pop(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>push_blend(<span class="kw-2">&amp;</span><span class="self">self</span>, blend_mode: gsk::BlendMode) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_blend(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, blend_mode.into_glib());
-        }
-    }
-
-    <span class="kw">fn </span>push_blur(<span class="kw-2">&amp;</span><span class="self">self</span>, radius: f64) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_blur(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, radius);
-        }
-    }
-
-    <span class="kw">fn </span>push_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_clip(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, bounds.to_glib_none().<span class="number">0</span>);
-        }
-    }
-
-    <span class="kw">fn </span>push_color_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, color_matrix: <span class="kw-2">&amp;</span>graphene::Matrix, color_offset: <span class="kw-2">&amp;</span>graphene::Vec4) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_color_matrix(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                color_matrix.to_glib_none().<span class="number">0</span>,
-                color_offset.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>push_cross_fade(<span class="kw-2">&amp;</span><span class="self">self</span>, progress: f64) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_cross_fade(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, progress);
-        }
-    }
-
-    <span class="kw">fn </span>push_gl_shader(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        shader: <span class="kw-2">&amp;</span>gsk::GLShader,
-        bounds: <span class="kw-2">&amp;</span>graphene::Rect,
-        take_args: glib::Bytes,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_gl_shader(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                shader.to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                take_args.into_glib_ptr(),
-            );
-        }
-    }
-
-    <span class="kw">fn </span>push_opacity(<span class="kw-2">&amp;</span><span class="self">self</span>, opacity: f64) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_opacity(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, opacity);
-        }
-    }
-
-    <span class="kw">fn </span>push_repeat(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>graphene::Rect, child_bounds: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>graphene::Rect&gt;) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_repeat(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-                child_bounds.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>push_rounded_clip(<span class="kw-2">&amp;</span><span class="self">self</span>, bounds: <span class="kw-2">&amp;</span>gsk::RoundedRect) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_rounded_clip(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                bounds.to_glib_none().<span class="number">0</span>,
-            );
-        }
-    }
-
-    <span class="kw">fn </span>push_shadow(<span class="kw-2">&amp;</span><span class="self">self</span>, shadow: <span class="kw-2">&amp;</span>[gsk::Shadow]) {
-        <span class="kw">let </span>n_shadows = shadow.len() <span class="kw">as _</span>;
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_push_shadow(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                shadow.to_glib_none().<span class="number">0</span>,
-                n_shadows,
-            );
-        }
-    }
-
-    <span class="attr">#[allow(deprecated)]
-    </span><span class="kw">fn </span>render_background(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_render_background(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                context.as_ref().to_glib_none().<span class="number">0</span>,
-                x,
-                y,
-                width,
-                height,
-            );
-        }
-    }
-
-    <span class="attr">#[allow(deprecated)]
-    </span><span class="kw">fn </span>render_focus(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_render_focus(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                context.as_ref().to_glib_none().<span class="number">0</span>,
-                x,
-                y,
-                width,
-                height,
-            );
-        }
-    }
-
-    <span class="attr">#[allow(deprecated)]
-    </span><span class="kw">fn </span>render_frame(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        width: f64,
-        height: f64,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_render_frame(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                context.as_ref().to_glib_none().<span class="number">0</span>,
-                x,
-                y,
-                width,
-                height,
-            );
-        }
-    }
-
-    <span class="attr">#[allow(deprecated)]
-    </span><span class="kw">fn </span>render_insertion_cursor(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        layout: <span class="kw-2">&amp;</span>pango::Layout,
-        index: i32,
-        direction: pango::Direction,
-    ) {
-        <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_render_insertion_cursor(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                context.as_ref().to_glib_none().<span class="number">0</span>,
-                x,
-                y,
-                layout.to_glib_none().<span class="number">0</span>,
-                index,
-                direction.into_glib(),
-            );
-        }
-    }
-
-    <span class="attr">#[allow(deprecated)]
-    </span><span class="kw">fn </span>render_layout(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;StyleContext&gt;,
-        x: f64,
-        y: f64,
-        layout: <span class="kw-2">&amp;</span>pango::Layout,
+        context: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="style_context.rs.html#14-71">StyleContext</a>&gt;,
+        x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>,
+        layout: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/layout/struct.Layout.html">pango::Layout</a>,
     ) {
         <span class="kw">unsafe </span>{
             ffi::gtk_snapshot_render_layout(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                context.as_ref().to_glib_none().<span class="number">0</span>,
-                x,
-                y,
-                layout.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#863">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#864">context</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#865">x</a>,
+                <a href="#866">y</a>,
+                <a href="#867">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn </span>restore(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    <span class="doccomment">/// Restores @self to the state saved by a preceding call to
+    /// [`save()`][Self::save()] and removes that state from the stack of
+    /// saved states.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_restore&quot;</span>)]
+    </span><span class="kw">fn </span>restore(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_restore(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
+            ffi::gtk_snapshot_restore(<a class="self" href="#884">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn </span>rotate(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: f32) {
+    <span class="doccomment">/// Rotates @@self&#39;s coordinate system by @angle degrees in 2D space -
+    /// or in 3D speak, rotates around the Z axis.
+    ///
+    /// To rotate around other axes, use [`gsk::Transform::rotate_3d()`][crate::gsk::Transform::rotate_3d()].
+    /// ## `angle`
+    /// the rotation angle, in degrees (clockwise)
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_rotate&quot;</span>)]
+    </span><span class="kw">fn </span>rotate(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_rotate(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, angle);
+            ffi::gtk_snapshot_rotate(<a class="self" href="#897">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#897">angle</a>);
         }
     }
 
-    <span class="kw">fn </span>rotate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: f32, axis: <span class="kw-2">&amp;</span>graphene::Vec3) {
+    <span class="doccomment">/// Rotates @self&#39;s coordinate system by @angle degrees around @axis.
+    ///
+    /// For a rotation in 2D space, use [`gsk::Transform::rotate()`][crate::gsk::Transform::rotate()].
+    /// ## `angle`
+    /// the rotation angle, in degrees (clockwise)
+    /// ## `axis`
+    /// The rotation axis
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_rotate_3d&quot;</span>)]
+    </span><span class="kw">fn </span>rotate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, angle: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, axis: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/vec3/struct.Vec3.html">graphene::Vec3</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_snapshot_rotate_3d(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                angle,
-                axis.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#911">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#911">angle</a>,
+                <a href="#911">axis</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+    <span class="doccomment">/// Makes a copy of the current state of @self and saves it
+    /// on an internal stack.
+    ///
+    /// When [`restore()`][Self::restore()] is called, @self will
+    /// be restored to the saved state. Multiple calls to
+    /// [`save()`][Self::save()] and `Snapshot::restore` can be nested;
+    /// each call to `gtk_snapshot_restore()` restores the state from
+    /// the matching paired `gtk_snapshot_save()`.
+    ///
+    /// It is necessary to clear all saved states with corresponding
+    /// calls to `gtk_snapshot_restore()`.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_save&quot;</span>)]
+    </span><span class="kw">fn </span>save(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_save(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>);
+            ffi::gtk_snapshot_save(<a class="self" href="#933">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn </span>scale(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: f32, factor_y: f32) {
+    <span class="doccomment">/// Scales @self&#39;s coordinate system in 2-dimensional space by
+    /// the given factors.
+    ///
+    /// Use [`scale_3d()`][Self::scale_3d()] to scale in all 3 dimensions.
+    /// ## `factor_x`
+    /// scaling factor on the X axis
+    /// ## `factor_y`
+    /// scaling factor on the Y axis
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_scale&quot;</span>)]
+    </span><span class="kw">fn </span>scale(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_scale(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, factor_x, factor_y);
+            ffi::gtk_snapshot_scale(<a class="self" href="#948">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#948">factor_x</a>, <a href="#948">factor_y</a>);
         }
     }
 
-    <span class="kw">fn </span>scale_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: f32, factor_y: f32, factor_z: f32) {
+    <span class="doccomment">/// Scales @self&#39;s coordinate system by the given factors.
+    /// ## `factor_x`
+    /// scaling factor on the X axis
+    /// ## `factor_y`
+    /// scaling factor on the Y axis
+    /// ## `factor_z`
+    /// scaling factor on the Z axis
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_scale_3d&quot;</span>)]
+    </span><span class="kw">fn </span>scale_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, factor_x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, factor_z: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_snapshot_scale_3d(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                factor_x,
-                factor_y,
-                factor_z,
+                <a class="self" href="#962">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#962">factor_x</a>,
+                <a href="#962">factor_y</a>,
+                <a href="#962">factor_z</a>,
             );
         }
     }
 
-    <span class="kw">fn </span>to_node(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;gsk::RenderNode&gt; {
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_snapshot_to_node(<span class="self">self</span>.upcast().into_glib_ptr())) }
+    <span class="doccomment">/// Returns the render node that was constructed
+    /// by @self.
+    ///
+    /// Note that this function may return [`None`] if nothing has been
+    /// added to the snapshot or if its content does not produce pixels
+    /// to be rendered.
+    ///
+    /// After calling this function, it is no longer possible to
+    /// add more nodes to @self. The only function that should
+    /// be called after this is `GObject::Object::unref()`.
+    ///
+    /// # Returns
+    ///
+    /// the constructed [`gsk::RenderNode`][crate::gsk::RenderNode] or
+    ///   [`None`] if there are no nodes to render.
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_to_node&quot;</span>)]
+    </span><span class="kw">fn </span>to_node(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gsk4/auto/render_node/struct.RenderNode.html">gsk::RenderNode</a>&gt; {
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_snapshot_to_node(<a class="self" href="#989">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">upcast</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>())) }
     }
 
-    <span class="kw">fn </span>to_paintable(<span class="self">self</span>, size: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>graphene::Size&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;gdk::Paintable&gt; {
+    <span class="doccomment">/// Returns a paintable encapsulating the render node
+    /// that was constructed by @self.
+    ///
+    /// After calling this function, it is no longer possible to
+    /// add more nodes to @self. The only function that should
+    /// be called after this is `GObject::Object::unref()`.
+    /// ## `size`
+    /// The size of the resulting paintable
+    ///   or [`None`] to use the bounds of the snapshot
+    ///
+    /// # Returns
+    ///
+    /// a new [`gdk::Paintable`][crate::gdk::Paintable]
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_to_paintable&quot;</span>)]
+    </span><span class="kw">fn </span>to_paintable(<span class="self">self</span>, size: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/size/struct.Size.html">graphene::Size</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/paintable/struct.Paintable.html">gdk::Paintable</a>&gt; {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gtk_snapshot_to_paintable(
-                <span class="self">self</span>.upcast().into_glib_ptr(),
-                size.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#1007">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">upcast</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#1007">size</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn </span>transform(<span class="kw-2">&amp;</span><span class="self">self</span>, transform: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>gsk::Transform&gt;) {
+    <span class="doccomment">/// Transforms @self&#39;s coordinate system with the given @transform.
+    /// ## `transform`
+    /// the transform to apply
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_transform&quot;</span>)]
+    </span><span class="kw">fn </span>transform(<span class="kw-2">&amp;</span><span class="self">self</span>, transform: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../../../gsk4/auto/transform/struct.Transform.html">gsk::Transform</a>&gt;) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_transform(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, transform.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_snapshot_transform(<a class="self" href="#1020">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#1020">transform</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn </span>transform_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, matrix: <span class="kw-2">&amp;</span>graphene::Matrix) {
+    <span class="doccomment">/// Transforms @self&#39;s coordinate system with the given @matrix.
+    /// ## `matrix`
+    /// the matrix to multiply the transform with
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_transform_matrix&quot;</span>)]
+    </span><span class="kw">fn </span>transform_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>, matrix: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/matrix/struct.Matrix.html">graphene::Matrix</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_snapshot_transform_matrix(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                matrix.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#1030">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#1030">matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             );
         }
     }
 
-    <span class="kw">fn </span>translate(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point) {
+    <span class="doccomment">/// Translates @self&#39;s coordinate system by @point in 2-dimensional space.
+    /// ## `point`
+    /// the point to translate the snapshot by
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_translate&quot;</span>)]
+    </span><span class="kw">fn </span>translate(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_translate(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, point.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_snapshot_translate(<a class="self" href="#1043">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#1043">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
-    <span class="kw">fn </span>translate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span>graphene::Point3D) {
+    <span class="doccomment">/// Translates @self&#39;s coordinate system by @point.
+    /// ## `point`
+    /// the point to translate the snapshot by
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_translate_3d&quot;</span>)]
+    </span><span class="kw">fn </span>translate_3d(<span class="kw-2">&amp;</span><span class="self">self</span>, point: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point3_d/struct.Point3D.html">graphene::Point3D</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_snapshot_translate_3d(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, point.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_snapshot_translate_3d(<a class="self" href="#1053">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#1053">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 }
 
-<span class="kw">impl </span>fmt::Display <span class="kw">for </span>Snapshot {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.write_str(<span class="string">&quot;Snapshot&quot;</span>)
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="#10-33">Snapshot</a>&gt;&gt; <a href="#66-1058">SnapshotExt</a> <span class="kw">for </span>O {}
+
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#10-33">Snapshot</a> {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+        <a href="#1063">f</a>.write_str(<span class="string">&quot;Snapshot&quot;</span>)
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

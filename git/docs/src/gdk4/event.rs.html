@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/event.rs`."><title>event.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gdk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gdk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -309,42 +309,42 @@
 <a href="#236" id="236">236</a>
 <a href="#237" id="237">237</a>
 <a href="#238" id="238">238</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use crate</span>::{Event, EventType};
-<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, StaticType};
-<span class="kw">use </span>std::{fmt, mem};
+</span><span class="kw">use crate</span>::{<a href="auto/event.rs.html#12-28">Event</a>, <a href="auto/enums.rs.html#732-832">EventType</a>};
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/trait.StaticType.html">StaticType</a>};
+<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>};
 
-<span class="kw">impl </span>Event {
+<span class="kw">impl </span><a href="auto/event.rs.html#12-28">Event</a> {
     <span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>is&lt;T: EventKind&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        T::event_types().contains(<span class="kw-2">&amp;</span><span class="self">self</span>.event_type())
+    </span><span class="kw">pub fn </span>is&lt;T: <a href="#187-191">EventKind</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        T::event_types().contains(<span class="kw-2">&amp;</span><a class="self" href="#9">self</a>.<a href="auto/event.rs.html#175-181">event_type</a>())
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>type_(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; glib::Type {
+    </span><span class="kw">pub fn </span>type_(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">glib::Type</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>ptr = <span class="self">self</span>.as_ptr();
-            from_glib((<span class="kw-2">*</span>(<span class="kw-2">*</span>(ptr <span class="kw">as </span><span class="kw-2">*mut </span>glib::gobject_ffi::GTypeInstance)).g_class).g_type)
+            <span class="kw">let </span>ptr = <a class="self" href="#14">self</a>.<a href="auto/event.rs.html#12-28">as_ptr</a>();
+            from_glib((<span class="kw-2">*</span>(<span class="kw-2">*</span>(<a href="#16">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>glib::gobject_ffi::GTypeInstance)).g_class).g_type)
         }
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>downcast&lt;T: EventKind&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, Event&gt; {
+    </span><span class="kw">pub fn </span>downcast&lt;T: <a href="#187-191">EventKind</a>&gt;(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;T, <a href="auto/event.rs.html#12-28">Event</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">if </span><span class="self">self</span>.is::&lt;T&gt;() {
-                <span class="prelude-val">Ok</span>(from_glib_full(<span class="self">self</span>.into_glib_ptr()))
+                <span class="prelude-val">Ok</span>(from_glib_full(<a class="self" href="#22">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()))
             } <span class="kw">else </span>{
-                <span class="prelude-val">Err</span>(<span class="self">self</span>)
+                <span class="prelude-val">Err</span>(<a class="self" href="#22">self</a>)
             }
         }
     }
 
     <span class="attr">#[inline]
-    </span><span class="kw">pub fn </span>downcast_ref&lt;T: EventKind&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
+    </span><span class="kw">pub fn </span>downcast_ref&lt;T: <a href="#187-191">EventKind</a>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>T&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">if </span><span class="self">self</span>.is::&lt;T&gt;() {
-                <span class="prelude-val">Some</span>(<span class="kw-2">&amp;*</span>(<span class="self">self </span><span class="kw">as </span><span class="kw-2">*const </span>Event <span class="kw">as </span><span class="kw-2">*const </span>T))
+                <span class="prelude-val">Some</span>(<span class="kw-2">&amp;*</span>(<span class="self"><a href="#33">self</a> </span><span class="kw">as </span><span class="kw-2">*const </span><a href="auto/event.rs.html#12-28">Event</a> <span class="kw">as </span><span class="kw-2">*const </span>T))
             } <span class="kw">else </span>{
                 <span class="prelude-val">None
             </span>}
@@ -372,18 +372,18 @@
     /// return location for the relative angle between both events
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_events_get_angle&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_angle&quot;</span>)]
-    </span><span class="kw">pub fn </span>angle(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+    </span><span class="kw">pub fn </span>angle(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;<a href="auto/event.rs.html#12-28">Event</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt; {
         <span class="macro">skip_assert_initialized!</span>();
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>angle = mem::MaybeUninit::uninit();
             <span class="kw">let </span>ret = from_glib(ffi::gdk_events_get_angle(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                event.as_ref().to_glib_none().<span class="number">0</span>,
-                angle.as_mut_ptr(),
+                <a class="self" href="#64">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#64">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#67">angle</a>.as_mut_ptr(),
             ));
             <span class="kw">if </span>ret {
-                <span class="kw">let </span>angle = angle.assume_init();
-                <span class="prelude-val">Some</span>(angle)
+                <span class="kw">let </span>angle = <a href="#67">angle</a>.assume_init();
+                <span class="prelude-val">Some</span>(<a href="#74">angle</a>)
             } <span class="kw">else </span>{
                 <span class="prelude-val">None
             </span>}
@@ -410,21 +410,21 @@
     /// return location for the Y coordinate of the center
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_events_get_center&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_center&quot;</span>)]
-    </span><span class="kw">pub fn </span>center(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;(f64, f64)&gt; {
+    </span><span class="kw">pub fn </span>center(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;<a href="auto/event.rs.html#12-28">Event</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>)&gt; {
         <span class="macro">skip_assert_initialized!</span>();
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>x = mem::MaybeUninit::uninit();
             <span class="kw">let </span><span class="kw-2">mut </span>y = mem::MaybeUninit::uninit();
             <span class="kw">let </span>ret = from_glib(ffi::gdk_events_get_center(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                event.as_ref().to_glib_none().<span class="number">0</span>,
-                x.as_mut_ptr(),
-                y.as_mut_ptr(),
+                <a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#102">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#105">x</a>.as_mut_ptr(),
+                <a href="#106">y</a>.as_mut_ptr(),
             ));
             <span class="kw">if </span>ret {
-                <span class="kw">let </span>x = x.assume_init();
-                <span class="kw">let </span>y = y.assume_init();
-                <span class="prelude-val">Some</span>((x, y))
+                <span class="kw">let </span>x = <a href="#105">x</a>.assume_init();
+                <span class="kw">let </span>y = <a href="#106">y</a>.assume_init();
+                <span class="prelude-val">Some</span>((<a href="#114">x</a>, <a href="#115">y</a>))
             } <span class="kw">else </span>{
                 <span class="prelude-val">None
             </span>}
@@ -448,18 +448,18 @@
     /// return location for the distance
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_events_get_distance&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_distance&quot;</span>)]
-    </span><span class="kw">pub fn </span>distance(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;Event&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+    </span><span class="kw">pub fn </span>distance(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="kw">impl </span>AsRef&lt;<a href="auto/event.rs.html#12-28">Event</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>&gt; {
         <span class="macro">skip_assert_initialized!</span>();
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>distance = mem::MaybeUninit::uninit();
             <span class="kw">let </span>ret = from_glib(ffi::gdk_events_get_distance(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                event.as_ref().to_glib_none().<span class="number">0</span>,
-                distance.as_mut_ptr(),
+                <a class="self" href="#140">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#140">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#143">distance</a>.as_mut_ptr(),
             ));
             <span class="kw">if </span>ret {
-                <span class="kw">let </span>distance = distance.assume_init();
-                <span class="prelude-val">Some</span>(distance)
+                <span class="kw">let </span>distance = <a href="#143">distance</a>.assume_init();
+                <span class="prelude-val">Some</span>(<a href="#150">distance</a>)
             } <span class="kw">else </span>{
                 <span class="prelude-val">None
             </span>}
@@ -467,25 +467,25 @@
     }
 }
 
-<span class="kw">impl </span>fmt::Debug <span class="kw">for </span>Event {
-    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>fmt::Formatter) -&gt; fmt::Result {
-        f.debug_struct(<span class="string">&quot;Event&quot;</span>)
-            .field(<span class="string">&quot;event_type&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.event_type())
-            .field(<span class="string">&quot;history&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.history())
-            .field(<span class="string">&quot;modifier_state&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.modifier_state())
-            .field(<span class="string">&quot;pointer_emulated&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.is_pointer_emulated())
-            .field(<span class="string">&quot;position&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.position())
-            .field(<span class="string">&quot;time&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.time())
-            .field(<span class="string">&quot;triggers_context_menu&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.triggers_context_menu())
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="auto/event.rs.html#12-28">Event</a> {
+    <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
+        <a href="#160">f</a>.debug_struct(<span class="string">&quot;Event&quot;</span>)
+            .field(<span class="string">&quot;event_type&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#175-181">event_type</a>())
+            .field(<span class="string">&quot;history&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#199-211">history</a>())
+            .field(<span class="string">&quot;modifier_state&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#220-226">modifier_state</a>())
+            .field(<span class="string">&quot;pointer_emulated&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#237-243">is_pointer_emulated</a>())
+            .field(<span class="string">&quot;position&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#259-274">position</a>())
+            .field(<span class="string">&quot;time&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#308-310">time</a>())
+            .field(<span class="string">&quot;triggers_context_menu&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#160">self</a>.<a href="auto/event.rs.html#324-330">triggers_context_menu</a>())
             .finish()
     }
 }
 
 <span class="attr">#[doc(hidden)]
-</span><span class="kw">impl </span>AsRef&lt;Event&gt; <span class="kw">for </span>Event {
+</span><span class="kw">impl </span>AsRef&lt;<a href="auto/event.rs.html#12-28">Event</a>&gt; <span class="kw">for </span><a href="auto/event.rs.html#12-28">Event</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self </span>{
-        <span class="self">self
+        <span class="self"><a href="#176">self</a>
     </span>}
 }
 
@@ -495,10 +495,10 @@
 /// # Safety
 ///
 /// The user is not supposed to implement this trait.
-</span><span class="kw">pub unsafe trait </span>EventKind:
-    StaticType + FromGlibPtrFull&lt;<span class="kw-2">*mut </span>ffi::GdkEvent&gt; + <span class="lifetime">&#39;static
+</span><span class="kw">pub unsafe trait </span><a href="../../gdk4/prelude/trait.EventKind.html">EventKind</a>:
+    <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/trait.StaticType.html">StaticType</a> + FromGlibPtrFull&lt;<span class="kw-2">*mut </span>ffi::GdkEvent&gt; + <span class="lifetime">&#39;static
 </span>{
-    <span class="kw">fn </span>event_types() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[EventType];
+    <span class="kw">fn </span>event_types() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span>[<a href="auto/enums.rs.html#732-832">EventType</a>];
 }
 
 <span class="macro">macro_rules! </span>define_event {
@@ -547,5 +547,4 @@
         }
     };
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

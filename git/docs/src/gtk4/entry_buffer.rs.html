@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/entry_buffer.rs`."><title>entry_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../source-files.js"></script><script defer src="../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/entry_buffer.rs`."><title>entry_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../gtk4/index.html"><img class="rust-logo" src="../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -211,91 +211,13 @@
 <a href="#138" id="138">138</a>
 <a href="#139" id="139">139</a>
 <a href="#140" id="140">140</a>
-<a href="#141" id="141">141</a>
-<a href="#142" id="142">142</a>
-<a href="#143" id="143">143</a>
-<a href="#144" id="144">144</a>
-<a href="#145" id="145">145</a>
-<a href="#146" id="146">146</a>
-<a href="#147" id="147">147</a>
-<a href="#148" id="148">148</a>
-<a href="#149" id="149">149</a>
-<a href="#150" id="150">150</a>
-<a href="#151" id="151">151</a>
-<a href="#152" id="152">152</a>
-<a href="#153" id="153">153</a>
-<a href="#154" id="154">154</a>
-<a href="#155" id="155">155</a>
-<a href="#156" id="156">156</a>
-<a href="#157" id="157">157</a>
-<a href="#158" id="158">158</a>
-<a href="#159" id="159">159</a>
-<a href="#160" id="160">160</a>
-<a href="#161" id="161">161</a>
-<a href="#162" id="162">162</a>
-<a href="#163" id="163">163</a>
-<a href="#164" id="164">164</a>
-<a href="#165" id="165">165</a>
-<a href="#166" id="166">166</a>
-<a href="#167" id="167">167</a>
-<a href="#168" id="168">168</a>
-<a href="#169" id="169">169</a>
-<a href="#170" id="170">170</a>
-<a href="#171" id="171">171</a>
-<a href="#172" id="172">172</a>
-<a href="#173" id="173">173</a>
-<a href="#174" id="174">174</a>
-<a href="#175" id="175">175</a>
-<a href="#176" id="176">176</a>
-<a href="#177" id="177">177</a>
-<a href="#178" id="178">178</a>
-<a href="#179" id="179">179</a>
-<a href="#180" id="180">180</a>
-<a href="#181" id="181">181</a>
-<a href="#182" id="182">182</a>
-<a href="#183" id="183">183</a>
-<a href="#184" id="184">184</a>
-<a href="#185" id="185">185</a>
-<a href="#186" id="186">186</a>
-<a href="#187" id="187">187</a>
-<a href="#188" id="188">188</a>
-<a href="#189" id="189">189</a>
-<a href="#190" id="190">190</a>
-<a href="#191" id="191">191</a>
-<a href="#192" id="192">192</a>
-<a href="#193" id="193">193</a>
-<a href="#194" id="194">194</a>
-<a href="#195" id="195">195</a>
-<a href="#196" id="196">196</a>
-<a href="#197" id="197">197</a>
-<a href="#198" id="198">198</a>
-<a href="#199" id="199">199</a>
-<a href="#200" id="200">200</a>
-<a href="#201" id="201">201</a>
-<a href="#202" id="202">202</a>
-<a href="#203" id="203">203</a>
-<a href="#204" id="204">204</a>
-<a href="#205" id="205">205</a>
-<a href="#206" id="206">206</a>
-<a href="#207" id="207">207</a>
-<a href="#208" id="208">208</a>
-<a href="#209" id="209">209</a>
-<a href="#210" id="210">210</a>
-<a href="#211" id="211">211</a>
-<a href="#212" id="212">212</a>
-<a href="#213" id="213">213</a>
-<a href="#214" id="214">214</a>
-<a href="#215" id="215">215</a>
-<a href="#216" id="216">216</a>
-<a href="#217" id="217">217</a>
-<a href="#218" id="218">218</a>
-</pre><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
+</pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use crate</span>::{prelude::<span class="kw-2">*</span>, EntryBuffer};
-<span class="kw">use </span>glib::{translate::<span class="kw-2">*</span>, GString, IntoGStr, IntoOptionalGStr};
+</span><span class="kw">use crate</span>::{<a href="lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a>};
+<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoOptionalGStr.html">IntoOptionalGStr</a>};
 <span class="kw">use </span>libc::{c_int, c_uint};
 
-<span class="kw">impl </span>EntryBuffer {
+<span class="kw">impl </span><a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a> {
     <span class="doccomment">/// Create a new [`EntryBuffer`][crate::EntryBuffer] object.
     ///
     /// Optionally, specify initial text to set in the buffer.
@@ -308,115 +230,17 @@
     ///
     /// A new [`EntryBuffer`][crate::EntryBuffer] object.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_new&quot;</span>)]
-    </span><span class="kw">pub fn </span>new(initial_chars: <span class="kw">impl </span>IntoOptionalGStr) -&gt; <span class="self">Self </span>{
-        <span class="macro">assert_initialized_main_thread!</span>();
+    </span><span class="kw">pub fn </span>new(initial_chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoOptionalGStr.html">IntoOptionalGStr</a>) -&gt; <span class="self">Self </span>{
+        <a class="macro" href="rt.rs.html#22-34">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{
-            initial_chars.run_with_gstr(|initial_chars| {
+            <a href="#20">initial_chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoOptionalGStr.html">run_with_gstr</a>(|initial_chars| {
                 from_glib_full(ffi::gtk_entry_buffer_new(
-                    initial_chars.to_glib_none().<span class="number">0</span>,
+                    <a href="#23">initial_chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                     -<span class="number">1</span>,
                 ))
             })
         }
     }
-}
-
-<span class="comment">// rustdoc-stripper-ignore-next
-</span><span class="doccomment">/// Trait containing manually implemented methods of [`EntryBuffer`](crate::EntryBuffer).
-</span><span class="kw">pub trait </span>EntryBufferExtManual: <span class="lifetime">&#39;static </span>{
-    <span class="doccomment">/// Deletes a sequence of characters from the buffer.
-    ///
-    /// @n_chars characters are deleted starting at @position.
-    /// If @n_chars is negative, then all characters until the
-    /// end of the text are deleted.
-    ///
-    /// If @position or @n_chars are out of bounds, then they
-    /// are coerced to sane values.
-    ///
-    /// Note that the positions are specified in characters,
-    /// not bytes.
-    /// ## `position`
-    /// position at which to delete text
-    /// ## `n_chars`
-    /// number of characters to delete
-    ///
-    /// # Returns
-    ///
-    /// The number of characters deleted.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_delete_text&quot;</span>)]
-    </span><span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: u16, n_chars: <span class="prelude-ty">Option</span>&lt;u16&gt;) -&gt; u16;
-
-    <span class="doccomment">/// Retrieves the length in bytes of the buffer.
-    ///
-    /// See [`EntryBufferExtManual::length()`][crate::prelude::EntryBufferExtManual::length()].
-    ///
-    /// # Returns
-    ///
-    /// The byte length of the buffer.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_bytes&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_bytes&quot;</span>)]
-    </span><span class="kw">fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize;
-
-    <span class="doccomment">/// Retrieves the length in characters of the buffer.
-    ///
-    /// # Returns
-    ///
-    /// The number of characters in the buffer.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_length&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_length&quot;</span>)]
-    </span><span class="kw">fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16;
-
-    <span class="doccomment">/// Retrieves the maximum allowed length of the text in @self.
-    ///
-    /// # Returns
-    ///
-    /// the maximum allowed number of characters
-    ///   in [`EntryBuffer`][crate::EntryBuffer], or 0 if there is no maximum.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_max_length&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_max_length&quot;</span>)]
-    </span><span class="kw">fn </span>max_length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u16&gt;;
-
-    <span class="doccomment">/// Retrieves the contents of the buffer.
-    ///
-    /// The memory pointer returned by this call will not change
-    /// unless this object emits a signal, or is finalized.
-    ///
-    /// # Returns
-    ///
-    /// a pointer to the contents of the widget as a
-    ///   string. This string points to internally allocated storage
-    ///   in the buffer and must not be freed, modified or stored.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_text&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_text&quot;</span>)]
-    </span><span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; GString;
-
-    <span class="doccomment">/// Inserts @n_chars characters of @chars into the contents of the
-    /// buffer, at position @position.
-    ///
-    /// If @n_chars is negative, then characters from chars will be inserted
-    /// until a null-terminator is found. If @position or @n_chars are out of
-    /// bounds, or the maximum buffer text length is exceeded, then they are
-    /// coerced to sane values.
-    ///
-    /// Note that the position and length are in characters, not in bytes.
-    /// ## `position`
-    /// the position at which to insert text.
-    /// ## `chars`
-    /// the text to insert into the buffer.
-    /// ## `n_chars`
-    /// the length of the text in characters, or -1
-    ///
-    /// # Returns
-    ///
-    /// The number of characters actually inserted.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_insert_text&quot;</span>)]
-    </span><span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: u16, chars: <span class="kw">impl </span>IntoGStr) -&gt; u16;
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_max_length&quot;</span>)]
-    </span><span class="kw">fn </span>set_max_length(<span class="kw-2">&amp;</span><span class="self">self</span>, max_length: <span class="prelude-ty">Option</span>&lt;u16&gt;);
-
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_text&quot;</span>)]
-    </span><span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, chars: <span class="kw">impl </span>IntoGStr);
 }
 
 <span class="macro">macro_rules! </span>to_u16 {
@@ -429,11 +253,18 @@
         }
     )
 }
+<span class="kw">mod </span>sealed {
+    <span class="kw">pub trait </span>Sealed {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/entry_buffer.rs.html#12-70"><span class="kw">super</span>::EntryBuffer</a>&gt;&gt; <a href="#44">Sealed</a> <span class="kw">for </span>T {}
+}
 
-<span class="kw">impl</span>&lt;O: IsA&lt;EntryBuffer&gt;&gt; EntryBufferExtManual <span class="kw">for </span>O {
-    <span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: u16, n_chars: <span class="prelude-ty">Option</span>&lt;u16&gt;) -&gt; u16 {
+<span class="comment">// rustdoc-stripper-ignore-next
+</span><span class="doccomment">/// Trait containing manually implemented methods of [`EntryBuffer`](crate::EntryBuffer).
+</span><span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.EntryBufferExtManual.html">EntryBufferExtManual</a>: <a href="#44">sealed::Sealed</a> + IsA&lt;<a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a>&gt; + <span class="lifetime">&#39;static </span>{
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_delete_text&quot;</span>)]
+    </span><span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, n_chars: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
-            <span class="macro">to_u16!</span>(ffi::gtk_entry_buffer_delete_text(
+            <a class="macro" href="#33-42">to_u16!</a>(ffi::gtk_entry_buffer_delete_text(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
                 position <span class="kw">as </span>c_uint,
                 n_chars.map(|n| n <span class="kw">as </span>c_int).unwrap_or(-<span class="number">1</span>)
@@ -441,39 +272,48 @@
         }
     }
 
-    <span class="kw">fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; usize {
-        <span class="kw">unsafe </span>{ ffi::gtk_entry_buffer_get_bytes(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) <span class="kw">as _ </span>}
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_bytes&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_bytes&quot;</span>)]
+    </span><span class="kw">fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_entry_buffer_get_bytes(<a class="self" href="#64">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) <span class="kw">as _ </span>}
     }
 
-    <span class="kw">fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u16 {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_length&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_length&quot;</span>)]
+    </span><span class="kw">fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
-            <span class="macro">to_u16!</span>(ffi::gtk_entry_buffer_get_length(
+            <a class="macro" href="#33-42">to_u16!</a>(ffi::gtk_entry_buffer_get_length(
                 <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0
             </span>))
         }
     }
 
-    <span class="kw">fn </span>max_length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;u16&gt; {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_max_length&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_max_length&quot;</span>)]
+    </span><span class="kw">fn </span>max_length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">match </span>ffi::gtk_entry_buffer_get_max_length(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>) {
+            <span class="kw">match </span>ffi::gtk_entry_buffer_get_max_length(<a class="self" href="#80">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) {
                 <span class="number">0 </span>=&gt; <span class="prelude-val">None</span>,
-                x =&gt; <span class="prelude-val">Some</span>(<span class="macro">to_u16!</span>(x)),
+                x =&gt; <span class="prelude-val">Some</span>(<a class="macro" href="#33-42">to_u16!</a>(x)),
             }
         }
     }
 
-    <span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; GString {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_text&quot;</span>)]
+    #[doc(alias = <span class="string">&quot;get_text&quot;</span>)]
+    </span><span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gtk_entry_buffer_get_text(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#91">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
-    <span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: u16, chars: <span class="kw">impl </span>IntoGStr) -&gt; u16 {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_insert_text&quot;</span>)]
+    </span><span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
-            chars.run_with_gstr(|chars| {
-                <span class="macro">to_u16!</span>(ffi::gtk_entry_buffer_insert_text(
+            <a href="#100">chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|chars| {
+                <a class="macro" href="#33-42">to_u16!</a>(ffi::gtk_entry_buffer_insert_text(
                     <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
                     position <span class="kw">as </span>c_uint,
                     chars.as_ptr(),
@@ -483,29 +323,32 @@
         }
     }
 
-    <span class="kw">fn </span>set_max_length(<span class="kw-2">&amp;</span><span class="self">self</span>, max_length: <span class="prelude-ty">Option</span>&lt;u16&gt;) {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_max_length&quot;</span>)]
+    </span><span class="kw">fn </span>set_max_length(<span class="kw-2">&amp;</span><span class="self">self</span>, max_length: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;) {
         <span class="kw">unsafe </span>{
-            <span class="macro">assert_ne!</span>(max_length, <span class="prelude-val">Some</span>(<span class="number">0</span>), <span class="string">&quot;Zero maximum length not supported&quot;</span>);
+            <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_ne.html">assert_ne!</a>(max_length, <span class="prelude-val">Some</span>(<span class="number">0</span>), <span class="string">&quot;Zero maximum length not supported&quot;</span>);
             ffi::gtk_entry_buffer_set_max_length(
-                <span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>,
-                max_length.unwrap_or(<span class="number">0</span>) <span class="kw">as </span>c_int,
+                <a class="self" href="#114">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#114">max_length</a>.unwrap_or(<span class="number">0</span>) <span class="kw">as </span>c_int,
             );
         }
     }
 
-    <span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, chars: <span class="kw">impl </span>IntoGStr) {
+    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_text&quot;</span>)]
+    </span><span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) {
         <span class="kw">unsafe </span>{
-            chars.run_with_gstr(|chars| {
-                ffi::gtk_entry_buffer_set_text(<span class="self">self</span>.as_ref().to_glib_none().<span class="number">0</span>, chars.as_ptr(), -<span class="number">1</span>);
+            <a href="#125">chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|chars| {
+                ffi::gtk_entry_buffer_set_text(<a class="self" href="#125">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#127">chars</a>.as_ptr(), -<span class="number">1</span>);
             })
         }
     }
 }
 
-<span class="kw">impl </span>Default <span class="kw">for </span>EntryBuffer {
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a>&gt;&gt; <a href="#50-132">EntryBufferExtManual</a> <span class="kw">for </span>O {}
+
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a> {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         glib::Object::new()
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>

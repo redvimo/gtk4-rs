@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/bitset.rs`."><title>bitset.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-0ef3deca4ed45ad8.css" id="mainThemeStyle"><link rel="stylesheet" id="themeStyle" href="../../../static.files/light-f501212b8b071243.css"><link rel="stylesheet" disabled href="../../../static.files/dark-e92fc12c34ff89d3.css"><link rel="stylesheet" disabled href="../../../static.files/ayu-a0090c8b1ced384f.css"><script src="../../../static.files/storage-3891ce972e3a2bf8.js"></script><script defer src="../../../static.files/source-script-ea63cb6500f71309.js"></script><script defer src="../../../source-files.js"></script><script defer src="../../../static.files/main-364b95f387bc3166.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-13285aec31fa243e.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/bitset.rs`."><title>bitset.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (1d56e3a6d 2023-07-22)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-5ec35bf9ca753509.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -483,13 +483,13 @@
 <a href="#410" id="410">410</a>
 <a href="#411" id="411">411</a>
 <a href="#412" id="412">412</a>
-</pre><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
+</pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use </span>glib::translate::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 
-<span class="macro">glib::wrapper! </span>{
+<a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// A [`Bitset`][crate::Bitset] represents a set of unsigned integers.
     ///
     /// Another name for this data structure is &quot;bitmap&quot;.
@@ -506,7 +506,7 @@
     /// The main use case for [`Bitset`][crate::Bitset] is implementing complex selections for
     /// [`SelectionModel`][crate::SelectionModel].
     </span><span class="attr">#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    </span><span class="kw">pub struct </span>Bitset(Shared&lt;ffi::GtkBitset&gt;);
+    </span><span class="kw">pub struct </span><a href="../../../gtk4/struct.Bitset.html">Bitset</a>(Shared&lt;<a href="../../../gtk4_sys/struct.GtkBitset.html">ffi::GtkBitset</a>&gt;);
 
     <span class="kw">match fn </span>{
         <span class="kw-2">ref </span>=&gt; |ptr| ffi::gtk_bitset_ref(ptr),
@@ -515,15 +515,15 @@
     }
 }
 
-<span class="kw">impl </span>Bitset {
+<span class="kw">impl </span><a href="#7-31">Bitset</a> {
     <span class="doccomment">/// Creates a new empty bitset.
     ///
     /// # Returns
     ///
     /// A new empty bitset
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_new_empty&quot;</span>)]
-    </span><span class="kw">pub fn </span>new_empty() -&gt; Bitset {
-        <span class="macro">assert_initialized_main_thread!</span>();
+    </span><span class="kw">pub fn </span>new_empty() -&gt; <a href="#7-31">Bitset</a> {
+        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_bitset_new_empty()) }
     }
 
@@ -537,9 +537,9 @@
     ///
     /// A new bitset
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_new_range&quot;</span>)]
-    </span><span class="kw">pub fn </span>new_range(start: u32, n_items: u32) -&gt; Bitset {
-        <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_bitset_new_range(start, n_items)) }
+    </span><span class="kw">pub fn </span>new_range(start: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="#7-31">Bitset</a> {
+        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_bitset_new_range(<a href="#55">start</a>, <a href="#55">n_items</a>)) }
     }
 
     <span class="doccomment">/// Adds @value to @self if it wasn&#39;t part of it before.
@@ -551,8 +551,8 @@
     /// [`true`] if @value was not part of @self and @self
     ///   was changed
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_add&quot;</span>)]
-    </span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, value: u32) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_add(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, value)) }
+    </span><span class="kw">pub fn </span>add(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_add(<a class="self" href="#69">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#69">value</a>)) }
     }
 
     <span class="doccomment">/// Adds all values from @start (inclusive) to @start + @n_items
@@ -562,9 +562,9 @@
     /// ## `n_items`
     /// number of consecutive values to add
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_add_range&quot;</span>)]
-    </span><span class="kw">pub fn </span>add_range(<span class="kw-2">&amp;</span><span class="self">self</span>, start: u32, n_items: u32) {
+    </span><span class="kw">pub fn </span>add_range(<span class="kw-2">&amp;</span><span class="self">self</span>, start: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_add_range(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, start, n_items);
+            ffi::gtk_bitset_add_range(<a class="self" href="#80">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#80">start</a>, <a href="#80">n_items</a>);
         }
     }
 
@@ -575,9 +575,9 @@
     /// ## `last`
     /// last value to add
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_add_range_closed&quot;</span>)]
-    </span><span class="kw">pub fn </span>add_range_closed(<span class="kw-2">&amp;</span><span class="self">self</span>, first: u32, last: u32) {
+    </span><span class="kw">pub fn </span>add_range_closed(<span class="kw-2">&amp;</span><span class="self">self</span>, first: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, last: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_add_range_closed(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, first, last);
+            ffi::gtk_bitset_add_range_closed(<a class="self" href="#93">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#93">first</a>, <a href="#93">last</a>);
         }
     }
 
@@ -592,9 +592,9 @@
     /// ## `stride`
     /// row stride of the grid
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_add_rectangle&quot;</span>)]
-    </span><span class="kw">pub fn </span>add_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>, start: u32, width: u32, height: u32, stride: u32) {
+    </span><span class="kw">pub fn </span>add_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>, start: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, width: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, height: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, stride: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_add_rectangle(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, start, width, height, stride);
+            ffi::gtk_bitset_add_rectangle(<a class="self" href="#110">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#110">start</a>, <a href="#110">width</a>, <a href="#110">height</a>, <a href="#110">stride</a>);
         }
     }
 
@@ -606,14 +606,14 @@
     ///
     /// [`true`] if @self contains @value
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_contains&quot;</span>)]
-    </span><span class="kw">pub fn </span>contains(<span class="kw-2">&amp;</span><span class="self">self</span>, value: u32) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_contains(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, value)) }
+    </span><span class="kw">pub fn </span>contains(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_contains(<a class="self" href="#124">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#124">value</a>)) }
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_copy&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>copy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Bitset {
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_bitset_copy(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
+    </span><span class="kw">pub fn </span>copy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="#7-31">Bitset</a> {
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gtk_bitset_copy(<a class="self" href="#130">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Sets @self to be the symmetric difference of @self and @other.
@@ -627,9 +627,9 @@
     /// ## `other`
     /// the [`Bitset`][crate::Bitset] to compute the difference from
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_difference&quot;</span>)]
-    </span><span class="kw">pub fn </span>difference(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Bitset) {
+    </span><span class="kw">pub fn </span>difference(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><a href="#7-31">Bitset</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_difference(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, other.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_bitset_difference(<a class="self" href="#145">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#145">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -641,11 +641,11 @@
     ///
     /// [`true`] if @self and @other contain the same values
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_equals&quot;</span>)]
-    </span><span class="kw">pub fn </span>equals(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Bitset) -&gt; bool {
+    </span><span class="kw">pub fn </span>equals(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><a href="#7-31">Bitset</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_bitset_equals(
-                <span class="self">self</span>.to_glib_none().<span class="number">0</span>,
-                other.to_glib_none().<span class="number">0</span>,
+                <a class="self" href="#159">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#159">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -659,8 +659,8 @@
     /// The largest value in @self
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_get_maximum&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_maximum&quot;</span>)]
-    </span><span class="kw">pub fn </span>maximum(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_maximum(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>maximum(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_maximum(<a class="self" href="#177">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Returns the smallest value in @self.
@@ -672,8 +672,8 @@
     /// The smallest value in @self
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_get_minimum&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_minimum&quot;</span>)]
-    </span><span class="kw">pub fn </span>minimum(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u32 {
-        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_minimum(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>minimum(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_minimum(<a class="self" href="#190">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Returns the value of the @nth item in self.
@@ -687,8 +687,8 @@
     /// the value of the @nth item in @self
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_get_nth&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_nth&quot;</span>)]
-    </span><span class="kw">pub fn </span>nth(<span class="kw-2">&amp;</span><span class="self">self</span>, nth: u32) -&gt; u32 {
-        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_nth(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, nth) }
+    </span><span class="kw">pub fn </span>nth(<span class="kw-2">&amp;</span><span class="self">self</span>, nth: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_nth(<a class="self" href="#205">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#205">nth</a>) }
     }
 
     <span class="doccomment">/// Gets the number of values that were added to the set.
@@ -705,8 +705,8 @@
     /// The number of values in the set.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_get_size&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_size&quot;</span>)]
-    </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
-        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_size(<span class="self">self</span>.to_glib_none().<span class="number">0</span>) }
+    </span><span class="kw">pub fn </span>size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_size(<a class="self" href="#223">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Gets the number of values that are part of the set from @first to @last
@@ -725,8 +725,8 @@
     /// The number of values in the set from @first to @last.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_get_size_in_range&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_size_in_range&quot;</span>)]
-    </span><span class="kw">pub fn </span>size_in_range(<span class="kw-2">&amp;</span><span class="self">self</span>, first: u32, last: u32) -&gt; u64 {
-        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_size_in_range(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, first, last) }
+    </span><span class="kw">pub fn </span>size_in_range(<span class="kw-2">&amp;</span><span class="self">self</span>, first: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, last: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a> {
+        <span class="kw">unsafe </span>{ ffi::gtk_bitset_get_size_in_range(<a class="self" href="#243">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#243">first</a>, <a href="#243">last</a>) }
     }
 
     <span class="doccomment">/// Sets @self to be the intersection of @self and @other.
@@ -738,9 +738,9 @@
     /// ## `other`
     /// the [`Bitset`][crate::Bitset] to intersect with
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_intersect&quot;</span>)]
-    </span><span class="kw">pub fn </span>intersect(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Bitset) {
+    </span><span class="kw">pub fn </span>intersect(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><a href="#7-31">Bitset</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_intersect(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, other.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_bitset_intersect(<a class="self" href="#256">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#256">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -750,8 +750,8 @@
     ///
     /// [`true`] if @self is empty
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_is_empty&quot;</span>)]
-    </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_is_empty(<span class="self">self</span>.to_glib_none().<span class="number">0</span>)) }
+    </span><span class="kw">pub fn </span>is_empty(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_is_empty(<a class="self" href="#268">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Removes @value from @self if it was part of it before.
@@ -763,15 +763,15 @@
     /// [`true`] if @value was part of @self and @self
     ///   was changed
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_remove&quot;</span>)]
-    </span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, value: u32) -&gt; bool {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_remove(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, value)) }
+    </span><span class="kw">pub fn </span>remove(<span class="kw-2">&amp;</span><span class="self">self</span>, value: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gtk_bitset_remove(<a class="self" href="#281">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#281">value</a>)) }
     }
 
     <span class="doccomment">/// Removes all values from the bitset so that it is empty again.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_remove_all&quot;</span>)]
     </span><span class="kw">pub fn </span>remove_all(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_remove_all(<span class="self">self</span>.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_bitset_remove_all(<a class="self" href="#287">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -782,9 +782,9 @@
     /// ## `n_items`
     /// number of consecutive values to remove
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_remove_range&quot;</span>)]
-    </span><span class="kw">pub fn </span>remove_range(<span class="kw-2">&amp;</span><span class="self">self</span>, start: u32, n_items: u32) {
+    </span><span class="kw">pub fn </span>remove_range(<span class="kw-2">&amp;</span><span class="self">self</span>, start: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_remove_range(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, start, n_items);
+            ffi::gtk_bitset_remove_range(<a class="self" href="#300">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#300">start</a>, <a href="#300">n_items</a>);
         }
     }
 
@@ -795,9 +795,9 @@
     /// ## `last`
     /// last value to remove
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_remove_range_closed&quot;</span>)]
-    </span><span class="kw">pub fn </span>remove_range_closed(<span class="kw-2">&amp;</span><span class="self">self</span>, first: u32, last: u32) {
+    </span><span class="kw">pub fn </span>remove_range_closed(<span class="kw-2">&amp;</span><span class="self">self</span>, first: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, last: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_remove_range_closed(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, first, last);
+            ffi::gtk_bitset_remove_range_closed(<a class="self" href="#313">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#313">first</a>, <a href="#313">last</a>);
         }
     }
 
@@ -812,9 +812,9 @@
     /// ## `stride`
     /// row stride of the grid
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_remove_rectangle&quot;</span>)]
-    </span><span class="kw">pub fn </span>remove_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>, start: u32, width: u32, height: u32, stride: u32) {
+    </span><span class="kw">pub fn </span>remove_rectangle(<span class="kw-2">&amp;</span><span class="self">self</span>, start: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, width: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, height: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, stride: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_remove_rectangle(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, start, width, height, stride);
+            ffi::gtk_bitset_remove_rectangle(<a class="self" href="#330">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#330">start</a>, <a href="#330">width</a>, <a href="#330">height</a>, <a href="#330">stride</a>);
         }
     }
 
@@ -824,9 +824,9 @@
     /// ## `amount`
     /// amount to shift all values to the left
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_shift_left&quot;</span>)]
-    </span><span class="kw">pub fn </span>shift_left(<span class="kw-2">&amp;</span><span class="self">self</span>, amount: u32) {
+    </span><span class="kw">pub fn </span>shift_left(<span class="kw-2">&amp;</span><span class="self">self</span>, amount: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_shift_left(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, amount);
+            ffi::gtk_bitset_shift_left(<a class="self" href="#342">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#342">amount</a>);
         }
     }
 
@@ -836,9 +836,9 @@
     /// ## `amount`
     /// amount to shift all values to the right
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_shift_right&quot;</span>)]
-    </span><span class="kw">pub fn </span>shift_right(<span class="kw-2">&amp;</span><span class="self">self</span>, amount: u32) {
+    </span><span class="kw">pub fn </span>shift_right(<span class="kw-2">&amp;</span><span class="self">self</span>, amount: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_shift_right(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, amount);
+            ffi::gtk_bitset_shift_right(<a class="self" href="#354">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#354">amount</a>);
         }
     }
 
@@ -859,9 +859,9 @@
     /// ## `added`
     /// number of values to add
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_splice&quot;</span>)]
-    </span><span class="kw">pub fn </span>splice(<span class="kw-2">&amp;</span><span class="self">self</span>, position: u32, removed: u32, added: u32) {
+    </span><span class="kw">pub fn </span>splice(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, removed: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, added: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_splice(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, position, removed, added);
+            ffi::gtk_bitset_splice(<a class="self" href="#377">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#377">position</a>, <a href="#377">removed</a>, <a href="#377">added</a>);
         }
     }
 
@@ -874,9 +874,9 @@
     /// ## `other`
     /// the [`Bitset`][crate::Bitset] to subtract
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_subtract&quot;</span>)]
-    </span><span class="kw">pub fn </span>subtract(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Bitset) {
+    </span><span class="kw">pub fn </span>subtract(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><a href="#7-31">Bitset</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_subtract(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, other.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_bitset_subtract(<a class="self" href="#392">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#392">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -889,11 +889,10 @@
     /// ## `other`
     /// the [`Bitset`][crate::Bitset] to union with
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_bitset_union&quot;</span>)]
-    </span><span class="kw">pub fn </span>union(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span>Bitset) {
+    </span><span class="kw">pub fn </span>union(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><a href="#7-31">Bitset</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_bitset_union(<span class="self">self</span>.to_glib_none().<span class="number">0</span>, other.to_glib_none().<span class="number">0</span>);
+            ffi::gtk_bitset_union(<a class="self" href="#407">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#407">other</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 }
-</code></pre></div>
-</section></main><div id="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.69.0-nightly (ef934d9b6 2023-02-08)" data-search-js="search-28136cea55c34037.js" data-settings-js="settings-f0c5c39777a9a2f6.js" data-settings-css="settings-0bcba95ff279c1db.css" ></div></body></html>
+</code></pre></div></section></main></body></html>
