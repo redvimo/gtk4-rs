@@ -2499,7 +2499,8 @@ That is why you can move the window at the same time as a progress bar is growin
 That happens when a single task takes too long.
 Let's look at one example.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/1/main.rs">listings/main_event_loop/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use std::time::Duration;
+<pre><code class="language-rust  no_run noplayground">use std::thread;
+use std::time::Duration;
 
 use gtk::prelude::*;
 use gtk::{self, glib, Application, ApplicationWindow, Button};
@@ -2531,7 +2532,7 @@ fn build_ui(app: &amp;Application) {
     button.connect_clicked(move |_| {
         // GUI is blocked for 5 seconds after the button is pressed
         let five_seconds = Duration::from_secs(5);
-        std::thread::sleep(five_seconds);
+        thread::sleep(five_seconds);
     });
 
     // Create a window
@@ -2549,13 +2550,13 @@ We can't even move the window.
 The <code>sleep</code> call is an artificial example,
 but it is not unusual wanting to run a slightly longer operation in one go.</p>
 <h2 id="how-to-avoid-blocking-the-main-loop"><a class="header" href="#how-to-avoid-blocking-the-main-loop">How to Avoid Blocking the Main Loop</a></h2>
-<p>In order to avoid blocking the main loop we can spawn a new thread and let the operation run there.</p>
+<p>In order to avoid blocking the main loop we can spawn a new thread with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/fn.spawn_blocking.html"><code>gio::spawn_blocking</code></a> and let the operation run there.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/2/main.rs">listings/main_event_loop/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{self, glib, Application, ApplicationWindow, Button};
+</span><span class="boring">use gtk::{self, gio, glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop2&quot;;
 </span><span class="boring">
@@ -2583,7 +2584,7 @@ but it is not unusual wanting to run a slightly longer operation in one go.</p>
 </span>    // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
         // The long running operation runs now in a separate thread
-        thread::spawn(move || {
+        gio::spawn_blocking(move || {
             let five_seconds = Duration::from_secs(5);
             thread::sleep(five_seconds);
         });
@@ -2620,7 +2621,7 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
-</span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
+</span><span class="boring">use gtk::{gio, glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.MainEventLoop3&quot;;
 </span><span class="boring">
@@ -2650,7 +2651,7 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
     button.connect_clicked(move |_| {
         let sender = sender.clone();
         // The long running operation runs now in a separate thread
-        thread::spawn(move || {
+        gio::spawn_blocking(move || {
             // Deactivate the button until the operation is done
             sender.send(false).expect(&quot;Could not send through channel&quot;);
             let ten_seconds = Duration::from_secs(10);
@@ -2664,10 +2665,10 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
     receiver.attach(
         None,
         clone!(@weak button =&gt; @default-return glib::ControlFlow::Break,
-                    move |enable_button| {
-                        button.set_sensitive(enable_button);
-                        glib::ControlFlow::Continue
-                    }
+            move |enable_button| {
+                button.set_sensitive(enable_button);
+                glib::ControlFlow::Continue
+            }
         ),
     );
 <span class="boring">
@@ -2742,10 +2743,10 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
     receiver.attach(
         None,
         clone!(@weak button =&gt; @default-return glib::ControlFlow::Break,
-                    move |enable_button| {
-                        button.set_sensitive(enable_button);
-                        glib::ControlFlow::Continue
-                    }
+            move |enable_button| {
+                button.set_sensitive(enable_button);
+                glib::ControlFlow::Continue
+            }
         ),
     );
 <span class="boring">
@@ -2815,7 +2816,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 <pre><pre class="playground"><code class="language-rust  no_run compile_fail"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, MainContext, PRIORITY_DEFAULT};
-</span><span class="boring">use gtk::glib;
+</span><span class="boring">use gtk::{glib, gio};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -2857,7 +2858,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
     button.connect_clicked(move |button| {
         button.clone();
         // The long running operation runs now in a separate thread
-        thread::spawn(move || {
+        gio::spawn_blocking(move || {
             // Deactivate the button until the operation is done
             button.set_sensitive(false);
             let five_seconds = Duration::from_secs(5);
