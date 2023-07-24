@@ -311,7 +311,7 @@ impl IntegerObject {
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/integer_object/imp.rs">listings/list_widgets/2/integer_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, Properties, Value};
+</span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -332,19 +332,8 @@ pub struct IntegerObject {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
-</span><span class="boring">impl ObjectImpl for IntegerObject {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        Self::derived_properties()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        self.derived_set_property(id, value, pspec)
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        self.derived_property(id, pspec)
-</span><span class="boring">    }
-</span><span class="boring">}
+</span><span class="boring">#[glib::derived_properties]
+</span><span class="boring">impl ObjectImpl for IntegerObject {}
 </span><span class="boring"></span></code></pre>
 <p>We now fill the model with integers from 0 to 100 000.
 Please note that models only takes care of the data.

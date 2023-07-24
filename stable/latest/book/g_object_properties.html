@@ -350,7 +350,7 @@ It also generates <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gli
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, Properties, Value};
+</span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -372,19 +372,8 @@ pub struct CustomButton {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
+</span><span class="boring">#[glib::derived_properties]
 </span><span class="boring">impl ObjectImpl for CustomButton {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        Self::derived_properties()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        self.derived_set_property(id, value, pspec)
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        self.derived_property(id, pspec)
-</span><span class="boring">    }
-</span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        self.parent_constructed();
 </span><span class="boring">
@@ -407,14 +396,14 @@ pub struct CustomButton {
 </span><span class="boring">        self.obj().set_number(incremented_number);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p>The implementation of <code>properties</code>, <code>set_property</code> and <code>property</code> is boilerplate that is the same for every GObject that generates its properties with the <code>Property</code> macro.
+<p>The <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/attr.derived_properties.html"><code>glib::derived_properties</code></a> macro generates boilerplate that is the same for every GObject that generates its properties with the <code>Property</code> macro.
 In <code>constructed</code> we use our new property &quot;number&quot; by binding the &quot;label&quot; property to it.
 <code>bind_property</code> converts the integer value of &quot;number&quot; to the string of &quot;label&quot; on its own.
 Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, Properties, Value};
+</span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -436,19 +425,8 @@ Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore
 </span><span class="boring">}
 </span><span class="boring">
 </span>// Trait shared by all GObjects
+#[glib::derived_properties]
 impl ObjectImpl for CustomButton {
-    fn properties() -&gt; &amp;'static [ParamSpec] {
-        Self::derived_properties()
-    }
-
-    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-        self.derived_set_property(id, value, pspec)
-    }
-
-    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-        self.derived_property(id, pspec)
-    }
-
     fn constructed(&amp;self) {
         self.parent_constructed();
 
@@ -476,7 +454,7 @@ Before we modified <code>number</code> directly, now we can use the generated wr
 This way the &quot;notify&quot; signal will be emitted, which is necessary for the bindings to work as expected.</p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, Properties, Value};
+</span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -498,19 +476,8 @@ This way the &quot;notify&quot; signal will be emitted, which is necessary for t
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all GObjects
+</span><span class="boring">#[glib::derived_properties]
 </span><span class="boring">impl ObjectImpl for CustomButton {
-</span><span class="boring">    fn properties() -&gt; &amp;'static [ParamSpec] {
-</span><span class="boring">        Self::derived_properties()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-</span><span class="boring">        self.derived_set_property(id, value, pspec)
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-</span><span class="boring">        self.derived_property(id, pspec)
-</span><span class="boring">    }
-</span><span class="boring">
 </span><span class="boring">    fn constructed(&amp;self) {
 </span><span class="boring">        self.parent_constructed();
 </span><span class="boring">

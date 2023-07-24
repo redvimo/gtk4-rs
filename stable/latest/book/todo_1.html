@@ -521,7 +521,7 @@ For each property we additionally specify the name, the type and which member va
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/imp.rs">listings/todo/1/task_object/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
-</span><span class="boring">use glib::{ParamSpec, Properties, Value};
+</span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -545,19 +545,8 @@ impl ObjectSubclass for TaskObject {
 }
 
 // Trait shared by all GObjects
-impl ObjectImpl for TaskObject {
-    fn properties() -&gt; &amp;'static [ParamSpec] {
-        Self::derived_properties()
-    }
-
-    fn set_property(&amp;self, id: usize, value: &amp;Value, pspec: &amp;ParamSpec) {
-        self.derived_set_property(id, value, pspec)
-    }
-
-    fn property(&amp;self, id: usize, pspec: &amp;ParamSpec) -&gt; Value {
-        self.derived_property(id, pspec)
-    }
-}</code></pre>
+#[glib::derived_properties]
+impl ObjectImpl for TaskObject {}</code></pre>
 <h2 id="task-row"><a class="header" href="#task-row">Task Row</a></h2>
 <p>Let's move on to the individual tasks.
 The row of a task should look like this:</p>
