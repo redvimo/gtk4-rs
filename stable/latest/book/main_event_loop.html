@@ -302,7 +302,7 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
-</span><span class="boring">use glib::{clone, Continue, MainContext, Priority};
+</span><span class="boring">use glib::{clone, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -347,10 +347,10 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
     // The main loop executes the closure as soon as it receives the message
     receiver.attach(
         None,
-        clone!(@weak button =&gt; @default-return Continue(false),
+        clone!(@weak button =&gt; @default-return glib::ControlFlow::Break,
                     move |enable_button| {
                         button.set_sensitive(enable_button);
-                        Continue(true)
+                        glib::ControlFlow::Continue
                     }
         ),
     );
@@ -373,15 +373,15 @@ We want to send a <code>bool</code> to inform, whether we want the button to rea
 </div>
 <blockquote>
 <p>Per default, <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.clone.html"><code>glib::clone!</code></a> returns <code>()</code> when upgrading of a weak reference fails.
-<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.Receiver.html#method.attach"><code>glib::Receiver::attach</code></a> expects a closure with a return value of type <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/source/struct.Continue.html"><code>glib::Continue</code></a>.
-This is why we specify <code>@default-return</code> as <code>Continue(False)</code> to clarify that the closure not be called anymore as soon as the upgrade of a weak reference fails.</p>
+<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.Receiver.html#method.attach"><code>glib::Receiver::attach</code></a> expects a closure with a return value of type <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/enum.ControlFlow.html"><code>glib::ControlFlow</code></a>.
+This is why we specify <code>@default-return</code> as <code>glib::ControlFlow::Break</code> to clarify that the closure not be called anymore as soon as the upgrade of a weak reference fails.</p>
 </blockquote>
 <p>Spawning threads is not the only way to run operations asynchronously.
 You can also let the main loop take care of running <a href="https://rust-lang.github.io/async-book/"><code>async</code></a> functions.
 If you do that from the main thread use <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn_local"><code>spawn_local</code></a>, from other threads <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn"><code>spawn</code></a> has to be used.
 The converted code looks and behaves very similar to the multi-threaded code.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/4/main.rs">listings/main_event_loop/4/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, timeout_future_seconds, Continue, MainContext, Priority};
+<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, timeout_future_seconds, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -425,10 +425,10 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
     // The main loop executes the closure as soon as it receives the message
     receiver.attach(
         None,
-        clone!(@weak button =&gt; @default-return Continue(false),
+        clone!(@weak button =&gt; @default-return glib::ControlFlow::Break,
                     move |enable_button| {
                         button.set_sensitive(enable_button);
-                        Continue(true)
+                        glib::ControlFlow::Continue
                     }
         ),
     );

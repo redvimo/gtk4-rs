@@ -257,7 +257,6 @@ Then we add a reference to <code>settings</code> to <code>imp::Window</code>.</p
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -318,7 +317,7 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
@@ -434,7 +433,7 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">    fn setup_tasks(&amp;self) {
 </span><span class="boring">        // Create new model
-</span><span class="boring">        let model = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">        // Get state and set model
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
@@ -718,7 +717,7 @@ We also add an action which allows us to remove done tasks. </p>
 </span><span class="boring">
 </span><span class="boring">    fn setup_tasks(&amp;self) {
 </span><span class="boring">        // Create new model
-</span><span class="boring">        let model = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">        // Get state and set model
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
@@ -964,7 +963,7 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 <span class="boring">
 </span><span class="boring">    fn setup_tasks(&amp;self) {
 </span><span class="boring">        // Create new model
-</span><span class="boring">        let model = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">        // Get state and set model
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
@@ -1208,7 +1207,7 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
 </span><span class="boring">
 </span>    fn setup_tasks(&amp;self) {
         // Create new model
-        let model = gio::ListStore::new(TaskObject::static_type());
+        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 
         // Get state and set model
         self.imp().tasks.replace(Some(model));
@@ -1555,7 +1554,6 @@ Then we serialize the <code>Vec</code> and store the data as a json file.</p>
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -1616,7 +1614,7 @@ Then we serialize the <code>Vec</code> and store the data as a json file.</p>
 </span><span class="boring">
 </span>// Trait shared by all windows
 impl WindowImpl for Window {
-    fn close_request(&amp;self) -&gt; Inhibit {
+    fn close_request(&amp;self) -&gt; glib::ControlFlow {
         // Store task data in vector
         let backup_data: Vec&lt;TaskData&gt; = self
             .obj()
@@ -1762,7 +1760,7 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">
 </span><span class="boring">    fn setup_tasks(&amp;self) {
 </span><span class="boring">        // Create new model
-</span><span class="boring">        let model = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">        // Get state and set model
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
@@ -1916,7 +1914,6 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -1977,7 +1974,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()

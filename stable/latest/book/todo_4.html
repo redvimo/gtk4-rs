@@ -312,7 +312,6 @@ For example, the parent type of our window is now <code>adw::ApplicationWindow</
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
@@ -373,7 +372,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
@@ -406,7 +405,6 @@ impl ObjectSubclass for Window {
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
@@ -467,7 +465,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;TaskData&gt; = self
 </span><span class="boring">            .obj()
@@ -580,7 +578,7 @@ impl AdwApplicationWindowImpl for Window {}</code></pre>
 </span><span class="boring">
 </span><span class="boring">    fn setup_tasks(&amp;self) {
 </span><span class="boring">        // Create new model
-</span><span class="boring">        let model = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">        // Get state and set model
 </span><span class="boring">        self.imp().tasks.replace(Some(model));
@@ -861,7 +859,7 @@ impl ObjectSubclass for CollectionObject {
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/collection_object/mod.rs">listings/todo/8/collection_object/mod.rs</a></p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::{ListModelExtManual, *};
+</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::{gio, glib};
@@ -900,7 +898,7 @@ impl ObjectSubclass for CollectionObject {
 </span><span class="boring">            .map(TaskObject::from_task_data)
 </span><span class="boring">            .collect();
 </span><span class="boring">
-</span><span class="boring">        let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">        tasks.extend_from_slice(&amp;tasks_to_extend);
 </span><span class="boring">
 </span><span class="boring">        Self::new(&amp;title, tasks)
@@ -921,7 +919,7 @@ pub struct CollectionData {
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/collection_object/mod.rs">listings/todo/8/collection_object/mod.rs</a></p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::{ListModelExtManual, *};
+</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::{gio, glib};
@@ -960,7 +958,7 @@ pub struct CollectionData {
             .map(TaskObject::from_task_data)
             .collect();
 
-        let tasks = gio::ListStore::new(TaskObject::static_type());
+        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
         tasks.extend_from_slice(&amp;tasks_to_extend);
 
         Self::new(&amp;title, tasks)
@@ -986,7 +984,6 @@ Its purpose will become clear in later snippets.</p>
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">use adw::Leaflet;
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
 </span><span class="boring">use gtk::{
@@ -1059,7 +1056,7 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;CollectionData&gt; = self
 </span><span class="boring">            .obj()
@@ -1196,7 +1193,7 @@ pub struct Window {
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -1516,7 +1513,7 @@ pub struct Window {
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -1543,7 +1540,6 @@ Since most of the implementation is in the method <code>CollectionObject::to_col
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">use adw::Leaflet;
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
 </span><span class="boring">use gtk::{
@@ -1616,7 +1612,7 @@ Since most of the implementation is in the method <code>CollectionObject::to_col
 </span><span class="boring">
 </span>// Trait shared by all windows
 impl WindowImpl for Window {
-    fn close_request(&amp;self) -&gt; Inhibit {
+    fn close_request(&amp;self) -&gt; glib::ControlFlow {
         // Store task data in vector
         let backup_data: Vec&lt;CollectionData&gt; = self
             .obj()
@@ -1651,7 +1647,6 @@ Instead of <code>setup_tasks</code> we now call <code>setup_collections</code>.<
 </span><span class="boring">use adw::subclass::prelude::*;
 </span><span class="boring">use adw::Leaflet;
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::signal::Inhibit;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
 </span><span class="boring">use gtk::{
@@ -1724,7 +1719,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all windows
 </span><span class="boring">impl WindowImpl for Window {
-</span><span class="boring">    fn close_request(&amp;self) -&gt; Inhibit {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::ControlFlow {
 </span><span class="boring">        // Store task data in vector
 </span><span class="boring">        let backup_data: Vec&lt;CollectionData&gt; = self
 </span><span class="boring">            .obj()
@@ -1862,7 +1857,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn setup_collections(&amp;self) {
-        let collections = gio::ListStore::new(CollectionObject::static_type());
+        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
         self.imp()
             .collections
             .set(collections.clone())
@@ -2182,7 +2177,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -2311,7 +2306,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -2631,7 +2626,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -2763,7 +2758,7 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -3083,7 +3078,7 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -3218,7 +3213,7 @@ Finally, we select the collection row.</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -3538,7 +3533,7 @@ Finally, we select the collection row.</p>
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -3668,7 +3663,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -3988,7 +3983,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -4117,7 +4112,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -4437,7 +4432,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -4583,7 +4578,7 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -4903,7 +4898,7 @@ This action will be activated by a click on the <code>+</code> button as well as
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -5038,7 +5033,7 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -5358,7 +5353,7 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
                 }
 
                 // Create a new list store
-                let tasks = gio::ListStore::new(TaskObject::static_type());
+                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 
                 // Create a new collection object from the title the user provided
                 let title = entry.text().to_string();
@@ -5493,7 +5488,7 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -5813,7 +5808,7 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
@@ -5943,7 +5938,7 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new(CollectionObject::static_type());
+</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
 </span><span class="boring">        self.imp()
 </span><span class="boring">            .collections
 </span><span class="boring">            .set(collections.clone())
@@ -6263,7 +6258,7 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">                }
 </span><span class="boring">
 </span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new(TaskObject::static_type());
+</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
 </span><span class="boring">                // Create a new collection object from the title the user provided
 </span><span class="boring">                let title = entry.text().to_string();
