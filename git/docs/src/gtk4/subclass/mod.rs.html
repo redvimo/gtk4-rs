@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (474709a9a 2023-08-03)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-6d2c9675f3d09c26.css" data-theme-dark-css="dark-45ceb8f2e522f4d1.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-6d2c9675f3d09c26.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-45ceb8f2e522f4d1.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/mod.rs`."><title>mod.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (eb088b8b9 2023-08-05)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-1596385f77d47ef2.css" data-theme-dark-css="dark-0a43001d3fc2282c.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-1596385f77d47ef2.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-0a43001d3fc2282c.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -256,6 +256,7 @@
 <a href="#183" id="183">183</a>
 <a href="#184" id="184">184</a>
 <a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
@@ -272,10 +273,10 @@
     }
 }
 
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub mod </span><a href="accessible.rs.html#4-245">accessible</a>;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
 </span><span class="kw">pub mod </span><a href="accessible_range.rs.html#4-64">accessible_range</a>;
 <span class="kw">pub mod </span><a href="actionable.rs.html#4-141">actionable</a>;
@@ -292,9 +293,9 @@
 <span class="kw">pub mod </span><a href="cell_layout.rs.html#4-405">cell_layout</a>;
 <span class="kw">pub mod </span><a href="cell_renderer.rs.html#4-734">cell_renderer</a>;
 <span class="kw">pub mod </span><a href="cell_renderer_text.rs.html#4-66">cell_renderer_text</a>;
-<span class="kw">pub mod </span><a href="check_button.rs.html#4-77">check_button</a>;
+<span class="kw">pub mod </span><a href="check_button.rs.html#4-81">check_button</a>;
 <span class="kw">pub mod </span><a href="color_chooser.rs.html#4-178">color_chooser</a>;
-<span class="kw">pub mod </span><a href="combo_box.rs.html#4-106">combo_box</a>;
+<span class="kw">pub mod </span><a href="combo_box.rs.html#4-110">combo_box</a>;
 <span class="kw">pub mod </span><a href="constraint_target.rs.html#4-14">constraint_target</a>;
 <span class="kw">pub mod </span><a href="dialog.rs.html#4-83">dialog</a>;
 <span class="kw">pub mod </span><a href="drawing_area.rs.html#4-55">drawing_area</a>;
@@ -308,7 +309,7 @@
 <span class="kw">pub mod </span><a href="frame.rs.html#4-57">frame</a>;
 <span class="kw">pub mod </span><a href="gl_area.rs.html#4-117">gl_area</a>;
 <span class="kw">pub mod </span><a href="grid.rs.html#4-10">grid</a>;
-<span class="kw">pub mod </span><a href="im_context.rs.html#4-664">im_context</a>;
+<span class="kw">pub mod </span><a href="im_context.rs.html#4-668">im_context</a>;
 <span class="kw">pub mod </span><a href="layout_child.rs.html#4-16">layout_child</a>;
 <span class="kw">pub mod </span><a href="layout_manager.rs.html#4-330">layout_manager</a>;
 <span class="kw">pub mod </span><a href="list_box_row.rs.html#4-48">list_box_row</a>;
@@ -326,14 +327,14 @@
 <span class="kw">pub mod </span><a href="scale.rs.html#4-79">scale</a>;
 <span class="kw">pub mod </span><a href="scale_button.rs.html#4-54">scale_button</a>;
 <span class="kw">pub mod </span><a href="scrollable.rs.html#4-71">scrollable</a>;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;v4_12&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
 </span><span class="kw">pub mod </span><a href="section_model.rs.html#4-72">section_model</a>;
 <span class="kw">pub mod </span><a href="selection_model.rs.html#4-356">selection_model</a>;
 <span class="kw">pub mod </span><a href="shortcut_manager.rs.html#4-97">shortcut_manager</a>;
 <span class="kw">pub mod </span><a href="sorter.rs.html#4-95">sorter</a>;
 <span class="kw">pub mod </span><a href="style_context.rs.html#4-57">style_context</a>;
-<span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+<span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
 #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
 </span><span class="kw">pub mod </span><a href="symbolic_paintable.rs.html#4-90">symbolic_paintable</a>;
 <span class="kw">pub mod </span><a href="text_buffer.rs.html#4-523">text_buffer</a>;
@@ -357,10 +358,10 @@
     <span class="attr">#[doc(hidden)]
     </span><span class="kw">pub use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/prelude/index.html">glib::subclass::prelude</a>::<span class="kw-2">*</span>;
 
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::accessible::{<a href="accessible.rs.html#10-40">AccessibleImpl</a>, <a href="accessible.rs.html#47-162">AccessibleImplExt</a>};
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_10&quot;</span>, docsrs))]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::accessible_range::{<a href="accessible_range.rs.html#9-13">AccessibleRangeImpl</a>, <a href="accessible_range.rs.html#20-40">AccessibleRangeImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::actionable::{<a href="actionable.rs.html#9-16">ActionableImpl</a>, <a href="actionable.rs.html#23-89">ActionableImplExt</a>};
@@ -377,9 +378,9 @@
     <span class="kw">pub use </span><span class="kw">super</span>::cell_layout::{<a href="cell_layout.rs.html#53-94">CellLayoutImpl</a>, <a href="cell_layout.rs.html#103-265">CellLayoutImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::cell_renderer::{<a href="cell_renderer.rs.html#17-255">CellRendererImpl</a>, <a href="cell_renderer.rs.html#264-512">CellRendererImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::cell_renderer_text::{<a href="cell_renderer_text.rs.html#11-15">CellRendererTextImpl</a>, <a href="cell_renderer_text.rs.html#24-41">CellRendererTextImplExt</a>};
-    <span class="kw">pub use </span><span class="kw">super</span>::check_button::{<a href="check_button.rs.html#9-18">CheckButtonImpl</a>, <a href="check_button.rs.html#25-46">CheckButtonImplExt</a>};
+    <span class="kw">pub use </span><span class="kw">super</span>::check_button::{<a href="check_button.rs.html#9-19">CheckButtonImpl</a>, <a href="check_button.rs.html#26-48">CheckButtonImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::color_chooser::{<a href="color_chooser.rs.html#12-24">ColorChooserImpl</a>, <a href="color_chooser.rs.html#33-114">ColorChooserImplExt</a>};
-    <span class="kw">pub use </span><span class="kw">super</span>::combo_box::{<a href="combo_box.rs.html#11-22">ComboBoxImpl</a>, <a href="combo_box.rs.html#31-64">ComboBoxImplExt</a>};
+    <span class="kw">pub use </span><span class="kw">super</span>::combo_box::{<a href="combo_box.rs.html#11-23">ComboBoxImpl</a>, <a href="combo_box.rs.html#32-66">ComboBoxImplExt</a>};
     <span class="kw">pub use </span><a href="constraint_target.rs.html#8"><span class="kw">super</span>::constraint_target::ConstraintTargetImpl</a>;
     <span class="kw">pub use </span><span class="kw">super</span>::dialog::{<a href="dialog.rs.html#9-26">DialogImpl</a>, <a href="dialog.rs.html#33-56">DialogImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::drawing_area::{<a href="drawing_area.rs.html#9-13">DrawingAreaImpl</a>, <a href="drawing_area.rs.html#19-33">DrawingAreaImplExt</a>};
@@ -393,7 +394,7 @@
     <span class="kw">pub use </span><span class="kw">super</span>::frame::{<a href="frame.rs.html#11-15">FrameImpl</a>, <a href="frame.rs.html#19-35">FrameImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::gl_area::{<a href="gl_area.rs.html#11-23">GLAreaImpl</a>, <a href="gl_area.rs.html#31-74">GLAreaImplExt</a>};
     <span class="kw">pub use </span><a href="grid.rs.html#8"><span class="kw">super</span>::grid::GridImpl</a>;
-    <span class="kw">pub use </span><span class="kw">super</span>::im_context::{<a href="im_context.rs.html#11-212">IMContextImpl</a>, <a href="im_context.rs.html#220-454">IMContextImplExt</a>};
+    <span class="kw">pub use </span><span class="kw">super</span>::im_context::{<a href="im_context.rs.html#11-213">IMContextImpl</a>, <a href="im_context.rs.html#221-456">IMContextImplExt</a>};
     <span class="kw">pub use </span><a href="layout_child.rs.html#8"><span class="kw">super</span>::layout_child::LayoutChildImpl</a>;
     <span class="kw">pub use </span><span class="kw">super</span>::layout_manager::{<a href="layout_manager.rs.html#13-103">LayoutManagerImpl</a>, <a href="layout_manager.rs.html#110-226">LayoutManagerImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::list_box_row::{<a href="list_box_row.rs.html#9-13">ListBoxRowImpl</a>, <a href="list_box_row.rs.html#20-30">ListBoxRowImplExt</a>};
@@ -411,14 +412,15 @@
     <span class="kw">pub use </span><span class="kw">super</span>::scale::{<a href="scale.rs.html#9-31">ScaleImpl</a>, <a href="scale.rs.html#38-55">ScaleImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::scale_button::{<a href="scale_button.rs.html#9-13">ScaleButtonImpl</a>, <a href="scale_button.rs.html#20-33">ScaleButtonImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::scrollable::{<a href="scrollable.rs.html#9-14">ScrollableImpl</a>, <a href="scrollable.rs.html#21-40">ScrollableImplExt</a>};
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_12&quot;</span>, docsrs))]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_12&quot;</span>)]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_12&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::section_model::{<a href="section_model.rs.html#9-14">SectionModelImpl</a>, <a href="section_model.rs.html#21-46">SectionModelImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::selection_model::{<a href="selection_model.rs.html#9-46">SelectionModelImpl</a>, <a href="selection_model.rs.html#53-237">SelectionModelImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::shortcut_manager::{<a href="shortcut_manager.rs.html#9-17">ShortcutManagerImpl</a>, <a href="shortcut_manager.rs.html#24-64">ShortcutManagerImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::sorter::{<a href="sorter.rs.html#9-27">SorterImpl</a>, <a href="sorter.rs.html#34-60">SorterImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::style_context::{<a href="style_context.rs.html#11-15">StyleContextImpl</a>, <a href="style_context.rs.html#24-38">StyleContextImplExt</a>};
-    <span class="attr">#[cfg(any(feature = <span class="string">&quot;v4_6&quot;</span>, docsrs))]
+    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
     </span><span class="kw">pub use </span><span class="kw">super</span>::symbolic_paintable::{<a href="symbolic_paintable.rs.html#9-19">SymbolicPaintableImpl</a>, <a href="symbolic_paintable.rs.html#26-53">SymbolicPaintableImplExt</a>};
     <span class="kw">pub use </span><span class="kw">super</span>::text_buffer::{<a href="text_buffer.rs.html#11-134">TextBufferImpl</a>, <a href="text_buffer.rs.html#141-328">TextBufferImplExt</a>};
