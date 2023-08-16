@@ -279,6 +279,9 @@ Again we do that by extending our <code>CustomButton</code>.
 First we override the <code>signals</code> method in <code>ObjectImpl</code>.
 In order to do that, we need to lazily initialize a static item <code>SIGNALS</code>.
 Until <a href="https://doc.rust-lang.org/std/sync/struct.LazyLock.html"><code>std::sync::LazyLock</code></a> is stabilized, we use <a href="https://docs.rs/once_cell/latest/once_cell/sync/struct.Lazy.html"><code>once_cell::sync::Lazy</code></a> instead.</p>
+<p>This also means, we have to add the <code>once_cell</code> crate as dependency by executing:</p>
+<pre><code>cargo add once_cell
+</code></pre>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_signals/2/custom_button/imp.rs">listings/g_object_signals/2/custom_button/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
