@@ -969,13 +969,13 @@ First we create a schema with settings corresponding to the stateful actions we 
 </code></pre>
 <p>Again, we install the schema as described in the settings <a href="./settings.html">chapter</a>.
 Then we add the settings to <code>imp::Window</code>.
-Since <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a> does not implement <code>Default</code>, we wrap it in a <a href="https://docs.rs/once_cell/latest/once_cell/sync/struct.OnceCell.html"><code>once_cell::sync::OnceCell</code></a>.</p>
+Since <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a> does not implement <code>Default</code>, we wrap it in a <a href="https://doc.rust-lang.org/std/cell/struct.OnceCell.html"><code>std::cell::OnceCell</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/imp.rs">listings/actions/7/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
-</span><span class="boring">use once_cell::sync::OnceCell;
+</span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span>// Object holding the state
 #[derive(CompositeTemplate, Default)]
@@ -1402,7 +1402,7 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Button, CompositeTemplate, Label};
-</span><span class="boring">use once_cell::sync::OnceCell;
+</span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">// Object holding the state
 </span><span class="boring">#[derive(CompositeTemplate, Default)]
