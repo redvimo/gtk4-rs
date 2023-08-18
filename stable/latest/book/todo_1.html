@@ -888,6 +888,134 @@ Then we store a reference to the model in <code>imp::Window</code> as well as in
 </span><span class="boring">        self.imp().tasks_list.set_factory(Some(&amp;factory));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
+<p>We also create a method <code>new_task</code> which takes the content of the entry, clears the entry and uses the content to create a new task.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
+<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+</span><span class="boring">
+</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gtk::subclass::prelude::*;
+</span><span class="boring">use gtk::{gio, glib, Application, NoSelection, SignalListItemFactory};
+</span><span class="boring">use gtk::{prelude::*, ListItem};
+</span><span class="boring">
+</span><span class="boring">use crate::task_object::TaskObject;
+</span><span class="boring">use crate::task_row::TaskRow;
+</span><span class="boring">
+</span><span class="boring">glib::wrapper! {
+</span><span class="boring">    pub struct Window(ObjectSubclass&lt;imp::Window&gt;)
+</span><span class="boring">        @extends gtk::ApplicationWindow, gtk::Window, gtk::Widget,
+</span><span class="boring">        @implements gio::ActionGroup, gio::ActionMap, gtk::Accessible, gtk::Buildable,
+</span><span class="boring">                    gtk::ConstraintTarget, gtk::Native, gtk::Root, gtk::ShortcutManager;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Window {
+</span><span class="boring">    pub fn new(app: &amp;Application) -&gt; Self {
+</span><span class="boring">        // Create new window
+</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn tasks(&amp;self) -&gt; gio::ListStore {
+</span><span class="boring">        // Get state
+</span><span class="boring">        self.imp()
+</span><span class="boring">            .tasks
+</span><span class="boring">            .borrow()
+</span><span class="boring">            .clone()
+</span><span class="boring">            .expect(&quot;Could not get current tasks.&quot;)
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn setup_tasks(&amp;self) {
+</span><span class="boring">        // Create new model
+</span><span class="boring">        let model = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">
+</span><span class="boring">        // Get state and set model
+</span><span class="boring">        self.imp().tasks.replace(Some(model));
+</span><span class="boring">
+</span><span class="boring">        // Wrap model with selection and pass it to the list view
+</span><span class="boring">        let selection_model = NoSelection::new(Some(self.tasks()));
+</span><span class="boring">        self.imp().tasks_list.set_model(Some(&amp;selection_model));
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    fn setup_callbacks(&amp;self) {
+</span><span class="boring">        // Setup callback for activation of the entry
+</span><span class="boring">        self.imp()
+</span><span class="boring">            .entry
+</span><span class="boring">            .connect_activate(clone!(@weak self as window =&gt; move |_| {
+</span><span class="boring">                window.new_task();
+</span><span class="boring">            }));
+</span><span class="boring">
+</span><span class="boring">        // Setup callback for clicking (and the releasing) the icon of the entry
+</span><span class="boring">        self.imp().entry.connect_icon_release(
+</span><span class="boring">            clone!(@weak self as window =&gt; move |_,_| {
+</span><span class="boring">                window.new_task();
+</span><span class="boring">            }),
+</span><span class="boring">        );
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    fn new_task(&amp;self) {
+        // Get content from entry and clear it
+        let buffer = self.imp().entry.buffer();
+        let content = buffer.text().to_string();
+        if content.is_empty() {
+            return;
+        }
+        buffer.set_text(&quot;&quot;);
+
+        // Add new task to model
+        let task = TaskObject::new(false, content);
+        self.tasks().append(&amp;task);
+    }
+<span class="boring">
+</span><span class="boring">    fn setup_factory(&amp;self) {
+</span><span class="boring">        // Create a new factory
+</span><span class="boring">        let factory = SignalListItemFactory::new();
+</span><span class="boring">
+</span><span class="boring">        // Create an empty `TaskRow` during setup
+</span><span class="boring">        factory.connect_setup(move |_, list_item| {
+</span><span class="boring">            // Create `TaskRow`
+</span><span class="boring">            let task_row = TaskRow::new();
+</span><span class="boring">            list_item
+</span><span class="boring">                .downcast_ref::&lt;ListItem&gt;()
+</span><span class="boring">                .expect(&quot;Needs to be ListItem&quot;)
+</span><span class="boring">                .set_child(Some(&amp;task_row));
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Tell factory how to bind `TaskRow` to a `TaskObject`
+</span><span class="boring">        factory.connect_bind(move |_, list_item| {
+</span><span class="boring">            // Get `TaskObject` from `ListItem`
+</span><span class="boring">            let task_object = list_item
+</span><span class="boring">                .downcast_ref::&lt;ListItem&gt;()
+</span><span class="boring">                .expect(&quot;Needs to be ListItem&quot;)
+</span><span class="boring">                .item()
+</span><span class="boring">                .and_downcast::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The item has to be an `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            // Get `TaskRow` from `ListItem`
+</span><span class="boring">            let task_row = list_item
+</span><span class="boring">                .downcast_ref::&lt;ListItem&gt;()
+</span><span class="boring">                .expect(&quot;Needs to be ListItem&quot;)
+</span><span class="boring">                .child()
+</span><span class="boring">                .and_downcast::&lt;TaskRow&gt;()
+</span><span class="boring">                .expect(&quot;The child has to be a `TaskRow`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            task_row.bind(&amp;task_object);
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Tell factory how to unbind `TaskRow` from `TaskObject`
+</span><span class="boring">        factory.connect_unbind(move |_, list_item| {
+</span><span class="boring">            // Get `TaskRow` from `ListItem`
+</span><span class="boring">            let task_row = list_item
+</span><span class="boring">                .downcast_ref::&lt;ListItem&gt;()
+</span><span class="boring">                .expect(&quot;Needs to be ListItem&quot;)
+</span><span class="boring">                .child()
+</span><span class="boring">                .and_downcast::&lt;TaskRow&gt;()
+</span><span class="boring">                .expect(&quot;The child has to be a `TaskRow`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            task_row.unbind();
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Set the factory of the list view
+</span><span class="boring">        self.imp().tasks_list.set_factory(Some(&amp;factory));
+</span><span class="boring">    }
+</span><span class="boring">}</span></code></pre>
 <p>In <code>Window::setup_callbacks</code> we connect to the &quot;activate&quot; signal of the entry.
 This signal is triggered when we press the enter key in the entry.
 Then a new <code>TaskObject</code> with the content will be created and appended to the model.
