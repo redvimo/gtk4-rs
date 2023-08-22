@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/attribute_parser.rs`."><title>attribute_parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (0bdb00d55 2023-08-15)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-1596385f77d47ef2.css" data-theme-dark-css="dark-0a43001d3fc2282c.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-1596385f77d47ef2.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-0a43001d3fc2282c.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4-macros/src/attribute_parser.rs`."><title>attribute_parser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4_macros" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (ef85656a1 2023-08-21)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -457,7 +457,7 @@
 <a href="#384" id="384">384</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use </span>anyhow::{<a href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail</a>, <span class="prelude-ty">Result</span>};
+</span><span class="kw">use </span>anyhow::{<a href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail</a>, <span class="prelude-ty">Result</span>};
 <span class="kw">use </span><a href="https://docs.rs/proc-macro2/1.0.66/proc_macro2/struct.Span.html">proc_macro2::Span</a>;
 <span class="kw">use </span>syn::{
     <a href="https://docs.rs/syn/1.0.109/syn/error/struct.Error.html">parse::Error</a>, <a href="https://docs.rs/syn/1.0.109/syn/spanned/trait.Spanned.html">spanned::Spanned</a>, <a href="https://docs.rs/syn/1.0.109/syn/attr/struct.Attribute.html">Attribute</a>, <a href="https://docs.rs/syn/1.0.109/syn/derive/struct.DeriveInput.html">DeriveInput</a>, <a href="https://docs.rs/syn/1.0.109/syn/data/struct.Field.html">Field</a>, <a href="https://docs.rs/syn/1.0.109/syn/data/enum.Fields.html">Fields</a>, Ident, Lit, <a href="https://docs.rs/syn/1.0.109/syn/attr/enum.Meta.html">Meta</a>,
@@ -494,14 +494,14 @@
                 </span><span class="kw">return </span><span class="prelude-val">Ok</span>(<span class="self">Self</span>::Xml(source));
             }
         }
-        <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Unknown language&quot;</span>)
+        <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Unknown language&quot;</span>)
     }
 }
 
 <span class="kw">pub fn </span>parse_template_source(input: <span class="kw-2">&amp;</span><a href="https://docs.rs/syn/1.0.109/syn/derive/struct.DeriveInput.html">DeriveInput</a>) -&gt; <span class="prelude-ty">Result</span>&lt;<a href="#10-13">Template</a>&gt; {
     <span class="kw">let </span>meta = <span class="kw">match </span>find_attribute_meta(<span class="kw-2">&amp;</span>input.attrs, <span class="string">&quot;template&quot;</span>)<span class="question-mark">? </span>{
         <span class="prelude-val">Some</span>(meta) =&gt; <a href="#46">meta</a>,
-        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Missing &#39;template&#39; attribute&quot;</span>),
+        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Missing &#39;template&#39; attribute&quot;</span>),
     };
 
     <span class="kw">let </span><span class="kw-2">mut </span>allow_template_child_without_attribute = <span class="bool-val">false</span>;
@@ -537,7 +537,7 @@
     }
     <span class="kw">let </span>source = <span class="kw">match </span><a href="#51">source</a> {
         <span class="prelude-val">Some</span>(source) =&gt; <a href="#82">source</a>,
-        <span class="prelude-val">None </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(Error::new_spanned(
+        <span class="prelude-val">None </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(Error::new_spanned(
             <span class="kw-2">&amp;</span>meta,
             <span class="string">&quot;Invalid meta, specify one of &#39;file&#39;, &#39;resource&#39;, or &#39;string&#39;&quot;
         </span>)),
@@ -549,7 +549,7 @@
         <span class="string">&quot;file&quot; </span>=&gt; <a href="#16">TemplateSource::File</a>(<a href="#89">v</a>),
         <span class="string">&quot;resource&quot; </span>=&gt; <a href="#17">TemplateSource::Resource</a>(<a href="#89">v</a>),
         <span class="string">&quot;string&quot; </span>=&gt; TemplateSource::from_string_source(v)<span class="question-mark">?</span>,
-        s =&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Unknown enum meta {}&quot;</span>, s),
+        s =&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;Unknown enum meta {}&quot;</span>, s),
     };
     <span class="prelude-val">Ok</span>(<a href="#10-13">Template</a> {
         <a href="#91">source</a>,
@@ -565,7 +565,7 @@
     };
     <span class="kw">match </span>meta<span class="question-mark">? </span>{
         Meta::List(n) =&gt; <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<a href="#110">n</a>)),
-        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
+        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
     }
 }
 
@@ -573,19 +573,19 @@
 </span><span class="kw">fn </span>parse_attribute(meta: <span class="kw-2">&amp;</span><a href="https://docs.rs/syn/1.0.109/syn/attr/enum.NestedMeta.html">NestedMeta</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(<a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>, <a href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html">String</a>)&gt; {
     <span class="kw">let </span>meta = <span class="kw">match </span><span class="kw-2">&amp;</span><a href="#116">meta</a> {
         NestedMeta::Meta(m) =&gt; <a href="#118">m</a>,
-        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
+        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
     };
     <span class="kw">let </span>meta = <span class="kw">match </span><a href="#117">meta</a> {
         Meta::NameValue(n) =&gt; <a href="#122">n</a>,
-        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
+        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
     };
     <span class="kw">let </span>value = <span class="kw">match </span><span class="kw-2">&amp;</span><a href="#121">meta</a>.lit {
         Lit::Str(s) =&gt; <a href="#126">s</a>.value(),
-        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
+        <span class="kw">_ </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;wrong meta type&quot;</span>),
     };
 
     <span class="kw">let </span>ident = <span class="kw">match </span><a href="#121">meta</a>.path.get_ident() {
-        <span class="prelude-val">None </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.74/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;missing ident&quot;</span>),
+        <span class="prelude-val">None </span>=&gt; <a class="macro" href="https://docs.rs/anyhow/1.0.75/anyhow/macro.bail.html">bail!</a>(<span class="string">&quot;missing ident&quot;</span>),
         <span class="prelude-val">Some</span>(ident) =&gt; <a href="#132">ident</a>,
     };
 

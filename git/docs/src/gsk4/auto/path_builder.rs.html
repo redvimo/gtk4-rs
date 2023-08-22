@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/path_builder.rs`."><title>path_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0-nightly (0bdb00d55 2023-08-15)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-1596385f77d47ef2.css" data-theme-dark-css="dark-0a43001d3fc2282c.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-1596385f77d47ef2.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-0a43001d3fc2282c.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/path_builder.rs`."><title>path_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (ef85656a1 2023-08-21)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -441,11 +441,42 @@
 <a href="#368" id="368">368</a>
 <a href="#369" id="369">369</a>
 <a href="#370" id="370">370</a>
+<a href="#371" id="371">371</a>
+<a href="#372" id="372">372</a>
+<a href="#373" id="373">373</a>
+<a href="#374" id="374">374</a>
+<a href="#375" id="375">375</a>
+<a href="#376" id="376">376</a>
+<a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use crate</span>::{<a href="path.rs.html#9-37">Path</a>, <a href="path_point.rs.html#8-27">PathPoint</a>};
+</span><span class="kw">use crate</span>::{<a href="path.rs.html#9-37">Path</a>, <a href="path_point.rs.html#9-28">PathPoint</a>, <a href="../rounded_rect.rs.html#7-23">RoundedRect</a>};
 <span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 
 <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
@@ -515,6 +546,8 @@
     }
 
     <span class="doccomment">/// Adds a circle with the @center and @radius.
+    ///
+    /// The path is going around the circle in clockwise direction.
     /// ## `center`
     /// the center of the circle
     /// ## `radius`
@@ -523,9 +556,9 @@
     </span><span class="kw">pub fn </span>add_circle(<span class="kw-2">&amp;</span><span class="self">self</span>, center: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a>, radius: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gsk_path_builder_add_circle(
-                <a class="self" href="#80">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#80">center</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#80">radius</a>,
+                <a class="self" href="#82">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#82">center</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#82">radius</a>,
             );
         }
     }
@@ -537,7 +570,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_layout&quot;</span>)]
     </span><span class="kw">pub fn </span>add_layout(<span class="kw-2">&amp;</span><span class="self">self</span>, layout: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/layout/struct.Layout.html">pango::Layout</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_add_layout(<a class="self" href="#95">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#95">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+            ffi::gsk_path_builder_add_layout(<a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#97">layout</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -547,11 +580,13 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_path&quot;</span>)]
     </span><span class="kw">pub fn </span>add_path(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="path.rs.html#9-37">Path</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_add_path(<a class="self" href="#105">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#105">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+            ffi::gsk_path_builder_add_path(<a class="self" href="#107">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#107">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
     <span class="doccomment">/// Adds @rect as a new contour to the path built by the builder.
+    ///
+    /// The path is going around the rectangle in clockwise direction.
     ///
     /// If the width or height of the rectangle is negative, the start
     /// point will be on the right or bottom, respectively.
@@ -563,7 +598,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_rect&quot;</span>)]
     </span><span class="kw">pub fn </span>add_rect(<span class="kw-2">&amp;</span><span class="self">self</span>, rect: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/rect/struct.Rect.html">graphene::Rect</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_add_rect(<a class="self" href="#121">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#121">rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+            ffi::gsk_path_builder_add_rect(<a class="self" href="#125">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#125">rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -573,7 +608,19 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_reverse_path&quot;</span>)]
     </span><span class="kw">pub fn </span>add_reverse_path(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="path.rs.html#9-37">Path</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_add_reverse_path(<a class="self" href="#131">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#131">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+            ffi::gsk_path_builder_add_reverse_path(<a class="self" href="#135">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#135">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+        }
+    }
+
+    <span class="doccomment">/// Adds @rect as a new contour to the path built in @self.
+    ///
+    /// The path is going around the rectangle in clockwise direction.
+    /// ## `rect`
+    /// the rounded rect
+    </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_rounded_rect&quot;</span>)]
+    </span><span class="kw">pub fn </span>add_rounded_rect(<span class="kw-2">&amp;</span><span class="self">self</span>, rect: <span class="kw-2">&amp;</span><a href="../rounded_rect.rs.html#7-23">RoundedRect</a>) {
+        <span class="kw">unsafe </span>{
+            ffi::gsk_path_builder_add_rounded_rect(<a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#147">rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -593,13 +640,13 @@
     /// ## `end`
     /// the point on @path to end at
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_add_segment&quot;</span>)]
-    </span><span class="kw">pub fn </span>add_segment(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="path.rs.html#9-37">Path</a>, start: <span class="kw-2">&amp;</span><a href="path_point.rs.html#8-27">PathPoint</a>, end: <span class="kw-2">&amp;</span><a href="path_point.rs.html#8-27">PathPoint</a>) {
+    </span><span class="kw">pub fn </span>add_segment(<span class="kw-2">&amp;</span><span class="self">self</span>, path: <span class="kw-2">&amp;</span><a href="path.rs.html#9-37">Path</a>, start: <span class="kw-2">&amp;</span><a href="path_point.rs.html#9-28">PathPoint</a>, end: <span class="kw-2">&amp;</span><a href="path_point.rs.html#9-28">PathPoint</a>) {
         <span class="kw">unsafe </span>{
             ffi::gsk_path_builder_add_segment(
-                <a class="self" href="#153">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#153">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#153">start</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#153">end</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a class="self" href="#169">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#169">path</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#169">start</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#169">end</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             );
         }
     }
@@ -608,13 +655,13 @@
     ///
     /// Note that this is different from calling [`line_to()`][Self::line_to()]
     /// with the start point in that the contour will be closed. A closed
-    /// contour behaves different from an open one when stroking its start
-    /// and end point are considered connected, so they will be joined
-    /// via the line join, and not ended with line caps.
+    /// contour behaves differently from an open one. When stroking, its
+    /// start and end point are considered connected, so they will be
+    /// joined via the line join, and not ended with line caps.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_close&quot;</span>)]
     </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_close(<a class="self" href="#172">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
+            ffi::gsk_path_builder_close(<a class="self" href="#188">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
         }
     }
 
@@ -623,6 +670,11 @@
     /// points.
     ///
     /// After this, @x3, @y3 will be the new current point.
+    ///
+    /// &lt;picture&gt;
+    ///   &lt;source srcset=&quot;cubic-dark.png&quot; media=&quot;(prefers-color-scheme: dark)&quot;&gt;
+    ///   &lt;img alt=&quot;Cubic To&quot; src=&quot;cubic-light.png&quot;&gt;
+    /// &lt;/picture&gt;
     /// ## `x1`
     /// x coordinate of first control point
     /// ## `y1`
@@ -638,7 +690,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_cubic_to&quot;</span>)]
     </span><span class="kw">pub fn </span>cubic_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x3: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y3: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_cubic_to(<a class="self" href="#196">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#196">x1</a>, <a href="#196">y1</a>, <a href="#196">x2</a>, <a href="#196">y2</a>, <a href="#196">x3</a>, <a href="#196">y3</a>);
+            ffi::gsk_path_builder_cubic_to(<a class="self" href="#217">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#217">x1</a>, <a href="#217">y1</a>, <a href="#217">x2</a>, <a href="#217">y2</a>, <a href="#217">x3</a>, <a href="#217">y3</a>);
         }
     }
 
@@ -657,13 +709,18 @@
     </span><span class="kw">pub fn </span>current_point(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/point/struct.Point.html">graphene::Point</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gsk_path_builder_get_current_point(
-                <a class="self" href="#214">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a class="self" href="#235">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
 
     <span class="doccomment">/// Draws a line from the current point to @x, @y and makes it
     /// the new current point.
+    ///
+    /// &lt;picture&gt;
+    ///   &lt;source srcset=&quot;line-dark.png&quot; media=&quot;(prefers-color-scheme: dark)&quot;&gt;
+    ///   &lt;img alt=&quot;Line To&quot; src=&quot;line-light.png&quot;&gt;
+    /// &lt;/picture&gt;
     /// ## `x`
     /// x coordinate
     /// ## `y`
@@ -671,7 +728,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_line_to&quot;</span>)]
     </span><span class="kw">pub fn </span>line_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_line_to(<a class="self" href="#229">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#229">x</a>, <a href="#229">y</a>);
+            ffi::gsk_path_builder_line_to(<a class="self" href="#255">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#255">x</a>, <a href="#255">y</a>);
         }
     }
 
@@ -687,7 +744,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_move_to&quot;</span>)]
     </span><span class="kw">pub fn </span>move_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_move_to(<a class="self" href="#245">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#245">x</a>, <a href="#245">y</a>);
+            ffi::gsk_path_builder_move_to(<a class="self" href="#271">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#271">x</a>, <a href="#271">y</a>);
         }
     }
 
@@ -695,6 +752,11 @@
     /// from the current point to @x2, @y2 with @x1, @y1 as the control point.
     ///
     /// After this, @x2, @y2 will be the new current point.
+    ///
+    /// &lt;picture&gt;
+    ///   &lt;source srcset=&quot;quad-dark.png&quot; media=&quot;(prefers-color-scheme: dark)&quot;&gt;
+    ///   &lt;img alt=&quot;Quad To&quot; src=&quot;quad-light.png&quot;&gt;
+    /// &lt;/picture&gt;
     /// ## `x1`
     /// x coordinate of control point
     /// ## `y1`
@@ -706,7 +768,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_quad_to&quot;</span>)]
     </span><span class="kw">pub fn </span>quad_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_quad_to(<a class="self" href="#264">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#264">x1</a>, <a href="#264">y1</a>, <a href="#264">x2</a>, <a href="#264">y2</a>);
+            ffi::gsk_path_builder_quad_to(<a class="self" href="#295">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#295">x1</a>, <a href="#295">y1</a>, <a href="#295">x2</a>, <a href="#295">y2</a>);
         }
     }
 
@@ -730,7 +792,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_rel_cubic_to&quot;</span>)]
     </span><span class="kw">pub fn </span>rel_cubic_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x3: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y3: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_rel_cubic_to(<a class="self" href="#288">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#288">x1</a>, <a href="#288">y1</a>, <a href="#288">x2</a>, <a href="#288">y2</a>, <a href="#288">x3</a>, <a href="#288">y3</a>);
+            ffi::gsk_path_builder_rel_cubic_to(<a class="self" href="#319">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#319">x1</a>, <a href="#319">y1</a>, <a href="#319">x2</a>, <a href="#319">y2</a>, <a href="#319">x3</a>, <a href="#319">y3</a>);
         }
     }
 
@@ -745,7 +807,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_rel_line_to&quot;</span>)]
     </span><span class="kw">pub fn </span>rel_line_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_rel_line_to(<a class="self" href="#303">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#303">x</a>, <a href="#303">y</a>);
+            ffi::gsk_path_builder_rel_line_to(<a class="self" href="#334">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#334">x</a>, <a href="#334">y</a>);
         }
     }
 
@@ -760,7 +822,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_rel_move_to&quot;</span>)]
     </span><span class="kw">pub fn </span>rel_move_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_rel_move_to(<a class="self" href="#318">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#318">x</a>, <a href="#318">y</a>);
+            ffi::gsk_path_builder_rel_move_to(<a class="self" href="#349">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#349">x</a>, <a href="#349">y</a>);
         }
     }
 
@@ -781,7 +843,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_rel_quad_to&quot;</span>)]
     </span><span class="kw">pub fn </span>rel_quad_to(<span class="kw-2">&amp;</span><span class="self">self</span>, x1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y1: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, x2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, y2: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_path_builder_rel_quad_to(<a class="self" href="#339">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#339">x1</a>, <a href="#339">y1</a>, <a href="#339">x2</a>, <a href="#339">y2</a>);
+            ffi::gsk_path_builder_rel_quad_to(<a class="self" href="#370">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#370">x1</a>, <a href="#370">y1</a>, <a href="#370">x2</a>, <a href="#370">y2</a>);
         }
     }
 
@@ -800,7 +862,7 @@
     ///   with all the contours added to the builder
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_path_builder_to_path&quot;</span>)]
     </span><span class="kw">pub fn </span>to_path(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="path.rs.html#9-37">Path</a> {
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_path_builder_to_path(<a class="self" href="#359">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_path_builder_to_path(<a class="self" href="#390">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 }
 
