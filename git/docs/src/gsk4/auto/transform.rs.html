@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/transform.rs`."><title>transform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (ef85656a1 2023-08-21)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/transform.rs`."><title>transform.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (69e97df5c 2023-08-26)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -506,14 +506,12 @@
 <a href="#433" id="433">433</a>
 <a href="#434" id="434">434</a>
 <a href="#435" id="435">435</a>
-<a href="#436" id="436">436</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use </span><a href="enums.rs.html#1972-2003"><span class="kw">crate</span>::TransformCategory</a>;
+</span><span class="kw">use </span><a href="enums.rs.html#1747-1778"><span class="kw">crate</span>::TransformCategory</a>;
 <span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
-<span class="kw">use </span>std::{<a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">fmt</a>, <a href="https://doc.rust-lang.org/nightly/core/mem/index.html">mem</a>};
 
 <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// [`Transform`][crate::Transform] is an object to describe transform matrices.
@@ -535,19 +533,19 @@
     }
 }
 
-<span class="kw">impl </span><a href="#9-27">Transform</a> {
+<span class="kw">impl </span><a href="#8-26">Transform</a> {
     <span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_new&quot;</span>)]
-    </span><span class="kw">pub fn </span>new() -&gt; <a href="#9-27">Transform</a> {
+    </span><span class="kw">pub fn </span>new() -&gt; <a href="#8-26">Transform</a> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_transform_new()) }
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_equal&quot;</span>)]
-    </span><span class="kw">fn </span>equal(<span class="kw-2">&amp;</span><span class="self">self</span>, second: <span class="kw-2">&amp;</span><a href="#9-27">Transform</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+    </span><span class="kw">fn </span>equal(<span class="kw-2">&amp;</span><span class="self">self</span>, second: <span class="kw-2">&amp;</span><a href="#8-26">Transform</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gsk_transform_equal(
-                <a class="self" href="#37">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#37">second</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a class="self" href="#36">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#36">second</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -559,8 +557,8 @@
     /// The category of the transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_get_category&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_category&quot;</span>)]
-    </span><span class="kw">pub fn </span>category(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#1972-2003">TransformCategory</a> {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_transform_get_category(<a class="self" href="#53">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    </span><span class="kw">pub fn </span>category(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#1747-1778">TransformCategory</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_transform_get_category(<a class="self" href="#52">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Multiplies @self with the given @matrix.
@@ -572,11 +570,11 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_matrix&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>matrix(<span class="self">self</span>, matrix: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/matrix/struct.Matrix.html">graphene::Matrix</a>) -&gt; <a href="#9-27">Transform</a> {
+    </span><span class="kw">pub fn </span>matrix(<span class="self">self</span>, matrix: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/matrix/struct.Matrix.html">graphene::Matrix</a>) -&gt; <a href="#8-26">Transform</a> {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gsk_transform_matrix(
-                <a class="self" href="#66">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
-                <a href="#66">matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a class="self" href="#65">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(),
+                <a href="#65">matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -597,8 +595,8 @@
     /// The new transform
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_perspective&quot;</span>)]
     #[must_use]
-    </span><span class="kw">pub fn </span>perspective(<span class="self">self</span>, depth: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#9-27">Transform</a> {
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_transform_perspective(<a class="self" href="#91">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(), <a href="#91">depth</a>)) }
+    </span><span class="kw">pub fn </span>perspective(<span class="self">self</span>, depth: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#8-26">Transform</a> {
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_transform_perspective(<a class="self" href="#90">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>(), <a href="#90">depth</a>)) }
     }
 
     <span class="doccomment">/// Converts a [`Transform`][crate::Transform] to a 2D transformation matrix.
@@ -642,28 +640,28 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_to_2d&quot;</span>)]
     </span><span class="kw">pub fn </span>to_2d(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>out_xx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_yx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_xy = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_yy = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_xx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_yx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_xy = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_yy = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = std::mem::MaybeUninit::uninit();
             ffi::gsk_transform_to_2d(
-                <a class="self" href="#134">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#136">out_xx</a>.as_mut_ptr(),
-                <a href="#137">out_yx</a>.as_mut_ptr(),
-                <a href="#138">out_xy</a>.as_mut_ptr(),
-                <a href="#139">out_yy</a>.as_mut_ptr(),
-                <a href="#140">out_dx</a>.as_mut_ptr(),
-                <a href="#141">out_dy</a>.as_mut_ptr(),
+                <a class="self" href="#133">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#135">out_xx</a>.as_mut_ptr(),
+                <a href="#136">out_yx</a>.as_mut_ptr(),
+                <a href="#137">out_xy</a>.as_mut_ptr(),
+                <a href="#138">out_yy</a>.as_mut_ptr(),
+                <a href="#139">out_dx</a>.as_mut_ptr(),
+                <a href="#140">out_dy</a>.as_mut_ptr(),
             );
             (
-                <a href="#136">out_xx</a>.assume_init(),
-                <a href="#137">out_yx</a>.assume_init(),
-                <a href="#138">out_xy</a>.assume_init(),
-                <a href="#139">out_yy</a>.assume_init(),
-                <a href="#140">out_dx</a>.assume_init(),
-                <a href="#141">out_dy</a>.assume_init(),
+                <a href="#135">out_xx</a>.assume_init(),
+                <a href="#136">out_yx</a>.assume_init(),
+                <a href="#137">out_xy</a>.assume_init(),
+                <a href="#138">out_yy</a>.assume_init(),
+                <a href="#139">out_dx</a>.assume_init(),
+                <a href="#140">out_dy</a>.assume_init(),
             )
         }
     }
@@ -721,31 +719,31 @@
     #[doc(alias = <span class="string">&quot;gsk_transform_to_2d_components&quot;</span>)]
     </span><span class="kw">pub fn </span>to_2d_components(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>out_skew_x = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_skew_y = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_x = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_y = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_angle = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_skew_x = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_skew_y = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_x = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_y = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_angle = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = std::mem::MaybeUninit::uninit();
             ffi::gsk_transform_to_2d_components(
-                <a class="self" href="#213">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#215">out_skew_x</a>.as_mut_ptr(),
-                <a href="#216">out_skew_y</a>.as_mut_ptr(),
-                <a href="#217">out_scale_x</a>.as_mut_ptr(),
-                <a href="#218">out_scale_y</a>.as_mut_ptr(),
-                <a href="#219">out_angle</a>.as_mut_ptr(),
-                <a href="#220">out_dx</a>.as_mut_ptr(),
-                <a href="#221">out_dy</a>.as_mut_ptr(),
+                <a class="self" href="#212">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#214">out_skew_x</a>.as_mut_ptr(),
+                <a href="#215">out_skew_y</a>.as_mut_ptr(),
+                <a href="#216">out_scale_x</a>.as_mut_ptr(),
+                <a href="#217">out_scale_y</a>.as_mut_ptr(),
+                <a href="#218">out_angle</a>.as_mut_ptr(),
+                <a href="#219">out_dx</a>.as_mut_ptr(),
+                <a href="#220">out_dy</a>.as_mut_ptr(),
             );
             (
-                <a href="#215">out_skew_x</a>.assume_init(),
-                <a href="#216">out_skew_y</a>.assume_init(),
-                <a href="#217">out_scale_x</a>.assume_init(),
-                <a href="#218">out_scale_y</a>.assume_init(),
-                <a href="#219">out_angle</a>.assume_init(),
-                <a href="#220">out_dx</a>.assume_init(),
-                <a href="#221">out_dy</a>.assume_init(),
+                <a href="#214">out_skew_x</a>.assume_init(),
+                <a href="#215">out_skew_y</a>.assume_init(),
+                <a href="#216">out_scale_x</a>.assume_init(),
+                <a href="#217">out_scale_y</a>.assume_init(),
+                <a href="#218">out_angle</a>.assume_init(),
+                <a href="#219">out_dx</a>.assume_init(),
+                <a href="#220">out_dy</a>.assume_init(),
             )
         }
     }
@@ -787,22 +785,22 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_to_affine&quot;</span>)]
     </span><span class="kw">pub fn </span>to_affine(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_x = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_y = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_x = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_scale_y = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = std::mem::MaybeUninit::uninit();
             ffi::gsk_transform_to_affine(
-                <a class="self" href="#279">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#281">out_scale_x</a>.as_mut_ptr(),
-                <a href="#282">out_scale_y</a>.as_mut_ptr(),
-                <a href="#283">out_dx</a>.as_mut_ptr(),
-                <a href="#284">out_dy</a>.as_mut_ptr(),
+                <a class="self" href="#278">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#280">out_scale_x</a>.as_mut_ptr(),
+                <a href="#281">out_scale_y</a>.as_mut_ptr(),
+                <a href="#282">out_dx</a>.as_mut_ptr(),
+                <a href="#283">out_dy</a>.as_mut_ptr(),
             );
             (
-                <a href="#281">out_scale_x</a>.assume_init(),
-                <a href="#282">out_scale_y</a>.assume_init(),
-                <a href="#283">out_dx</a>.assume_init(),
-                <a href="#284">out_dy</a>.assume_init(),
+                <a href="#280">out_scale_x</a>.assume_init(),
+                <a href="#281">out_scale_y</a>.assume_init(),
+                <a href="#282">out_dx</a>.assume_init(),
+                <a href="#283">out_dy</a>.assume_init(),
             )
         }
     }
@@ -820,8 +818,8 @@
     </span><span class="kw">pub fn </span>to_matrix(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/graphene/auto/matrix/struct.Matrix.html">graphene::Matrix</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>out_matrix = graphene::Matrix::uninitialized();
-            ffi::gsk_transform_to_matrix(<a class="self" href="#311">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#313">out_matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>);
-            <a href="#313">out_matrix</a>
+            ffi::gsk_transform_to_matrix(<a class="self" href="#310">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#312">out_matrix</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>);
+            <a href="#312">out_matrix</a>
         }
     }
 
@@ -837,7 +835,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_to_string&quot;</span>)]
     #[doc(alias = <span class="string">&quot;to_string&quot;</span>)]
     </span><span class="kw">pub fn </span>to_str(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a> {
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_transform_to_string(<a class="self" href="#330">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_transform_to_string(<a class="self" href="#329">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Converts a [`Transform`][crate::Transform] to a translation operation.
@@ -862,14 +860,14 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_transform_to_translate&quot;</span>)]
     </span><span class="kw">pub fn </span>to_translate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = mem::MaybeUninit::uninit();
-            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dx = std::mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>out_dy = std::mem::MaybeUninit::uninit();
             ffi::gsk_transform_to_translate(
-                <a class="self" href="#354">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#356">out_dx</a>.as_mut_ptr(),
-                <a href="#357">out_dy</a>.as_mut_ptr(),
+                <a class="self" href="#353">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#355">out_dx</a>.as_mut_ptr(),
+                <a href="#356">out_dy</a>.as_mut_ptr(),
             );
-            (<a href="#356">out_dx</a>.assume_init(), <a href="#357">out_dy</a>.assume_init())
+            (<a href="#355">out_dx</a>.assume_init(), <a href="#356">out_dy</a>.assume_init())
         }
     }
 
@@ -890,11 +888,11 @@
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>out_rect = graphene::Rect::uninitialized();
             ffi::gsk_transform_transform_bounds(
-                <a class="self" href="#380">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#380">rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#382">out_rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
+                <a class="self" href="#379">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#379">rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#381">out_rect</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
             );
-            <a href="#382">out_rect</a>
+            <a href="#381">out_rect</a>
         }
     }
 
@@ -913,34 +911,34 @@
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>out_point = graphene::Point::uninitialized();
             ffi::gsk_transform_transform_point(
-                <a class="self" href="#403">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#403">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#405">out_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
+                <a class="self" href="#402">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#402">point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#404">out_point</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
             );
-            <a href="#405">out_point</a>
+            <a href="#404">out_point</a>
         }
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="#9-27">Transform</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html">Default</a> <span class="kw">for </span><a href="#8-26">Transform</a> {
     <span class="kw">fn </span>default() -&gt; <span class="self">Self </span>{
         <span class="self">Self</span>::new()
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html">PartialEq</a> <span class="kw">for </span><a href="#9-27">Transform</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html">PartialEq</a> <span class="kw">for </span><a href="#8-26">Transform</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#424">self</a>.<a href="#37-44">equal</a>(<a href="#424">other</a>)
+        <a class="self" href="#423">self</a>.<a href="#36-43">equal</a>(<a href="#423">other</a>)
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html">Eq</a> <span class="kw">for </span><a href="#9-27">Transform</a> {}
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html">Eq</a> <span class="kw">for </span><a href="#8-26">Transform</a> {}
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">fmt::Display</a> <span class="kw">for </span><a href="#9-27">Transform</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Display.html">std::fmt::Display</a> <span class="kw">for </span><a href="#8-26">Transform</a> {
     <span class="attr">#[inline]
-    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-        <a href="#433">f</a>.write_str(<span class="kw-2">&amp;</span><a class="self" href="#433">self</a>.<a href="#330-332">to_str</a>())
+    </span><span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">std::fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">std::fmt::Result</a> {
+        <a href="#432">f</a>.write_str(<span class="kw-2">&amp;</span><a class="self" href="#432">self</a>.<a href="#329-331">to_str</a>())
     }
 }
 </code></pre></div></section></main></body></html>

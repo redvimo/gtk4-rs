@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/gl_texture_builder.rs`."><title>gl_texture_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (ef85656a1 2023-08-21)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/gl_texture_builder.rs`."><title>gl_texture_builder.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (69e97df5c 2023-08-26)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -310,7 +310,7 @@
 <a href="#237" id="237">237</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use crate</span>::{<a href="auto/gl_context.rs.html#19-120">GLContext</a>, <a href="auto/gl_texture_builder.rs.html#9-85">GLTextureBuilder</a>, <a href="auto/enums.rs.html#1720-1861">MemoryFormat</a>, <a href="auto/texture.rs.html#12-54">Texture</a>};
+</span><span class="kw">use crate</span>::{<a href="auto/gl_context.rs.html#18-119">GLContext</a>, <a href="auto/gl_texture_builder.rs.html#8-84">GLTextureBuilder</a>, <a href="auto/enums.rs.html#1506-1647">MemoryFormat</a>, <a href="auto/texture.rs.html#11-53">Texture</a>};
 <span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>};
 
 <span class="attr">#[cfg(not(feature = <span class="string">&quot;gl&quot;</span>))]
@@ -319,7 +319,7 @@
 <span class="attr">#[cfg(feature = <span class="string">&quot;gl&quot;</span>)]
 </span><span class="kw">pub use </span><a href="https://docs.rs/gl/latest/gl/types/type.GLsync.html">gl::types::GLsync</a>;
 
-<span class="kw">impl </span><a href="auto/gl_texture_builder.rs.html#9-85">GLTextureBuilder</a> {
+<span class="kw">impl </span><a href="auto/gl_texture_builder.rs.html#8-84">GLTextureBuilder</a> {
     <span class="doccomment">/// Builds a new [`Texture`][crate::Texture] with the values set up in the builder.
     ///
     /// The `destroy` function gets called when the returned texture gets released;
@@ -339,7 +339,7 @@
     /// a newly built [`Texture`][crate::Texture]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_texture_builder_build&quot;</span>)]
     #[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
-    </span><span class="kw">pub unsafe fn </span>build(<span class="self">self</span>) -&gt; <a href="auto/texture.rs.html#12-54">Texture</a> {
+    </span><span class="kw">pub unsafe fn </span>build(<span class="self">self</span>) -&gt; <a href="auto/texture.rs.html#11-53">Texture</a> {
         from_glib_full(ffi::gdk_gl_texture_builder_build(
             <a class="self" href="#32">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             <span class="prelude-val">None</span>,
@@ -349,7 +349,7 @@
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_texture_builder_build&quot;</span>)]
     #[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
-    </span><span class="kw">pub unsafe fn </span>build_with_release_func&lt;F: FnOnce() + <span class="lifetime">&#39;static</span>&gt;(<span class="self">self</span>, release_func: F) -&gt; <a href="auto/texture.rs.html#12-54">Texture</a> {
+    </span><span class="kw">pub unsafe fn </span>build_with_release_func&lt;F: FnOnce() + <span class="lifetime">&#39;static</span>&gt;(<span class="self">self</span>, release_func: F) -&gt; <a href="auto/texture.rs.html#11-53">Texture</a> {
         <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>destroy_closure&lt;F: FnOnce() + <span class="lifetime">&#39;static</span>&gt;(func: glib::ffi::gpointer) {
             <span class="kw">let </span>released_func = Box::&lt;F&gt;::from_raw(<a href="#43">func</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
             <a href="#44">released_func</a>();
@@ -369,7 +369,7 @@
     /// ## `context`
     /// The context the texture beongs to or [`None`] to unset
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_texture_builder_set_context&quot;</span>)]
-    </span><span class="kw">pub fn </span>set_context(<span class="self">self</span>, context: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/gl_context.rs.html#19-120">GLContext</a>&gt;&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>set_context(<span class="self">self</span>, context: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/gl_context.rs.html#18-119">GLContext</a>&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_texture_builder_set_context(
                 <a class="self" href="#62">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
@@ -399,7 +399,7 @@
     /// ## `format`
     /// The texture&#39;s format
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_texture_builder_set_format&quot;</span>)]
-    </span><span class="kw">pub fn </span>set_format(<span class="self">self</span>, format: <a href="auto/enums.rs.html#1720-1861">MemoryFormat</a>) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>set_format(<span class="self">self</span>, format: <a href="auto/enums.rs.html#1506-1647">MemoryFormat</a>) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_texture_builder_set_format(<a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#92">format</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
         }
@@ -484,7 +484,7 @@
     /// ## `texture`
     /// the texture to update
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_texture_builder_set_update_texture&quot;</span>)]
-    </span><span class="kw">pub fn </span>set_update_texture(<span class="self">self</span>, texture: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/texture.rs.html#12-54">Texture</a>&gt;&gt;) -&gt; <span class="self">Self </span>{
+    </span><span class="kw">pub fn </span>set_update_texture(<span class="self">self</span>, texture: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/texture.rs.html#11-53">Texture</a>&gt;&gt;) -&gt; <span class="self">Self </span>{
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_texture_builder_set_update_texture(
                 <a class="self" href="#177">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,

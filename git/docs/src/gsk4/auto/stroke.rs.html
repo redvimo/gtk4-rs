@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/stroke.rs`."><title>stroke.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (ef85656a1 2023-08-21)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/auto/stroke.rs`."><title>stroke.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-47e7ab555ef2818a.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.0-nightly (69e97df5c 2023-08-26)" data-channel="nightly" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-b2d31d2efc7e9b67.css" data-theme-dark-css="dark-3388a2fb2ef8066b.css" data-theme-ayu-css="ayu-8c3c66a6cf12cb2f.css" ><script src="../../../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-ef3a2de404864b0b.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../../../static.files/light-b2d31d2efc7e9b67.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../../../static.files/dark-3388a2fb2ef8066b.css"><link rel="stylesheet" href="../../../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -317,14 +317,12 @@
 <a href="#244" id="244">244</a>
 <a href="#245" id="245">245</a>
 <a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
 </pre></div><pre class="rust"><code><span class="comment">// This file was generated by gir (https://github.com/gtk-rs/gir)
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="kw">use crate</span>::{<a href="enums.rs.html#656-671">LineCap</a>, <a href="enums.rs.html#809-823">LineJoin</a>};
+</span><span class="kw">use crate</span>::{<a href="enums.rs.html#579-594">LineCap</a>, <a href="enums.rs.html#716-730">LineJoin</a>};
 <span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
-<span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/core/mem/index.html">std::mem</a>;
 
 <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="doccomment">/// A [`Stroke`][crate::Stroke] struct collects the parameters that influence
@@ -339,7 +337,7 @@
     }
 }
 
-<span class="kw">impl </span><a href="#9-20">Stroke</a> {
+<span class="kw">impl </span><a href="#8-19">Stroke</a> {
     <span class="doccomment">/// Creates a new [`Stroke`][crate::Stroke] with the given @line_width.
     /// ## `line_width`
     /// line width of the stroke. Must be &gt; 0
@@ -348,9 +346,9 @@
     ///
     /// a new [`Stroke`][crate::Stroke]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_new&quot;</span>)]
-    </span><span class="kw">pub fn </span>new(line_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#9-20">Stroke</a> {
+    </span><span class="kw">pub fn </span>new(line_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#8-19">Stroke</a> {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_stroke_new(<a href="#31">line_width</a>)) }
+        <span class="kw">unsafe </span>{ from_glib_full(ffi::gsk_stroke_new(<a href="#30">line_width</a>)) }
     }
 
     <span class="doccomment">/// Gets the dash array in use or `NULL` if dashing is disabled.
@@ -363,12 +361,12 @@
     #[doc(alias = <span class="string">&quot;get_dash&quot;</span>)]
     </span><span class="kw">pub fn </span>dash(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt; {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span><span class="kw-2">mut </span>n_dash = mem::MaybeUninit::uninit();
+            <span class="kw">let </span><span class="kw-2">mut </span>n_dash = std::mem::MaybeUninit::uninit();
             <span class="kw">let </span>ret = <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.FromGlibContainer.html">FromGlibContainer::from_glib_none_num</a>(
-                ffi::gsk_stroke_get_dash(<a class="self" href="#44">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#46">n_dash</a>.as_mut_ptr()),
-                <a href="#46">n_dash</a>.assume_init() <span class="kw">as _</span>,
+                ffi::gsk_stroke_get_dash(<a class="self" href="#43">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#45">n_dash</a>.as_mut_ptr()),
+                <a href="#45">n_dash</a>.assume_init() <span class="kw">as _</span>,
             );
-            <a href="#47">ret</a>
+            <a href="#46">ret</a>
         }
     }
 
@@ -376,7 +374,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_get_dash_offset&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_dash_offset&quot;</span>)]
     </span><span class="kw">pub fn </span>dash_offset(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a> {
-        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_dash_offset(<a class="self" href="#58">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_dash_offset(<a class="self" href="#57">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Gets the line cap used.
@@ -388,8 +386,8 @@
     /// The line cap
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_get_line_cap&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_line_cap&quot;</span>)]
-    </span><span class="kw">pub fn </span>line_cap(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#656-671">LineCap</a> {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_stroke_get_line_cap(<a class="self" href="#71">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    </span><span class="kw">pub fn </span>line_cap(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#579-594">LineCap</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_stroke_get_line_cap(<a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Gets the line join used.
@@ -401,8 +399,8 @@
     /// The line join
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_get_line_join&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_line_join&quot;</span>)]
-    </span><span class="kw">pub fn </span>line_join(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#809-823">LineJoin</a> {
-        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_stroke_get_line_join(<a class="self" href="#84">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
+    </span><span class="kw">pub fn </span>line_join(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#716-730">LineJoin</a> {
+        <span class="kw">unsafe </span>{ from_glib(ffi::gsk_stroke_get_line_join(<a class="self" href="#83">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
 
     <span class="doccomment">/// Gets the line width used.
@@ -413,14 +411,14 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_get_line_width&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_line_width&quot;</span>)]
     </span><span class="kw">pub fn </span>line_width(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a> {
-        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_line_width(<a class="self" href="#95">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_line_width(<a class="self" href="#94">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Returns the miter limit of a [`Stroke`][crate::Stroke].
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_get_miter_limit&quot;</span>)]
     #[doc(alias = <span class="string">&quot;get_miter_limit&quot;</span>)]
     </span><span class="kw">pub fn </span>miter_limit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a> {
-        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_miter_limit(<a class="self" href="#102">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
+        <span class="kw">unsafe </span>{ ffi::gsk_stroke_get_miter_limit(<a class="self" href="#101">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
 
     <span class="doccomment">/// Sets the dash pattern to use by this stroke.
@@ -448,15 +446,15 @@
     /// [`set_dash_offset()`][Self::set_dash_offset()].
     /// ## `dash`
     ///
-    ///     the array of dashes
+    ///   the array of dashes
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_dash&quot;</span>)]
     </span><span class="kw">pub fn </span>set_dash(<span class="kw-2">&amp;</span><span class="self">self</span>, dash: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>]) {
-        <span class="kw">let </span>n_dash = <a href="#133">dash</a>.len() <span class="kw">as _</span>;
+        <span class="kw">let </span>n_dash = <a href="#132">dash</a>.len() <span class="kw">as _</span>;
         <span class="kw">unsafe </span>{
             ffi::gsk_stroke_set_dash(
-                mut_override(<a class="self" href="#133">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>),
-                <a href="#133">dash</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#134">n_dash</a>,
+                mut_override(<a class="self" href="#132">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>),
+                <a href="#132">dash</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#133">n_dash</a>,
             );
         }
     }
@@ -472,7 +470,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_dash_offset&quot;</span>)]
     </span><span class="kw">pub fn </span>set_dash_offset(<span class="kw-2">&amp;</span><span class="self">self</span>, offset: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_stroke_set_dash_offset(mut_override(<a class="self" href="#153">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#153">offset</a>);
+            ffi::gsk_stroke_set_dash_offset(mut_override(<a class="self" href="#152">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#152">offset</a>);
         }
     }
 
@@ -482,9 +480,9 @@
     /// ## `line_cap`
     /// the [`LineCap`][crate::LineCap]
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_line_cap&quot;</span>)]
-    </span><span class="kw">pub fn </span>set_line_cap(<span class="kw-2">&amp;</span><span class="self">self</span>, line_cap: <a href="enums.rs.html#656-671">LineCap</a>) {
+    </span><span class="kw">pub fn </span>set_line_cap(<span class="kw-2">&amp;</span><span class="self">self</span>, line_cap: <a href="enums.rs.html#579-594">LineCap</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_stroke_set_line_cap(mut_override(<a class="self" href="#165">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#165">line_cap</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            ffi::gsk_stroke_set_line_cap(mut_override(<a class="self" href="#164">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#164">line_cap</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
         }
     }
 
@@ -494,11 +492,11 @@
     /// ## `line_join`
     /// The line join to use
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_line_join&quot;</span>)]
-    </span><span class="kw">pub fn </span>set_line_join(<span class="kw-2">&amp;</span><span class="self">self</span>, line_join: <a href="enums.rs.html#809-823">LineJoin</a>) {
+    </span><span class="kw">pub fn </span>set_line_join(<span class="kw-2">&amp;</span><span class="self">self</span>, line_join: <a href="enums.rs.html#716-730">LineJoin</a>) {
         <span class="kw">unsafe </span>{
             ffi::gsk_stroke_set_line_join(
-                mut_override(<a class="self" href="#177">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>),
-                <a href="#177">line_join</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                mut_override(<a class="self" href="#176">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>),
+                <a href="#176">line_join</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
             );
         }
     }
@@ -511,7 +509,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_line_width&quot;</span>)]
     </span><span class="kw">pub fn </span>set_line_width(<span class="kw-2">&amp;</span><span class="self">self</span>, line_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_stroke_set_line_width(mut_override(<a class="self" href="#192">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#192">line_width</a>);
+            ffi::gsk_stroke_set_line_width(mut_override(<a class="self" href="#191">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#191">line_width</a>);
         }
     }
 
@@ -528,7 +526,7 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_set_miter_limit&quot;</span>)]
     </span><span class="kw">pub fn </span>set_miter_limit(<span class="kw-2">&amp;</span><span class="self">self</span>, limit: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_stroke_set_miter_limit(mut_override(<a class="self" href="#209">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#209">limit</a>);
+            ffi::gsk_stroke_set_miter_limit(mut_override(<a class="self" href="#208">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>), <a href="#208">limit</a>);
         }
     }
 
@@ -539,30 +537,30 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_to_cairo&quot;</span>)]
     </span><span class="kw">pub fn </span>to_cairo(<span class="kw-2">&amp;</span><span class="self">self</span>, cr: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/cairo/context/struct.Context.html">cairo::Context</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gsk_stroke_to_cairo(<a class="self" href="#220">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, mut_override(<a href="#220">cr</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>));
+            ffi::gsk_stroke_to_cairo(<a class="self" href="#219">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, mut_override(<a href="#219">cr</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>));
         }
     }
 
     <span class="attr">#[doc(alias = <span class="string">&quot;gsk_stroke_equal&quot;</span>)]
-    </span><span class="kw">fn </span>equal(<span class="kw-2">&amp;</span><span class="self">self</span>, stroke2: <span class="kw-2">&amp;</span><a href="#9-20">Stroke</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+    </span><span class="kw">fn </span>equal(<span class="kw-2">&amp;</span><span class="self">self</span>, stroke2: <span class="kw-2">&amp;</span><a href="#8-19">Stroke</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{
             from_glib(ffi::gsk_stroke_equal(
-                ToGlibPtr::&lt;<span class="kw-2">*const </span>ffi::GskStroke&gt;::to_glib_none(<a class="self" href="#227">self</a>).<span class="number">0
+                ToGlibPtr::&lt;<span class="kw-2">*const </span>ffi::GskStroke&gt;::to_glib_none(<a class="self" href="#226">self</a>).<span class="number">0
                     </span><span class="kw">as </span>glib::ffi::gconstpointer,
-                ToGlibPtr::&lt;<span class="kw-2">*const </span>ffi::GskStroke&gt;::to_glib_none(<a href="#227">stroke2</a>).<span class="number">0
+                ToGlibPtr::&lt;<span class="kw-2">*const </span>ffi::GskStroke&gt;::to_glib_none(<a href="#226">stroke2</a>).<span class="number">0
                     </span><span class="kw">as </span>glib::ffi::gconstpointer,
             ))
         }
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html">PartialEq</a> <span class="kw">for </span><a href="#9-20">Stroke</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html">PartialEq</a> <span class="kw">for </span><a href="#8-19">Stroke</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>eq(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#242">self</a>.<a href="#227-237">equal</a>(<a href="#242">other</a>)
+        <a class="self" href="#241">self</a>.<a href="#226-236">equal</a>(<a href="#241">other</a>)
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html">Eq</a> <span class="kw">for </span><a href="#9-20">Stroke</a> {}
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html">Eq</a> <span class="kw">for </span><a href="#8-19">Stroke</a> {}
 </code></pre></div></section></main></body></html>
