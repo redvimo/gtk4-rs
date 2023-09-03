@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["ColorStopBuilder","GLShaderBuilder"]};
+window.SIDEBAR_ITEMS = {"struct":["ColorStopBuilder","GLShaderBuilder","StrokeBuilder"]};
