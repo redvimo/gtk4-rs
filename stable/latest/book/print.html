@@ -396,7 +396,7 @@ At the time of this writing the newest version is <code>4.8</code>.</p>
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="hello-world"><a class="header" href="#hello-world">Hello World!</a></h1>
 <p>Now that we've got a working installation, let's get right into it!</p>
-<p>At the very least, we need to create a <a href="../docs/gtk4/struct.Application.html"><code>gtk::Application</code></a> instance with an <a href="https://developer.gnome.org/documentation/tutorials/application-id.html">application id</a>.
+<p>At the very least, we need to create a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Application.html"><code>gtk::Application</code></a> instance with an <a href="https://developer.gnome.org/documentation/tutorials/application-id.html">application id</a>.
 For that we use the <a href="https://rust-unofficial.github.io/patterns/patterns/creational/builder.html">builder pattern</a> which many <code>gtk-rs</code> objects support.
 Note that we also import the prelude to bring the necessary traits into scope.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/1/main.rs">listings/hello_world/1/main.rs</a></p>
@@ -417,7 +417,7 @@ fn main() -&gt; glib::ExitCode {
 and has no handlers connected to the 'activate' signal. It should do one of these.
 </code></pre>
 <p>GTK tells us that something should be called in its <code>activate</code> step.
-So let's create a <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> there.</p>
+So let's create a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> there.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/2/main.rs">listings/hello_world/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
 use gtk::{glib, Application, ApplicationWindow};
@@ -524,11 +524,11 @@ The inheritance tree of a <code>Button</code> looks like this:</p>
 </code></pre>
 <p>The <a href="https://docs.gtk.org/gtk4/class.Button.html#implements">GTK documentation</a> also tells us that <code>Button</code> implements the interfaces <code>GtkAccessible</code>, <code>GtkActionable</code>, <code>GtkBuildable</code>, <code>GtkConstraintTarget</code>.</p>
 <p>Now let's compare that with the corresponding <code>Button</code> struct in <code>gtk-rs</code>.
-The <a href="../docs/gtk4/struct.Button.html#implements">gtk-rs documentation</a> tells us which traits it implements.
+The <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Button.html#implements">gtk-rs documentation</a> tells us which traits it implements.
 We find that these traits either have a corresponding base class or interface in the GTK docs.
 In the &quot;Hello World&quot; app we wanted to react to a button click.
 This behavior is specific to a button, so we expect to find a suitable method in the <code>ButtonExt</code> trait.
-And indeed, <code>ButtonExt</code> includes the method <a href="../docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.</p>
+And indeed, <code>ButtonExt</code> includes the method <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
@@ -1642,9 +1642,9 @@ More examples can be found in the <a href="https://gtk-rs.org/gtk-rs-core/stable
 <div style="break-before: page; page-break-before: always;"></div><h1 id="properties"><a class="header" href="#properties">Properties</a></h1>
 <p>Properties provide a public API for accessing state of GObjects.</p>
 <p>Let's see how this is done by experimenting with the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html"><code>Switch</code></a> widget.
-One of its properties is called <a href="../docs/gtk4/struct.Switch.html#active">active</a>.
+One of its properties is called <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#active">active</a>.
 According to the GTK docs, it can be read and be written to.
-That is why <code>gtk-rs</code> provides corresponding <a href="../docs/gtk4/struct.Switch.html#method.is_active"><code>is_active</code></a> and <a href="../docs/gtk4/struct.Switch.html#method.set_active"><code>set_active</code></a> methods.</p>
+That is why <code>gtk-rs</code> provides corresponding <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#method.is_active"><code>is_active</code></a> and <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#method.set_active"><code>set_active</code></a> methods.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/1/main.rs">listings/g_object_properties/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
@@ -2210,7 +2210,7 @@ If you only want to expose internal state, adding getter and setter methods is t
 For example, if we press on a button, the &quot;clicked&quot; signal will be emitted.
 The signal then takes care that all the registered callbacks will be executed.</p>
 <p><code>gtk-rs</code> provides convenience methods for registering callbacks.
-In our &quot;Hello World&quot; example we <a href="../docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked">connected</a> the &quot;clicked&quot; signal to a closure which sets the label of the button to &quot;Hello World&quot; as soon as it gets called.</p>
+In our &quot;Hello World&quot; example we <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked">connected</a> the &quot;clicked&quot; signal to a closure which sets the label of the button to &quot;Hello World&quot; as soon as it gets called.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
@@ -2914,7 +2914,7 @@ help: within `gtk4::Button`, the trait `Sync` is not implemented for `NonNull&lt
 <div style="break-before: page; page-break-before: always;"></div><h1 id="settings"><a class="header" href="#settings">Settings</a></h1>
 <p>We have now learned multiple ways to handle states.
 However, every time we close the application all of it is gone.
-Let's learn how to use <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a> by storing the state of a <a href="../docs/gtk4/struct.Switch.html"><code>Switch</code></a> in it.</p>
+Let's learn how to use <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a> by storing the state of a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html"><code>Switch</code></a> in it.</p>
 <p>At the very beginning we have to create a <code>GSchema</code> xml file in order to describe the kind of data our application plans to store in the settings.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/settings/1/org.gtk_rs.Settings1.gschema.xml">listings/settings/1/org.gtk_rs.Settings1.gschema.xml</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
@@ -3181,7 +3181,7 @@ glib-compile-schemas C:/ProgramData/glib-2.0/schemas/
 But we can make this even better.
 The <code>Switch</code> has a property &quot;active&quot; and <code>Settings</code> allows us to bind properties to a specific setting.
 So let's do exactly that.</p>
-<p>We can remove the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/prelude/trait.SettingsExt.html#tymethod.boolean"><code>boolean</code></a> call before initializing the <code>Switch</code> as well as the <a href="../docs/gtk4/struct.Switch.html#method.connect_state_set"><code>connect_state_set</code></a> call.
+<p>We can remove the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/prelude/trait.SettingsExt.html#tymethod.boolean"><code>boolean</code></a> call before initializing the <code>Switch</code> as well as the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#method.connect_state_set"><code>connect_state_set</code></a> call.
 We then bind the setting to the property by specifying the key, object and name of the property.
 Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/settings/2/main.rs">listings/settings/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::Settings;
@@ -3378,7 +3378,7 @@ impl ApplicationWindowImpl for Window {}</code></pre>
 Now our window retains its state between app sessions.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="list-widgets"><a class="header" href="#list-widgets">List Widgets</a></h1>
 <p>Sometimes you want to display a list of elements in a certain arrangement.
-<a href="../docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a> and <a href="../docs/gtk4/struct.FlowBox.html"><code>gtk::FlowBox</code></a> are two container widgets which allow you to do this.
+<a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a> and <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.FlowBox.html"><code>gtk::FlowBox</code></a> are two container widgets which allow you to do this.
 <code>ListBox</code> describes a vertical list and <code>FlowBox</code> describes a grid.</p>
 <p>Let's explore this concept by adding labels to a <code>ListBox</code>.
 Each label will display an integer starting from 0 and ranging up to 100.</p>
@@ -3428,7 +3428,7 @@ Each label will display an integer starting from 0 and ranging up to 100.</p>
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>We cannot display so many widgets at once.
-Therefore, we add <code>ListBox</code> to a <a href="../docs/gtk4/struct.ScrolledWindow.html"><code>gtk::ScrolledWindow</code></a>.
+Therefore, we add <code>ListBox</code> to a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ScrolledWindow.html"><code>gtk::ScrolledWindow</code></a>.
 Now we can scroll through our elements.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/1/main.rs">listings/list_widgets/1/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
@@ -3629,7 +3629,7 @@ Neither <code>Label</code> nor any other widget is mentioned here.</p>
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>The <code>ListItemFactory</code> takes care of the widgets as well as their relationship to the model.
-Here, we use the <a href="../docs/gtk4/struct.SignalListItemFactory.html"><code>SignalListItemFactory</code></a> which emits a signal for every relevant step in the life of a <a href="../docs/gtk4/struct.ListItem.html"><code>ListItem</code></a>.
+Here, we use the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.SignalListItemFactory.html"><code>SignalListItemFactory</code></a> which emits a signal for every relevant step in the life of a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListItem.html"><code>ListItem</code></a>.
 The &quot;setup&quot; signal will be emitted when new widgets have to be created.
 We connect to it to create a <code>Label</code> for every requested widget.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
@@ -3801,9 +3801,9 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>We only want single items to be selectable, so we choose <a href="../docs/gtk4/struct.SingleSelection.html"><code>SingleSelection</code></a>.
-The other options would have been <a href="../docs/gtk4/struct.MultiSelection.html"><code>MultiSelection</code></a> or <a href="../docs/gtk4/struct.NoSelection.html"><code>NoSelection</code></a>.
-Then we pass the model and the factory to the <a href="../docs/gtk4/struct.ListView.html"><code>ListView</code></a>.</p>
+<p>We only want single items to be selectable, so we choose <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.SingleSelection.html"><code>SingleSelection</code></a>.
+The other options would have been <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MultiSelection.html"><code>MultiSelection</code></a> or <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.NoSelection.html"><code>NoSelection</code></a>.
+Then we pass the model and the factory to the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListView.html"><code>ListView</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
 </span><span class="boring">
@@ -4207,7 +4207,7 @@ This relates to how the view works internally.
 Not every model item belongs to a single widget, but the widgets get recycled instead as you scroll through the view.
 That also means that in our case, multiple numbers will be bound to the same widget.</p>
 <h3 id="expressions"><a class="header" href="#expressions">Expressions</a></h3>
-<p>Situations like these are so common that GTK offers an alternative to property binding: <a href="../docs/gtk4/struct.Expression.html">expressions</a>.
+<p>Situations like these are so common that GTK offers an alternative to property binding: <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Expression.html">expressions</a>.
 As a first step it allows us to remove the &quot;bind&quot; step.
 Let's see how the &quot;setup&quot; step now works.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/4/main.rs">listings/list_widgets/4/main.rs</a></p>
@@ -4303,7 +4303,7 @@ That way, we also don't face the problem that multiple labels are bound to the s
 When we now activate a label, only the corresponding number visibly changes.</p>
 <p>Let's extend our app a bit more.
 We can, for example, filter our model to only allow even numbers.
-We do that by passing it to a <a href="../docs/gtk4/struct.FilterListModel.html"><code>gtk::FilterListModel</code></a> together with a <a href="../docs/gtk4/struct.CustomFilter.html"><code>gtk::CustomFilter</code></a> </p>
+We do that by passing it to a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.FilterListModel.html"><code>gtk::FilterListModel</code></a> together with a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.CustomFilter.html"><code>gtk::CustomFilter</code></a> </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/5/main.rs">listings/list_widgets/5/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
 </span><span class="boring">
@@ -4421,7 +4421,7 @@ We do that by passing it to a <a href="../docs/gtk4/struct.FilterListModel.html"
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>Additionally, we can reverse the order of our model.
-Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.html"><code>gtk::SortListModel</code></a> together with <a href="../docs/gtk4/struct.CustomSorter.html"><code>gtk::CustomSorter</code></a>.</p>
+Now we pass the filtered model to <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.SortListModel.html"><code>gtk::SortListModel</code></a> together with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.CustomSorter.html"><code>gtk::CustomSorter</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/5/main.rs">listings/list_widgets/5/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
 </span><span class="boring">
@@ -4660,7 +4660,7 @@ Now we pass the filtered model to <a href="../docs/gtk4/struct.SortListModel.htm
 <h3 id="string-list"><a class="header" href="#string-list">String List</a></h3>
 <p>Often, all you want is to display a list of strings.
 However, if you either need to filter and sort your displayed data or have too many elements to be displayed by <code>ListBox</code>, you will still want to use a view.
-GTK provides a convenient model for this use case: <a href="../docs/gtk4/struct.StringList.html"><code>gtk::StringList</code></a>.</p>
+GTK provides a convenient model for this use case: <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.StringList.html"><code>gtk::StringList</code></a>.</p>
 <p>Let's see with a small example how to use this API.
 Filter and sorter is controlled by the factory, so nothing changes here.
 This is why we will skip this topic here.</p>
@@ -4730,7 +4730,7 @@ This is why we will skip this topic here.</p>
 <p>Note that we can create a <code>StringList</code> directly from an iterator over strings.
 This means we don't have to create a custom GObject for our model anymore.</p>
 <p>As usual, we connect the label to the list item via an expression.
-Here we can use <a href="../docs/gtk4/struct.StringObject.html"><code>StringObject</code></a>, which exposes its content via the <a href="../docs/gtk4/struct.StringObject.html#string">property &quot;string&quot;</a>.</p>
+Here we can use <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.StringObject.html"><code>StringObject</code></a>, which exposes its content via the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.StringObject.html#string">property &quot;string&quot;</a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/6/main.rs">listings/list_widgets/6/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::{glib, prelude::*, ListItem};
 </span><span class="boring">use gtk::{
@@ -4798,7 +4798,7 @@ Here we can use <a href="../docs/gtk4/struct.StringObject.html"><code>StringObje
 Small amount of elements can be handled by <code>ListBox</code> or <code>FlowBox</code>.
 These widgets are easy to use and can, if necessary, be bound to a model such as <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.ListStore.html"><code>gio::ListStore</code></a>.
 Their data can then be modified, sorted and filtered more easily.
-However, if we need the widgets to be scalable, we still need to use <a href="../docs/gtk4/struct.ListView.html"><code>ListView</code></a>, <a href="../docs/gtk4/struct.ColumnView.html"><code>ColumnView</code></a> or <a href="../docs/gtk4/struct.GridView.html"><code>GridView</code></a> instead.</p>
+However, if we need the widgets to be scalable, we still need to use <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListView.html"><code>ListView</code></a>, <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ColumnView.html"><code>ColumnView</code></a> or <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.GridView.html"><code>GridView</code></a> instead.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="composite-templates"><a class="header" href="#composite-templates">Composite Templates</a></h1>
 <p>Until now, whenever we constructed pre-defined widgets we relied on the <a href="https://rust-unofficial.github.io/patterns/patterns/creational/builder.html">builder pattern</a>.
 As a reminder, that is how we used it to build our trusty &quot;Hello World!&quot; app.</p>
@@ -4872,10 +4872,10 @@ For example the following <code>xml</code> file describes the window widget of t
 </code></pre>
 <p>The most outer tag always has to be the <code>&lt;interface&gt;</code>.
 Then you start listing the elements you want to describe.
-In order to define a composite template, we specify the name <code>MyGtkAppWindow</code> of the custom widget we want to create and the parent <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> it derives of.
+In order to define a composite template, we specify the name <code>MyGtkAppWindow</code> of the custom widget we want to create and the parent <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> it derives of.
 These <code>xml</code> files are independent of the programming language, which is why the classes have the original names.
 Luckily, they all convert like this: <code>gtk::ApplicationWindow</code> → <code>GtkApplicationWindow</code>.
-Then we can specify properties which are listed <a href="../docs/gtk4/struct.ApplicationWindow.html#properties">here</a> for <code>ApplicationWindow</code>.
+Then we can specify properties which are listed <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html#properties">here</a> for <code>ApplicationWindow</code>.
 Since <code>ApplicationWindow</code> can contain other widgets we use the <code>&lt;child&gt;</code> tag to add a <code>gtk::Button</code>.
 We want to be able to refer to the button later on so we also set its <code>id</code>.</p>
 <h2 id="resources"><a class="header" href="#resources">Resources</a></h2>
@@ -4955,11 +4955,11 @@ impl Window {
         Object::builder().property(&quot;application&quot;, app).build()
     }
 }</code></pre>
-<p>In the implementation struct, we then add the derive macro <a href="../docs/gtk4_macros/derive.CompositeTemplate.html"><code>gtk::CompositeTemplate</code></a>.
+<p>In the implementation struct, we then add the derive macro <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4_macros/derive.CompositeTemplate.html"><code>gtk::CompositeTemplate</code></a>.
 We also specify that the template information comes from a resource of prefix <code>/org/gtk-rs/example</code> containing a file <code>window.ui</code>.</p>
 <p>One very convenient feature of templates is the template child.
 You use it by adding a struct member with the same name as one <code>id</code> attribute in the template.
-<a href="../docs/gtk4/subclass/widget/struct.TemplateChild.html"><code>TemplateChild</code></a> then stores a reference to the widget for later use.
+<a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/struct.TemplateChild.html"><code>TemplateChild</code></a> then stores a reference to the widget for later use.
 This will be useful later, when we want to add a callback to our button.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -5274,9 +5274,9 @@ This can be done with a <code>&lt;signal&gt;</code> tag containing the name of t
   &lt;/template&gt;
 &lt;/interface&gt;
 </code></pre>
-<p>Then we define the <code>handle_button_clicked</code> with the <a href="../docs/gtk4_macros/attr.template_callbacks.html"><code>template_callbacks</code></a> macro applied to it.
+<p>Then we define the <code>handle_button_clicked</code> with the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4_macros/attr.template_callbacks.html"><code>template_callbacks</code></a> macro applied to it.
 We can determine the function signature by having a look at the <code>connect_*</code> method of the signal we want to handle.
-In our case that would be <a href="../docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.
+In our case that would be <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.
 It takes a function of type <code>Fn(&amp;Self)</code>.
 <code>Self</code> refers to our button.
 This means that <code>handle_button_clicked</code> has a single parameter of type <code>&amp;CustomButton</code>.</p>
@@ -5334,7 +5334,7 @@ impl Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
+<p>Then we have to bind the template callbacks with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
 We also need to remove the <code>button.connect_clicked</code> callback implemented in <code>window/imp.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -5670,7 +5670,7 @@ impl ObjectSubclass for Window {
 <li>specify handler functions for signals. </li>
 </ul>
 <p>The API involved here is extensive so especially at the beginning you will want to check out the documentation.
-The basic syntax of the <code>ui</code> files is explained within <a href="../docs/gtk4/struct.Builder.html#gtkbuilder-ui-definitions"><code>Builder</code></a>, syntax specific to widgets within <a href="../docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>Widget</code></a>.
+The basic syntax of the <code>ui</code> files is explained within <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Builder.html#gtkbuilder-ui-definitions"><code>Builder</code></a>, syntax specific to widgets within <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>Widget</code></a>.
 If a certain widget accepts additional element, then they are typically explained in the docs of the widget.</p>
 <p>In the following chapter, we will see how composite templates help us to create slightly bigger apps such as a To-Do app.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="building-a-simple-to-do-app"><a class="header" href="#building-a-simple-to-do-app">Building a Simple To-Do App</a></h1>
@@ -7044,8 +7044,8 @@ fn main() -&gt; glib::ExitCode {
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre></pre>
 <p>One of the most popular reasons to use actions are keyboard accelerators, so we added one here.
-With <a href="../docs/gtk4/prelude/trait.GtkApplicationExt.html#tymethod.set_accels_for_action"><code>set_accels_for_action</code></a> one can assign one or more accelerators to a certain action.
-Check the documentation of <a href="../docs/gtk4/functions/fn.accelerator_parse.html"><code>accelerator_parse</code></a> in order to learn more about its syntax.</p>
+With <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.GtkApplicationExt.html#tymethod.set_accels_for_action"><code>set_accels_for_action</code></a> one can assign one or more accelerators to a certain action.
+Check the documentation of <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/functions/fn.accelerator_parse.html"><code>accelerator_parse</code></a> in order to learn more about its syntax.</p>
 <p>Before we move on to other aspects of actions, let's appreciate a few things that are curious here.
 The &quot;win&quot; part of &quot;win.close&quot; is the group of the action.
 But how does GTK know that &quot;win&quot; is the action group of our window?
@@ -7107,7 +7107,7 @@ However, that also means that we actually define one action per window instance.
 If we want to have a single globally accessible action instead, we call <code>add_action</code> on our application instead.</p>
 <blockquote>
 <p>Adding &quot;win.close&quot; was useful as a simple example.
-However, in the future we will use the pre-defined <a href="../docs/gtk4/struct.Window.html#actions">&quot;window.close&quot;</a> action which does exactly the same thing.</p>
+However, in the future we will use the pre-defined <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Window.html#actions">&quot;window.close&quot;</a> action which does exactly the same thing.</p>
 </blockquote>
 <h2 id="parameter-and-state"><a class="header" href="#parameter-and-state">Parameter and State</a></h2>
 <p>An action, like most functions, can take a parameter.
@@ -7216,10 +7216,10 @@ This is how our app works:</p>
  </video>
 </div>
 <h2 id="actionable"><a class="header" href="#actionable">Actionable</a></h2>
-<p>Connecting actions to the &quot;clicked&quot; signal of buttons is a typical use case, which is why all buttons implement the <a href="../docs/gtk4/struct.Actionable.html"><code>Actionable</code></a> interface.
+<p>Connecting actions to the &quot;clicked&quot; signal of buttons is a typical use case, which is why all buttons implement the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Actionable.html"><code>Actionable</code></a> interface.
 This way, the action can be specified by setting the &quot;action-name&quot; property.
 If the action accepts a parameter, it can be set via the &quot;action-target&quot; property.
-With <a href="../docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuilder</code></a>, we can set everything up by calling its methods.</p>
+With <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuilder</code></a>, we can set everything up by calling its methods.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/4/main.rs">listings/actions/4/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gio::SimpleAction;
 </span><span class="boring">use glib::clone;
@@ -7707,8 +7707,8 @@ We do that by adding the menu in front of the template.</p>
        &lt;object class=&quot;GtkBox&quot; id=&quot;gtk_box&quot;&gt;
          &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
 </code></pre>
-<p>Since we connect the menu to the <a href="../docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> via the <a href="../docs/gtk4/struct.MenuButton.html#menu-model">menu-model</a> property, the <code>Menu</code> is expected to be a <a href="../docs/gtk4/struct.PopoverMenu.html"><code>gtk::PopoverMenu</code></a>.
-The <a href="../docs/gtk4/struct.PopoverMenu.html">documentation</a> for <code>PopoverMenu</code> also explains its <code>xml</code> syntax for the interface builder.</p>
+<p>Since we connect the menu to the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> via the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MenuButton.html#menu-model">menu-model</a> property, the <code>Menu</code> is expected to be a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.PopoverMenu.html"><code>gtk::PopoverMenu</code></a>.
+The <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.PopoverMenu.html">documentation</a> for <code>PopoverMenu</code> also explains its <code>xml</code> syntax for the interface builder.</p>
 <p>Also note how we specified the target:</p>
 <pre><code class="language-xml">&lt;attribute name=&quot;target&quot;&gt;Horizontal&lt;/attribute&gt;
 </code></pre>
@@ -7726,7 +7726,7 @@ For example, an <code>i32</code> variable with value &quot;5&quot; would corresp
 </div>
 <blockquote>
 <p>We changed the icon of the <code>MenuButton</code> by setting its property &quot;icon-name&quot; to &quot;open-menu-symbolic&quot;.
-You can find more icons with the <a href="https://apps.gnome.org/app/org.gnome.design.IconLibrary/">Icon Library</a>.
+You can find more icons with the <a href="https://flathub.org/apps/org.gnome.design.IconLibrary">Icon Library</a>.
 They can be embedded with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Resource.html"><code>gio::Resource</code></a> and then be referenced within the composite templates (or other places).</p>
 </blockquote>
 <h2 id="settings-1"><a class="header" href="#settings-1">Settings</a></h2>
@@ -8939,7 +8939,7 @@ We also add an action which allows us to remove done tasks. </p>
     }
 <span class="boring">}</span></code></pre>
 <p>After activating the action &quot;win.filter&quot;, the corresponding setting will be changed.
-So we need a method which translates this setting into a filter that the <a href="../docs/gtk4/struct.FilterListModel.html"><code>gtk::FilterListModel</code></a> understands.
+So we need a method which translates this setting into a filter that the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.FilterListModel.html"><code>gtk::FilterListModel</code></a> understands.
 The possible states are &quot;All&quot;, &quot;Open&quot; and &quot;Done&quot;. 
 We return <code>Some(filter)</code> for &quot;Open&quot; and &quot;Done&quot;.
 If the state is &quot;All&quot; nothing has to be filtered out, so we return <code>None</code>.</p>
@@ -9473,7 +9473,7 @@ fn setup_shortcuts(app: &amp;Application) {
 <p>Now that we created all these nice shortcuts we will want our users to find them.
 We do that by creating a shortcut window.
 Again we use an <code>ui</code> file to describe it, but here we don't want to use it as template for our custom widget.
-Instead we instantiate a widget of the existing class <a href="../docs/gtk4/struct.ShortcutsWindow.html"><code>gtk::ShortcutsWindow</code></a> with it. </p>
+Instead we instantiate a widget of the existing class <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ShortcutsWindow.html"><code>gtk::ShortcutsWindow</code></a> with it. </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/2/resources/shortcuts.ui">listings/todo/2/resources/shortcuts.ui</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;interface&gt;
@@ -9517,9 +9517,9 @@ Instead we instantiate a widget of the existing class <a href="../docs/gtk4/stru
   &lt;/object&gt;
 &lt;/interface&gt;
 </code></pre>
-<p>The entries can be organized with <a href="../docs/gtk4/struct.ShortcutsSection.html"><code>gtk::ShortcutsSection</code></a> and <a href="../docs/gtk4/struct.ShortcutsGroup.html"><code>gtk::ShortcutsGroup</code></a>.
+<p>The entries can be organized with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ShortcutsSection.html"><code>gtk::ShortcutsSection</code></a> and <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ShortcutsGroup.html"><code>gtk::ShortcutsGroup</code></a>.
 If we specify the action name, we also don't have to repeat the keyboard accelerator.
-<a href="../docs/gtk4/struct.ShortcutsShortcut.html"><code>gtk::ShortcutsShortcut</code></a> looks it up on its own.</p>
+<a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ShortcutsShortcut.html"><code>gtk::ShortcutsShortcut</code></a> looks it up on its own.</p>
 <blockquote>
 <p>Note the way we set <code>action-name</code> for <code>ShortcutsShortcut</code>.
 Instead of using a separate property for the target, it takes a <em>detailed</em> action name.
@@ -10158,7 +10158,7 @@ Open the CSS view and override the button color with the following snippet.</p>
 <h2 id="style-classes-applied-by-gtk"><a class="header" href="#style-classes-applied-by-gtk">Style Classes Applied by GTK</a></h2>
 <p><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors">Class selectors</a> are one way to choose which specific elements a CSS rule applies to.
 GTK adds style classes to many of its widgets, often depending on their content.
-A <a href="../docs/gtk4/struct.Button.html#css-nodes"><code>gtk::Button</code></a>, for example, will get the <code>text-button</code> style class when its content is a label.
+A <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Button.html#css-nodes"><code>gtk::Button</code></a>, for example, will get the <code>text-button</code> style class when its content is a label.
 That is why we create a new CSS rule which only applies to <code>button</code> nodes with the style class <code>text_button</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/2/style.css">listings/css/2/style.css</a></p>
 <pre><code class="language-css">button.text-button {
@@ -10168,7 +10168,7 @@ That is why we create a new CSS rule which only applies to <code>button</code> n
 <p>Now only the font of our button becomes magenta.</p>
 <div style="text-align:center"><img src="img/css_2.png" alt="Now only the text of the button is magenta"/></div>
 <h2 id="adding-your-own-style-class"><a class="header" href="#adding-your-own-style-class">Adding Your Own Style Class</a></h2>
-<p>With <a href="../docs/gtk4/prelude/trait.WidgetExt.html#tymethod.add_css_class"><code>add_css_class</code></a> we can also add our own style classes to widgets.
+<p>With <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.WidgetExt.html#tymethod.add_css_class"><code>add_css_class</code></a> we can also add our own style classes to widgets.
 One use-case for this is when you want a rule to apply to a hand-picked set of widgets.
 For example if we have two buttons, but want only one of them to have magenta font.
 Relying on one of the style classes which GTK adds will not help since both will get the same ones.
@@ -10244,7 +10244,7 @@ Which is why we add the style class <code>button-1</code> to the first one.</p>
 Ideally however, you would give the widget a name and match with that name instead.
 This way your intentions are more clear, compared to matching with style classes that can apply to multiple widgets. </p>
 <p>Again, we have two buttons but want to color only one of them magenta.
-We set the name of the first one with <a href="../docs/gtk4/prelude/trait.WidgetExt.html#tymethod.set_widget_name"><code>set_widget_name</code></a>.</p>
+We set the name of the first one with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.WidgetExt.html#tymethod.set_widget_name"><code>set_widget_name</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/4/main.rs">listings/css/4/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gdk::Display;
 </span><span class="boring">use gtk::prelude::*;
@@ -10316,7 +10316,7 @@ The name is specified after the <code>#</code> symbol.</p>
 <p>Certain styles are common enough that GTK provides CSS rules for them.
 For example, if you want to indicate that your button leads to a destructive or suggested action you don't have to provide your own CSS rules.
 All you have to do is to add &quot;destructive-action&quot; or &quot;suggested-action&quot; style class to your button.
-Most widgets will document these rules in their documentation under <a href="../docs/gtk4/struct.Button.html#css-nodes">CSS nodes</a>.</p>
+Most widgets will document these rules in their documentation under <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Button.html#css-nodes">CSS nodes</a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/5/main.rs">listings/css/5/main.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
@@ -10366,7 +10366,7 @@ Most widgets will document these rules in their documentation under <a href="../
 <h2 id="interface-builder"><a class="header" href="#interface-builder">Interface Builder</a></h2>
 <p>We can also add style classes with the interface builder.
 Just add the <code>&lt;style&gt;</code> element to your widget.
-The <code>&lt;style&gt;</code> element is documented together with <a href="../docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>gtk::Widget</code></a>.
+The <code>&lt;style&gt;</code> element is documented together with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>gtk::Widget</code></a>.
 Adding again destructive and suggested buttons, would then look like this:</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/6/window/window.ui">listings/css/6/window/window.ui</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -10441,7 +10441,7 @@ After we removed the cursor, the button returns to its original state.</p>
 <h2 id="nodes"><a class="header" href="#nodes">Nodes</a></h2>
 <p>In the previous examples, a widget always corresponded to a single CSS node.
 This is not always the case.
-For example, <a href="../docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> has multiple CSS nodes.
+For example, <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MenuButton.html"><code>gtk::MenuButton</code></a> has multiple CSS nodes.
 Let's see how that works.</p>
 <p>First, we create a single <code>MenuButton</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/css/8/window/window.ui">listings/css/8/window/window.ui</a></p>
@@ -10462,7 +10462,7 @@ Let's see how that works.</p>
 </code></pre>
 <p>You can make a <code>MenuButton</code> show an icon or a label.
 If you choose to do neither of those, as we currently do, it shows an image displaying an arrow.</p>
-<p>An inheritance tree of <a href="../docs/gtk4/struct.MenuButton.html#css-nodes">CSS nodes</a> displays this situation:</p>
+<p>An inheritance tree of <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MenuButton.html#css-nodes">CSS nodes</a> displays this situation:</p>
 <pre><code>menubutton
 ╰── button.toggle
     ╰── &lt;content&gt;
@@ -10484,7 +10484,7 @@ Let's see how to deal with this situation by messing with our To-Do app once mor
 <p>The class <code>TaskRow</code> inherits from <code>gtk::Box</code>, so we could just match for the node <code>box</code>.
 However, in that case we would also match with other instance of <code>gtk::Box</code>.
 What we will want to do instead is to give <code>TaskRow</code> its own CSS name.
-When calling <a href="../docs/gtk4/subclass/widget/trait.WidgetClassSubclassExt.html#method.set_css_name"><code>set_css_name</code> </a>, we change the name of the CSS node of the widget class.
+When calling <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.WidgetClassExt.html#method.set_css_name"><code>set_css_name</code> </a>, we change the name of the CSS node of the widget class.
 In our case, the widget <code>TaskRow</code> then corresponds to the node <code>task-row</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/3/task_row/imp.rs">listings/todo/3/task_row/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
@@ -11059,7 +11059,7 @@ This means they cannot be used with <a href="https://developer.gnome.org/hig/pat
 <p>Try to add tasks programmatically and see how many of them you have to add until the UI noticeably slows down.
 Determine for yourself if you think that is a reasonable number or if we should have rather stuck with list views.</p>
 </blockquote>
-<p>We can use boxed lists by using <a href="../docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a> instead of <a href="../docs/gtk4/struct.ListView.html"><code>gtk::ListView</code></a>.
+<p>We can use boxed lists by using <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a> instead of <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListView.html"><code>gtk::ListView</code></a>.
 We will also add the <a href="https://gnome.pages.gitlab.gnome.org/libadwaita/doc/main/boxed-lists.html"><code>boxed-list</code></a> style class provided by Libadwaita.</p>
 <p>Let's implement all these changes in the <code>window.ui</code> file.
 All of the changes are confined within the second child of the <code>ApplicationWindow</code>.
@@ -11102,7 +11102,7 @@ To see the complete file, just click on the link after &quot;Filename&quot;.</p>
   &lt;/object&gt;
 &lt;/child&gt;
 </code></pre>
-<p>In order to follow the boxed list pattern, we switched to <a href="../docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a>, set its property &quot;selection-mode&quot; to &quot;none&quot; and added the <code>boxed-list</code> style class. </p>
+<p>In order to follow the boxed list pattern, we switched to <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBox.html"><code>gtk::ListBox</code></a>, set its property &quot;selection-mode&quot; to &quot;none&quot; and added the <code>boxed-list</code> style class. </p>
 <p>Let's continue with <code>window/imp.rs</code>.
 The member variable <code>tasks_list</code> now describes a <code>ListBox</code> rather than a <code>ListView</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/6/window/imp.rs">listings/todo/6/window/imp.rs</a></p>
@@ -12138,10 +12138,10 @@ These collections will get their own sidebar on the left of the app.
 We will start by adding an empty sidebar without any functionality.</p>
 <div style="text-align:center"><img src="img/todo_7_sidebar.png" alt="To-Do app with an empty sidebar"/></div>
 <p>There are a couple of steps we have to go through to get to this state.
-First, we have to replace <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.ApplicationWindow.html"><code>adw::ApplicationWindow</code></a>.
+First, we have to replace <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.ApplicationWindow.html"><code>adw::ApplicationWindow</code></a>.
 The only difference between those two is that <code>adw::ApplicationWindow</code> has no titlebar area.
 That comes in handy when we build up our interface with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.Leaflet.html"><code>adw::Leaflet</code></a>.
-In the screenshot above, the <code>Leaflet</code> behaves like a <a href="../docs/gtk4/struct.Box.html"><code>gtk::Box</code></a> and contains the collection view on the left, a separator in the middle and the task view on the right.
+In the screenshot above, the <code>Leaflet</code> behaves like a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Box.html"><code>gtk::Box</code></a> and contains the collection view on the left, a separator in the middle and the task view on the right.
 When using <code>adw::ApplicationWindow</code> the collection view and task view have their own <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.HeaderBar.html"><code>adw::HeaderBar</code></a> and the separator spans over the whole window.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/7/resources/window.ui">listings/todo/7/resources/window.ui</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -12180,7 +12180,7 @@ When using <code>adw::ApplicationWindow</code> the collection view and task view
 &lt;/interface&gt;
 </code></pre>
 <p>The <code>Leaflet</code> does not always behave like a <code>gtk::Box</code>.
-As soon as the requested size is too small to fit all children at the same time, the leaflet folds, and starts behaving like a <a href="../docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
+As soon as the requested size is too small to fit all children at the same time, the leaflet folds, and starts behaving like a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
 This means that it only displays one of its children at a time.
 The property &quot;can-navigate-back&quot; controls whether gestures and shortcuts for navigating backward are enabled.
 The <code>AdwLeafletPage</code> with the <code>gtk::Separator</code> will never be displayed in the folded state since its property &quot;navigatable&quot; is set to <code>False</code>.)
@@ -12692,7 +12692,7 @@ Users will have to add a collection first, and we have to make that clear.
 The GNOME HIG suggests to use a <a href="https://developer.gnome.org/hig/patterns/feedback/placeholders.html">placeholder page</a> for that.
 In our case, this placeholder page will be presented to the user if they open the app without any collections present.</p>
 <div style="text-align:center"><img src="img/todo_8_placeholder_page.png" alt="The placeholder page"/></div>
-<p>We now wrap our UI in a <a href="../docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
+<p>We now wrap our UI in a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
 One stack page describes the placeholder page, the other describes the main page.
 We will later wire up the logic to display the correct stack page in the Rust code.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/resources/window.ui">listings/todo/8/resources/window.ui</a></p>
@@ -14143,7 +14143,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">        dialog.present();
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><code>create_collection_row</code> takes a <code>CollectionObject</code> and builds a <a href="../docs/gtk4/struct.ListBoxRow.html"><code>gtk::ListBoxRow</code></a> from its information.</p>
+<p><code>create_collection_row</code> takes a <code>CollectionObject</code> and builds a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBoxRow.html"><code>gtk::ListBoxRow</code></a> from its information.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/window/imp.rs">listings/todo/8/window/mod.rs</a></p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">

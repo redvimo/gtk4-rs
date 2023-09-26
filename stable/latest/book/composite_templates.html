@@ -243,10 +243,10 @@ For example the following <code>xml</code> file describes the window widget of t
 </code></pre>
 <p>The most outer tag always has to be the <code>&lt;interface&gt;</code>.
 Then you start listing the elements you want to describe.
-In order to define a composite template, we specify the name <code>MyGtkAppWindow</code> of the custom widget we want to create and the parent <a href="../docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> it derives of.
+In order to define a composite template, we specify the name <code>MyGtkAppWindow</code> of the custom widget we want to create and the parent <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> it derives of.
 These <code>xml</code> files are independent of the programming language, which is why the classes have the original names.
 Luckily, they all convert like this: <code>gtk::ApplicationWindow</code> → <code>GtkApplicationWindow</code>.
-Then we can specify properties which are listed <a href="../docs/gtk4/struct.ApplicationWindow.html#properties">here</a> for <code>ApplicationWindow</code>.
+Then we can specify properties which are listed <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html#properties">here</a> for <code>ApplicationWindow</code>.
 Since <code>ApplicationWindow</code> can contain other widgets we use the <code>&lt;child&gt;</code> tag to add a <code>gtk::Button</code>.
 We want to be able to refer to the button later on so we also set its <code>id</code>.</p>
 <h2 id="resources"><a class="header" href="#resources">Resources</a></h2>
@@ -326,11 +326,11 @@ impl Window {
         Object::builder().property(&quot;application&quot;, app).build()
     }
 }</code></pre>
-<p>In the implementation struct, we then add the derive macro <a href="../docs/gtk4_macros/derive.CompositeTemplate.html"><code>gtk::CompositeTemplate</code></a>.
+<p>In the implementation struct, we then add the derive macro <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4_macros/derive.CompositeTemplate.html"><code>gtk::CompositeTemplate</code></a>.
 We also specify that the template information comes from a resource of prefix <code>/org/gtk-rs/example</code> containing a file <code>window.ui</code>.</p>
 <p>One very convenient feature of templates is the template child.
 You use it by adding a struct member with the same name as one <code>id</code> attribute in the template.
-<a href="../docs/gtk4/subclass/widget/struct.TemplateChild.html"><code>TemplateChild</code></a> then stores a reference to the widget for later use.
+<a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/struct.TemplateChild.html"><code>TemplateChild</code></a> then stores a reference to the widget for later use.
 This will be useful later, when we want to add a callback to our button.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -645,9 +645,9 @@ This can be done with a <code>&lt;signal&gt;</code> tag containing the name of t
   &lt;/template&gt;
 &lt;/interface&gt;
 </code></pre>
-<p>Then we define the <code>handle_button_clicked</code> with the <a href="../docs/gtk4_macros/attr.template_callbacks.html"><code>template_callbacks</code></a> macro applied to it.
+<p>Then we define the <code>handle_button_clicked</code> with the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4_macros/attr.template_callbacks.html"><code>template_callbacks</code></a> macro applied to it.
 We can determine the function signature by having a look at the <code>connect_*</code> method of the signal we want to handle.
-In our case that would be <a href="../docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.
+In our case that would be <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked"><code>connect_clicked</code></a>.
 It takes a function of type <code>Fn(&amp;Self)</code>.
 <code>Self</code> refers to our button.
 This means that <code>handle_button_clicked</code> has a single parameter of type <code>&amp;CustomButton</code>.</p>
@@ -705,7 +705,7 @@ impl Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>Then we have to bind the template callbacks with <a href="../docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
+<p>Then we have to bind the template callbacks with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
 We also need to remove the <code>button.connect_clicked</code> callback implemented in <code>window/imp.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
 <pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
@@ -1041,7 +1041,7 @@ impl ObjectSubclass for Window {
 <li>specify handler functions for signals. </li>
 </ul>
 <p>The API involved here is extensive so especially at the beginning you will want to check out the documentation.
-The basic syntax of the <code>ui</code> files is explained within <a href="../docs/gtk4/struct.Builder.html#gtkbuilder-ui-definitions"><code>Builder</code></a>, syntax specific to widgets within <a href="../docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>Widget</code></a>.
+The basic syntax of the <code>ui</code> files is explained within <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Builder.html#gtkbuilder-ui-definitions"><code>Builder</code></a>, syntax specific to widgets within <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Widget.html#gtkwidget-as-gtkbuildable"><code>Widget</code></a>.
 If a certain widget accepts additional element, then they are typically explained in the docs of the widget.</p>
 <p>In the following chapter, we will see how composite templates help us to create slightly bigger apps such as a To-Do app.</p>
 
