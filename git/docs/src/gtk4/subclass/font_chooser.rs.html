@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/font_chooser.rs`."><title>font_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (bf9a1c8a1 2023-10-08)" data-channel="nightly" data-search-js="search-5f5ec5419eadd0c9.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/font_chooser.rs`."><title>font_chooser.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,7 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><a class="sub-logo-container" href="../../../gtk4/index.html"><img class="rust-logo" src="../../../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -408,6 +408,7 @@
 <a href="#335" id="335">335</a>
 <a href="#336" id="336">336</a>
 <a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
@@ -427,13 +428,14 @@
 }
 
 <span class="kw">impl </span><a href="#13-17">FilterCallback</a> {
-    <span class="kw">pub fn </span>call(<span class="kw-2">&amp;</span><span class="self">self</span>, font_family: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_family/struct.FontFamily.html">FontFamily</a>, font_face: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_face/struct.FontFace.html">FontFace</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
+    <span class="comment">// true if the font should be displayed
+    </span><span class="kw">pub fn </span>call(<span class="kw-2">&amp;</span><span class="self">self</span>, font_family: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_family/struct.FontFamily.html">FontFamily</a>, font_face: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_face/struct.FontFace.html">FontFace</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(filter_func) = <a class="self" href="#20">self</a>.filter_func {
-                from_glib(<a href="#22">filter_func</a>(
-                    <a href="#20">font_family</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#20">font_face</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a class="self" href="#20">self</a>.user_data,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(filter_func) = <a class="self" href="#21">self</a>.filter_func {
+                from_glib(<a href="#23">filter_func</a>(
+                    <a href="#21">font_family</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#21">font_face</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a class="self" href="#21">self</a>.user_data,
                 ))
             } <span class="kw">else </span>{
                 <span class="comment">// show the font if the filter_func was not set
@@ -447,8 +449,8 @@
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>drop(<span class="kw-2">&amp;mut </span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(destroy_notify) = <a class="self" href="#38">self</a>.destroy_notify {
-                <a href="#40">destroy_notify</a>(<a class="self" href="#38">self</a>.user_data)
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(destroy_notify) = <a class="self" href="#39">self</a>.destroy_notify {
+                <a href="#41">destroy_notify</a>(<a class="self" href="#39">self</a>.user_data)
             }
         }
     }
@@ -458,52 +460,52 @@
 #[allow(deprecated)]
 </span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/font_chooser/trait.FontChooserImpl.html">FontChooserImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
     <span class="kw">fn </span>font_family(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_family/struct.FontFamily.html">FontFamily</a>&gt; {
-        <a class="self" href="#50">self</a>.<a href="#87-102">parent_font_family</a>()
+        <a class="self" href="#51">self</a>.<a href="#88-103">parent_font_family</a>()
     }
 
     <span class="kw">fn </span>font_face(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_face/struct.FontFace.html">FontFace</a>&gt; {
-        <a class="self" href="#54">self</a>.<a href="#104-120">parent_font_face</a>()
+        <a class="self" href="#55">self</a>.<a href="#105-121">parent_font_face</a>()
     }
 
     <span class="kw">fn </span>font_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
-        <a class="self" href="#58">self</a>.<a href="#122-135">parent_font_size</a>()
+        <a class="self" href="#59">self</a>.<a href="#123-136">parent_font_size</a>()
     }
 
     <span class="kw">fn </span>set_filter_func(<span class="kw-2">&amp;</span><span class="self">self</span>, callback: <span class="prelude-ty">Option</span>&lt;<a href="#13-17">FilterCallback</a>&gt;) {
-        <a class="self" href="#62">self</a>.<a href="#137-161">parent_set_filter_func</a>(<a href="#62">callback</a>)
+        <a class="self" href="#63">self</a>.<a href="#138-162">parent_set_filter_func</a>(<a href="#63">callback</a>)
     }
 
     <span class="kw">fn </span>set_font_map&lt;P: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, font_map: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;) {
-        <a class="self" href="#66">self</a>.<a href="#163-177">parent_set_font_map</a>(<a href="#66">font_map</a>)
+        <a class="self" href="#67">self</a>.<a href="#164-178">parent_set_font_map</a>(<a href="#67">font_map</a>)
     }
 
     <span class="kw">fn </span>font_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt; {
-        <a class="self" href="#70">self</a>.<a href="#179-195">parent_font_map</a>()
+        <a class="self" href="#71">self</a>.<a href="#180-196">parent_font_map</a>()
     }
 
     <span class="kw">fn </span>font_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, font_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
-        <a class="self" href="#74">self</a>.<a href="#197-209">parent_font_activated</a>(<a href="#74">font_name</a>)
+        <a class="self" href="#75">self</a>.<a href="#198-210">parent_font_activated</a>(<a href="#75">font_name</a>)
     }
 }
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <a href="#86-210"><span class="kw">super</span>::FontChooserImplExt</a>&gt; <a href="#80">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <a href="#87-211"><span class="kw">super</span>::FontChooserImplExt</a>&gt; <a href="#81">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/font_chooser/trait.FontChooserImplExt.html">FontChooserImplExt</a>: <a href="#80">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/font_chooser/trait.FontChooserImplExt.html">FontChooserImplExt</a>: <a href="#81">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_font_family(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_family/struct.FontFamily.html">FontFamily</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#89">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#90">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
-            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#90">parent_iface</a>)
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#91">parent_iface</a>)
                 .get_font_family
                 .expect(<span class="string">&quot;no parent \&quot;get_font_family\&quot; implementation&quot;</span>);
 
-            from_glib_none(<a href="#92">f</a>(<span class="self"><a href="#87">self</a>
+            from_glib_none(<a href="#93">f</a>(<span class="self"><a href="#88">self</a>
                 </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
@@ -514,14 +516,14 @@
     <span class="kw">fn </span>parent_font_face(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_face/struct.FontFace.html">FontFace</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#106">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#107">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
 
-            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#107">parent_iface</a>)
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#108">parent_iface</a>)
                 .get_font_face
                 .expect(<span class="string">&quot;no parent \&quot;get_font_face\&quot; implementation&quot;</span>);
 
-            from_glib_none(<a href="#110">f</a>(<span class="self"><a href="#104">self</a>
+            from_glib_none(<a href="#111">f</a>(<span class="self"><a href="#105">self</a>
                 </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
@@ -532,11 +534,11 @@
     <span class="kw">fn </span>parent_font_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#124">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#125">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#125">parent_iface</a>).get_font_size {
-                <a href="#128">f</a>(<a class="self" href="#122">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#126">parent_iface</a>).get_font_size {
+                <a href="#129">f</a>(<a class="self" href="#123">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)
             } <span class="kw">else </span>{
                 <span class="comment">// No font size is selected
                 </span>-<span class="number">1
@@ -547,20 +549,20 @@
     <span class="kw">fn </span>parent_set_filter_func(<span class="kw-2">&amp;</span><span class="self">self</span>, callback: <span class="prelude-ty">Option</span>&lt;<a href="#13-17">FilterCallback</a>&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#139">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#140">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#140">parent_iface</a>).set_filter_func {
-                <span class="kw">if let </span><span class="prelude-val">Some</span>(filter_callback) = <a href="#137">callback</a> {
-                    <a href="#143">f</a>(
-                        <a class="self" href="#137">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                        <a href="#144">filter_callback</a>.filter_func,
-                        <a href="#144">filter_callback</a>.user_data,
-                        <a href="#144">filter_callback</a>.destroy_notify,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#141">parent_iface</a>).set_filter_func {
+                <span class="kw">if let </span><span class="prelude-val">Some</span>(filter_callback) = <a href="#138">callback</a> {
+                    <a href="#144">f</a>(
+                        <a class="self" href="#138">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                        <a href="#145">filter_callback</a>.filter_func,
+                        <a href="#145">filter_callback</a>.user_data,
+                        <a href="#145">filter_callback</a>.destroy_notify,
                     )
                 } <span class="kw">else </span>{
-                    <a href="#143">f</a>(
-                        <a class="self" href="#137">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#144">f</a>(
+                        <a class="self" href="#138">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                         <span class="prelude-val">None</span>,
                         std::ptr::null_mut(),
                         <span class="prelude-val">None</span>,
@@ -573,15 +575,15 @@
     <span class="kw">fn </span>parent_set_font_map&lt;P: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, font_map: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>P&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#165">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#166">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
 
-            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#166">parent_iface</a>)
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#167">parent_iface</a>)
                 .set_font_map
                 .expect(<span class="string">&quot;no parent \&quot;set_font_map\&quot; implementation&quot;</span>);
-            <a href="#169">f</a>(
-                <a class="self" href="#163">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#163">font_map</a>.map(|fm| <a href="#174">fm</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            <a href="#170">f</a>(
+                <a class="self" href="#164">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#164">font_map</a>.map(|fm| <a href="#175">fm</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>()).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             );
         }
     }
@@ -589,14 +591,14 @@
     <span class="kw">fn </span>parent_font_map(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#181">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#182">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
 
-            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#182">parent_iface</a>)
+            <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#183">parent_iface</a>)
                 .get_font_map
                 .expect(<span class="string">&quot;no parent \&quot;get_font_map\&quot; implementation&quot;</span>);
 
-            from_glib_none(<a href="#185">f</a>(<span class="self"><a href="#179">self</a>
+            from_glib_none(<a href="#186">f</a>(<span class="self"><a href="#180">self</a>
                 </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
@@ -607,55 +609,55 @@
     <span class="kw">fn </span>parent_font_activated(<span class="kw-2">&amp;</span><span class="self">self</span>, font_name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#199">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#200">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkFontChooserIface.html">ffi::GtkFontChooserIface</a>;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#200">parent_iface</a>).font_activated {
-                <a href="#202">f</a>(
-                    <a class="self" href="#197">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#197">font_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#201">parent_iface</a>).font_activated {
+                <a href="#203">f</a>(
+                    <a class="self" href="#198">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/font_chooser.rs.html#14-92">FontChooser</a>&gt;().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#198">font_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             }
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T: <a href="#49-77">FontChooserImpl</a>&gt; <a href="#86-210">FontChooserImplExt</a> <span class="kw">for </span>T {}
+<span class="kw">impl</span>&lt;T: <a href="#50-78">FontChooserImpl</a>&gt; <a href="#87-211">FontChooserImplExt</a> <span class="kw">for </span>T {}
 
-<span class="kw">unsafe impl</span>&lt;T: <a href="#49-77">FontChooserImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/font_chooser.rs.html#14-92">FontChooser</a> {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#50-78">FontChooserImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/font_chooser.rs.html#14-92">FontChooser</a> {
     <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">let </span>iface = <a href="#215">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <span class="kw">let </span>iface = <a href="#216">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
 
         <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
 
-        <a href="#216">iface</a>.get_font_family = <span class="prelude-val">Some</span>(font_chooser_get_font_family::&lt;T&gt;);
-        <a href="#216">iface</a>.get_font_face = <span class="prelude-val">Some</span>(font_chooser_get_font_face::&lt;T&gt;);
-        <a href="#216">iface</a>.get_font_size = <span class="prelude-val">Some</span>(font_chooser_get_font_size::&lt;T&gt;);
-        <a href="#216">iface</a>.font_activated = <span class="prelude-val">Some</span>(font_chooser_font_activated::&lt;T&gt;);
-        <a href="#216">iface</a>.set_font_map = <span class="prelude-val">Some</span>(font_chooser_set_font_map::&lt;T&gt;);
-        <a href="#216">iface</a>.get_font_map = <span class="prelude-val">Some</span>(font_chooser_get_font_map::&lt;T&gt;);
-        <a href="#216">iface</a>.set_filter_func = <span class="prelude-val">Some</span>(font_chooser_set_filter_func::&lt;T&gt;);
+        <a href="#217">iface</a>.get_font_family = <span class="prelude-val">Some</span>(font_chooser_get_font_family::&lt;T&gt;);
+        <a href="#217">iface</a>.get_font_face = <span class="prelude-val">Some</span>(font_chooser_get_font_face::&lt;T&gt;);
+        <a href="#217">iface</a>.get_font_size = <span class="prelude-val">Some</span>(font_chooser_get_font_size::&lt;T&gt;);
+        <a href="#217">iface</a>.font_activated = <span class="prelude-val">Some</span>(font_chooser_font_activated::&lt;T&gt;);
+        <a href="#217">iface</a>.set_font_map = <span class="prelude-val">Some</span>(font_chooser_set_font_map::&lt;T&gt;);
+        <a href="#217">iface</a>.get_font_map = <span class="prelude-val">Some</span>(font_chooser_get_font_map::&lt;T&gt;);
+        <a href="#217">iface</a>.set_filter_func = <span class="prelude-val">Some</span>(font_chooser_set_filter_func::&lt;T&gt;);
     }
 }
 
 <span class="kw">static </span>FONT_CHOOSER_GET_FONT_FAMILY_QUARK: Lazy&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/quark/struct.Quark.html">Quark</a>&gt; =
     Lazy::new(|| Quark::from_str(<span class="string">&quot;gtk4-rs-subclass-font-chooser-font-family&quot;</span>));
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_family&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_family&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
 ) -&gt; <span class="kw-2">*mut </span>pango::ffi::PangoFontFamily {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#234">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#236">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#235">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#237">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <span class="kw">let </span>ret = <a href="#237">imp</a>.<a href="#50-52">font_family</a>();
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(font_family) = <a href="#239">ret</a> {
-        <span class="kw">let </span>font_family = <a href="#240">font_family</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
-        <a href="#237">imp</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_qdata</a>(
-            <span class="kw-2">*</span><a href="#230-231">FONT_CHOOSER_GET_FONT_FAMILY_QUARK</a>,
-            <a href="mod.rs.html#8">PtrHolder</a>(<a href="#241">font_family</a>, |ptr| {
-                glib::gobject_ffi::g_object_unref(<a href="#244">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>)
+    <span class="kw">let </span>ret = <a href="#238">imp</a>.<a href="#51-53">font_family</a>();
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(font_family) = <a href="#240">ret</a> {
+        <span class="kw">let </span>font_family = <a href="#241">font_family</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+        <a href="#238">imp</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_qdata</a>(
+            <span class="kw-2">*</span><a href="#231-232">FONT_CHOOSER_GET_FONT_FAMILY_QUARK</a>,
+            <a href="mod.rs.html#8">PtrHolder</a>(<a href="#242">font_family</a>, |ptr| {
+                glib::gobject_ffi::g_object_unref(<a href="#245">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>)
             }),
         );
-        <a href="#241">font_family</a>
+        <a href="#242">font_family</a>
     } <span class="kw">else </span>{
         std::ptr::null_mut()
     }
@@ -663,86 +665,86 @@
 
 <span class="kw">static </span>FONT_CHOOSER_GET_FONT_FACE_QUARK: Lazy&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/quark/struct.Quark.html">Quark</a>&gt; =
     Lazy::new(|| Quark::from_str(<span class="string">&quot;gtk4-rs-subclass-font-chooser-font-face&quot;</span>));
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_face&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_face&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
 ) -&gt; <span class="kw-2">*mut </span>pango::ffi::PangoFontFace {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#257">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#259">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#258">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#260">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <span class="kw">let </span>ret = <a href="#260">imp</a>.<a href="#54-56">font_face</a>();
-    <span class="kw">if let </span><span class="prelude-val">Some</span>(font_face) = <a href="#262">ret</a> {
-        <span class="kw">let </span>font_face = <a href="#263">font_face</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
-        <a href="#260">imp</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_qdata</a>(
-            <span class="kw-2">*</span><a href="#254-255">FONT_CHOOSER_GET_FONT_FACE_QUARK</a>,
-            <a href="mod.rs.html#8">PtrHolder</a>(<a href="#264">font_face</a>, |ptr| {
-                glib::gobject_ffi::g_object_unref(<a href="#267">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
+    <span class="kw">let </span>ret = <a href="#261">imp</a>.<a href="#55-57">font_face</a>();
+    <span class="kw">if let </span><span class="prelude-val">Some</span>(font_face) = <a href="#263">ret</a> {
+        <span class="kw">let </span>font_face = <a href="#264">font_face</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>();
+        <a href="#261">imp</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">set_qdata</a>(
+            <span class="kw-2">*</span><a href="#255-256">FONT_CHOOSER_GET_FONT_FACE_QUARK</a>,
+            <a href="mod.rs.html#8">PtrHolder</a>(<a href="#265">font_face</a>, |ptr| {
+                glib::gobject_ffi::g_object_unref(<a href="#268">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>);
             }),
         );
-        <a href="#264">font_face</a>
+        <a href="#265">font_face</a>
     } <span class="kw">else </span>{
         std::ptr::null_mut()
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_size&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_size&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
 ) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#278">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#280">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#279">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#281">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#281">imp</a>.<a href="#58-60">font_size</a>()
+    <a href="#282">imp</a>.<a href="#59-61">font_size</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_font_activated&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_font_activated&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
     font_nameptr: <span class="kw-2">*const </span>libc::c_char,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#287">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#290">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>font_name: Borrowed&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt; = from_glib_borrow(<a href="#288">font_nameptr</a>);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#288">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#291">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>font_name: Borrowed&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a>&gt; = from_glib_borrow(<a href="#289">font_nameptr</a>);
 
-    <a href="#291">imp</a>.<a href="#74-76">font_activated</a>(<span class="kw-2">&amp;</span><a href="#292">font_name</a>)
+    <a href="#292">imp</a>.<a href="#75-77">font_activated</a>(<span class="kw-2">&amp;</span><a href="#293">font_name</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_set_font_map&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_set_font_map&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
     font_mapptr: <span class="kw-2">*mut </span>pango::ffi::PangoFontMap,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#298">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#301">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>font_map: Borrowed&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt;&gt; = from_glib_borrow(<a href="#299">font_mapptr</a>);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#299">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#302">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>font_map: Borrowed&lt;<span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/pango/auto/font_map/struct.FontMap.html">FontMap</a>&gt;&gt; = from_glib_borrow(<a href="#300">font_mapptr</a>);
 
-    <a href="#302">imp</a>.<a href="#66-68">set_font_map</a>(<a href="#303">font_map</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().as_ref())
+    <a href="#303">imp</a>.<a href="#67-69">set_font_map</a>(<a href="#304">font_map</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().as_ref())
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_map&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_get_font_map&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
 ) -&gt; <span class="kw-2">*mut </span>pango::ffi::PangoFontMap {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#309">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#311">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#310">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#312">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#312">imp</a>.<a href="#70-72">font_map</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
+    <a href="#313">imp</a>.<a href="#71-73">font_map</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_set_filter_func&lt;T: <a href="#49-77">FontChooserImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>font_chooser_set_filter_func&lt;T: <a href="#50-78">FontChooserImpl</a>&gt;(
     font_chooser: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkFontChooser.html">ffi::GtkFontChooser</a>,
     filter_func: <a href="../../../gtk4_sys/type.GtkFontFilterFunc.html">ffi::GtkFontFilterFunc</a>,
     user_data: glib::ffi::gpointer,
     destroy_notify: glib::ffi::GDestroyNotify,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#318">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#323">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#319">font_chooser</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#324">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <span class="kw">let </span>callback = <span class="kw">if </span>filter_func.is_some() {
         <span class="prelude-val">None
     </span>} <span class="kw">else </span>{
         <span class="prelude-val">Some</span>(<a href="#13-17">FilterCallback</a> {
-            <a href="#319">filter_func</a>,
-            <a href="#320">user_data</a>,
-            <a href="#321">destroy_notify</a>,
+            <a href="#320">filter_func</a>,
+            <a href="#321">user_data</a>,
+            <a href="#322">destroy_notify</a>,
         })
     };
 
-    <a href="#324">imp</a>.<a href="#62-64">set_filter_func</a>(<a href="#326">callback</a>);
+    <a href="#325">imp</a>.<a href="#63-65">set_filter_func</a>(<a href="#327">callback</a>);
 }
 </code></pre></div></section></main></body></html>
