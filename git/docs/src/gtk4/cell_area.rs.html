@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/cell_area.rs`."><title>cell_area.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/cell_area.rs`."><title>cell_area.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -192,21 +192,26 @@
 <a href="#119" id="119">119</a>
 <a href="#120" id="120">120</a>
 <a href="#121" id="121">121</a>
+<a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
+<a href="#124" id="124">124</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use crate</span>::{<a href="lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="auto/cell_area.rs.html#17-414">CellArea</a>, <a href="auto/cell_renderer.rs.html#17-183">CellRenderer</a>};
-<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.FromValue.html">value::FromValue</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+</span><span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.FromValue.html">value::FromValue</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+
+<span class="kw">use crate</span>::{<a href="lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="auto/cell_area.rs.html#17-414">CellArea</a>, <a href="auto/cell_renderer.rs.html#17-183">CellRenderer</a>};
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/cell_area.rs.html#17-414"><span class="kw">super</span>::CellArea</a>&gt;&gt; <a href="#7">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/cell_area.rs.html#17-414"><span class="kw">super</span>::CellArea</a>&gt;&gt; <a href="#8">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="comment">// rustdoc-stripper-ignore-next
-</span><span class="doccomment">/// Trait containing manually implemented methods of [`CellArea`](crate::CellArea).
+</span><span class="doccomment">/// Trait containing manually implemented methods of
+/// [`CellArea`](crate::CellArea).
 </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.CellAreaExtManual.html">CellAreaExtManual</a>: <a href="#7">sealed::Sealed</a> + IsA&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt; {
+</span><span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.CellAreaExtManual.html">CellAreaExtManual</a>: <a href="#8">sealed::Sealed</a> + IsA&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt; {
     <span class="doccomment">/// Adds @renderer to @self, setting cell properties at the same time.
     /// See gtk_cell_area_add() and gtk_cell_area_cell_set() for more details.
     ///
@@ -222,9 +227,9 @@
         renderer: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/cell_renderer.rs.html#17-183">CellRenderer</a>&gt;,
         properties: <span class="kw-2">&amp;</span>[(<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <span class="kw-2">&amp;</span><span class="kw">dyn </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">ToValue</a>)],
     ) {
-        <a class="self" href="#27">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="auto/cell_area.rs.html#529-536">add</a>(<a href="#28">renderer</a>);
-        <a href="#29">properties</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">for_each</a>(|(property_name, value)| {
-            <a class="self" href="#27">self</a>.<a href="#84-118">cell_set</a>(<a href="#28">renderer</a>, <span class="kw-2">*</span><a href="#32">property_name</a>, <span class="kw-2">*</span><a href="#32">value</a>);
+        <a class="self" href="#29">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="auto/cell_area.rs.html#529-536">add</a>(<a href="#30">renderer</a>);
+        <a href="#31">properties</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">for_each</a>(|(property_name, value)| {
+            <a class="self" href="#29">self</a>.<a href="#87-121">cell_set</a>(<a href="#30">renderer</a>, <span class="kw-2">*</span><a href="#34">property_name</a>, <span class="kw-2">*</span><a href="#34">value</a>);
         });
     }
 
@@ -236,30 +241,31 @@
         property_name: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>,
     ) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">glib::Value</a> {
         <span class="kw">unsafe </span>{
-            <a href="#42">property_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|property_name| {
+            <a href="#44">property_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|property_name| {
                 <span class="kw">let </span>cell_class = glib::Class::&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt;::from_type(<span class="self">Self</span>::static_type()).unwrap();
                 <span class="kw">let </span>pspec: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/param_spec/struct.ParamSpec.html">glib::ParamSpec</a>&gt; =
                     from_glib_none(ffi::gtk_cell_area_class_find_cell_property(
-                        <a href="#46">cell_class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*mut </span><a href="../../gtk4_sys/struct.GtkCellAreaClass.html">ffi::GtkCellAreaClass</a>,
-                        <a href="#45">property_name</a>.as_ptr(),
+                        <a href="#48">cell_class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*mut </span><a href="../../gtk4_sys/struct.GtkCellAreaClass.html">ffi::GtkCellAreaClass</a>,
+                        <a href="#47">property_name</a>.as_ptr(),
                     ));
-                <span class="kw">let </span>pspec = <a href="#47">pspec</a>.unwrap_or_else(|| {
+                <span class="kw">let </span>pspec = <a href="#49">pspec</a>.unwrap_or_else(|| {
                     <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;The CellArea property {property_name} doesn&#39;t exists&quot;</span>)
                 });
-                <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::from_type(<a href="#52">pspec</a>.value_type());
+                <span class="kw">let </span><span class="kw-2">mut </span>value = glib::Value::from_type(<a href="#54">pspec</a>.value_type());
                 ffi::gtk_cell_area_cell_get_property(
-                    <a class="self" href="#40">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#41">renderer</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#45">property_name</a>.as_ptr(),
-                    <a href="#55">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
+                    <a class="self" href="#42">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#43">renderer</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#47">property_name</a>.as_ptr(),
+                    <a href="#57">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtrMut.html">to_glib_none_mut</a>().<span class="number">0</span>,
                 );
-                <a href="#55">value</a>
+                <a href="#57">value</a>
             })
         }
     }
 
     <span class="comment">// rustdoc-stripper-ignore-next
-    </span><span class="doccomment">/// Similar to [`Self::cell_get_value`] but panics if the value is of a different type.
+    </span><span class="doccomment">/// Similar to [`Self::cell_get_value`] but panics if the value is of a
+    /// different type.
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_cell_area_cell_get_valist&quot;</span>)]
     #[doc(alias = <span class="string">&quot;gtk_cell_area_cell_get_property&quot;</span>)]
     </span><span class="kw">fn </span>cell_get&lt;V: <span class="kw">for</span>&lt;<span class="lifetime">&#39;b</span>&gt; FromValue&lt;<span class="lifetime">&#39;b</span>&gt; + <span class="lifetime">&#39;static</span>&gt;(
@@ -267,8 +273,8 @@
         renderer: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="auto/cell_renderer.rs.html#17-183">CellRenderer</a>&gt;,
         property_name: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>,
     ) -&gt; V {
-        <span class="kw">let </span>value = <a class="self" href="#72">self</a>.<a href="#39-65">cell_get_value</a>(<a href="#73">renderer</a>, <a href="#74">property_name</a>);
-        <a href="#76">value</a>
+        <span class="kw">let </span>value = <a class="self" href="#75">self</a>.<a href="#41-67">cell_get_value</a>(<a href="#76">renderer</a>, <a href="#77">property_name</a>);
+        <a href="#79">value</a>
             .get_owned::&lt;V&gt;()
             .expect(<span class="string">&quot;Failed to get value of renderer&quot;</span>)
     }
@@ -282,18 +288,18 @@
         value: <span class="kw">impl </span>Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>&gt;,
     ) {
         <span class="kw">unsafe </span>{
-            <a href="#87">property_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|property_name| {
+            <a href="#90">property_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|property_name| {
                 <span class="kw">let </span>cell_class = glib::Class::&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt;::from_type(<span class="self">Self</span>::static_type()).unwrap();
                 <span class="kw">let </span>pspec: <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/param_spec/struct.ParamSpec.html">glib::ParamSpec</a>&gt; =
                     from_glib_none(ffi::gtk_cell_area_class_find_cell_property(
-                        <a href="#92">cell_class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*mut </span><a href="../../gtk4_sys/struct.GtkCellAreaClass.html">ffi::GtkCellAreaClass</a>,
-                        <a href="#91">property_name</a>.as_ptr(),
+                        <a href="#95">cell_class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_ as </span><span class="kw-2">*mut </span><a href="../../gtk4_sys/struct.GtkCellAreaClass.html">ffi::GtkCellAreaClass</a>,
+                        <a href="#94">property_name</a>.as_ptr(),
                     ));
-                <span class="kw">let </span>pspec = <a href="#93">pspec</a>.unwrap_or_else(|| {
+                <span class="kw">let </span>pspec = <a href="#96">pspec</a>.unwrap_or_else(|| {
                     <a class="macro" href="https://doc.rust-lang.org/nightly/std/macro.panic.html">panic!</a>(<span class="string">&quot;The CellArea property {property_name} doesn&#39;t exists&quot;</span>)
                 });
 
-                <span class="kw">let </span>value = <a href="#88">value</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>();
+                <span class="kw">let </span>value = <a href="#91">value</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>();
                 <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                     pspec.value_type().is_a(value.type_()),
                     <span class="string">&quot;The CellArea property&#39;s value is of wrong type. Expected &#39;{}&#39; but got &#39;{}&#39;&quot;</span>,
@@ -302,15 +308,15 @@
                 );
 
                 ffi::gtk_cell_area_cell_set_property(
-                    <a class="self" href="#85">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#86">renderer</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#91">property_name</a>.as_ptr(),
-                    <a href="#102">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a class="self" href="#88">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#89">renderer</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#94">property_name</a>.as_ptr(),
+                    <a href="#105">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             })
         }
     }
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt;&gt; <a href="#15-119">CellAreaExtManual</a> <span class="kw">for </span>O {}
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/cell_area.rs.html#17-414">CellArea</a>&gt;&gt; <a href="#17-122">CellAreaExtManual</a> <span class="kw">for </span>O {}
 </code></pre></div></section></main></body></html>

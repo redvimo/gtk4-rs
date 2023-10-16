@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/cell_editable.rs`."><title>cell_editable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/cell_editable.rs`."><title>cell_editable.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -195,46 +195,50 @@
 <a href="#122" id="122">122</a>
 <a href="#123" id="123">123</a>
 <a href="#124" id="124">124</a>
+<a href="#125" id="125">125</a>
+<a href="#126" id="126">126</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
-</span><span class="doccomment">//! Traits intended for implementing the [`CellEditable`](crate::CellEditable) interface.
+</span><span class="doccomment">//! Traits intended for implementing the [`CellEditable`](crate::CellEditable)
+//! interface.
 
-</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-186">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>};
-<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-184">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>};
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
 </span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/cell_editable/trait.CellEditableImpl.html">CellEditableImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
     <span class="kw">fn </span>editing_done(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <a class="self" href="#12">self</a>.<a href="#33-47">parent_editing_done</a>()
+        <a class="self" href="#14">self</a>.<a href="#35-49">parent_editing_done</a>()
     }
 
     <span class="kw">fn </span>remove_widget(<span class="kw-2">&amp;</span><span class="self">self</span>) {
-        <a class="self" href="#16">self</a>.<a href="#49-63">parent_remove_widget</a>()
+        <a class="self" href="#18">self</a>.<a href="#51-65">parent_remove_widget</a>()
     }
 
     <span class="kw">fn </span>start_editing(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../../../gdk4/auto/event/struct.Event.html">gdk::Event</a>&gt;) {
-        <a class="self" href="#20">self</a>.<a href="#65-81">parent_start_editing</a>(<a href="#20">event</a>)
+        <a class="self" href="#22">self</a>.<a href="#67-83">parent_start_editing</a>(<a href="#22">event</a>)
     }
 }
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <a href="#32-82"><span class="kw">super</span>::CellEditableImplExt</a>&gt; <a href="#26">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <a href="#34-84"><span class="kw">super</span>::CellEditableImplExt</a>&gt; <a href="#28">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/cell_editable/trait.CellEditableImplExt.html">CellEditableImplExt</a>: <a href="#26">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/cell_editable/trait.CellEditableImplExt.html">CellEditableImplExt</a>: <a href="#28">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_editing_done(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#35">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#37">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkCellEditableIface.html">ffi::GtkCellEditableIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#36">parent_iface</a>).editing_done {
-                <a href="#39">f</a>(<span class="self"><a href="#33">self</a>
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#38">parent_iface</a>).editing_done {
+                <a href="#41">f</a>(<span class="self"><a href="#35">self</a>
                     </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
@@ -246,11 +250,11 @@
     <span class="kw">fn </span>parent_remove_widget(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#51">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#53">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkCellEditableIface.html">ffi::GtkCellEditableIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#52">parent_iface</a>).remove_widget {
-                <a href="#55">f</a>(<span class="self"><a href="#49">self</a>
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#54">parent_iface</a>).remove_widget {
+                <a href="#57">f</a>(<span class="self"><a href="#51">self</a>
                     </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
@@ -262,61 +266,61 @@
     <span class="kw">fn </span>parent_start_editing(<span class="kw-2">&amp;</span><span class="self">self</span>, event: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="../../../gdk4/auto/event/struct.Event.html">gdk::Event</a>&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#67">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#69">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkCellEditableIface.html">ffi::GtkCellEditableIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#68">parent_iface</a>).start_editing {
-                <a href="#71">f</a>(
-                    <a class="self" href="#65">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#70">parent_iface</a>).start_editing {
+                <a href="#73">f</a>(
+                    <a class="self" href="#67">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/cell_editable.rs.html#14-492">CellEditable</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#65">event</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#67">event</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             }
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T: <a href="#11-23">CellEditableImpl</a>&gt; <a href="#32-82">CellEditableImplExt</a> <span class="kw">for </span>T {}
+<span class="kw">impl</span>&lt;T: <a href="#13-25">CellEditableImpl</a>&gt; <a href="#34-84">CellEditableImplExt</a> <span class="kw">for </span>T {}
 
-<span class="kw">unsafe impl</span>&lt;T: <a href="#11-23">CellEditableImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/cell_editable.rs.html#14-492">CellEditable</a> {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#13-25">CellEditableImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/cell_editable.rs.html#14-492">CellEditable</a> {
     <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">let </span>iface = <a href="#87">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <span class="kw">let </span>iface = <a href="#89">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
 
-        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <a class="macro" href="../rt.rs.html#23-35">assert_initialized_main_thread!</a>();
 
-        <a href="#88">iface</a>.editing_done = <span class="prelude-val">Some</span>(cell_editable_editing_done::&lt;T&gt;);
-        <a href="#88">iface</a>.remove_widget = <span class="prelude-val">Some</span>(cell_editable_remove_widget::&lt;T&gt;);
-        <a href="#88">iface</a>.start_editing = <span class="prelude-val">Some</span>(cell_editable_start_editing::&lt;T&gt;);
+        <a href="#90">iface</a>.editing_done = <span class="prelude-val">Some</span>(cell_editable_editing_done::&lt;T&gt;);
+        <a href="#90">iface</a>.remove_widget = <span class="prelude-val">Some</span>(cell_editable_remove_widget::&lt;T&gt;);
+        <a href="#90">iface</a>.start_editing = <span class="prelude-val">Some</span>(cell_editable_start_editing::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_editing_done&lt;T: <a href="#11-23">CellEditableImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_editing_done&lt;T: <a href="#13-25">CellEditableImpl</a>&gt;(
     cell_editable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkCellEditable.html">ffi::GtkCellEditable</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#99">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#101">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#101">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#103">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#102">imp</a>.<a href="#12-14">editing_done</a>()
+    <a href="#104">imp</a>.<a href="#14-16">editing_done</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_remove_widget&lt;T: <a href="#11-23">CellEditableImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_remove_widget&lt;T: <a href="#13-25">CellEditableImpl</a>&gt;(
     cell_editable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkCellEditable.html">ffi::GtkCellEditable</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#108">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#110">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#110">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#112">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#111">imp</a>.<a href="#16-18">remove_widget</a>()
+    <a href="#113">imp</a>.<a href="#18-20">remove_widget</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_start_editing&lt;T: <a href="#11-23">CellEditableImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>cell_editable_start_editing&lt;T: <a href="#13-25">CellEditableImpl</a>&gt;(
     cell_editable: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkCellEditable.html">ffi::GtkCellEditable</a>,
-    eventptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkEvent.html">gdk::ffi::GdkEvent</a>,
+    eventptr: <span class="kw-2">*mut </span>gdk::ffi::GdkEvent,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#117">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#120">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>event: Borrowed&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/event/struct.Event.html">gdk::Event</a>&gt;&gt; = from_glib_borrow(<a href="#118">eventptr</a>);
-    <a href="#121">imp</a>.<a href="#20-22">start_editing</a>(<a href="#122">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().as_ref())
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#119">cell_editable</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#122">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>event: Borrowed&lt;<span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/event/struct.Event.html">gdk::Event</a>&gt;&gt; = from_glib_borrow(<a href="#120">eventptr</a>);
+    <a href="#123">imp</a>.<a href="#22-24">start_editing</a>(<a href="#124">event</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().as_ref())
 }
 </code></pre></div></section></main></body></html>

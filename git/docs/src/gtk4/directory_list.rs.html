@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/directory_list.rs`."><title>directory_list.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/directory_list.rs`."><title>directory_list.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -165,10 +165,15 @@
 <a href="#92" id="92">92</a>
 <a href="#93" id="93">93</a>
 <a href="#94" id="94">94</a>
+<a href="#95" id="95">95</a>
+<a href="#96" id="96">96</a>
+<a href="#97" id="97">97</a>
+<a href="#98" id="98">98</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use crate</span>::{<a href="lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="auto/directory_list.rs.html#12-95">DirectoryList</a>};
-<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+
+<span class="kw">use crate</span>::{<a href="lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="auto/directory_list.rs.html#12-95">DirectoryList</a>};
 
 <span class="kw">impl </span><a href="auto/directory_list.rs.html#12-95">DirectoryList</a> {
     <span class="doccomment">/// Gets the IO priority set via gtk_directory_list_set_io_priority().
@@ -181,7 +186,7 @@
     </span><span class="kw">pub fn </span>io_priority(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_directory_list_get_io_priority(
-                <a class="self" href="#14">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a class="self" href="#15">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -200,15 +205,18 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_directory_list_set_io_priority&quot;</span>)]
     </span><span class="kw">pub fn </span>set_io_priority(<span class="kw-2">&amp;</span><span class="self">self</span>, io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>) {
         <span class="kw">unsafe </span>{
-            ffi::gtk_directory_list_set_io_priority(<a class="self" href="#34">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#34">io_priority</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
+            ffi::gtk_directory_list_set_io_priority(<a class="self" href="#35">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#35">io_priority</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
         }
     }
 
     <span class="comment">// rustdoc-stripper-ignore-next
-    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct [`DirectoryList`] objects.
+    </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct
+    /// [`DirectoryList`] objects.
     ///
-    /// This method returns an instance of [`DirectoryListBuilder`](crate::builders::DirectoryListBuilder) which can be used to create [`DirectoryList`] objects.
-    </span><span class="kw">pub fn </span>builder() -&gt; <a href="#54-56">DirectoryListBuilder</a> {
+    /// This method returns an instance of
+    /// [`DirectoryListBuilder`](crate::builders::DirectoryListBuilder) which
+    /// can be used to create [`DirectoryList`] objects.
+    </span><span class="kw">pub fn </span>builder() -&gt; <a href="#58-60">DirectoryListBuilder</a> {
         DirectoryListBuilder::new()
     }
 }
@@ -222,7 +230,7 @@
     builder: glib::object::ObjectBuilder&lt;<span class="lifetime">&#39;static</span>, <a href="auto/directory_list.rs.html#12-95">DirectoryList</a>&gt;,
 }
 
-<span class="kw">impl </span><a href="#54-56">DirectoryListBuilder</a> {
+<span class="kw">impl </span><a href="#58-60">DirectoryListBuilder</a> {
     <span class="kw">fn </span>new() -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             builder: glib::object::Object::builder(),
@@ -230,32 +238,32 @@
     }
     <span class="attr">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
     </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; <a href="auto/directory_list.rs.html#12-95">DirectoryList</a> {
-        <a class="self" href="#65">self</a>.builder.build()
+        <a class="self" href="#69">self</a>.builder.build()
     }
 
     <span class="kw">pub fn </span>attributes(<span class="self">self</span>, attributes: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#69">self</a>.builder.property(<span class="string">&quot;attributes&quot;</span>, <a href="#69">attributes</a>),
+            builder: <a class="self" href="#73">self</a>.builder.property(<span class="string">&quot;attributes&quot;</span>, <a href="#73">attributes</a>),
         }
     }
 
     <span class="kw">pub fn </span>file(<span class="self">self</span>, file: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/file/struct.File.html">gio::File</a>&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#75">self</a>.builder.property(<span class="string">&quot;file&quot;</span>, <a href="#75">file</a>),
+            builder: <a class="self" href="#79">self</a>.builder.property(<span class="string">&quot;file&quot;</span>, <a href="#79">file</a>),
         }
     }
 
     <span class="kw">pub fn </span>io_priority(<span class="self">self</span>, io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <span class="self"><a href="#81">self</a>
+            builder: <span class="self"><a href="#85">self</a>
                 </span>.builder
-                .property(<span class="string">&quot;io-priority&quot;</span>, <a href="#81">io_priority</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()),
+                .property(<span class="string">&quot;io-priority&quot;</span>, <a href="#85">io_priority</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()),
         }
     }
 
     <span class="kw">pub fn </span>monitored(<span class="self">self</span>, monitored: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#89">self</a>.builder.property(<span class="string">&quot;monitored&quot;</span>, <a href="#89">monitored</a>),
+            builder: <a class="self" href="#93">self</a>.builder.property(<span class="string">&quot;monitored&quot;</span>, <a href="#93">monitored</a>),
         }
     }
 }

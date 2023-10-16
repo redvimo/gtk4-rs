@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/css_location.rs`."><title>css_location.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/css_location.rs`."><title>css_location.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -139,17 +139,19 @@
 <a href="#66" id="66">66</a>
 <a href="#67" id="67">67</a>
 <a href="#68" id="68">68</a>
+<a href="#69" id="69">69</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
-</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
-<span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">std::fmt</a>;
+</span><span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/alloc/fmt/index.html">std::fmt</a>;
+
+<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
 
 <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
     <span class="attr">#[doc(alias = <span class="string">&quot;GtkCssLocation&quot;</span>)]
     </span><span class="kw">pub struct </span><a href="../../gtk4/struct.CssLocation.html">CssLocation</a>(BoxedInline&lt;<a href="../../gtk4_sys/struct.GtkCssLocation.html">ffi::GtkCssLocation</a>&gt;);
 }
 
-<span class="kw">impl </span><a href="#6-9">CssLocation</a> {
+<span class="kw">impl </span><a href="#7-10">CssLocation</a> {
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>new(
         bytes: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
@@ -158,52 +160,52 @@
         line_bytes: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
         line_chars: <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>,
     ) -&gt; <span class="self">Self </span>{
-        <a class="macro" href="rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <a class="macro" href="rt.rs.html#23-35">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{
             <span class="self">Self</span>::unsafe_from(<a href="../../gtk4_sys/struct.GtkCssLocation.html">ffi::GtkCssLocation</a> {
-                <a href="#14">bytes</a>,
-                <a href="#15">chars</a>,
-                <a href="#16">lines</a>,
-                <a href="#17">line_bytes</a>,
-                <a href="#18">line_chars</a>,
+                <a href="#15">bytes</a>,
+                <a href="#16">chars</a>,
+                <a href="#17">lines</a>,
+                <a href="#18">line_bytes</a>,
+                <a href="#19">line_chars</a>,
             })
         }
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-        <a class="self" href="#33">self</a>.inner.bytes
+        <a class="self" href="#34">self</a>.inner.bytes
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-        <a class="self" href="#38">self</a>.inner.chars
+        <a class="self" href="#39">self</a>.inner.chars
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>lines(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-        <a class="self" href="#43">self</a>.inner.lines
+        <a class="self" href="#44">self</a>.inner.lines
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>line_bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-        <a class="self" href="#48">self</a>.inner.line_bytes
+        <a class="self" href="#49">self</a>.inner.line_bytes
     }
 
     <span class="attr">#[inline]
     </span><span class="kw">pub fn </span>line_chars(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
-        <a class="self" href="#53">self</a>.inner.line_chars
+        <a class="self" href="#54">self</a>.inner.line_chars
     }
 }
 
-<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#6-9">CssLocation</a> {
+<span class="kw">impl </span><a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html">fmt::Debug</a> <span class="kw">for </span><a href="#7-10">CssLocation</a> {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span><a href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html">fmt::Formatter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html">fmt::Result</a> {
-        <a href="#59">f</a>.debug_struct(<span class="string">&quot;CssLocation&quot;</span>)
-            .field(<span class="string">&quot;bytes&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#59">self</a>.<a href="#33-35">bytes</a>())
-            .field(<span class="string">&quot;chars&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#59">self</a>.<a href="#38-40">chars</a>())
-            .field(<span class="string">&quot;lines&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#59">self</a>.<a href="#43-45">lines</a>())
-            .field(<span class="string">&quot;line_bytes&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#59">self</a>.<a href="#48-50">line_bytes</a>())
-            .field(<span class="string">&quot;line_chars&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#59">self</a>.<a href="#53-55">line_chars</a>())
+        <a href="#60">f</a>.debug_struct(<span class="string">&quot;CssLocation&quot;</span>)
+            .field(<span class="string">&quot;bytes&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#60">self</a>.<a href="#34-36">bytes</a>())
+            .field(<span class="string">&quot;chars&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#60">self</a>.<a href="#39-41">chars</a>())
+            .field(<span class="string">&quot;lines&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#60">self</a>.<a href="#44-46">lines</a>())
+            .field(<span class="string">&quot;line_bytes&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#60">self</a>.<a href="#49-51">line_bytes</a>())
+            .field(<span class="string">&quot;line_chars&quot;</span>, <span class="kw-2">&amp;</span><a class="self" href="#60">self</a>.<a href="#54-56">line_chars</a>())
             .finish()
     }
 }

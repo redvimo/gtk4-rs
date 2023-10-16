@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/stroke.rs`."><title>stroke.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gsk4/src/stroke.rs`."><title>stroke.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gsk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -126,6 +126,8 @@
 <a href="#53" id="53">53</a>
 <a href="#54" id="54">54</a>
 <a href="#55" id="55">55</a>
+<a href="#56" id="56">56</a>
+<a href="#57" id="57">57</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use crate</span>::{<a href="auto/enums.rs.html#579-594">LineCap</a>, <a href="auto/enums.rs.html#716-730">LineJoin</a>, <a href="auto/stroke.rs.html#8-19">Stroke</a>};
@@ -134,10 +136,12 @@
     <span class="comment">// rustdoc-stripper-ignore-next
     </span><span class="doccomment">/// Creates a new builder-pattern struct instance to construct a [`Stroke`].
     ///
-    /// This method returns an instance of [`StrokeBuilder`](crate::builders::StrokeBuilder) which can be used to create a [`Stroke`].
-    </span><span class="kw">pub fn </span>builder(line_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#21">StrokeBuilder</a> {
+    /// This method returns an instance of
+    /// [`StrokeBuilder`](crate::builders::StrokeBuilder) which can be used to
+    /// create a [`Stroke`].
+    </span><span class="kw">pub fn </span>builder(line_width: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <a href="#23">StrokeBuilder</a> {
         <span class="macro">assert_initialized_main_thread!</span>();
-        <a href="#21">StrokeBuilder</a>(Stroke::new(<a href="#10">line_width</a>))
+        <a href="#23">StrokeBuilder</a>(Stroke::new(<a href="#12">line_width</a>))
     }
 }
 
@@ -148,37 +152,37 @@
 </span><span class="attr">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
 </span><span class="kw">pub struct </span><a href="../../gsk4/builders/struct.StrokeBuilder.html">StrokeBuilder</a>(<a href="auto/stroke.rs.html#8-19">Stroke</a>);
 
-<span class="kw">impl </span><a href="#21">StrokeBuilder</a> {
+<span class="kw">impl </span><a href="#23">StrokeBuilder</a> {
     <span class="kw">pub fn </span>dash(<span class="self">self</span>, dash: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>]) -&gt; <span class="self">Self </span>{
-        <a class="self" href="#24">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#132-141">set_dash</a>(<a href="#24">dash</a>);
-        <span class="self"><a href="#24">self</a>
+        <a class="self" href="#26">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#132-141">set_dash</a>(<a href="#26">dash</a>);
+        <span class="self"><a href="#26">self</a>
     </span>}
 
     <span class="kw">pub fn </span>dash_offset(<span class="self">self</span>, dash_offset: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
-        <a class="self" href="#29">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#152-156">set_dash_offset</a>(<a href="#29">dash_offset</a>);
-        <span class="self"><a href="#29">self</a>
+        <a class="self" href="#31">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#152-156">set_dash_offset</a>(<a href="#31">dash_offset</a>);
+        <span class="self"><a href="#31">self</a>
     </span>}
 
     <span class="kw">pub fn </span>line_cap(<span class="self">self</span>, line_cap: <a href="auto/enums.rs.html#579-594">LineCap</a>) -&gt; <span class="self">Self </span>{
-        <a class="self" href="#34">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#164-168">set_line_cap</a>(<a href="#34">line_cap</a>);
-        <span class="self"><a href="#34">self</a>
+        <a class="self" href="#36">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#164-168">set_line_cap</a>(<a href="#36">line_cap</a>);
+        <span class="self"><a href="#36">self</a>
     </span>}
 
     <span class="kw">pub fn </span>line_join(<span class="self">self</span>, line_join: <a href="auto/enums.rs.html#716-730">LineJoin</a>) -&gt; <span class="self">Self </span>{
-        <a class="self" href="#39">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#176-183">set_line_join</a>(<a href="#39">line_join</a>);
-        <span class="self"><a href="#39">self</a>
+        <a class="self" href="#41">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#176-183">set_line_join</a>(<a href="#41">line_join</a>);
+        <span class="self"><a href="#41">self</a>
     </span>}
 
     <span class="kw">pub fn </span>miter_limit(<span class="self">self</span>, miter_limit: <a href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>) -&gt; <span class="self">Self </span>{
-        <a class="self" href="#44">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#208-212">set_miter_limit</a>(<a href="#44">miter_limit</a>);
-        <span class="self"><a href="#44">self</a>
+        <a class="self" href="#46">self</a>.<span class="number">0</span>.<a href="auto/stroke.rs.html#208-212">set_miter_limit</a>(<a href="#46">miter_limit</a>);
+        <span class="self"><a href="#46">self</a>
     </span>}
 
     <span class="comment">// rustdoc-stripper-ignore-next
     </span><span class="doccomment">/// Build the [`Stroke`].
     </span><span class="attr">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
     </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; <a href="auto/stroke.rs.html#8-19">Stroke</a> {
-        <a class="self" href="#52">self</a>.<span class="number">0
+        <a class="self" href="#54">self</a>.<span class="number">0
     </span>}
 }
 </code></pre></div></section></main></body></html>

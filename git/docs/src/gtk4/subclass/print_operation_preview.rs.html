@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/print_operation_preview.rs`."><title>print_operation_preview.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/print_operation_preview.rs`."><title>print_operation_preview.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -270,21 +270,25 @@
 <a href="#197" id="197">197</a>
 <a href="#198" id="198">198</a>
 <a href="#199" id="199">199</a>
+<a href="#200" id="200">200</a>
+<a href="#201" id="201">201</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
-</span><span class="doccomment">//! Traits intended for implementing the [`PrintOperationPreview`](crate::PrintOperationPreview) interface.
+</span><span class="doccomment">//! Traits intended for implementing the
+//! [`PrintOperationPreview`](crate::PrintOperationPreview) interface.
 
-</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-186">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/page_setup.rs.html#8-63">PageSetup</a>, <a href="../auto/print_context.rs.html#8-90">PrintContext</a>, <a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>};
-<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-184">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/page_setup.rs.html#8-63">PageSetup</a>, <a href="../auto/print_context.rs.html#8-90">PrintContext</a>, <a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>};
 
 <span class="kw">pub trait </span><a href="../../../gtk4/subclass/print_operation_preview/trait.PrintOperationPreviewImpl.html">PrintOperationPreviewImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
     <span class="kw">fn </span>ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <span class="kw-2">&amp;</span><a href="../auto/print_context.rs.html#8-90">PrintContext</a>) {
-        <a class="self" href="#10">self</a>.<a href="#29-47">parent_ready</a>(<a href="#10">context</a>)
+        <a class="self" href="#12">self</a>.<a href="#31-49">parent_ready</a>(<a href="#12">context</a>)
     }
 
     <span class="kw">fn </span>got_page_size(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <span class="kw-2">&amp;</span><a href="../auto/print_context.rs.html#8-90">PrintContext</a>, page_setup: <span class="kw-2">&amp;</span><a href="../auto/page_setup.rs.html#8-63">PageSetup</a>) {
-        <a class="self" href="#14">self</a>.<a href="#49-68">parent_got_page_size</a>(<a href="#14">context</a>, <a href="#14">page_setup</a>)
+        <a class="self" href="#16">self</a>.<a href="#51-70">parent_got_page_size</a>(<a href="#16">context</a>, <a href="#16">page_setup</a>)
     }
 
     <span class="kw">fn </span>render_page(<span class="kw-2">&amp;</span><span class="self">self</span>, page_nr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>);
@@ -294,25 +298,25 @@
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <a href="#28-129"><span class="kw">super</span>::PrintOperationPreviewImplExt</a>&gt; <a href="#24">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <a href="#30-131"><span class="kw">super</span>::PrintOperationPreviewImplExt</a>&gt; <a href="#26">Sealed</a> <span class="kw">for </span>T {}
 }
 
-<span class="kw">pub trait </span><a href="../../../gtk4/subclass/print_operation_preview/trait.PrintOperationPreviewImplExt.html">PrintOperationPreviewImplExt</a>: <a href="#24">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+<span class="kw">pub trait </span><a href="../../../gtk4/subclass/print_operation_preview/trait.PrintOperationPreviewImplExt.html">PrintOperationPreviewImplExt</a>: <a href="#26">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_ready(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <span class="kw-2">&amp;</span><a href="../auto/print_context.rs.html#8-90">PrintContext</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#31">type_data</a>
+            <span class="kw">let </span>parent_iface = <a href="#33">type_data</a>
                 .as_ref()
                 .parent_interface::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreviewIface.html">ffi::GtkPrintOperationPreviewIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#32">parent_iface</a>).ready {
-                <a href="#37">func</a>(
-                    <a class="self" href="#29">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#34">parent_iface</a>).ready {
+                <a href="#39">func</a>(
+                    <a class="self" href="#31">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#29">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#31">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             }
         }
@@ -321,19 +325,19 @@
     <span class="kw">fn </span>parent_got_page_size(<span class="kw-2">&amp;</span><span class="self">self</span>, context: <span class="kw-2">&amp;</span><a href="../auto/print_context.rs.html#8-90">PrintContext</a>, page_setup: <span class="kw-2">&amp;</span><a href="../auto/page_setup.rs.html#8-63">PageSetup</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#51">type_data</a>
+            <span class="kw">let </span>parent_iface = <a href="#53">type_data</a>
                 .as_ref()
                 .parent_interface::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreviewIface.html">ffi::GtkPrintOperationPreviewIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#52">parent_iface</a>).got_page_size {
-                <a href="#57">func</a>(
-                    <a class="self" href="#49">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#54">parent_iface</a>).got_page_size {
+                <a href="#59">func</a>(
+                    <a class="self" href="#51">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#49">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#49">page_setup</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#51">context</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#51">page_setup</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 );
             }
         }
@@ -342,18 +346,18 @@
     <span class="kw">fn </span>parent_render_page(<span class="kw-2">&amp;</span><span class="self">self</span>, page_nr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#72">type_data</a>
+            <span class="kw">let </span>parent_iface = <a href="#74">type_data</a>
                 .as_ref()
                 .parent_interface::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreviewIface.html">ffi::GtkPrintOperationPreviewIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#73">parent_iface</a>).render_page {
-                <a href="#78">func</a>(
-                    <a class="self" href="#70">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#75">parent_iface</a>).render_page {
+                <a href="#80">func</a>(
+                    <a class="self" href="#72">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#70">page_nr</a>,
+                    <a href="#72">page_nr</a>,
                 );
             }
         }
@@ -362,20 +366,20 @@
     <span class="kw">fn </span>parent_is_selected(<span class="kw-2">&amp;</span><span class="self">self</span>, page_nr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#92">type_data</a>
+            <span class="kw">let </span>parent_iface = <a href="#94">type_data</a>
                 .as_ref()
                 .parent_interface::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreviewIface.html">ffi::GtkPrintOperationPreviewIface</a>;
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#93">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#95">parent_iface</a>)
                 .is_selected
                 .expect(<span class="string">&quot;no parent \&quot;is_selected\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#97">func</a>(
-                <a class="self" href="#90">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#99">func</a>(
+                <a class="self" href="#92">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#90">page_nr</a>,
+                <a href="#92">page_nr</a>,
             ))
         }
     }
@@ -383,14 +387,14 @@
     <span class="kw">fn </span>parent_end_preview(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#113">type_data</a>
+            <span class="kw">let </span>parent_iface = <a href="#115">type_data</a>
                 .as_ref()
                 .parent_interface::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreviewIface.html">ffi::GtkPrintOperationPreviewIface</a>;
 
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#114">parent_iface</a>).end_preview {
-                <a href="#119">func</a>(
-                    <a class="self" href="#111">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(func) = (<span class="kw-2">*</span><a href="#116">parent_iface</a>).end_preview {
+                <a href="#121">func</a>(
+                    <a class="self" href="#113">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
@@ -400,73 +404,73 @@
     }
 }
 
-<span class="kw">impl</span>&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt; <a href="#28-129">PrintOperationPreviewImplExt</a> <span class="kw">for </span>T {}
+<span class="kw">impl</span>&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt; <a href="#30-131">PrintOperationPreviewImplExt</a> <span class="kw">for </span>T {}
 
-<span class="kw">unsafe impl</span>&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a> {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/print_operation_preview.rs.html#13-51">PrintOperationPreview</a> {
     <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">let </span>iface = <a href="#134">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <span class="kw">let </span>iface = <a href="#136">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
 
-        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <a class="macro" href="../rt.rs.html#23-35">assert_initialized_main_thread!</a>();
 
-        <a href="#135">iface</a>.ready = <span class="prelude-val">Some</span>(print_operation_preview_ready::&lt;T&gt;);
-        <a href="#135">iface</a>.got_page_size = <span class="prelude-val">Some</span>(print_operation_preview_got_page_size::&lt;T&gt;);
-        <a href="#135">iface</a>.render_page = <span class="prelude-val">Some</span>(print_operation_preview_render_page::&lt;T&gt;);
-        <a href="#135">iface</a>.is_selected = <span class="prelude-val">Some</span>(print_operation_preview_is_selected::&lt;T&gt;);
-        <a href="#135">iface</a>.end_preview = <span class="prelude-val">Some</span>(print_operation_preview_end_preview::&lt;T&gt;);
+        <a href="#137">iface</a>.ready = <span class="prelude-val">Some</span>(print_operation_preview_ready::&lt;T&gt;);
+        <a href="#137">iface</a>.got_page_size = <span class="prelude-val">Some</span>(print_operation_preview_got_page_size::&lt;T&gt;);
+        <a href="#137">iface</a>.render_page = <span class="prelude-val">Some</span>(print_operation_preview_render_page::&lt;T&gt;);
+        <a href="#137">iface</a>.is_selected = <span class="prelude-val">Some</span>(print_operation_preview_is_selected::&lt;T&gt;);
+        <a href="#137">iface</a>.end_preview = <span class="prelude-val">Some</span>(print_operation_preview_end_preview::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_ready&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_ready&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt;(
     print_operation_preview: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreview.html">ffi::GtkPrintOperationPreview</a>,
     contextptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintContext.html">ffi::GtkPrintContext</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#148">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#151">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>context: Borrowed&lt;<a href="../auto/print_context.rs.html#8-90">PrintContext</a>&gt; = from_glib_borrow(<a href="#149">contextptr</a>);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#150">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#153">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>context: Borrowed&lt;<a href="../auto/print_context.rs.html#8-90">PrintContext</a>&gt; = from_glib_borrow(<a href="#151">contextptr</a>);
 
-    <a href="#152">imp</a>.<a href="#10-12">ready</a>(<span class="kw-2">&amp;</span><a href="#153">context</a>)
+    <a href="#154">imp</a>.<a href="#12-14">ready</a>(<span class="kw-2">&amp;</span><a href="#155">context</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_got_page_size&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_got_page_size&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt;(
     print_operation_preview: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreview.html">ffi::GtkPrintOperationPreview</a>,
     contextptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintContext.html">ffi::GtkPrintContext</a>,
     setupptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPageSetup.html">ffi::GtkPageSetup</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#159">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#163">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#161">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#165">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <span class="kw">let </span>context: Borrowed&lt;<a href="../auto/print_context.rs.html#8-90">PrintContext</a>&gt; = from_glib_borrow(<a href="#160">contextptr</a>);
-    <span class="kw">let </span>setup: Borrowed&lt;<a href="../auto/page_setup.rs.html#8-63">PageSetup</a>&gt; = from_glib_borrow(<a href="#161">setupptr</a>);
+    <span class="kw">let </span>context: Borrowed&lt;<a href="../auto/print_context.rs.html#8-90">PrintContext</a>&gt; = from_glib_borrow(<a href="#162">contextptr</a>);
+    <span class="kw">let </span>setup: Borrowed&lt;<a href="../auto/page_setup.rs.html#8-63">PageSetup</a>&gt; = from_glib_borrow(<a href="#163">setupptr</a>);
 
-    <a href="#164">imp</a>.<a href="#14-16">got_page_size</a>(<span class="kw-2">&amp;</span><a href="#166">context</a>, <span class="kw-2">&amp;</span><a href="#167">setup</a>)
+    <a href="#166">imp</a>.<a href="#16-18">got_page_size</a>(<span class="kw-2">&amp;</span><a href="#168">context</a>, <span class="kw-2">&amp;</span><a href="#169">setup</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_render_page&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_render_page&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt;(
     print_operation_preview: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreview.html">ffi::GtkPrintOperationPreview</a>,
     page_nr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#173">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#176">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#175">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#178">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#177">imp</a>.<a href="#18">render_page</a>(<a href="#174">page_nr</a>)
+    <a href="#179">imp</a>.<a href="#20">render_page</a>(<a href="#176">page_nr</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_is_selected&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_is_selected&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt;(
     print_operation_preview: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreview.html">ffi::GtkPrintOperationPreview</a>,
     page_nr: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#183">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#186">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#185">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#188">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#187">imp</a>.<a href="#19">is_selected</a>(<a href="#184">page_nr</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#189">imp</a>.<a href="#21">is_selected</a>(<a href="#186">page_nr</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_end_preview&lt;T: <a href="#9-21">PrintOperationPreviewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>print_operation_preview_end_preview&lt;T: <a href="#11-23">PrintOperationPreviewImpl</a>&gt;(
     print_operation_preview: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkPrintOperationPreview.html">ffi::GtkPrintOperationPreview</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#193">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#195">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#195">print_operation_preview</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#197">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#196">imp</a>.<a href="#20">end_preview</a>()
+    <a href="#198">imp</a>.<a href="#22">end_preview</a>()
 }
 </code></pre></div></section></main></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/selection_model.rs`."><title>selection_model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/selection_model.rs`."><title>selection_model.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -427,76 +427,80 @@
 <a href="#354" id="354">354</a>
 <a href="#355" id="355">355</a>
 <a href="#356" id="356">356</a>
+<a href="#357" id="357">357</a>
+<a href="#358" id="358">358</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
-</span><span class="doccomment">//! Traits intended for implementing the [`SelectionModel`](crate::SelectionModel) interface.
+</span><span class="doccomment">//! Traits intended for implementing the
+//! [`SelectionModel`](crate::SelectionModel) interface.
 
-</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-186">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/bitset.rs.html#7-31">Bitset</a>, <a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>};
-<span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+</span><span class="kw">use </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">glib::translate</a>::<span class="kw-2">*</span>;
+
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-184">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/bitset.rs.html#7-31">Bitset</a>, <a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>};
 
 <span class="kw">pub trait </span><a href="../../../gtk4/subclass/selection_model/trait.SelectionModelImpl.html">SelectionModelImpl</a>: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/subclass/list_model/trait.ListModelImpl.html">ListModelImpl</a> {
     <span class="attr">#[doc(alias = <span class="string">&quot;get_selection_in_range&quot;</span>)]
     </span><span class="kw">fn </span>selection_in_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="../auto/bitset.rs.html#7-31">Bitset</a> {
-        <a class="self" href="#11">self</a>.<a href="#54-73">parent_selection_in_range</a>(<a href="#11">position</a>, <a href="#11">n_items</a>)
+        <a class="self" href="#13">self</a>.<a href="#56-75">parent_selection_in_range</a>(<a href="#13">position</a>, <a href="#13">n_items</a>)
     }
 
     <span class="kw">fn </span>is_selected(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#15">self</a>.<a href="#75-93">parent_is_selected</a>(<a href="#15">position</a>)
+        <a class="self" href="#17">self</a>.<a href="#77-95">parent_is_selected</a>(<a href="#17">position</a>)
     }
 
     <span class="kw">fn </span>select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#19">self</a>.<a href="#95-112">parent_select_all</a>()
+        <a class="self" href="#21">self</a>.<a href="#97-114">parent_select_all</a>()
     }
 
     <span class="kw">fn </span>select_item(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, unselect_rest: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#23">self</a>.<a href="#114-133">parent_select_item</a>(<a href="#23">position</a>, <a href="#23">unselect_rest</a>)
+        <a class="self" href="#25">self</a>.<a href="#116-135">parent_select_item</a>(<a href="#25">position</a>, <a href="#25">unselect_rest</a>)
     }
 
     <span class="kw">fn </span>select_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, unselect_rest: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#27">self</a>.<a href="#135-155">parent_select_range</a>(<a href="#27">position</a>, <a href="#27">n_items</a>, <a href="#27">unselect_rest</a>)
+        <a class="self" href="#29">self</a>.<a href="#137-157">parent_select_range</a>(<a href="#29">position</a>, <a href="#29">n_items</a>, <a href="#29">unselect_rest</a>)
     }
 
     <span class="kw">fn </span>set_selection(<span class="kw-2">&amp;</span><span class="self">self</span>, selected: <span class="kw-2">&amp;</span><a href="../auto/bitset.rs.html#7-31">Bitset</a>, mask: <span class="kw-2">&amp;</span><a href="../auto/bitset.rs.html#7-31">Bitset</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#31">self</a>.<a href="#157-176">parent_set_selection</a>(<a href="#31">selected</a>, <a href="#31">mask</a>)
+        <a class="self" href="#33">self</a>.<a href="#159-178">parent_set_selection</a>(<a href="#33">selected</a>, <a href="#33">mask</a>)
     }
 
     <span class="kw">fn </span>unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#35">self</a>.<a href="#178-195">parent_unselect_all</a>()
+        <a class="self" href="#37">self</a>.<a href="#180-197">parent_unselect_all</a>()
     }
 
     <span class="kw">fn </span>unselect_item(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#39">self</a>.<a href="#197-215">parent_unselect_item</a>(<a href="#39">position</a>)
+        <a class="self" href="#41">self</a>.<a href="#199-217">parent_unselect_item</a>(<a href="#41">position</a>)
     }
 
     <span class="kw">fn </span>unselect_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#43">self</a>.<a href="#217-236">parent_unselect_range</a>(<a href="#43">position</a>, <a href="#43">n_items</a>)
+        <a class="self" href="#45">self</a>.<a href="#219-238">parent_unselect_range</a>(<a href="#45">position</a>, <a href="#45">n_items</a>)
     }
 }
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <a href="#53-237"><span class="kw">super</span>::SelectionModelImplExt</a>&gt; <a href="#49">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <a href="#55-239"><span class="kw">super</span>::SelectionModelImplExt</a>&gt; <a href="#51">Sealed</a> <span class="kw">for </span>T {}
 }
 
-<span class="kw">pub trait </span><a href="../../../gtk4/subclass/selection_model/trait.SelectionModelImplExt.html">SelectionModelImplExt</a>: <a href="#49">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+<span class="kw">pub trait </span><a href="../../../gtk4/subclass/selection_model/trait.SelectionModelImplExt.html">SelectionModelImplExt</a>: <a href="#51">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="kw">fn </span>parent_selection_in_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="../auto/bitset.rs.html#7-31">Bitset</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#56">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#58">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#57">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#59">parent_iface</a>)
                 .get_selection_in_range
                 .expect(<span class="string">&quot;no parent \&quot;get_selection_in_range\&quot; implementation&quot;</span>);
 
-            from_glib_full(<a href="#60">func</a>(
-                <a class="self" href="#54">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib_full(<a href="#62">func</a>(
+                <a class="self" href="#56">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#54">position</a>,
-                <a href="#54">n_items</a>,
+                <a href="#56">position</a>,
+                <a href="#56">n_items</a>,
             ))
         }
     }
@@ -504,19 +508,19 @@
     <span class="kw">fn </span>parent_is_selected(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#77">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#79">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#78">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#80">parent_iface</a>)
                 .is_selected
                 .expect(<span class="string">&quot;no parent \&quot;is_selected\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#81">func</a>(
-                <a class="self" href="#75">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#83">func</a>(
+                <a class="self" href="#77">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#75">position</a>,
+                <a href="#77">position</a>,
             ))
         }
     }
@@ -524,15 +528,15 @@
     <span class="kw">fn </span>parent_select_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#97">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#99">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#98">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#100">parent_iface</a>)
                 .select_all
                 .expect(<span class="string">&quot;no parent \&quot;select_all\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#101">func</a>(
-                <a class="self" href="#95">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#103">func</a>(
+                <a class="self" href="#97">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
@@ -543,20 +547,20 @@
     <span class="kw">fn </span>parent_select_item(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, unselect_rest: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#116">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#118">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#117">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#119">parent_iface</a>)
                 .select_item
                 .expect(<span class="string">&quot;no parent \&quot;select_item\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#120">func</a>(
-                <a class="self" href="#114">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#122">func</a>(
+                <a class="self" href="#116">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#114">position</a>,
-                <a href="#114">unselect_rest</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                <a href="#116">position</a>,
+                <a href="#116">unselect_rest</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
             ))
         }
     }
@@ -564,21 +568,21 @@
     <span class="kw">fn </span>parent_select_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, unselect_rest: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#137">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#139">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#138">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#140">parent_iface</a>)
                 .select_range
                 .expect(<span class="string">&quot;no parent \&quot;select_range\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#141">func</a>(
-                <a class="self" href="#135">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#143">func</a>(
+                <a class="self" href="#137">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#135">position</a>,
-                <a href="#135">n_items</a>,
-                <a href="#135">unselect_rest</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
+                <a href="#137">position</a>,
+                <a href="#137">n_items</a>,
+                <a href="#137">unselect_rest</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>(),
             ))
         }
     }
@@ -586,20 +590,20 @@
     <span class="kw">fn </span>parent_set_selection(<span class="kw-2">&amp;</span><span class="self">self</span>, selected: <span class="kw-2">&amp;</span><a href="../auto/bitset.rs.html#7-31">Bitset</a>, mask: <span class="kw-2">&amp;</span><a href="../auto/bitset.rs.html#7-31">Bitset</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#159">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#161">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#160">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#162">parent_iface</a>)
                 .set_selection
                 .expect(<span class="string">&quot;no parent \&quot;set_selection\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#163">func</a>(
-                <a class="self" href="#157">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#165">func</a>(
+                <a class="self" href="#159">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#157">selected</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#157">mask</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#159">selected</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#159">mask</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
             ))
         }
     }
@@ -607,15 +611,15 @@
     <span class="kw">fn </span>parent_unselect_all(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#180">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#182">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#181">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#183">parent_iface</a>)
                 .unselect_all
                 .expect(<span class="string">&quot;no parent \&quot;unselect_all\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#184">func</a>(
-                <a class="self" href="#178">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#186">func</a>(
+                <a class="self" href="#180">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
@@ -626,19 +630,19 @@
     <span class="kw">fn </span>parent_unselect_item(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#199">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#201">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#200">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#202">parent_iface</a>)
                 .unselect_item
                 .expect(<span class="string">&quot;no parent \&quot;unselect_item\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#203">func</a>(
-                <a class="self" href="#197">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#205">func</a>(
+                <a class="self" href="#199">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#197">position</a>,
+                <a href="#199">position</a>,
             ))
         }
     }
@@ -646,141 +650,141 @@
     <span class="kw">fn </span>parent_unselect_range(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>type_data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_iface = <a href="#219">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
+            <span class="kw">let </span>parent_iface = <a href="#221">type_data</a>.as_ref().parent_interface::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                 <span class="kw">as </span><span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkSelectionModelInterface.html">ffi::GtkSelectionModelInterface</a>;
 
-            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#220">parent_iface</a>)
+            <span class="kw">let </span>func = (<span class="kw-2">*</span><a href="#222">parent_iface</a>)
                 .unselect_range
                 .expect(<span class="string">&quot;no parent \&quot;unselect_range\&quot; implementation&quot;</span>);
 
-            from_glib(<a href="#223">func</a>(
-                <a class="self" href="#217">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            from_glib(<a href="#225">func</a>(
+                <a class="self" href="#219">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/selection_model.rs.html#13-87">SelectionModel</a>&gt;()
                     .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                     .<span class="number">0</span>,
-                <a href="#217">position</a>,
-                <a href="#217">n_items</a>,
+                <a href="#219">position</a>,
+                <a href="#219">n_items</a>,
             ))
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt; <a href="#53-237">SelectionModelImplExt</a> <span class="kw">for </span>T {}
+<span class="kw">impl</span>&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt; <a href="#55-239">SelectionModelImplExt</a> <span class="kw">for </span>T {}
 
-<span class="kw">unsafe impl</span>&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/selection_model.rs.html#13-87">SelectionModel</a> {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt; IsImplementable&lt;T&gt; <span class="kw">for </span><a href="../auto/selection_model.rs.html#13-87">SelectionModel</a> {
     <span class="kw">fn </span>interface_init(iface: <span class="kw-2">&amp;mut </span>glib::Interface&lt;<span class="self">Self</span>&gt;) {
-        <span class="kw">let </span>iface = <a href="#242">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <span class="kw">let </span>iface = <a href="#244">iface</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
 
-        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <a class="macro" href="../rt.rs.html#23-35">assert_initialized_main_thread!</a>();
 
-        <a href="#243">iface</a>.get_selection_in_range = <span class="prelude-val">Some</span>(model_get_selection_in_range::&lt;T&gt;);
-        <a href="#243">iface</a>.is_selected = <span class="prelude-val">Some</span>(model_is_selected::&lt;T&gt;);
-        <a href="#243">iface</a>.select_all = <span class="prelude-val">Some</span>(model_select_all::&lt;T&gt;);
-        <a href="#243">iface</a>.select_item = <span class="prelude-val">Some</span>(model_select_item::&lt;T&gt;);
-        <a href="#243">iface</a>.select_range = <span class="prelude-val">Some</span>(model_select_range::&lt;T&gt;);
-        <a href="#243">iface</a>.set_selection = <span class="prelude-val">Some</span>(model_set_selection::&lt;T&gt;);
-        <a href="#243">iface</a>.unselect_all = <span class="prelude-val">Some</span>(model_unselect_all::&lt;T&gt;);
-        <a href="#243">iface</a>.unselect_item = <span class="prelude-val">Some</span>(model_unselect_item::&lt;T&gt;);
-        <a href="#243">iface</a>.unselect_range = <span class="prelude-val">Some</span>(model_unselect_range::&lt;T&gt;);
+        <a href="#245">iface</a>.get_selection_in_range = <span class="prelude-val">Some</span>(model_get_selection_in_range::&lt;T&gt;);
+        <a href="#245">iface</a>.is_selected = <span class="prelude-val">Some</span>(model_is_selected::&lt;T&gt;);
+        <a href="#245">iface</a>.select_all = <span class="prelude-val">Some</span>(model_select_all::&lt;T&gt;);
+        <a href="#245">iface</a>.select_item = <span class="prelude-val">Some</span>(model_select_item::&lt;T&gt;);
+        <a href="#245">iface</a>.select_range = <span class="prelude-val">Some</span>(model_select_range::&lt;T&gt;);
+        <a href="#245">iface</a>.set_selection = <span class="prelude-val">Some</span>(model_set_selection::&lt;T&gt;);
+        <a href="#245">iface</a>.unselect_all = <span class="prelude-val">Some</span>(model_unselect_all::&lt;T&gt;);
+        <a href="#245">iface</a>.unselect_item = <span class="prelude-val">Some</span>(model_unselect_item::&lt;T&gt;);
+        <a href="#245">iface</a>.unselect_range = <span class="prelude-val">Some</span>(model_unselect_range::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_get_selection_in_range&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_get_selection_in_range&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 ) -&gt; <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBitset.html">ffi::GtkBitset</a> {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#260">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#264">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#262">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#266">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#265">imp</a>.<a href="#11-13">selection_in_range</a>(<a href="#261">position</a>, <a href="#262">n_items</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
+    <a href="#267">imp</a>.<a href="#13-15">selection_in_range</a>(<a href="#263">position</a>, <a href="#264">n_items</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_is_selected&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_is_selected&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#271">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#274">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#273">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#276">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#275">imp</a>.<a href="#15-17">is_selected</a>(<a href="#272">position</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#277">imp</a>.<a href="#17-19">is_selected</a>(<a href="#274">position</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_all&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_all&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#281">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#283">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#283">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#285">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#284">imp</a>.<a href="#19-21">select_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#286">imp</a>.<a href="#21-23">select_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_item&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_item&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     unselect_rest: glib::ffi::gboolean,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#290">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#294">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#292">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#296">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#295">imp</a>.<a href="#23-25">select_item</a>(<a href="#291">position</a>, from_glib(<a href="#292">unselect_rest</a>))
+    <a href="#297">imp</a>.<a href="#25-27">select_item</a>(<a href="#293">position</a>, from_glib(<a href="#294">unselect_rest</a>))
         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_range&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_select_range&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     unselect_rest: glib::ffi::gboolean,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#302">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#307">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#304">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#309">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#308">imp</a>.<a href="#27-29">select_range</a>(<a href="#303">position</a>, <a href="#304">n_items</a>, from_glib(<a href="#305">unselect_rest</a>))
+    <a href="#310">imp</a>.<a href="#29-31">select_range</a>(<a href="#305">position</a>, <a href="#306">n_items</a>, from_glib(<a href="#307">unselect_rest</a>))
         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_set_selection&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_set_selection&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     selected_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBitset.html">ffi::GtkBitset</a>,
     mask_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkBitset.html">ffi::GtkBitset</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#315">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#319">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#317">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#321">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <span class="kw">let </span>selected = from_glib_borrow(<a href="#316">selected_ptr</a>);
-    <span class="kw">let </span>mask = from_glib_borrow(<a href="#317">mask_ptr</a>);
+    <span class="kw">let </span>selected = from_glib_borrow(<a href="#318">selected_ptr</a>);
+    <span class="kw">let </span>mask = from_glib_borrow(<a href="#319">mask_ptr</a>);
 
-    <a href="#320">imp</a>.<a href="#31-33">set_selection</a>(<span class="kw-2">&amp;</span><a href="#322">selected</a>, <span class="kw-2">&amp;</span><a href="#323">mask</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#322">imp</a>.<a href="#33-35">set_selection</a>(<span class="kw-2">&amp;</span><a href="#324">selected</a>, <span class="kw-2">&amp;</span><a href="#325">mask</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_all&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_all&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#329">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#331">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#331">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#333">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#332">imp</a>.<a href="#35-37">unselect_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#334">imp</a>.<a href="#37-39">unselect_all</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_item&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_item&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#338">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#341">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#340">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#343">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#342">imp</a>.<a href="#39-41">unselect_item</a>(<a href="#339">position</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#344">imp</a>.<a href="#41-43">unselect_item</a>(<a href="#341">position</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_range&lt;T: <a href="#9-46">SelectionModelImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>model_unselect_range&lt;T: <a href="#11-48">SelectionModelImpl</a>&gt;(
     model: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSelectionModel.html">ffi::GtkSelectionModel</a>,
     position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
     n_items: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#348">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#352">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#350">model</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#354">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
-    <a href="#353">imp</a>.<a href="#43-45">unselect_range</a>(<a href="#349">position</a>, <a href="#350">n_items</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#355">imp</a>.<a href="#45-47">unselect_range</a>(<a href="#351">position</a>, <a href="#352">n_items</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 </code></pre></div></section></main></body></html>

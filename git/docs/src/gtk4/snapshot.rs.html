@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/snapshot.rs`."><title>snapshot.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -156,19 +156,21 @@
 <a href="#83" id="83">83</a>
 <a href="#84" id="84">84</a>
 <a href="#85" id="85">85</a>
+<a href="#86" id="86">86</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 </span><span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html">std::borrow::Borrow</a>;
 
-<span class="kw">use crate</span>::{<a href="lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="auto/snapshot.rs.html#9-32">Snapshot</a>};
 <span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>};
+
+<span class="kw">use crate</span>::{<a href="lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="auto/snapshot.rs.html#9-32">Snapshot</a>};
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/snapshot.rs.html#9-32"><span class="kw">super</span>::Snapshot</a>&gt;&gt; <a href="#9">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <span class="kw">super</span>::IsA&lt;<a href="auto/snapshot.rs.html#9-32"><span class="kw">super</span>::Snapshot</a>&gt;&gt; <a href="#10">Sealed</a> <span class="kw">for </span>T {}
 }
 
-<span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.SnapshotExtManual.html">SnapshotExtManual</a>: <a href="#9">sealed::Sealed</a> + IsA&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt; + <span class="lifetime">&#39;static </span>{
+<span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.SnapshotExtManual.html">SnapshotExtManual</a>: <a href="#10">sealed::Sealed</a> + IsA&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt; + <span class="lifetime">&#39;static </span>{
     <span class="doccomment">/// Appends a stroked border rectangle inside the given @outline.
     ///
     /// The four sides of the border can have different widths and colors.
@@ -188,13 +190,13 @@
         border_color: <span class="kw-2">&amp;</span>[<a href="../../gdk4/auto/rgba/struct.RGBA.html">gdk::RGBA</a>; <span class="number">4</span>],
     ) {
         <span class="kw">unsafe </span>{
-            <span class="kw">let </span>border_color_ptr: Vec&lt;<a href="../../gdk4_sys/struct.GdkRGBA.html">gdk::ffi::GdkRGBA</a>&gt; =
-                <a href="#30">border_color</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|c| <span class="kw-2">*</span><a href="#34">c</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>();
+            <span class="kw">let </span>border_color_ptr: Vec&lt;gdk::ffi::GdkRGBA&gt; =
+                <a href="#31">border_color</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">map</a>(|c| <span class="kw-2">*</span><a href="#35">c</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>).<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">collect</a>();
             ffi::gtk_snapshot_append_border(
-                <a class="self" href="#27">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#28">outline</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                <a href="#29">border_width</a>,
-                <a href="#33">border_color_ptr</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <a class="self" href="#28">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#29">outline</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                <a href="#30">border_width</a>,
+                <a href="#34">border_color_ptr</a>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
             )
         }
     }
@@ -209,34 +211,34 @@
     </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_snapshot_push_debug&quot;</span>)]
     </span><span class="kw">fn </span>push_debug(<span class="kw-2">&amp;</span><span class="self">self</span>, message: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) {
         <span class="kw">unsafe </span>{
-            <a href="#52">message</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|message| {
-                ffi::gtk_snapshot_push_debug(<a class="self" href="#52">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#54">message</a>.as_ptr())
+            <a href="#53">message</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|message| {
+                ffi::gtk_snapshot_push_debug(<a class="self" href="#53">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#55">message</a>.as_ptr())
             })
         }
     }
 }
 
-<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt;&gt; <a href="#13-59">SnapshotExtManual</a> <span class="kw">for </span>O {}
+<span class="kw">impl</span>&lt;O: IsA&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt;&gt; <a href="#14-60">SnapshotExtManual</a> <span class="kw">for </span>O {}
 
 <span class="kw">impl </span>AsRef&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt; <span class="kw">for </span><a href="../../gdk4/auto/snapshot/struct.Snapshot.html">gdk::Snapshot</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>as_ref(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="auto/snapshot.rs.html#9-32">Snapshot</a> {
-        <a class="self" href="#65">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast_ref</a>().unwrap()
+        <a class="self" href="#66">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast_ref</a>().unwrap()
     }
 }
 
 <span class="kw">impl </span>From&lt;<a href="../../gdk4/auto/snapshot/struct.Snapshot.html">gdk::Snapshot</a>&gt; <span class="kw">for </span><a href="auto/snapshot.rs.html#9-32">Snapshot</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>from(e: <a href="../../gdk4/auto/snapshot/struct.Snapshot.html">gdk::Snapshot</a>) -&gt; <a href="auto/snapshot.rs.html#9-32">Snapshot</a> {
-        <a class="macro" href="rt.rs.html#22-34">assert_initialized_main_thread!</a>();
-        <a href="#72">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast</a>().unwrap()
+        <a class="macro" href="rt.rs.html#23-35">assert_initialized_main_thread!</a>();
+        <a href="#73">e</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast</a>().unwrap()
     }
 }
 
 <span class="kw">impl </span>Borrow&lt;<a href="auto/snapshot.rs.html#9-32">Snapshot</a>&gt; <span class="kw">for </span><a href="../../gdk4/auto/snapshot/struct.Snapshot.html">gdk::Snapshot</a> {
     <span class="attr">#[inline]
     </span><span class="kw">fn </span>borrow(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><a href="auto/snapshot.rs.html#9-32">Snapshot</a> {
-        <a class="self" href="#80">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast_ref</a>().unwrap()
+        <a class="self" href="#81">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">downcast_ref</a>().unwrap()
     }
 }
 

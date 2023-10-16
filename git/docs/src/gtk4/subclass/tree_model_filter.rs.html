@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/tree_model_filter.rs`."><title>tree_model_filter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (c543b6f35 2023-10-14)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/tree_model_filter.rs`."><title>tree_model_filter.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-deb46770fd761b69.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.75.0-nightly (42b1224e9 2023-10-15)" data-channel="nightly" data-search-js="search-8fbf244ebcf71464.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-5f34af1a0ee6bacd.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -193,19 +193,21 @@
 <a href="#120" id="120">120</a>
 <a href="#121" id="121">121</a>
 <a href="#122" id="122">122</a>
+<a href="#123" id="123">123</a>
 </pre></div><pre class="rust"><code><span class="comment">// Take a look at the license at the top of the repository in the LICENSE file.
 
 // rustdoc-stripper-ignore-next
 </span><span class="doccomment">//! Traits intended for subclassing [`TreeModelFilter`](crate::TreeModelFilter).
 
-</span><span class="kw">use crate</span>::{<a href="../lib.rs.html#141">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-186">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>, <a href="../auto/tree_model.rs.html#14-276">TreeModel</a>, <a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a>};
-<span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+</span><span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>};
+
+<span class="kw">use crate</span>::{<a href="../lib.rs.html#140">prelude</a>::<span class="kw-2">*</span>, <a href="mod.rs.html#94-184">subclass::prelude</a>::<span class="kw-2">*</span>, <a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>, <a href="../auto/tree_model.rs.html#14-276">TreeModel</a>, <a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a>};
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_model_filter/trait.TreeModelFilterImpl.html">TreeModelFilterImpl</a>: <a href="#34-79">TreeModelFilterImplExt</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_model_filter/trait.TreeModelFilterImpl.html">TreeModelFilterImpl</a>: <a href="#35-80">TreeModelFilterImplExt</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/object/trait.ObjectImpl.html">ObjectImpl</a> {
     <span class="kw">fn </span>visible&lt;M: IsA&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, child_model: <span class="kw-2">&amp;</span>M, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
-        <a class="self" href="#12">self</a>.<a href="#36-53">parent_visible</a>(<a href="#12">child_model</a>, <a href="#12">iter</a>)
+        <a class="self" href="#13">self</a>.<a href="#37-54">parent_visible</a>(<a href="#13">child_model</a>, <a href="#13">iter</a>)
     }
 
     <span class="kw">fn </span>modify&lt;M: IsA&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt;&gt;(
@@ -215,31 +217,31 @@
         value: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>,
         column: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
     ) {
-        <a class="self" href="#17">self</a>.<a href="#55-78">parent_modify</a>(<a href="#18">child_model</a>, <a href="#19">iter</a>, <a href="#20">value</a>, <a href="#21">column</a>)
+        <a class="self" href="#18">self</a>.<a href="#56-79">parent_modify</a>(<a href="#19">child_model</a>, <a href="#20">iter</a>, <a href="#21">value</a>, <a href="#22">column</a>)
     }
 }
 
 <span class="kw">mod </span>sealed {
     <span class="kw">pub trait </span>Sealed {}
-    <span class="kw">impl</span>&lt;T: <a href="#34-79"><span class="kw">super</span>::TreeModelFilterImplExt</a>&gt; <a href="#28">Sealed</a> <span class="kw">for </span>T {}
+    <span class="kw">impl</span>&lt;T: <a href="#35-80"><span class="kw">super</span>::TreeModelFilterImplExt</a>&gt; <a href="#29">Sealed</a> <span class="kw">for </span>T {}
 }
 
 <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
 #[allow(deprecated)]
-</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_model_filter/trait.TreeModelFilterImplExt.html">TreeModelFilterImplExt</a>: <a href="#28">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
+</span><span class="kw">pub trait </span><a href="../../../gtk4/subclass/tree_model_filter/trait.TreeModelFilterImplExt.html">TreeModelFilterImplExt</a>: <a href="#29">sealed::Sealed</a> + <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclass.html">ObjectSubclass</a> {
     <span class="comment">// Whether the row indicated by iter is visible
     </span><span class="kw">fn </span>parent_visible&lt;M: IsA&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt;&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, child_model: <span class="kw-2">&amp;</span>M, iter: <span class="kw-2">&amp;</span><a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_class = <a href="#38">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilterClass.html">ffi::GtkTreeModelFilterClass</a>;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#39">parent_class</a>).visible {
-                from_glib(<a href="#40">f</a>(
-                    <a class="self" href="#36">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">let </span>parent_class = <a href="#39">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilterClass.html">ffi::GtkTreeModelFilterClass</a>;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#40">parent_class</a>).visible {
+                from_glib(<a href="#41">f</a>(
+                    <a class="self" href="#37">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#36">child_model</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#36">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#37">child_model</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#37">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
                 ))
             } <span class="kw">else </span>{
                 <span class="bool-val">true </span><span class="comment">// always visible if not set
@@ -256,63 +258,63 @@
     ) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
-            <span class="kw">let </span>parent_class = <a href="#63">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilterClass.html">ffi::GtkTreeModelFilterClass</a>;
-            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#64">parent_class</a>).modify {
-                <a href="#65">f</a>(
-                    <a class="self" href="#56">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
+            <span class="kw">let </span>parent_class = <a href="#64">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilterClass.html">ffi::GtkTreeModelFilterClass</a>;
+            <span class="kw">if let </span><span class="prelude-val">Some</span>(f) = (<span class="kw-2">*</span><a href="#65">parent_class</a>).modify {
+                <a href="#66">f</a>(
+                    <a class="self" href="#57">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a>&gt;()
                         .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>()
                         .<span class="number">0</span>,
-                    <a href="#57">child_model</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
-                    <a href="#58">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    <a href="#59">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                    <a href="#60">index</a>,
+                    <a href="#58">child_model</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
+                    <a href="#59">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#60">value</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0 </span><span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
+                    <a href="#61">index</a>,
                 )
             }
         }
     }
 }
 
-<span class="kw">impl</span>&lt;T: <a href="#11-25">TreeModelFilterImpl</a>&gt; <a href="#34-79">TreeModelFilterImplExt</a> <span class="kw">for </span>T {}
+<span class="kw">impl</span>&lt;T: <a href="#12-26">TreeModelFilterImpl</a>&gt; <a href="#35-80">TreeModelFilterImplExt</a> <span class="kw">for </span>T {}
 
-<span class="kw">unsafe impl</span>&lt;T: <a href="#11-25">TreeModelFilterImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a> {
+<span class="kw">unsafe impl</span>&lt;T: <a href="#12-26">TreeModelFilterImpl</a>&gt; IsSubclassable&lt;T&gt; <span class="kw">for </span><a href="../auto/tree_model_filter.rs.html#10-99">TreeModelFilter</a> {
     <span class="kw">fn </span>class_init(class: <span class="kw-2">&amp;mut </span>glib::Class&lt;<span class="self">Self</span>&gt;) {
-        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#84">class</a>);
+        <span class="self">Self</span>::parent_class_init::&lt;T&gt;(<a href="#85">class</a>);
 
-        <a class="macro" href="../rt.rs.html#22-34">assert_initialized_main_thread!</a>();
+        <a class="macro" href="../rt.rs.html#23-35">assert_initialized_main_thread!</a>();
 
-        <span class="kw">let </span>klass = <a href="#84">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
-        <a href="#89">klass</a>.visible = <span class="prelude-val">Some</span>(tree_model_filter_visible::&lt;T&gt;);
-        <a href="#89">klass</a>.modify = <span class="prelude-val">Some</span>(tree_model_filter_modify::&lt;T&gt;);
+        <span class="kw">let </span>klass = <a href="#85">class</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsMut.html">as_mut</a>();
+        <a href="#90">klass</a>.visible = <span class="prelude-val">Some</span>(tree_model_filter_visible::&lt;T&gt;);
+        <a href="#90">klass</a>.modify = <span class="prelude-val">Some</span>(tree_model_filter_modify::&lt;T&gt;);
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_model_filter_visible&lt;T: <a href="#11-25">TreeModelFilterImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_model_filter_visible&lt;T: <a href="#12-26">TreeModelFilterImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilter.html">ffi::GtkTreeModelFilter</a>,
     child_modelptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModel.html">ffi::GtkTreeModel</a>,
     iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
 ) -&gt; glib::ffi::gboolean {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#96">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#100">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>child_model: Borrowed&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt; = from_glib_borrow(<a href="#97">child_modelptr</a>);
-    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>&gt; = from_glib_borrow(<a href="#98">iterptr</a>);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#97">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#101">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>child_model: Borrowed&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt; = from_glib_borrow(<a href="#98">child_modelptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>&gt; = from_glib_borrow(<a href="#99">iterptr</a>);
 
-    <a href="#101">imp</a>.<a href="#12-14">visible</a>(<span class="kw-2">&amp;*</span><a href="#102">child_model</a>, <span class="kw-2">&amp;</span><a href="#103">iter</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
+    <a href="#102">imp</a>.<a href="#13-15">visible</a>(<span class="kw-2">&amp;*</span><a href="#103">child_model</a>, <span class="kw-2">&amp;</span><a href="#104">iter</a>).<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_model_filter_modify&lt;T: <a href="#11-25">TreeModelFilterImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>tree_model_filter_modify&lt;T: <a href="#12-26">TreeModelFilterImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModelFilter.html">ffi::GtkTreeModelFilter</a>,
     child_modelptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeModel.html">ffi::GtkTreeModel</a>,
     iterptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTreeIter.html">ffi::GtkTreeIter</a>,
     valueptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GValue,
     column: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
 ) {
-    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#109">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
-    <span class="kw">let </span>imp = <a href="#115">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
-    <span class="kw">let </span>child_model: Borrowed&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt; = from_glib_borrow(<a href="#110">child_modelptr</a>);
-    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>&gt; = from_glib_borrow(<a href="#111">iterptr</a>);
-    <span class="kw">let </span>value: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a> = from_glib_full(<a href="#112">valueptr</a>);
+    <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#110">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
+    <span class="kw">let </span>imp = <a href="#116">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
+    <span class="kw">let </span>child_model: Borrowed&lt;<a href="../auto/tree_model.rs.html#14-276">TreeModel</a>&gt; = from_glib_borrow(<a href="#111">child_modelptr</a>);
+    <span class="kw">let </span>iter: Borrowed&lt;<a href="../auto/tree_iter.rs.html#7-24">TreeIter</a>&gt; = from_glib_borrow(<a href="#112">iterptr</a>);
+    <span class="kw">let </span>value: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a> = from_glib_full(<a href="#113">valueptr</a>);
 
-    <a href="#116">imp</a>.<a href="#16-24">modify</a>(<span class="kw-2">&amp;*</span><a href="#117">child_model</a>, <span class="kw-2">&amp;</span><a href="#118">iter</a>, <a href="#119">value</a>, <a href="#113">column</a>)
+    <a href="#117">imp</a>.<a href="#17-25">modify</a>(<span class="kw-2">&amp;*</span><a href="#118">child_model</a>, <span class="kw-2">&amp;</span><a href="#119">iter</a>, <a href="#120">value</a>, <a href="#114">column</a>)
 }
 </code></pre></div></section></main></body></html>
