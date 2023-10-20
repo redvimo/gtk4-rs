@@ -182,7 +182,7 @@ One of its properties is called <a href="https://gtk-rs.org/gtk4-rs/stable/lates
 According to the GTK docs, it can be read and be written to.
 That is why <code>gtk-rs</code> provides corresponding <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#method.is_active"><code>is_active</code></a> and <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Switch.html#method.set_active"><code>set_active</code></a> methods.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/1/main.rs">listings/g_object_properties/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectProperties1&quot;;
@@ -235,7 +235,7 @@ That is why <code>gtk-rs</code> provides corresponding <a href="https://gtk-rs.o
 <p>Properties can not only be accessed via getters &amp; setters, they can also be bound to each other.
 Let's see how that would look like for two <code>Switch</code> instances.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectProperties3&quot;;
@@ -288,7 +288,7 @@ Let's see how that would look like for two <code>Switch</code> instances.</p>
 <p>In our case, we want to bind the &quot;active&quot; property of <code>switch_1</code> to the &quot;active&quot; property of <code>switch_2</code>.
 We also want the binding to be bidirectional, so we specify by calling the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.bidirectional"><code>bidirectional</code></a> method.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/2/main.rs">listings/g_object_properties/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Align, Application, ApplicationWindow, Box, Orientation, Switch};
 </span><span class="boring">
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.GObjectProperties3&quot;;
@@ -353,7 +353,7 @@ We tell it that the wrapper type is <code>super::CustomButton</code>.
 We also annotate <code>number</code>, so that macro knows that it should create a property &quot;number&quot; that is readable and writable.
 It also generates <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/derive.Properties.html#generated-wrapper-methods">wrapper methods</a> which we are going to use later in this chapter.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
@@ -406,7 +406,7 @@ In <code>constructed</code> we use our new property &quot;number&quot; by bindin
 <code>bind_property</code> converts the integer value of &quot;number&quot; to the string of &quot;label&quot; on its own.
 Now we don't have to adapt the label in the &quot;clicked&quot; callback anymore.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/custom_button/imp.rs">listings/g_object_properties/3/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
@@ -457,7 +457,7 @@ impl ObjectImpl for CustomButton {
 <p>We also have to adapt the <code>clicked</code> method.
 Before we modified <code>number</code> directly, now we can use the generated wrapper methods <code>number</code> and <code>set_number</code>.
 This way the &quot;notify&quot; signal will be emitted, which is necessary for the bindings to work as expected.</p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
@@ -507,7 +507,7 @@ impl ButtonImpl for CustomButton {
 }</code></pre>
 <p>Let's see what we can do with this by creating two custom buttons.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
+<pre><code class="language-rust"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;
@@ -581,7 +581,7 @@ impl ButtonImpl for CustomButton {
 <p>We have already seen that bound properties don't necessarily have to be of the same type.
 By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_to"><code>transform_to</code></a> and <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/struct.BindingBuilder.html#method.transform_from"><code>transform_from</code></a>, we can assure that <code>button_2</code> always displays a number which is 1 higher than the number of <code>button_1</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
+<pre><code class="language-rust"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;
@@ -662,7 +662,7 @@ By leveraging <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/ob
 <p>Another nice feature of properties is, that you can connect a callback to the event, when a property gets changed.
 For example like this:</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_properties/3/main.rs">listings/g_object_properties/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
+<pre><code class="language-rust"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;

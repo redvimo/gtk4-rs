@@ -182,7 +182,7 @@ The signal then takes care that all the registered callbacks will be executed.</
 <p><code>gtk-rs</code> provides convenience methods for registering callbacks.
 In our &quot;Hello World&quot; example we <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.ButtonExt.html#tymethod.connect_clicked">connected</a> the &quot;clicked&quot; signal to a closure which sets the label of the button to &quot;Hello World&quot; as soon as it gets called.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld3&quot;;
 </span><span class="boring">
@@ -225,7 +225,7 @@ In our &quot;Hello World&quot; example we <a href="https://gtk-rs.org/gtk4-rs/st
 </span><span class="boring">}</span></code></pre>
 <p>If we wanted to, we could have connected to it with the generic <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/object/trait.ObjectExt.html#tymethod.connect_closure"><code>connect_closure</code></a> method and the <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/macro.closure_local.html"><code>glib::closure_local!</code></a> macro.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_signals/1/main.rs">listings/g_object_signals/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::closure_local;
+<pre><code class="language-rust"><span class="boring">use glib::closure_local;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -288,7 +288,7 @@ Until <a href="https://doc.rust-lang.org/std/sync/struct.LazyLock.html"><code>st
 <pre><code>cargo add once_cell
 </code></pre>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_signals/2/custom_button/imp.rs">listings/g_object_signals/2/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
 </span><span class="boring">use glib::Properties;
@@ -365,7 +365,7 @@ When emitted, it sends a single <code>i32</code> value.</p>
 Together with the signal we send the value <code>number</code> currently holds.
 After we did that, we set <code>number</code> back to 0.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_signals/2/custom_button/imp.rs">listings/g_object_signals/2/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::Signal;
 </span><span class="boring">use glib::Properties;
@@ -438,7 +438,7 @@ impl ButtonImpl for CustomButton {
 Then it emits the &quot;max-number-reached&quot; signal which we can nicely connect to.
 Whenever we now receive the &quot;max-number-reached&quot; signal, the accompanying number is printed to <a href="https://en.wikipedia.org/wiki/Standard_streams#Standard_output_(stdout)">standard output</a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_signals/2/main.rs">listings/g_object_signals/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
+<pre><code class="language-rust"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use glib::closure_local;

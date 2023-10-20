@@ -182,7 +182,7 @@
 <p>Let's explore this concept by adding labels to a <code>ListBox</code>.
 Each label will display an integer starting from 0 and ranging up to 100.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/1/main.rs">listings/list_widgets/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{
 </span><span class="boring">    glib, Application, ApplicationWindow, Label, ListBox, PolicyType, ScrolledWindow,
 </span><span class="boring">};
@@ -230,7 +230,7 @@ Each label will display an integer starting from 0 and ranging up to 100.</p>
 Therefore, we add <code>ListBox</code> to a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ScrolledWindow.html"><code>gtk::ScrolledWindow</code></a>.
 Now we can scroll through our elements.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/1/main.rs">listings/list_widgets/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::prelude::*;
+<pre><code class="language-rust"><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{
 </span><span class="boring">    glib, Application, ApplicationWindow, Label, ListBox, PolicyType, ScrolledWindow,
 </span><span class="boring">};
@@ -297,7 +297,7 @@ The model is an instance of <a href="https://gtk-rs.org/gtk-rs-core/stable/lates
 The main limitation here is that <code>gio::ListStore</code> only accepts GObjects.
 So let's create a custom GObject <code>IntegerObject</code> that which is initialized with a number.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/integer_object/mod.rs">listings/list_widgets/2/integer_object/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
@@ -314,7 +314,7 @@ impl IntegerObject {
 <span class="boring"></span></code></pre>
 <p>This number represents the internal state of <code>IntegerObject</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/integer_object/imp.rs">listings/list_widgets/2/integer_object/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
@@ -344,7 +344,7 @@ pub struct IntegerObject {
 Please note that models only takes care of the data.
 Neither <code>Label</code> nor any other widget is mentioned here.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -432,7 +432,7 @@ Here, we use the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/str
 The &quot;setup&quot; signal will be emitted when new widgets have to be created.
 We connect to it to create a <code>Label</code> for every requested widget.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -517,7 +517,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 </span><span class="boring">}</span></code></pre>
 <p>In the &quot;bind&quot; step we bind the data in our model to the individual list items.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -604,7 +604,7 @@ We connect to it to create a <code>Label</code> for every requested widget.</p>
 The other options would have been <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.MultiSelection.html"><code>MultiSelection</code></a> or <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.NoSelection.html"><code>NoSelection</code></a>.
 Then we pass the model and the factory to the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListView.html"><code>ListView</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -689,7 +689,7 @@ Then we pass the model and the factory to the <a href="https://gtk-rs.org/gtk4-r
 </span><span class="boring">}</span></code></pre>
 <p>Every <code>ListView</code> has to be a direct child of a <code>ScrolledWindow</code>, so we are adding it to one.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/2/main.rs">listings/list_widgets/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -778,7 +778,7 @@ Then we pass the model and the factory to the <a href="https://gtk-rs.org/gtk4-r
 We might want to increase the number every time we activate its row.
 For that we first add the method <code>increase_number</code> to our <code>IntegerObject</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/3/integer_object/mod.rs">listings/list_widgets/3/integer_object/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
@@ -798,7 +798,7 @@ For that we first add the method <code>increase_number</code> to our <code>Integ
 }</code></pre>
 <p>In order to interact with our <code>ListView</code>, we connect to its &quot;activate&quot; signal.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/3/main.rs">listings/list_widgets/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -901,7 +901,7 @@ the corresponding &quot;number&quot; property of the <code>IntegerObject</code> 
 However, just because the <code>IntegerObject</code> has been modified the corresponding <code>Label</code> does not immediately change.
 One naive approach would be to bind the properties in the &quot;bind&quot; step of the <code>SignalListItemFactory</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/3/main.rs">listings/list_widgets/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -1010,7 +1010,7 @@ That also means that in our case, multiple numbers will be bound to the same wid
 As a first step it allows us to remove the &quot;bind&quot; step.
 Let's see how the &quot;setup&quot; step now works.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/4/main.rs">listings/list_widgets/4/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, Label, ListView, PolicyType,
@@ -1104,7 +1104,7 @@ When we now activate a label, only the corresponding number visibly changes.</p>
 We can, for example, filter our model to only allow even numbers.
 We do that by passing it to a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.FilterListModel.html"><code>gtk::FilterListModel</code></a> together with a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.CustomFilter.html"><code>gtk::CustomFilter</code></a> </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/5/main.rs">listings/list_widgets/5/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, CustomFilter, CustomSorter,
@@ -1222,7 +1222,7 @@ We do that by passing it to a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/
 <p>Additionally, we can reverse the order of our model.
 Now we pass the filtered model to <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.SortListModel.html"><code>gtk::SortListModel</code></a> together with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.CustomSorter.html"><code>gtk::CustomSorter</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/5/main.rs">listings/list_widgets/5/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, CustomFilter, CustomSorter,
@@ -1339,7 +1339,7 @@ Now we pass the filtered model to <a href="https://gtk-rs.org/gtk4-rs/stable/lat
 </span><span class="boring">}</span></code></pre>
 <p>To ensure that our filter and sorter get updated when we modify the numbers, we call the <code>changed</code> method on them.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/5/main.rs">listings/list_widgets/5/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod integer_object;
+<pre><code class="language-rust"><span class="boring">mod integer_object;
 </span><span class="boring">
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Application, ApplicationWindow, CustomFilter, CustomSorter,
@@ -1465,7 +1465,7 @@ Filter and sorter is controlled by the factory, so nothing changes here.
 This is why we will skip this topic here.</p>
 <p>First, we add a bunch of strings to our model.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/6/main.rs">listings/list_widgets/6/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::{glib, prelude::*, ListItem};
+<pre><code class="language-rust"><span class="boring">use gtk::{glib, prelude::*, ListItem};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    Application, ApplicationWindow, Label, ListView, NoSelection, PolicyType,
 </span><span class="boring">    ScrolledWindow, SignalListItemFactory, StringList, StringObject, Widget,
@@ -1531,7 +1531,7 @@ This means we don't have to create a custom GObject for our model anymore.</p>
 <p>As usual, we connect the label to the list item via an expression.
 Here we can use <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.StringObject.html"><code>StringObject</code></a>, which exposes its content via the <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.StringObject.html#string">property &quot;string&quot;</a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/list_widgets/6/main.rs">listings/list_widgets/6/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::{glib, prelude::*, ListItem};
+<pre><code class="language-rust"><span class="boring">use gtk::{glib, prelude::*, ListItem};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    Application, ApplicationWindow, Label, ListView, NoSelection, PolicyType,
 </span><span class="boring">    ScrolledWindow, SignalListItemFactory, StringList, StringObject, Widget,

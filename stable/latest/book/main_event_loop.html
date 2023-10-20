@@ -188,7 +188,7 @@ That is why you can move the window at the same time as a progress bar is growin
 That happens when a single task takes too long.
 Let's look at one example.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/1/main.rs">listings/main_event_loop/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use std::thread;
+<pre><code class="language-rust">use std::thread;
 use std::time::Duration;
 
 use gtk::prelude::*;
@@ -241,7 +241,7 @@ but it is not unusual wanting to run a slightly longer operation in one go.</p>
 <h2 id="how-to-avoid-blocking-the-main-loop"><a class="header" href="#how-to-avoid-blocking-the-main-loop">How to Avoid Blocking the Main Loop</a></h2>
 <p>In order to avoid blocking the main loop we can spawn a new thread with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/fn.spawn_blocking.html"><code>gio::spawn_blocking</code></a> and let the operation run there.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/2/main.rs">listings/main_event_loop/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::thread;
+<pre><code class="language-rust"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">use gtk::prelude::*;
@@ -305,7 +305,7 @@ In order to achieve that we can create a channel.
 The main loop allows us to send a message from multiple places to a single receiver at the main thread.
 We want to send a <code>bool</code> to inform, whether we want the button to react to clicks or not.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/3/main.rs">listings/main_event_loop/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::thread;
+<pre><code class="language-rust"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, MainContext, Priority};
@@ -387,7 +387,7 @@ You can also let the main loop take care of running <a href="https://rust-lang.g
 If you do that from the main thread use <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn_local"><code>spawn_local</code></a>, from other threads <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn"><code>spawn</code></a> has to be used.
 The converted code looks and behaves very similar to the multi-threaded code.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/4/main.rs">listings/main_event_loop/4/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, MainContext, Priority};
+<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext, Priority};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -451,7 +451,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">}</span></code></pre>
 <p>Since we are single-threaded again, we could even get rid of the channels while achieving the same result.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/5/main.rs">listings/main_event_loop/5/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -502,7 +502,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
 <p>But why did we not do the same thing with our multi-threaded example?</p>
-<pre><pre class="playground"><code class="language-rust  no_run compile_fail"><span class="boring">use std::{thread, time::Duration};
+<pre><code class="language-rust  no_run compile_fail"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, MainContext, PRIORITY_DEFAULT};
 </span><span class="boring">use gtk::{glib, gio};
@@ -559,7 +559,7 @@ The converted code looks and behaves very similar to the multi-threaded code.</p
 </span><span class="boring">    // Add button
 </span><span class="boring">    window.set_child(Some(&amp;button));
 </span><span class="boring">    window.present();
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Simply because we would get this error message:</p>
 <pre><code class="language-console">error[E0277]: `NonNull&lt;GObject&gt;` cannot be shared between threads safely
 

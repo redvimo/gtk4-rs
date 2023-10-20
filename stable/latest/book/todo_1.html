@@ -225,7 +225,7 @@ Something like this:</p>
 The <code>parent</code> is <code>gtk::ApplicationWindow</code>, so we inherit from it.
 As usual, we have to list all <a href="https://docs.gtk.org/gtk4/class.ApplicationWindow.html#ancestors">ancestors</a> and <a href="https://docs.gtk.org/gtk4/class.ApplicationWindow.html#implements">interfaces</a> apart from <code>GObject</code> and <code>GInitiallyUnowned</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -357,7 +357,7 @@ This will come in handy when we later add methods to our window.
 After that, we add the typical boilerplate for initializing composite templates.
 We only have to assure that the <code>class</code> attribute of the template in <code>window.ui</code> matches <code>NAME</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/imp.rs">listings/todo/1/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
+<pre><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -415,7 +415,7 @@ impl ObjectSubclass for Window {
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
 <p><code>main.rs</code> also does not hold any surprises for us.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/main.rs">listings/todo/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod task_object;
+<pre><code class="language-rust"><span class="boring">mod task_object;
 </span><span class="boring">mod task_row;
 </span><span class="boring">mod window;
 </span><span class="boring">
@@ -471,7 +471,7 @@ This object will store the state of the task consisting of:</p>
 <li>a string holding the task name.</li>
 </ul>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/mod.rs">listings/todo/1/task_object/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
@@ -497,7 +497,7 @@ impl TaskObject {
 <p>Unlike the lists chapter, the state is stored in a struct rather than in individual members of <code>imp::TaskObject</code>.
 This will be very convenient when saving the state in one of the following chapters.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/mod.rs">listings/todo/1/task_object/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
@@ -524,7 +524,7 @@ pub struct TaskData {
 Since the data is now inside a struct rather than individual member variables we have to add more annotations.
 For each property we additionally specify the name, the type and which member variable of <code>TaskData</code> we want to access.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_object/imp.rs">listings/todo/1/task_object/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
+<pre><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::Properties;
 </span><span class="boring">use gtk::glib;
@@ -582,7 +582,7 @@ The row of a task should look like this:</p>
 </code></pre>
 <p>In the code, we <a href="https://docs.gtk.org/gtk4/class.Box.html#hierarchy">derive</a> <code>TaskRow</code> from <code>gtk:Box</code>:</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
@@ -661,7 +661,7 @@ The row of a task should look like this:</p>
 We also store a mutable vector of bindings.
 Why we need that will become clear as soon as we get to bind the state of <code>TaskObject</code> to the corresponding <code>TaskRow</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/imp.rs">listings/todo/1/task_row/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
+<pre><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::Binding;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -707,7 +707,7 @@ impl ObjectSubclass for TaskRow {
 <p>Now we can bring everything together.
 We override the <code>imp::Window::constructed</code> in order to set up window contents at the time of its construction.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/imp.rs">listings/todo/1/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::RefCell;
+<pre><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -767,7 +767,7 @@ impl ObjectImpl for Window {
 In <code>Window::setup_tasks</code> we create a new model.
 Then we store a reference to the model in <code>imp::Window</code> as well as in <code>gtk::ListView</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -895,7 +895,7 @@ Then we store a reference to the model in <code>imp::Window</code> as well as in
 </span><span class="boring">}</span></code></pre>
 <p>We also create a method <code>new_task</code> which takes the content of the entry, clears the entry and uses the content to create a new task.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -1026,7 +1026,7 @@ This signal is triggered when we press the enter key in the entry.
 Then a new <code>TaskObject</code> with the content will be created and appended to the model.
 Finally, the entry will be cleared.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -1163,7 +1163,7 @@ This means we have to use property bindings.
 We will need to unbind them manually when they are no longer needed.</p>
 <p>We will create empty <code>TaskRow</code> objects in the &quot;setup&quot; step in <code>Window::setup_factory</code> and deal with binding in the &quot;bind&quot; and &quot;unbind&quot; steps.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/window/mod.rs">listings/todo/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::subclass::prelude::*;
@@ -1295,7 +1295,7 @@ This is necessary because a <code>TaskRow</code> will be reused as you scroll th
 That means that over time a <code>TaskRow</code> will need to bound to a new <code>TaskObject</code> and has to be unbound from the old one.
 Unbinding will only work if it can access the stored <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.Binding.html"><code>glib::Binding</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
@@ -1374,7 +1374,7 @@ Unbinding will only work if it can access the stored <a href="https://gtk-rs.org
 It iterates through the vector and unbinds each binding.
 In the end, it clears the vector.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/1/task_row/mod.rs">listings/todo/1/task_row/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod imp;
+<pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
 </span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;

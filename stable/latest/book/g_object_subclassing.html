@@ -181,7 +181,7 @@ Therefore, it makes sense that if we want to create a custom GObject, this is do
 Let's see how this works by replacing the button in our &quot;Hello World!&quot; app with a custom one.
 First, we need to create an implementation struct that holds the state and overrides the virtual methods.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/1/custom_button/imp.rs">listings/g_object_subclassing/1/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use gtk::glib;
+<pre><code class="language-rust">use gtk::glib;
 use gtk::subclass::prelude::*;
 
 // Object holding the state
@@ -215,7 +215,7 @@ Since we only want to have a plain button for now, we override nothing.
 We still have to add the empty <code>impl</code> though.
 Next, we describe the public interface of our custom GObject.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/1/custom_button/mod.rs">listings/g_object_subclassing/1/custom_button/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">mod imp;
+<pre><code class="language-rust">mod imp;
 
 use glib::Object;
 use gtk::glib;
@@ -248,7 +248,7 @@ Which is why, as of today, subclassing of GObjects in Rust requires to mention a
 For <code>gtk::Button</code>, we can look up the ancestors and interfaces in the corresponding <a href="https://docs.gtk.org/gtk4/class.Button.html#hierarchy">doc page</a> of GTK4.</p>
 <p>After these steps, nothing is stopping us from replacing <code>gtk::Button</code> with our <code>CustomButton</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/1/main.rs">listings/g_object_subclassing/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">mod custom_button;
+<pre><code class="language-rust">mod custom_button;
 
 use custom_button::CustomButton;
 use gtk::prelude::*;
@@ -303,7 +303,7 @@ For the gain of zero benefits, it did involve quite a bit of boilerplate after a
 <p>So let's make it a bit more interesting!
 <code>gtk::Button</code> does not hold much state, but we can let <code>CustomButton</code> hold a number.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/2/custom_button/imp.rs">listings/g_object_subclassing/2/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use std::cell::Cell;
+<pre><code class="language-rust">use std::cell::Cell;
 
 use gtk::glib;
 use gtk::prelude::*;
@@ -344,7 +344,7 @@ impl ButtonImpl for CustomButton {
 <p>We override <code>constructed</code> in <code>ObjectImpl</code> so that the label of the button initializes with <code>number</code>.
 We also override <code>clicked</code> in <code>ButtonImpl</code> so that every click increases <code>number</code> and updates the label.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/g_object_subclassing/2/main.rs">listings/g_object_subclassing/2/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">mod custom_button;
+<pre><code class="language-rust"><span class="boring">mod custom_button;
 </span><span class="boring">
 </span><span class="boring">use custom_button::CustomButton;
 </span><span class="boring">use gtk::prelude::*;

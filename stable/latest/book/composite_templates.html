@@ -179,7 +179,7 @@
 <p>Until now, whenever we constructed pre-defined widgets we relied on the <a href="https://rust-unofficial.github.io/patterns/patterns/creational/builder.html">builder pattern</a>.
 As a reminder, that is how we used it to build our trusty &quot;Hello World!&quot; app.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/hello_world/3/main.rs">listings/hello_world/3/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">use gtk::prelude::*;
+<pre><code class="language-rust">use gtk::prelude::*;
 use gtk::{glib, Application, ApplicationWindow, Button};
 const APP_ID: &amp;str = &quot;org.gtk_rs.HelloWorld3&quot;;
 
@@ -274,7 +274,7 @@ One way to do this is to execute <a href="https://gtk-rs.org/gtk-rs-core/stable/
 <p>Then, we create a <code>build.rs</code> at the root of our package with the following content.
 This will compile the resources whenever we trigger a build with cargo and then statically link our executable to them.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/build.rs">listings/build.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">fn main() {
+<pre><code class="language-rust">fn main() {
     glib_build_tools::compile_resources(
         &amp;[&quot;composite_templates/1/resources&quot;],
         &quot;composite_templates/1/resources/resources.gresource.xml&quot;,
@@ -284,7 +284,7 @@ This will compile the resources whenever we trigger a build with cargo and then 
 <p>Finally, we register and include the resources by calling the macro <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/macro.resources_register_include.html"><code>gio::resources_register_include!</code></a>.
 In your own apps take care to register the resources before creating the <code>gtk::Application</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/main.rs">listings/composite_templates/1/main.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">mod window;
+<pre><code class="language-rust">mod window;
 
 use gtk::prelude::*;
 use gtk::{gio, glib, Application};
@@ -313,7 +313,7 @@ fn build_ui(app: &amp;Application) {
 }</code></pre>
 <p>Within our code we create a custom widget inheriting from <code>gtk::ApplicationWindow</code> to make use of our template.
 Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/mod.rs">listings/composite_templates/1/window/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground">mod imp;
+<pre><code class="language-rust">mod imp;
 
 use glib::Object;
 use gtk::{gio, glib, Application};
@@ -338,7 +338,7 @@ You use it by adding a struct member with the same name as one <code>id</code> a
 <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/struct.TemplateChild.html"><code>TemplateChild</code></a> then stores a reference to the widget for later use.
 This will be useful later, when we want to add a callback to our button.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, Button, CompositeTemplate};
@@ -393,7 +393,7 @@ pub struct Window {
 <p>Within the <code>ObjectSubclass</code> trait, we make sure that <code>NAME</code> corresponds to <code>class</code> in the template and <code>ParentType</code> corresponds to <code>parent</code> in the template.
 We also bind and initialize the template in <code>class_init</code> and <code>instance_init</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, Button, CompositeTemplate};
@@ -448,7 +448,7 @@ impl ObjectSubclass for Window {
 <p>Finally, we connect the callback to the &quot;clicked&quot; signal of <code>button</code> within <code>constructed</code>.
 The button is easily available thanks to the stored reference in <code>self</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/1/window/imp.rs">listings/composite_templates/1/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, Button, CompositeTemplate};
@@ -506,7 +506,7 @@ First we define <code>CustomButton</code> that inherits from <code>gtk::Button</
 As usual, we define the implementation struct within <code>imp.rs</code>.
 Note the <code>NAME</code> we define here, we will need it later to refer to it in the template.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/custom_button/imp.rs">listings/composite_templates/2/custom_button/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use gtk::glib;
+<pre><code class="language-rust"><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">
 </span>// Object holding the state
@@ -531,7 +531,7 @@ impl ObjectSubclass for CustomButton {
 </span><span class="boring">impl ButtonImpl for CustomButton {}</span></code></pre>
 <p>We also define the public struct in <code>mod.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/custom_button/mod.rs">listings/composite_templates/2/custom_button/mod.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::Object;
+<pre><code class="language-rust"><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">
 </span>mod imp;
@@ -556,7 +556,7 @@ glib::wrapper! {
 </span><span class="boring">}</span></code></pre>
 <p>Since we want to refer to a <code>CustomButton</code> now we also have to change the type of the template child to it.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/2/window/imp.rs">listings/composite_templates/2/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CompositeTemplate};
@@ -657,7 +657,7 @@ It takes a function of type <code>Fn(&amp;Self)</code>.
 <code>Self</code> refers to our button.
 This means that <code>handle_button_clicked</code> has a single parameter of type <code>&amp;CustomButton</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CompositeTemplate};
@@ -713,7 +713,7 @@ impl Window {
 <p>Then we have to bind the template callbacks with <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.CompositeTemplateCallbacksClass.html#tymethod.bind_template_callbacks"><code>bind_template_callbacks</code></a>.
 We also need to remove the <code>button.connect_clicked</code> callback implemented in <code>window/imp.rs</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/3/window/imp.rs">listings/composite_templates/3/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use glib::subclass::InitializingObject;
+<pre><code class="language-rust"><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{glib, CompositeTemplate};
@@ -769,7 +769,7 @@ impl ObjectSubclass for Window {
 <p>We can also access the state of our widget.
 Let's say we want to manipulate a <code>number</code> stored in <code>imp::Window</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/4/window/imp.rs">listings/composite_templates/4/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
@@ -848,7 +848,7 @@ pub struct Window {
 <p>Now we can add <code>&amp;self</code> as first parameter to <code>handle_button_clicked</code>.
 This lets us access the state of the window and therefore manipulate <code>number</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/4/window/imp.rs">listings/composite_templates/4/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
@@ -909,7 +909,7 @@ impl Window {
 <p>Now that we use template callbacks we don't access the template child anymore.
 Let's remove it. </p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/5/window/imp.rs">listings/composite_templates/5/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
@@ -973,7 +973,7 @@ So what happened here?</p>
 It also ensures that the widget type is registered.
 Luckily we can also do that by ourselves.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/composite_templates/6/window/imp.rs">listings/composite_templates/6/window/imp.rs</a></p>
-<pre><code class="language-rust  no_run noplayground"><span class="boring">use std::cell::Cell;
+<pre><code class="language-rust"><span class="boring">use std::cell::Cell;
 </span><span class="boring">
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::prelude::*;
