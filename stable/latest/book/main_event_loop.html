@@ -344,7 +344,8 @@ We spawn that <code>async</code> block on the glib main loop with <a href="https
 </span><span class="boring">        .margin_end(12)
 </span><span class="boring">        .build();
 </span><span class="boring">
-</span>    let (sender, receiver) = async_channel::unbounded();
+</span>    // Create channel that can hold at most 1 message at a time
+    let (sender, receiver) = async_channel::bounded(1);
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
         let sender = sender.clone();
@@ -422,7 +423,8 @@ The converted code looks and behaves very similar to the multithreaded code.</p>
 </span><span class="boring">        .margin_end(12)
 </span><span class="boring">        .build();
 </span><span class="boring">
-</span>    let (sender, receiver) = async_channel::unbounded();
+</span>    // Create channel that can hold at most 1 message at a time
+    let (sender, receiver) = async_channel::bounded(1);
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
         let main_context = MainContext::default();
