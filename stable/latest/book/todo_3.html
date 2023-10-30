@@ -434,10 +434,8 @@ fn build_ui(app: &amp;adw::Application) {
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -452,9 +450,9 @@ fn build_ui(app: &amp;adw::Application) {
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>adw::Application</code> calls <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/functions/fn.init.html"><code>adw::init</code></a> internally and makes sure that translations, types, stylesheets, and icons are set up properly for Libadwaita. 
@@ -827,10 +825,8 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -845,9 +841,9 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We still have to specify the <code>create_task_row</code> method.
@@ -1062,10 +1058,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1080,9 +1074,9 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>When using boxed lists, you also have to take care to hide the <code>ListBox</code> when there is no task present.</p>
@@ -1294,10 +1288,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1312,9 +1304,9 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Finally, we define the <code>set_task_list_visible</code> method.</p>
@@ -1526,10 +1518,8 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1544,9 +1534,9 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>This is how the boxed list style looks like in our app.</p>

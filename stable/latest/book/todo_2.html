@@ -402,8 +402,6 @@ pub struct Window {
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Get filter_state from settings
 </span><span class="boring">        let filter_state: String = self.settings().get(&quot;filter&quot;);
 </span><span class="boring">
@@ -563,10 +561,8 @@ pub struct Window {
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -581,9 +577,9 @@ pub struct Window {
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We also add the methods <code>is_completed</code>, <code>task_data</code> and <code>from_task_data</code> to <code>TaskObject</code>.
@@ -686,8 +682,6 @@ We also add an action which allows us to remove done tasks. </p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Get filter_state from settings
 </span><span class="boring">        let filter_state: String = self.settings().get(&quot;filter&quot;);
 </span><span class="boring">
@@ -847,10 +841,8 @@ We also add an action which allows us to remove done tasks. </p>
         self.add_action(&amp;action_filter);
 
         // Create action to remove done tasks and add to action group &quot;win&quot;
-        let action_remove_done_tasks =
-            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-        action_remove_done_tasks.connect_activate(
-            clone!(@weak self as window =&gt; move |_, _| {
+        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+            .activate(move |window: &amp;Self, _, _| {
                 let tasks = window.tasks();
                 let mut position = 0;
                 while let Some(item) = tasks.item(position) {
@@ -865,9 +857,9 @@ We also add an action which allows us to remove done tasks. </p>
                         position += 1;
                     }
                 }
-            }),
-        );
-        self.add_action(&amp;action_remove_done_tasks);
+            })
+            .build();
+        self.add_action_entries([action_remove_done_tasks]);
     }
 <span class="boring">}</span></code></pre>
 <p>After activating the action &quot;win.filter&quot;, the corresponding setting will be changed.
@@ -932,8 +924,6 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-        // Get state
-
         // Get filter_state from settings
         let filter_state: String = self.settings().get(&quot;filter&quot;);
 
@@ -1093,10 +1083,8 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1111,9 +1099,9 @@ If the state is &quot;All&quot; nothing has to be filtered out, so we return <co
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Now, we can set up the model.
@@ -1176,8 +1164,6 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Get filter_state from settings
 </span><span class="boring">        let filter_state: String = self.settings().get(&quot;filter&quot;);
 </span><span class="boring">
@@ -1337,10 +1323,8 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1355,9 +1339,9 @@ Whenever the state of the key &quot;filter&quot; changes, we call the method <co
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Then, we bind the shortcuts to their actions with <code>set_accels_for_action</code>.
@@ -1729,8 +1713,6 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Get filter_state from settings
 </span><span class="boring">        let filter_state: String = self.settings().get(&quot;filter&quot;);
 </span><span class="boring">
@@ -1890,10 +1872,8 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">        self.add_action(&amp;action_filter);
 </span><span class="boring">
 </span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks =
-</span><span class="boring">            gio::SimpleAction::new(&quot;remove-done-tasks&quot;, None);
-</span><span class="boring">        action_remove_done_tasks.connect_activate(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
+</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
+</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
 </span><span class="boring">                let tasks = window.tasks();
 </span><span class="boring">                let mut position = 0;
 </span><span class="boring">                while let Some(item) = tasks.item(position) {
@@ -1908,9 +1888,9 @@ It might be the first time that we started the app and therefore there is no for
 </span><span class="boring">                        position += 1;
 </span><span class="boring">                    }
 </span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.add_action(&amp;action_remove_done_tasks);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Finally, we make sure that everything is set up in <code>constructed</code>.</p>

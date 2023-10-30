@@ -182,8 +182,7 @@ Now, we will complete our set by learning about actions.</p>
 <p>An action is a piece of functionality bound to a certain GObject.
 Let's check out the simplest case where we activate an action without a parameter.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/1/main.rs">listings/actions/1/main.rs</a></p>
-<pre><code class="language-rust no_run"><span class="boring">use gio::SimpleAction;
-</span><span class="boring">use glib::clone;
+<pre><code class="language-rust no_run"><span class="boring">use gio::ActionEntry;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, ApplicationWindow};
 </span><span class="boring">
@@ -212,20 +211,21 @@ Let's check out the simplest case where we activate an action without a paramete
         .build();
 
     // Add action &quot;close&quot; to `window` taking no parameter
-    let action_close = SimpleAction::new(&quot;close&quot;, None);
-    action_close.connect_activate(clone!(@weak window =&gt; move |_, _| {
-        window.close();
-    }));
-    window.add_action(&amp;action_close);
+    let action_close = ActionEntry::builder(&quot;close&quot;)
+        .activate(|window: &amp;ApplicationWindow, _, _| {
+            window.close();
+        })
+        .build();
+    window.add_action_entries([action_close]);
 
     // Present window
     window.present();
 }</code></pre>
-<p>First, we created a new <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.SimpleAction.html"><code>gio::SimpleAction</code></a> which is named &quot;close&quot; and takes no parameter.
-We also connected a callback which closes the window.</p>
+<p>First, we created a new <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.ActionEntry.html"><code>gio::ActionEntry</code></a> which is named &quot;close&quot; and takes no parameter.
+We also connected a callback which closes the window when the action is activated.
+Finally, we add the action entry to the window via <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/prelude/trait.ActionMapExtManual.html#method.add_action_entries"><code>add_action_entries</code></a>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/1/main.rs">listings/actions/1/main.rs</a></p>
-<pre><code class="language-rust no_run"><span class="boring">use gio::SimpleAction;
-</span><span class="boring">use glib::clone;
+<pre><code class="language-rust no_run"><span class="boring">use gio::ActionEntry;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, ApplicationWindow};
 </span><span class="boring">
@@ -254,11 +254,12 @@ fn main() -&gt; glib::ExitCode {
 </span><span class="boring">        .build();
 </span><span class="boring">
 </span><span class="boring">    // Add action &quot;close&quot; to `window` taking no parameter
-</span><span class="boring">    let action_close = SimpleAction::new(&quot;close&quot;, None);
-</span><span class="boring">    action_close.connect_activate(clone!(@weak window =&gt; move |_, _| {
-</span><span class="boring">        window.close();
-</span><span class="boring">    }));
-</span><span class="boring">    window.add_action(&amp;action_close);
+</span><span class="boring">    let action_close = ActionEntry::builder(&quot;close&quot;)
+</span><span class="boring">        .activate(|window: &amp;ApplicationWindow, _, _| {
+</span><span class="boring">            window.close();
+</span><span class="boring">        })
+</span><span class="boring">        .build();
+</span><span class="boring">    window.add_action_entries([action_close]);
 </span><span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
@@ -274,9 +275,12 @@ The answer is that it is so common to add actions to windows and applications th
 <li>&quot;app&quot; for actions global to the application, and</li>
 <li>&quot;win&quot; for actions tied to an application window.</li>
 </ul>
-<p>If that had not been the case, we would have to add the action group manually via <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.SimpleActionGroup.html"><code>gio::SimpleActionGroup</code></a>.</p>
+<p>We can add an action group to any widget via the method <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/prelude/trait.WidgetExt.html#method.insert_action_group"><code>insert_action_group</code></a>.
+Let's add our action to the action group &quot;custom-group&quot; and add the group then to our window.
+The action entry isn't specific to our window anymore, the first parameter of the &quot;activate&quot; callback is of type <code>SimpleActionGroup</code> instead of <code>ApplicationWindow</code>.
+This means we have to clone <code>window</code> into the closure.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/2/main.rs">listings/actions/2/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use gio::SimpleAction;
+<pre><code class="language-rust"><span class="boring">use gio::ActionEntry;
 </span><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::gio::SimpleActionGroup;
 </span><span class="boring">use gtk::prelude::*;
@@ -290,10 +294,55 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">
 </span><span class="boring">    // Connect to &quot;activate&quot; signal of `app`
 </span><span class="boring">    app.connect_activate(build_ui);
+</span><span class="boring">    // Set keyboard accelerator to trigger &quot;custom-group.close&quot;.
+</span><span class="boring">    app.set_accels_for_action(&quot;custom-group.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
 </span><span class="boring">
-</span><span class="boring">    // Set keyboard accelerator to trigger &quot;win.close&quot;.
-</span><span class="boring">    app.set_accels_for_action(&quot;win.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
+</span><span class="boring">    // Run the application
+</span><span class="boring">    app.run()
+</span><span class="boring">}
 </span><span class="boring">
+</span>fn build_ui(app: &amp;Application) {
+    // Create a window and set the title
+    let window = ApplicationWindow::builder()
+        .application(app)
+        .title(&quot;My GTK App&quot;)
+        .width_request(360)
+        .build();
+
+    // Add action &quot;close&quot; to `window` taking no parameter
+    let action_close = ActionEntry::builder(&quot;close&quot;)
+        .activate(clone!(@weak window =&gt; move |_, _, _| {
+            window.close();
+        }))
+        .build();
+
+    // Create a new action group and add actions to it
+    let actions = SimpleActionGroup::new();
+    actions.add_action_entries([action_close]);
+    window.insert_action_group(&quot;custom-group&quot;, Some(&amp;actions));
+
+    // Present window
+    window.present();
+}</code></pre>
+<p>If we bind the accelerator to &quot;custom-group.close&quot;, it works just as before.</p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/2/main.rs">listings/actions/2/main.rs</a></p>
+<pre><code class="language-rust"><span class="boring">use gio::ActionEntry;
+</span><span class="boring">use glib::clone;
+</span><span class="boring">use gtk::gio::SimpleActionGroup;
+</span><span class="boring">use gtk::prelude::*;
+</span><span class="boring">use gtk::{gio, glib, Application, ApplicationWindow};
+</span><span class="boring">
+</span><span class="boring">const APP_ID: &amp;str = &quot;org.gtk_rs.Actions2&quot;;
+</span><span class="boring">
+</span><span class="boring">fn main() -&gt; glib::ExitCode {
+</span><span class="boring">    // Create a new application
+</span><span class="boring">    let app = Application::builder().application_id(APP_ID).build();
+</span><span class="boring">
+</span><span class="boring">    // Connect to &quot;activate&quot; signal of `app`
+</span><span class="boring">    app.connect_activate(build_ui);
+</span>    // Set keyboard accelerator to trigger &quot;custom-group.close&quot;.
+    app.set_accels_for_action(&quot;custom-group.close&quot;, &amp;[&quot;&lt;Ctrl&gt;W&quot;]);
+<span class="boring">
 </span><span class="boring">    // Run the application
 </span><span class="boring">    app.run()
 </span><span class="boring">}
@@ -307,24 +356,24 @@ The answer is that it is so common to add actions to windows and applications th
 </span><span class="boring">        .build();
 </span><span class="boring">
 </span><span class="boring">    // Add action &quot;close&quot; to `window` taking no parameter
-</span><span class="boring">    let action_close = SimpleAction::new(&quot;close&quot;, None);
-</span><span class="boring">    action_close.connect_activate(clone!(@weak window =&gt; move |_, _| {
-</span><span class="boring">        window.close();
-</span><span class="boring">    }));
-</span><span class="boring">    window.add_action(&amp;action_close);
+</span><span class="boring">    let action_close = ActionEntry::builder(&quot;close&quot;)
+</span><span class="boring">        .activate(clone!(@weak window =&gt; move |_, _, _| {
+</span><span class="boring">            window.close();
+</span><span class="boring">        }))
+</span><span class="boring">        .build();
 </span><span class="boring">
-</span>    // Create a new action group and add actions to it
-    let actions = SimpleActionGroup::new();
-    window.insert_action_group(&quot;win&quot;, Some(&amp;actions));
-    actions.add_action(&amp;action_close);
-<span class="boring">
+</span><span class="boring">    // Create a new action group and add actions to it
+</span><span class="boring">    let actions = SimpleActionGroup::new();
+</span><span class="boring">    actions.add_action_entries([action_close]);
+</span><span class="boring">    window.insert_action_group(&quot;custom-group&quot;, Some(&amp;actions));
+</span><span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
 </span><span class="boring">}</span></code></pre>
-<p>Also, if we had multiple instances of the same windows we would expect that only the currently focused window will be closed when activating &quot;win.close&quot;.
+<p>Also, if we had multiple instances of the same windows, we would expect that only the currently focused window will be closed when activating &quot;win.close&quot;.
 And indeed, the &quot;win.close&quot; will be dispatched to the currently focused window.
 However, that also means that we actually define one action per window instance.
-If we want to have a single globally accessible action instead, we call <code>add_action</code> on our application instead.</p>
+If we want to have a single globally accessible action instead, we call <code>add_action_entries</code> on our application instead.</p>
 <blockquote>
 <p>Adding &quot;win.close&quot; was useful as a simple example.
 However, in the future we will use the pre-defined <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Window.html#actions">&quot;window.close&quot;</a> action which does exactly the same thing.</p>
@@ -334,8 +383,7 @@ However, in the future we will use the pre-defined <a href="https://gtk-rs.org/g
 However, unlike most functions it can also be stateful.
 Let's see how this works.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/3/main.rs">listings/actions/3/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use gio::SimpleAction;
-</span><span class="boring">use glib::clone;
+<pre><code class="language-rust"><span class="boring">use gio::ActionEntry;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Align, Application, ApplicationWindow, Button, Label, Orientation,
@@ -394,38 +442,37 @@ Let's see how this works.</p>
         .build();
 
     // Add action &quot;count&quot; to `window` taking an integer as parameter
-    let action_count = SimpleAction::new_stateful(
-        &quot;count&quot;,
-        Some(&amp;i32::static_variant_type()),
-        &amp;original_state.to_variant(),
-    );
-    action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-        // Get state
-        let mut state = action
-            .state()
-            .expect(&quot;Could not get state.&quot;)
-            .get::&lt;i32&gt;()
-            .expect(&quot;The variant needs to be of type `i32`.&quot;);
+    let action_count = ActionEntry::builder(&quot;count&quot;)
+        .parameter_type(Some(&amp;i32::static_variant_type()))
+        .state(original_state.to_variant())
+        .activate(move |_, action, parameter| {
+            // Get state
+            let mut state = action
+                .state()
+                .expect(&quot;Could not get state.&quot;)
+                .get::&lt;i32&gt;()
+                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 
-        // Get parameter
-        let parameter = parameter
-            .expect(&quot;Could not get parameter.&quot;)
-            .get::&lt;i32&gt;()
-            .expect(&quot;The variant needs to be of type `i32`.&quot;);
+            // Get parameter
+            let parameter = parameter
+                .expect(&quot;Could not get parameter.&quot;)
+                .get::&lt;i32&gt;()
+                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 
-        // Increase state by parameter and store state
-        state += parameter;
-        action.set_state(&amp;state.to_variant());
+            // Increase state by parameter and store state
+            state += parameter;
+            action.set_state(&amp;state.to_variant());
 
-        // Update label with new state
-        label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-    }));
-    window.add_action(&amp;action_count);
+            // Update label with new state
+            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+        })
+        .build();
+    window.add_action_entries([action_count]);
 
     // Present window
     window.present();
 }</code></pre>
-<p>Here we created a &quot;win.count&quot; action that increases its state by the given parameter every time it is activated.
+<p>Here, we created a &quot;win.count&quot; action that increases its state by the given parameter every time it is activated.
 It also takes care of updating the <code>label</code> with the current state.
 The button activates the action with each click while passing &quot;1&quot; as parameter.
 This is how our app works:</p>
@@ -441,8 +488,7 @@ This way, the action can be specified by setting the &quot;action-name&quot; pro
 If the action accepts a parameter, it can be set via the &quot;action-target&quot; property.
 With <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/builders/struct.ButtonBuilder.html"><code>ButtonBuilder</code></a>, we can set everything up by calling its methods.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/4/main.rs">listings/actions/4/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use gio::SimpleAction;
-</span><span class="boring">use glib::clone;
+<pre><code class="language-rust"><span class="boring">use gio::ActionEntry;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, Align, Application, ApplicationWindow, Button, Label, Orientation,
@@ -495,34 +541,32 @@ With <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/builders/struct
 </span><span class="boring">        .build();
 </span><span class="boring">
 </span><span class="boring">    // Add action &quot;count&quot; to `window` taking an integer as parameter
-</span><span class="boring">    let action_count = SimpleAction::new_stateful(
-</span><span class="boring">        &quot;count&quot;,
-</span><span class="boring">        Some(&amp;i32::static_variant_type()),
-</span><span class="boring">        &amp;original_state.to_variant(),
-</span><span class="boring">    );
-</span><span class="boring">    action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let mut state = action
-</span><span class="boring">            .state()
-</span><span class="boring">            .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">            .get::&lt;i32&gt;()
-</span><span class="boring">            .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">    let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">        .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">        .state(original_state.to_variant())
+</span><span class="boring">        .activate(move |_, action, parameter| {
+</span><span class="boring">            // Get state
+</span><span class="boring">            let mut state = action
+</span><span class="boring">                .state()
+</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                .get::&lt;i32&gt;()
+</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Get parameter
-</span><span class="boring">        let parameter = parameter
-</span><span class="boring">            .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">            .get::&lt;i32&gt;()
-</span><span class="boring">            .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">            // Get parameter
+</span><span class="boring">            let parameter = parameter
+</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                .get::&lt;i32&gt;()
+</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        // Increase state by parameter and save state
-</span><span class="boring">        state += parameter;
-</span><span class="boring">        action.set_state(&amp;state.to_variant());
+</span><span class="boring">            // Increase state by parameter and store state
+</span><span class="boring">            state += parameter;
+</span><span class="boring">            action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">        // Update label with new state
-</span><span class="boring">        label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">    }));
-</span><span class="boring">
-</span><span class="boring">    window.add_action(&amp;action_count);
+</span><span class="boring">            // Update label with new state
+</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">        })
+</span><span class="boring">        .build();
+</span><span class="boring">    window.add_action_entries([action_count]);
 </span><span class="boring">
 </span><span class="boring">    // Present window
 </span><span class="boring">    window.present();
@@ -565,8 +609,8 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/5/window/mod.rs">listings/actions/5/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::SimpleAction;
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::ActionEntry;
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application};
@@ -585,38 +629,34 @@ Within the template we can then set the &quot;action-name&quot; and &quot;action
     }
 
     fn setup_actions(&amp;self) {
-        let label = self.imp().label.get();
-
         // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
         let original_state = 0;
-        let action_count = SimpleAction::new_stateful(
-            &quot;count&quot;,
-            Some(&amp;i32::static_variant_type()),
-            &amp;original_state.to_variant(),
-        );
+        let action_count = ActionEntry::builder(&quot;count&quot;)
+            .parameter_type(Some(&amp;i32::static_variant_type()))
+            .state(original_state.to_variant())
+            .activate(move |window: &amp;Self, action, parameter| {
+                // Get state
+                let mut state = action
+                    .state()
+                    .expect(&quot;Could not get state.&quot;)
+                    .get::&lt;i32&gt;()
+                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 
-        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-            // Get state
-            let mut state = action
-                .state()
-                .expect(&quot;Could not get state.&quot;)
-                .get::&lt;i32&gt;()
-                .expect(&quot;The value needs to be of type `i32`.&quot;);
+                // Get parameter
+                let parameter = parameter
+                    .expect(&quot;Could not get parameter.&quot;)
+                    .get::&lt;i32&gt;()
+                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 
-            // Get parameter
-            let parameter = parameter
-                .expect(&quot;Could not get parameter.&quot;)
-                .get::&lt;i32&gt;()
-                .expect(&quot;The value needs to be of type `i32`.&quot;);
+                // Increase state by parameter and store state
+                state += parameter;
+                action.set_state(&amp;state.to_variant());
 
-            // Increase state by parameter and save state
-            state += parameter;
-            action.set_state(&amp;state.to_variant());
-
-            // Update label with new state
-            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-        }));
-        self.add_action(&amp;action_count);
+                // Update label with new state
+                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+            })
+            .build();
+        self.add_action_entries([action_count]);
     }
 }</code></pre>
 <p>Finally, <code>setup_actions</code> will be called within <code>constructed</code>.</p>
@@ -669,9 +709,9 @@ impl ObjectImpl for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>This app behaves the same as our previous example, but it leads us to menu creation.</p>
+<p>This app behaves the same as our previous example, but it will make it simpler for us to add a menu in the following section.</p>
 <h2 id="menus"><a class="header" href="#menus">Menus</a></h2>
-<p>If you want to create a <a href="https://developer.gnome.org/hig/patterns/controls/menus.html">menu</a> you have to use actions and you will want to use the interface builder.
+<p>If you want to create a <a href="https://developer.gnome.org/hig/patterns/controls/menus.html">menu</a>, you have to use actions, and you will want to use the interface builder.
 Typically, a menu entry has an action fitting one of these three descriptions:</p>
 <ul>
 <li>no parameter and no state, or</li>
@@ -679,17 +719,17 @@ Typically, a menu entry has an action fitting one of these three descriptions:</
 <li>string parameter and string state.</li>
 </ul>
 <p>Let's modify our small app to demonstrate these cases.
-First we extend <code>setup_actions</code>.
+First, we extend <code>setup_actions</code>.
 For the action without parameter or state, we can use the pre-defined &quot;window.close&quot; action.
-Therefore we don't have to add anything here.</p>
+Therefore, we don't have to add anything here.</p>
 <p>With the action &quot;button-frame&quot;, we manipulate the &quot;has-frame&quot; property of <code>button</code>.
 Here, the convention is that actions with no parameter and boolean state should behave like toggle actions.
 This means that the caller can expect the boolean state to toggle after activating the action. Luckily for us, that is the default behavior for <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.PropertyAction.html"><code>gio::PropertyAction</code></a> with a boolean property.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/6/window/mod.rs">listings/actions/6/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::{PropertyAction, SimpleAction};
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::{ActionEntry, PropertyAction};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, Orientation};
@@ -708,57 +748,44 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let label = self.imp().label.get();
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
 </span><span class="boring">        let original_state = 0;
-</span><span class="boring">        let action_count = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;count&quot;,
-</span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
-</span><span class="boring">        );
+</span><span class="boring">        let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">            .state(original_state.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
+</span><span class="boring">                // Get state
+</span><span class="boring">                let mut state = action
+</span><span class="boring">                    .state()
+</span><span class="boring">                    .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">            // Get state
-</span><span class="boring">            let mut state = action
-</span><span class="boring">                .state()
-</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Get parameter
+</span><span class="boring">                let parameter = parameter
+</span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">            // Get parameter
-</span><span class="boring">            let parameter = parameter
-</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Increase state by parameter and store state
+</span><span class="boring">                state += parameter;
+</span><span class="boring">                action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">            // Increase state by parameter and save state
-</span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
-</span><span class="boring">
-</span><span class="boring">            // Update label with new state
-</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_count);
-</span><span class="boring">
+</span><span class="boring">                // Update label with new state
+</span><span class="boring">                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">            })
+</span><span class="boring">            .build();
 </span>        // Add property action &quot;button-frame&quot; to `window`
         let button = self.imp().button.get();
         let action_button_frame =
             PropertyAction::new(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;);
         self.add_action(&amp;action_button_frame);
 <span class="boring">
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;orientation&quot; to `window` taking a string as parameter
-</span><span class="boring">        let gtk_box = self.imp().gtk_box.get();
-</span><span class="boring">        let action_orientation = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;orientation&quot;,
-</span><span class="boring">            Some(&amp;String::static_variant_type()),
-</span><span class="boring">            &amp;&quot;Vertical&quot;.to_variant(),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
-</span><span class="boring">            move |action, parameter| {
+</span><span class="boring">        let action_orientation = ActionEntry::builder(&quot;orientation&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;String::static_variant_type()))
+</span><span class="boring">            .state(&quot;Vertical&quot;.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
 </span><span class="boring">                // Get parameter
 </span><span class="boring">                let parameter = parameter
 </span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
@@ -768,14 +795,15 @@ This means that the caller can expect the boolean state to toggle after activati
 </span><span class="boring">                let orientation = match parameter.as_str() {
 </span><span class="boring">                    &quot;Horizontal&quot; =&gt; Orientation::Horizontal,
 </span><span class="boring">                    &quot;Vertical&quot; =&gt; Orientation::Vertical,
-</span><span class="boring">                    _ =&gt; unreachable!()
+</span><span class="boring">                    _ =&gt; unreachable!(),
 </span><span class="boring">                };
 </span><span class="boring">
 </span><span class="boring">                // Set orientation and save state
-</span><span class="boring">                gtk_box.set_orientation(orientation);
+</span><span class="boring">                window.imp().gtk_box.set_orientation(orientation);
 </span><span class="boring">                action.set_state(&amp;parameter.to_variant());
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_orientation);
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_count, action_orientation]);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <blockquote>
@@ -792,8 +820,8 @@ We don't need the action state to implement orientation switching, however it is
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/6/window/mod.rs">listings/actions/6/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::{PropertyAction, SimpleAction};
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::{ActionEntry, PropertyAction};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, Orientation};
@@ -812,57 +840,44 @@ We don't need the action state to implement orientation switching, however it is
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let label = self.imp().label.get();
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
 </span><span class="boring">        let original_state = 0;
-</span><span class="boring">        let action_count = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;count&quot;,
-</span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
-</span><span class="boring">        );
+</span><span class="boring">        let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">            .state(original_state.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
+</span><span class="boring">                // Get state
+</span><span class="boring">                let mut state = action
+</span><span class="boring">                    .state()
+</span><span class="boring">                    .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">            // Get state
-</span><span class="boring">            let mut state = action
-</span><span class="boring">                .state()
-</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Get parameter
+</span><span class="boring">                let parameter = parameter
+</span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">            // Get parameter
-</span><span class="boring">            let parameter = parameter
-</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The value needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Increase state by parameter and store state
+</span><span class="boring">                state += parameter;
+</span><span class="boring">                action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">            // Increase state by parameter and save state
-</span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
-</span><span class="boring">
-</span><span class="boring">            // Update label with new state
-</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_count);
-</span><span class="boring">
+</span><span class="boring">                // Update label with new state
+</span><span class="boring">                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">            })
+</span><span class="boring">            .build();
 </span><span class="boring">        // Add property action &quot;button-frame&quot; to `window`
 </span><span class="boring">        let button = self.imp().button.get();
 </span><span class="boring">        let action_button_frame =
 </span><span class="boring">            PropertyAction::new(&quot;button-frame&quot;, &amp;button, &quot;has-frame&quot;);
 </span><span class="boring">        self.add_action(&amp;action_button_frame);
 </span><span class="boring">
-</span>
-        // Add stateful action &quot;orientation&quot; to `window` taking a string as parameter
-        let gtk_box = self.imp().gtk_box.get();
-        let action_orientation = SimpleAction::new_stateful(
-            &quot;orientation&quot;,
-            Some(&amp;String::static_variant_type()),
-            &amp;&quot;Vertical&quot;.to_variant(),
-        );
-
-        action_orientation.connect_activate(clone!(@weak gtk_box =&gt;
-            move |action, parameter| {
+</span>        // Add stateful action &quot;orientation&quot; to `window` taking a string as parameter
+        let action_orientation = ActionEntry::builder(&quot;orientation&quot;)
+            .parameter_type(Some(&amp;String::static_variant_type()))
+            .state(&quot;Vertical&quot;.to_variant())
+            .activate(move |window: &amp;Self, action, parameter| {
                 // Get parameter
                 let parameter = parameter
                     .expect(&quot;Could not get parameter.&quot;)
@@ -872,14 +887,15 @@ We don't need the action state to implement orientation switching, however it is
                 let orientation = match parameter.as_str() {
                     &quot;Horizontal&quot; =&gt; Orientation::Horizontal,
                     &quot;Vertical&quot; =&gt; Orientation::Vertical,
-                    _ =&gt; unreachable!()
+                    _ =&gt; unreachable!(),
                 };
 
                 // Set orientation and save state
-                gtk_box.set_orientation(orientation);
+                window.imp().gtk_box.set_orientation(orientation);
                 action.set_state(&amp;parameter.to_variant());
-        }));
-        self.add_action(&amp;action_orientation);
+            })
+            .build();
+        self.add_action_entries([action_count, action_orientation]);
 <span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Even though <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Menu.html"><code>gio::Menu</code></a> can also be created with the bindings, the most convenient way is to use the interface builder for that.
@@ -950,7 +966,7 @@ You can find more icons with the <a href="https://flathub.org/apps/org.gnome.des
 They can be embedded with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Resource.html"><code>gio::Resource</code></a> and then be referenced within the composite templates (or other places).</p>
 </blockquote>
 <h2 id="settings"><a class="header" href="#settings">Settings</a></h2>
-<p>The menu entries nicely display the state of our stateful actions, but after the app is closed all changes to that state are lost.
+<p>The menu entries nicely display the state of our stateful actions, but after the app is closed, all changes to that state are lost.
 As usual, we solve this problem with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/gio/struct.Settings.html"><code>gio::Settings</code></a>.
 First we create a schema with settings corresponding to the stateful actions we created before.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/org.gtk_rs.Actions7.gschema.xml">listings/actions/7/org.gtk_rs.Actions7.gschema.xml</a></p>
@@ -1038,8 +1054,8 @@ pub struct Window {
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::{Settings, SimpleAction};
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::{ActionEntry, Settings};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, Orientation};
@@ -1075,47 +1091,34 @@ pub struct Window {
     }
 <span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let label = self.imp().label.get();
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
 </span><span class="boring">        let original_state = 0;
-</span><span class="boring">        let action_count = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;count&quot;,
-</span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
-</span><span class="boring">        );
+</span><span class="boring">        let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">            .state(original_state.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
+</span><span class="boring">                // Get state
+</span><span class="boring">                let mut state = action
+</span><span class="boring">                    .state()
+</span><span class="boring">                    .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">            // Get state
-</span><span class="boring">            let mut state = action
-</span><span class="boring">                .state()
-</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Get parameter
+</span><span class="boring">                let parameter = parameter
+</span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">            // Get parameter
-</span><span class="boring">            let parameter = parameter
-</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Increase state by parameter and store state
+</span><span class="boring">                state += parameter;
+</span><span class="boring">                action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">            // Increase state by parameter and save state
-</span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
-</span><span class="boring">
-</span><span class="boring">            // Update label with new state
-</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_count);
-</span><span class="boring">
-</span><span class="boring">        // Add action &quot;close&quot; to `window` taking no parameter
-</span><span class="boring">        let action_close = SimpleAction::new(&quot;close&quot;, None);
-</span><span class="boring">
-</span><span class="boring">        action_close.connect_activate(clone!(@weak self as window =&gt; move |_, _| {
-</span><span class="boring">            window.close();
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_close);
+</span><span class="boring">                // Update label with new state
+</span><span class="boring">                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_count]);
 </span><span class="boring">
 </span><span class="boring">        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
@@ -1127,8 +1130,6 @@ pub struct Window {
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn bind_settings(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
 </span><span class="boring">        let button = self.imp().button.get();
 </span><span class="boring">        self.settings()
@@ -1160,8 +1161,8 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::{Settings, SimpleAction};
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::{ActionEntry, Settings};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, Orientation};
@@ -1197,47 +1198,34 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let label = self.imp().label.get();
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
 </span><span class="boring">        let original_state = 0;
-</span><span class="boring">        let action_count = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;count&quot;,
-</span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
-</span><span class="boring">        );
+</span><span class="boring">        let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">            .state(original_state.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
+</span><span class="boring">                // Get state
+</span><span class="boring">                let mut state = action
+</span><span class="boring">                    .state()
+</span><span class="boring">                    .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">            // Get state
-</span><span class="boring">            let mut state = action
-</span><span class="boring">                .state()
-</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Get parameter
+</span><span class="boring">                let parameter = parameter
+</span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">            // Get parameter
-</span><span class="boring">            let parameter = parameter
-</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Increase state by parameter and store state
+</span><span class="boring">                state += parameter;
+</span><span class="boring">                action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">            // Increase state by parameter and save state
-</span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
-</span><span class="boring">
-</span><span class="boring">            // Update label with new state
-</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_count);
-</span><span class="boring">
-</span><span class="boring">        // Add action &quot;close&quot; to `window` taking no parameter
-</span><span class="boring">        let action_close = SimpleAction::new(&quot;close&quot;, None);
-</span><span class="boring">
-</span><span class="boring">        action_close.connect_activate(clone!(@weak self as window =&gt; move |_, _| {
-</span><span class="boring">            window.close();
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_close);
+</span><span class="boring">                // Update label with new state
+</span><span class="boring">                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_count]);
 </span><span class="boring">
 </span>        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
         let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
@@ -1249,8 +1237,6 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 <span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn bind_settings(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">
 </span><span class="boring">        // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
 </span><span class="boring">        let button = self.imp().button.get();
 </span><span class="boring">        self.settings()
@@ -1280,12 +1266,12 @@ We create actions with the<a href="https://gtk-rs.org/gtk-rs-core/stable/latest/
 <p>Since actions from <code>create_action</code> follow the aforementioned conventions, we can keep further changes to a minimum.
 The action &quot;win.button-frame&quot; toggles its state with each activation and the state of the &quot;win.orientation&quot; action follows the given parameter.</p>
 <p>We still have to specify what should happen when the actions are activated though.
-For the stateful actions, instead of adding callbacks to their &quot;activate&quot; signals we bind the settings to properties we want to manipulate.</p>
+For the stateful actions, instead of adding callbacks to their &quot;activate&quot; signals, we bind the settings to properties we want to manipulate.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/actions/7/window/mod.rs">listings/actions/7/window/mod.rs</a></p>
 <pre><code class="language-rust"><span class="boring">mod imp;
 </span><span class="boring">
-</span><span class="boring">use gio::{Settings, SimpleAction};
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use gio::{ActionEntry, Settings};
+</span><span class="boring">use glib::Object;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::subclass::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, Orientation};
@@ -1321,47 +1307,34 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Get state
-</span><span class="boring">        let label = self.imp().label.get();
-</span><span class="boring">
 </span><span class="boring">        // Add stateful action &quot;count&quot; to `window` taking an integer as parameter
 </span><span class="boring">        let original_state = 0;
-</span><span class="boring">        let action_count = SimpleAction::new_stateful(
-</span><span class="boring">            &quot;count&quot;,
-</span><span class="boring">            Some(&amp;i32::static_variant_type()),
-</span><span class="boring">            &amp;original_state.to_variant(),
-</span><span class="boring">        );
+</span><span class="boring">        let action_count = ActionEntry::builder(&quot;count&quot;)
+</span><span class="boring">            .parameter_type(Some(&amp;i32::static_variant_type()))
+</span><span class="boring">            .state(original_state.to_variant())
+</span><span class="boring">            .activate(move |window: &amp;Self, action, parameter| {
+</span><span class="boring">                // Get state
+</span><span class="boring">                let mut state = action
+</span><span class="boring">                    .state()
+</span><span class="boring">                    .expect(&quot;Could not get state.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">        action_count.connect_activate(clone!(@weak label =&gt; move |action, parameter| {
-</span><span class="boring">            // Get state
-</span><span class="boring">            let mut state = action
-</span><span class="boring">                .state()
-</span><span class="boring">                .expect(&quot;Could not get state.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Get parameter
+</span><span class="boring">                let parameter = parameter
+</span><span class="boring">                    .expect(&quot;Could not get parameter.&quot;)
+</span><span class="boring">                    .get::&lt;i32&gt;()
+</span><span class="boring">                    .expect(&quot;The variant needs to be of type `i32`.&quot;);
 </span><span class="boring">
-</span><span class="boring">            // Get parameter
-</span><span class="boring">            let parameter = parameter
-</span><span class="boring">                .expect(&quot;Could not get parameter.&quot;)
-</span><span class="boring">                .get::&lt;i32&gt;()
-</span><span class="boring">                .expect(&quot;The variant needs to be of type `i32`.&quot;);
+</span><span class="boring">                // Increase state by parameter and store state
+</span><span class="boring">                state += parameter;
+</span><span class="boring">                action.set_state(&amp;state.to_variant());
 </span><span class="boring">
-</span><span class="boring">            // Increase state by parameter and save state
-</span><span class="boring">            state += parameter;
-</span><span class="boring">            action.set_state(&amp;state.to_variant());
-</span><span class="boring">
-</span><span class="boring">            // Update label with new state
-</span><span class="boring">            label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_count);
-</span><span class="boring">
-</span><span class="boring">        // Add action &quot;close&quot; to `window` taking no parameter
-</span><span class="boring">        let action_close = SimpleAction::new(&quot;close&quot;, None);
-</span><span class="boring">
-</span><span class="boring">        action_close.connect_activate(clone!(@weak self as window =&gt; move |_, _| {
-</span><span class="boring">            window.close();
-</span><span class="boring">        }));
-</span><span class="boring">        self.add_action(&amp;action_close);
+</span><span class="boring">                // Update label with new state
+</span><span class="boring">                window.imp().label.set_label(&amp;format!(&quot;Counter: {state}&quot;));
+</span><span class="boring">            })
+</span><span class="boring">            .build();
+</span><span class="boring">        self.add_action_entries([action_count]);
 </span><span class="boring">
 </span><span class="boring">        // Create action from key &quot;button-frame&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_button_frame = self.settings().create_action(&quot;button-frame&quot;);
@@ -1373,8 +1346,6 @@ For the stateful actions, instead of adding callbacks to their &quot;activate&qu
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    fn bind_settings(&amp;self) {
-        // Get state
-
         // Bind setting &quot;button-frame&quot; to &quot;has-frame&quot; property of `button`
         let button = self.imp().button.get();
         self.settings()
@@ -1461,7 +1432,7 @@ impl ObjectImpl for Window {
 </span><span class="boring">
 </span><span class="boring">// Trait shared by all application windows
 </span><span class="boring">impl ApplicationWindowImpl for Window {}</span></code></pre>
-<p>Actions are extremely powerful and we are only scratching the surface here.
+<p>Actions are extremely powerful, and we are only scratching the surface here.
 If you want to learn more about them, the <a href="https://developer.gnome.org/documentation/tutorials/actions.html">GNOME developer documentation</a> is a good place to start.</p>
 
                     </main>
