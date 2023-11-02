@@ -349,6 +349,11 @@ impl ObjectSubclass for Window {
 
     fn class_init(klass: &amp;mut Self::Class) {
         klass.bind_template();
+
+        // Create action to remove done tasks and add to action group &quot;win&quot;
+        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+            window.remove_done_tasks();
+        });
     }
 
     fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -442,6 +447,11 @@ impl ObjectSubclass for Window {
 </span><span class="boring">
 </span><span class="boring">    fn class_init(klass: &amp;mut Self::Class) {
 </span><span class="boring">        klass.bind_template();
+</span><span class="boring">
+</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+</span><span class="boring">            window.remove_done_tasks();
+</span><span class="boring">        });
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -703,27 +713,23 @@ impl AdwApplicationWindowImpl for Window {}</code></pre>
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <h2 id="placeholder-page"><a class="header" href="#placeholder-page">Placeholder Page</a></h2>
@@ -1020,6 +1026,20 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">    fn class_init(klass: &amp;mut Self::Class) {
 </span><span class="boring">        klass.bind_template();
+</span><span class="boring">
+</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+</span><span class="boring">            window.remove_done_tasks();
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Create async action to create new collection and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action_async(
+</span><span class="boring">            &quot;win.new-collection&quot;,
+</span><span class="boring">            None,
+</span><span class="boring">            |window, _, _| async move {
+</span><span class="boring">                window.new_collection().await;
+</span><span class="boring">            },
+</span><span class="boring">        );
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -1420,37 +1440,26 @@ pub struct Window {
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -1490,34 +1499,26 @@ pub struct Window {
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>As always, we want our data to be saved when we close the window.
@@ -1574,6 +1575,20 @@ Since most of the implementation is in the method <code>CollectionObject::to_col
 </span><span class="boring">
 </span><span class="boring">    fn class_init(klass: &amp;mut Self::Class) {
 </span><span class="boring">        klass.bind_template();
+</span><span class="boring">
+</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+</span><span class="boring">            window.remove_done_tasks();
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Create async action to create new collection and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action_async(
+</span><span class="boring">            &quot;win.new-collection&quot;,
+</span><span class="boring">            None,
+</span><span class="boring">            |window, _, _| async move {
+</span><span class="boring">                window.new_collection().await;
+</span><span class="boring">            },
+</span><span class="boring">        );
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -1681,6 +1696,20 @@ Instead of <code>setup_tasks</code> we now call <code>setup_collections</code>.<
 </span><span class="boring">
 </span><span class="boring">    fn class_init(klass: &amp;mut Self::Class) {
 </span><span class="boring">        klass.bind_template();
+</span><span class="boring">
+</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+</span><span class="boring">            window.remove_done_tasks();
+</span><span class="boring">        });
+</span><span class="boring">
+</span><span class="boring">        // Create async action to create new collection and add to action group &quot;win&quot;
+</span><span class="boring">        klass.install_action_async(
+</span><span class="boring">            &quot;win.new-collection&quot;,
+</span><span class="boring">            None,
+</span><span class="boring">            |window, _, _| async move {
+</span><span class="boring">                window.new_collection().await;
+</span><span class="boring">            },
+</span><span class="boring">        );
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -2082,37 +2111,26 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -2152,34 +2170,26 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>create_collection_row</code> takes a <code>CollectionObject</code> and builds a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBoxRow.html"><code>gtk::ListBoxRow</code></a> from its information.</p>
@@ -2529,37 +2539,26 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -2599,34 +2598,26 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We also adapt <code>restore_data</code>.
@@ -2979,37 +2970,26 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -3049,34 +3029,26 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>set_current_collection</code> assures that all elements accessing tasks refer to the task model of the current collection.
@@ -3432,37 +3404,26 @@ Finally, we select the collection row.</p>
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -3502,34 +3463,26 @@ Finally, we select the collection row.</p>
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Previously, we used the method <code>set_task_list_visible</code>.
@@ -3880,37 +3833,26 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -3950,34 +3892,26 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>select_collection_row</code> assures that the row for the current collection is selected in <code>collections_list</code>.</p>
@@ -4327,37 +4261,26 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -4397,34 +4320,26 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <h2 id="leaflet-and-dialog"><a class="header" href="#leaflet-and-dialog">Leaflet and Dialog</a></h2>
@@ -4443,460 +4358,135 @@ While the entry is empty, the &quot;Create&quot; button remains insensitive.
 As soon as we start typing, the button becomes sensitive.
 When we remove all typed letters and the entry becomes empty again, the &quot;Create&quot; button becomes insensitive and the entry gets the &quot;error&quot; style.
 After clicking the &quot;Create&quot; button, a new collection is created, and we navigate to its task view.</p>
-<p>To implement that behavior we will first add a &quot;new-collection&quot; action to the <code>setup_actions</code> method.
-This action will be activated by a click on the <code>+</code> button as well as on the button in the placeholder page.</p>
-<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/window/imp.rs">listings/todo/8/window/mod.rs</a></p>
-<pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
-</span><span class="boring">
+<p>To implement that behavior we will first add a &quot;new-collection&quot; action to <code>class_init</code> method.
+This action will be activated by a click on the <code>+</code> button as well as on the button in the placeholder page.
+We are using <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/subclass/widget/trait.WidgetClassExt.html#method.install_action_async"><code>install_action_async</code></a>.
+It is a convenient way to add asynchronous actions to subclassed widgets. </p>
+<p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/window/imp.rs">listings/todo/8/window/imp.rs</a></p>
+<pre><code class="language-rust no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::Leaflet;
 </span><span class="boring">use gio::Settings;
-</span><span class="boring">use glib::{clone, Object};
+</span><span class="boring">use glib::subclass::InitializingObject;
+</span><span class="boring">use gtk::glib::SignalHandlerId;
 </span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    gio, glib, Button, CompositeTemplate, Entry, FilterListModel, ListBox, Stack,
 </span><span class="boring">};
+</span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
-</span><span class="boring">use crate::task_object::TaskObject;
 </span><span class="boring">use crate::utils::data_path;
-</span><span class="boring">use crate::APP_ID;
 </span><span class="boring">
-</span><span class="boring">glib::wrapper! {
-</span><span class="boring">    pub struct Window(ObjectSubclass&lt;imp::Window&gt;)
-</span><span class="boring">        @extends adw::ApplicationWindow, gtk::ApplicationWindow, gtk::Window, gtk::Widget,
-</span><span class="boring">        @implements gio::ActionGroup, gio::ActionMap, gtk::Accessible, gtk::Buildable,
-</span><span class="boring">                    gtk::ConstraintTarget, gtk::Native, gtk::Root, gtk::ShortcutManager;
+</span><span class="boring">// Object holding the state
+</span><span class="boring">#[derive(CompositeTemplate, Default)]
+</span><span class="boring">#[template(resource = &quot;/org/gtk_rs/Todo8/window.ui&quot;)]
+</span><span class="boring">pub struct Window {
+</span><span class="boring">    pub settings: OnceCell&lt;Settings&gt;,
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub entry: TemplateChild&lt;Entry&gt;,
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub tasks_list: TemplateChild&lt;ListBox&gt;,
+</span><span class="boring">    // 👇 all members below are new
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub collections_list: TemplateChild&lt;ListBox&gt;,
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub leaflet: TemplateChild&lt;Leaflet&gt;,
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub stack: TemplateChild&lt;Stack&gt;,
+</span><span class="boring">    #[template_child]
+</span><span class="boring">    pub back_button: TemplateChild&lt;Button&gt;,
+</span><span class="boring">    pub collections: OnceCell&lt;gio::ListStore&gt;,
+</span><span class="boring">    pub current_collection: RefCell&lt;Option&lt;CollectionObject&gt;&gt;,
+</span><span class="boring">    pub current_filter_model: RefCell&lt;Option&lt;FilterListModel&gt;&gt;,
+</span><span class="boring">    pub tasks_changed_handler_id: RefCell&lt;Option&lt;SignalHandlerId&gt;&gt;,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Window {
-</span><span class="boring">    pub fn new(app: &amp;adw::Application) -&gt; Self {
-</span><span class="boring">        // Create new window
-</span><span class="boring">        Object::builder().property(&quot;application&quot;, app).build()
+</span>// The central trait for subclassing a GObject
+#[glib::object_subclass]
+impl ObjectSubclass for Window {
+    // `NAME` needs to match `class` attribute of template
+    const NAME: &amp;'static str = &quot;TodoWindow&quot;;
+    type Type = super::Window;
+    type ParentType = adw::ApplicationWindow;
+
+    fn class_init(klass: &amp;mut Self::Class) {
+        klass.bind_template();
+
+        // Create action to remove done tasks and add to action group &quot;win&quot;
+        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+            window.remove_done_tasks();
+        });
+
+        // Create async action to create new collection and add to action group &quot;win&quot;
+        klass.install_action_async(
+            &quot;win.new-collection&quot;,
+            None,
+            |window, _, _| async move {
+                window.new_collection().await;
+            },
+        );
+    }
+
+    fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
+        obj.init_template();
+    }
+}
+<span class="boring">
+</span><span class="boring">// Trait shared by all GObjects
+</span><span class="boring">impl ObjectImpl for Window {
+</span><span class="boring">    fn constructed(&amp;self) {
+</span><span class="boring">        // Call &quot;constructed&quot; on parent
+</span><span class="boring">        self.parent_constructed();
+</span><span class="boring">
+</span><span class="boring">        // Setup
+</span><span class="boring">        let obj = self.obj();
+</span><span class="boring">        obj.setup_settings();
+</span><span class="boring">        obj.setup_collections();
+</span><span class="boring">        obj.restore_data();
+</span><span class="boring">        obj.setup_callbacks();
+</span><span class="boring">        obj.setup_actions();
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">    fn setup_settings(&amp;self) {
-</span><span class="boring">        let settings = Settings::new(APP_ID);
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .settings
-</span><span class="boring">            .set(settings)
-</span><span class="boring">            .expect(&quot;`settings` should not be set before calling `setup_settings`.&quot;);
+</span><span class="boring">// Trait shared by all widgets
+</span><span class="boring">impl WidgetImpl for Window {}
+</span><span class="boring">
+</span><span class="boring">// Trait shared by all windows
+</span><span class="boring">impl WindowImpl for Window {
+</span><span class="boring">    fn close_request(&amp;self) -&gt; glib::Propagation {
+</span><span class="boring">        // Store task data in vector
+</span><span class="boring">        let backup_data: Vec&lt;CollectionData&gt; = self
+</span><span class="boring">            .obj()
+</span><span class="boring">            .collections()
+</span><span class="boring">            .iter::&lt;CollectionObject&gt;()
+</span><span class="boring">            .filter_map(|collection_object| collection_object.ok())
+</span><span class="boring">            .map(|collection_object| collection_object.to_collection_data())
+</span><span class="boring">            .collect();
+</span><span class="boring">
+</span><span class="boring">        // Save state to file
+</span><span class="boring">        let file = File::create(data_path()).expect(&quot;Could not create json file.&quot;);
+</span><span class="boring">        serde_json::to_writer(file, &amp;backup_data)
+</span><span class="boring">            .expect(&quot;Could not write data to json file&quot;);
+</span><span class="boring">
+</span><span class="boring">        // Pass close request on to the parent
+</span><span class="boring">        self.parent_close_request()
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">    fn settings(&amp;self) -&gt; &amp;Settings {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .settings
-</span><span class="boring">            .get()
-</span><span class="boring">            .expect(&quot;`settings` should be set in `setup_settings`.&quot;)
-</span><span class="boring">    }
+</span><span class="boring">// Trait shared by all application windows
+</span><span class="boring">impl ApplicationWindowImpl for Window {}
 </span><span class="boring">
-</span><span class="boring">    fn tasks(&amp;self) -&gt; gio::ListStore {
-</span><span class="boring">        self.current_collection().tasks()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn current_collection(&amp;self) -&gt; CollectionObject {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .current_collection
-</span><span class="boring">            .borrow()
-</span><span class="boring">            .clone()
-</span><span class="boring">            .expect(&quot;`current_collection` should be set in `set_current_collections`.&quot;)
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn collections(&amp;self) -&gt; gio::ListStore {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .collections
-</span><span class="boring">            .get()
-</span><span class="boring">            .expect(&quot;`collections` should be set in `setup_collections`.&quot;)
-</span><span class="boring">            .clone()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_filter(&amp;self) {
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .current_filter_model
-</span><span class="boring">            .borrow()
-</span><span class="boring">            .clone()
-</span><span class="boring">            .expect(&quot;`current_filter_model` should be set in `set_current_collection`.&quot;)
-</span><span class="boring">            .set_filter(self.filter().as_ref());
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn filter(&amp;self) -&gt; Option&lt;CustomFilter&gt; {
-</span><span class="boring">        // Get filter state from settings
-</span><span class="boring">        let filter_state: String = self.settings().get(&quot;filter&quot;);
-</span><span class="boring">
-</span><span class="boring">        // Create custom filters
-</span><span class="boring">        let filter_open = CustomFilter::new(|obj| {
-</span><span class="boring">            // Get `TaskObject` from `glib::Object`
-</span><span class="boring">            let task_object = obj
-</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">            // Only allow completed tasks
-</span><span class="boring">            !task_object.is_completed()
-</span><span class="boring">        });
-</span><span class="boring">        let filter_done = CustomFilter::new(|obj| {
-</span><span class="boring">            // Get `TaskObject` from `glib::Object`
-</span><span class="boring">            let task_object = obj
-</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">            // Only allow done tasks
-</span><span class="boring">            task_object.is_completed()
-</span><span class="boring">        });
-</span><span class="boring">
-</span><span class="boring">        // Return the correct filter
-</span><span class="boring">        match filter_state.as_str() {
-</span><span class="boring">            &quot;All&quot; =&gt; None,
-</span><span class="boring">            &quot;Open&quot; =&gt; Some(filter_open),
-</span><span class="boring">            &quot;Done&quot; =&gt; Some(filter_done),
-</span><span class="boring">            _ =&gt; unreachable!(),
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn setup_collections(&amp;self) {
-</span><span class="boring">        let collections = gio::ListStore::new::&lt;CollectionObject&gt;();
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .collections
-</span><span class="boring">            .set(collections.clone())
-</span><span class="boring">            .expect(&quot;Could not set collections&quot;);
-</span><span class="boring">
-</span><span class="boring">        self.imp().collections_list.bind_model(
-</span><span class="boring">            Some(&amp;collections),
-</span><span class="boring">            clone!(@weak self as window =&gt; @default-panic, move |obj| {
-</span><span class="boring">                let collection_object = obj
-</span><span class="boring">                    .downcast_ref()
-</span><span class="boring">                    .expect(&quot;The object should be of type `CollectionObject`.&quot;);
-</span><span class="boring">                let row = window.create_collection_row(collection_object);
-</span><span class="boring">                row.upcast()
-</span><span class="boring">            }),
-</span><span class="boring">        )
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn restore_data(&amp;self) {
-</span><span class="boring">        if let Ok(file) = File::open(data_path()) {
-</span><span class="boring">            // Deserialize data from file to vector
-</span><span class="boring">            let backup_data: Vec&lt;CollectionData&gt; = serde_json::from_reader(file)
-</span><span class="boring">                .expect(
-</span><span class="boring">                    &quot;It should be possible to read `backup_data` from the json file.&quot;,
-</span><span class="boring">                );
-</span><span class="boring">
-</span><span class="boring">            // Convert `Vec&lt;CollectionData&gt;` to `Vec&lt;CollectionObject&gt;`
-</span><span class="boring">            let collections: Vec&lt;CollectionObject&gt; = backup_data
-</span><span class="boring">                .into_iter()
-</span><span class="boring">                .map(CollectionObject::from_collection_data)
-</span><span class="boring">                .collect();
-</span><span class="boring">
-</span><span class="boring">            // Insert restored objects into model
-</span><span class="boring">            self.collections().extend_from_slice(&amp;collections);
-</span><span class="boring">
-</span><span class="boring">            // Set first collection as current
-</span><span class="boring">            if let Some(first_collection) = collections.first() {
-</span><span class="boring">                self.set_current_collection(first_collection.clone());
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn create_collection_row(
-</span><span class="boring">        &amp;self,
-</span><span class="boring">        collection_object: &amp;CollectionObject,
-</span><span class="boring">    ) -&gt; ListBoxRow {
-</span><span class="boring">        let label = Label::builder()
-</span><span class="boring">            .ellipsize(pango::EllipsizeMode::End)
-</span><span class="boring">            .xalign(0.0)
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        collection_object
-</span><span class="boring">            .bind_property(&quot;title&quot;, &amp;label, &quot;label&quot;)
-</span><span class="boring">            .sync_create()
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        ListBoxRow::builder().child(&amp;label).build()
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_current_collection(&amp;self, collection: CollectionObject) {
-</span><span class="boring">        // Wrap model with filter and selection and pass it to the list box
-</span><span class="boring">        let tasks = collection.tasks();
-</span><span class="boring">        let filter_model = FilterListModel::new(Some(tasks.clone()), self.filter());
-</span><span class="boring">        let selection_model = NoSelection::new(Some(filter_model.clone()));
-</span><span class="boring">        self.imp().tasks_list.bind_model(
-</span><span class="boring">            Some(&amp;selection_model),
-</span><span class="boring">            clone!(@weak self as window =&gt; @default-panic, move |obj| {
-</span><span class="boring">                let task_object = obj
-</span><span class="boring">                    .downcast_ref()
-</span><span class="boring">                    .expect(&quot;The object should be of type `TaskObject`.&quot;);
-</span><span class="boring">                let row = window.create_task_row(task_object);
-</span><span class="boring">                row.upcast()
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Store filter model
-</span><span class="boring">        self.imp().current_filter_model.replace(Some(filter_model));
-</span><span class="boring">
-</span><span class="boring">        // If present, disconnect old `tasks_changed` handler
-</span><span class="boring">        if let Some(handler_id) = self.imp().tasks_changed_handler_id.take() {
-</span><span class="boring">            self.tasks().disconnect(handler_id);
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        // Assure that the task list is only visible when it is supposed to
-</span><span class="boring">        self.set_task_list_visible(&amp;tasks);
-</span><span class="boring">        let tasks_changed_handler_id = tasks.connect_items_changed(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |tasks, _, _, _| {
-</span><span class="boring">                window.set_task_list_visible(tasks);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .tasks_changed_handler_id
-</span><span class="boring">            .replace(Some(tasks_changed_handler_id));
-</span><span class="boring">
-</span><span class="boring">        // Set current tasks
-</span><span class="boring">        self.imp().current_collection.replace(Some(collection));
-</span><span class="boring">
-</span><span class="boring">        self.select_collection_row();
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_task_list_visible(&amp;self, tasks: &amp;gio::ListStore) {
-</span><span class="boring">        self.imp().tasks_list.set_visible(tasks.n_items() &gt; 0);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn select_collection_row(&amp;self) {
-</span><span class="boring">        if let Some(index) = self.collections().find(&amp;self.current_collection()) {
-</span><span class="boring">            let row = self.imp().collections_list.row_at_index(index as i32);
-</span><span class="boring">            self.imp().collections_list.select_row(row.as_ref());
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn create_task_row(&amp;self, task_object: &amp;TaskObject) -&gt; ActionRow {
-</span><span class="boring">        // Create check button
-</span><span class="boring">        let check_button = CheckButton::builder()
-</span><span class="boring">            .valign(Align::Center)
-</span><span class="boring">            .can_focus(false)
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create row
-</span><span class="boring">        let row = ActionRow::builder()
-</span><span class="boring">            .activatable_widget(&amp;check_button)
-</span><span class="boring">            .build();
-</span><span class="boring">        row.add_prefix(&amp;check_button);
-</span><span class="boring">
-</span><span class="boring">        // Bind properties
-</span><span class="boring">        task_object
-</span><span class="boring">            .bind_property(&quot;completed&quot;, &amp;check_button, &quot;active&quot;)
-</span><span class="boring">            .bidirectional()
-</span><span class="boring">            .sync_create()
-</span><span class="boring">            .build();
-</span><span class="boring">        task_object
-</span><span class="boring">            .bind_property(&quot;content&quot;, &amp;row, &quot;title&quot;)
-</span><span class="boring">            .sync_create()
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Return row
-</span><span class="boring">        row
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn setup_callbacks(&amp;self) {
-</span><span class="boring">        // Setup callback for activation of the entry
-</span><span class="boring">        self.imp()
-</span><span class="boring">            .entry
-</span><span class="boring">            .connect_activate(clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.new_task();
-</span><span class="boring">            }));
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for clicking (and the releasing) the icon of the entry
-</span><span class="boring">        self.imp().entry.connect_icon_release(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_,_| {
-</span><span class="boring">                window.new_task();
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Filter model whenever the value of the key &quot;filter&quot; changes
-</span><span class="boring">        self.settings().connect_changed(
-</span><span class="boring">            Some(&quot;filter&quot;),
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _| {
-</span><span class="boring">                window.set_filter();
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback when items of collections change
-</span><span class="boring">        self.set_stack();
-</span><span class="boring">        self.collections().connect_items_changed(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, _, _, _| {
-</span><span class="boring">                window.set_stack();
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for activating a row of collections list
-</span><span class="boring">        self.imp().collections_list.connect_row_activated(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_, row| {
-</span><span class="boring">                let index = row.index();
-</span><span class="boring">                let selected_collection = window.collections()
-</span><span class="boring">                    .item(index as u32)
-</span><span class="boring">                    .expect(&quot;There needs to be an object at this position.&quot;)
-</span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
-</span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
-</span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn set_stack(&amp;self) {
-</span><span class="boring">        if self.collections().n_items() &gt; 0 {
-</span><span class="boring">            self.imp().stack.set_visible_child_name(&quot;main&quot;);
-</span><span class="boring">        } else {
-</span><span class="boring">            self.imp().stack.set_visible_child_name(&quot;placeholder&quot;);
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn new_task(&amp;self) {
-</span><span class="boring">        // Get content from entry and clear it
-</span><span class="boring">        let buffer = self.imp().entry.buffer();
-</span><span class="boring">        let content = buffer.text().to_string();
-</span><span class="boring">        if content.is_empty() {
-</span><span class="boring">            return;
-</span><span class="boring">        }
-</span><span class="boring">        buffer.set_text(&quot;&quot;);
-</span><span class="boring">
-</span><span class="boring">        // Add new task to model
-</span><span class="boring">        let task = TaskObject::new(false, content);
-</span><span class="boring">        self.tasks().append(&amp;task);
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn setup_actions(&amp;self) {
-</span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
-</span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
-</span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span>        // Create action to create new collection and add to action group &quot;win&quot;
-        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-            .activate(move |window: &amp;Self, _, _| {
-                window.new_collection();
-            })
-            .build();
-        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
-<span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
-</span><span class="boring">        // Create entry
-</span><span class="boring">        let entry = Entry::builder()
-</span><span class="boring">            .placeholder_text(&quot;Name&quot;)
-</span><span class="boring">            .activates_default(true)
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        let cancel_response = &quot;cancel&quot;;
-</span><span class="boring">        let create_response = &quot;create&quot;;
-</span><span class="boring">
-</span><span class="boring">        // Create new dialog
-</span><span class="boring">        let dialog = MessageDialog::builder()
-</span><span class="boring">            .heading(&quot;New Collection&quot;)
-</span><span class="boring">            .transient_for(self)
-</span><span class="boring">            .modal(true)
-</span><span class="boring">            .destroy_with_parent(true)
-</span><span class="boring">            .close_response(cancel_response)
-</span><span class="boring">            .default_response(create_response)
-</span><span class="boring">            .extra_child(&amp;entry)
-</span><span class="boring">            .build();
-</span><span class="boring">        dialog
-</span><span class="boring">            .add_responses(&amp;[(cancel_response, &quot;Cancel&quot;), (create_response, &quot;Create&quot;)]);
-</span><span class="boring">        // Make the dialog button insensitive initially
-</span><span class="boring">        dialog.set_response_enabled(create_response, false);
-</span><span class="boring">        dialog.set_response_appearance(create_response, ResponseAppearance::Suggested);
-</span><span class="boring">
-</span><span class="boring">        // Set entry's css class to &quot;error&quot;, when there is no text in it
-</span><span class="boring">        entry.connect_changed(clone!(@weak dialog =&gt; move |entry| {
-</span><span class="boring">            let text = entry.text();
-</span><span class="boring">            let empty = text.is_empty();
-</span><span class="boring">
-</span><span class="boring">            dialog.set_response_enabled(create_response, !empty);
-</span><span class="boring">
-</span><span class="boring">            if empty {
-</span><span class="boring">                entry.add_css_class(&quot;error&quot;);
-</span><span class="boring">            } else {
-</span><span class="boring">                entry.remove_css_class(&quot;error&quot;);
-</span><span class="boring">            }
-</span><span class="boring">        }));
-</span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
-</span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
-</span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
-</span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
-</span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
-</span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<p>As soon as the &quot;new-collection&quot; action is activated, the <code>new_collection</code> method is called.
+</span><span class="boring">// Trait shared by all adwaita application windows
+</span><span class="boring">impl AdwApplicationWindowImpl for Window {}</span></code></pre>
+<p>As soon as the &quot;new-collection&quot; action is activated, the <code>async</code> <code>new_collection</code> method is called.
 Here, we create the <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.MessageDialog.html"><code>adw::MessageDialog</code></a>, set up the buttons as well as add the entry to it.
 We add a callback to the entry to ensure that when the content changes, an empty content sets <code>dialog_button</code> as insensitive and adds an &quot;error&quot; CSS class to the entry.
-We also add a callback to the dialog itself.
-If we click &quot;Cancel&quot;, the dialog should just be destroyed without any further actions.
-However, if we click &quot;Create&quot;, we want a new collection to be created and set as current collection.
+We then <code>await</code> on the user pressing a button on the dialog.
+If they click &quot;Cancel&quot;, we simply return.
+However, if they click &quot;Create&quot;, we want a new collection to be created and set as current collection.
 Afterwards we navigate forward on our leaflet, which means we navigate to the task view.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/window/imp.rs">listings/todo/8/window/mod.rs</a></p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
@@ -5244,37 +4834,26 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span>    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    async fn new_collection(&amp;self) {
         // Create entry
         let entry = Entry::builder()
             .placeholder_text(&quot;Name&quot;)
@@ -5314,34 +4893,26 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
             }
         }));
 
-        // Connect response to dialog
-        dialog.connect_response(
-            None,
-            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-                // Destroy dialog
-                dialog.destroy();
+        let response = dialog.choose_future().await;
 
-                // Return if the user chose a response different than `create_response`
-                if response != create_response {
-                    return;
-                }
+        // Return if the user chose `cancel_response`
+        if response == cancel_response {
+            return;
+        }
 
-                // Create a new list store
-                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+        // Create a new list store
+        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 
-                // Create a new collection object from the title the user provided
-                let title = entry.text().to_string();
-                let collection = CollectionObject::new(&amp;title, tasks);
+        // Create a new collection object from the title the user provided
+        let title = entry.text().to_string();
+        let collection = CollectionObject::new(&amp;title, tasks);
 
-                // Add new collection object and set current tasks
-                window.collections().append(&amp;collection);
-                window.set_current_collection(collection);
+        // Add new collection object and set current tasks
+        self.collections().append(&amp;collection);
+        self.set_current_collection(collection);
 
-                // Let the leaflet navigate to the next child
-                window.imp().leaflet.navigate(NavigationDirection::Forward);
-            }),
-        );
-        dialog.present();
+        // Let the leaflet navigate to the next child
+        self.imp().leaflet.navigate(NavigationDirection::Forward);
     }
 <span class="boring">}</span></code></pre>
 <p>We also add more callbacks to <code>setup_callbacks</code>.
@@ -5697,37 +5268,26 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -5767,34 +5327,26 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Before, we called the method <code>set_stack</code>.
@@ -6145,37 +5697,26 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
-</span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
-</span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">
-</span><span class="boring">        // Create action to create new collection and add to action group &quot;win&quot;
-</span><span class="boring">        let action_new_collection = gio::ActionEntry::builder(&quot;new-collection&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                window.new_collection();
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks, action_new_collection]);
 </span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">    fn new_collection(&amp;self) {
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    async fn new_collection(&amp;self) {
 </span><span class="boring">        // Create entry
 </span><span class="boring">        let entry = Entry::builder()
 </span><span class="boring">            .placeholder_text(&quot;Name&quot;)
@@ -6215,34 +5756,26 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">            }
 </span><span class="boring">        }));
 </span><span class="boring">
-</span><span class="boring">        // Connect response to dialog
-</span><span class="boring">        dialog.connect_response(
-</span><span class="boring">            None,
-</span><span class="boring">            clone!(@weak self as window, @weak entry =&gt; move |dialog, response| {
-</span><span class="boring">                // Destroy dialog
-</span><span class="boring">                dialog.destroy();
+</span><span class="boring">        let response = dialog.choose_future().await;
 </span><span class="boring">
-</span><span class="boring">                // Return if the user chose a response different than `create_response`
-</span><span class="boring">                if response != create_response {
-</span><span class="boring">                    return;
-</span><span class="boring">                }
+</span><span class="boring">        // Return if the user chose `cancel_response`
+</span><span class="boring">        if response == cancel_response {
+</span><span class="boring">            return;
+</span><span class="boring">        }
 </span><span class="boring">
-</span><span class="boring">                // Create a new list store
-</span><span class="boring">                let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
+</span><span class="boring">        // Create a new list store
+</span><span class="boring">        let tasks = gio::ListStore::new::&lt;TaskObject&gt;();
 </span><span class="boring">
-</span><span class="boring">                // Create a new collection object from the title the user provided
-</span><span class="boring">                let title = entry.text().to_string();
-</span><span class="boring">                let collection = CollectionObject::new(&amp;title, tasks);
+</span><span class="boring">        // Create a new collection object from the title the user provided
+</span><span class="boring">        let title = entry.text().to_string();
+</span><span class="boring">        let collection = CollectionObject::new(&amp;title, tasks);
 </span><span class="boring">
-</span><span class="boring">                // Add new collection object and set current tasks
-</span><span class="boring">                window.collections().append(&amp;collection);
-</span><span class="boring">                window.set_current_collection(collection);
+</span><span class="boring">        // Add new collection object and set current tasks
+</span><span class="boring">        self.collections().append(&amp;collection);
+</span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">                // Let the leaflet navigate to the next child
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">        dialog.present();
+</span><span class="boring">        // Let the leaflet navigate to the next child
+</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>And that was it!

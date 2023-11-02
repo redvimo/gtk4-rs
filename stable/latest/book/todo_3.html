@@ -432,27 +432,23 @@ fn build_ui(app: &amp;adw::Application) {
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>adw::Application</code> calls <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/functions/fn.init.html"><code>adw::init</code></a> internally and makes sure that translations, types, stylesheets, and icons are set up properly for Libadwaita. 
@@ -562,6 +558,11 @@ impl ObjectSubclass for Window {
 
     fn class_init(klass: &amp;mut Self::Class) {
         klass.bind_template();
+
+        // Create action to remove done tasks and add to action group &quot;win&quot;
+        klass.install_action(&quot;win.remove-done-tasks&quot;, None, |window, _, _| {
+            window.remove_done_tasks();
+        });
     }
 
     fn instance_init(obj: &amp;InitializingObject&lt;Self&gt;) {
@@ -823,27 +824,23 @@ There we specify the model, as well as a closure describing how to transform the
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We still have to specify the <code>create_task_row</code> method.
@@ -1056,27 +1053,23 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>When using boxed lists, you also have to take care to hide the <code>ListBox</code> when there is no task present.</p>
@@ -1286,27 +1279,23 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Finally, we define the <code>set_task_list_visible</code> method.</p>
@@ -1516,27 +1505,23 @@ That means we can just bind their properties without having to worry about unbin
 </span><span class="boring">        // Create action from key &quot;filter&quot; and add to action group &quot;win&quot;
 </span><span class="boring">        let action_filter = self.settings().create_action(&quot;filter&quot;);
 </span><span class="boring">        self.add_action(&amp;action_filter);
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">        // Create action to remove done tasks and add to action group &quot;win&quot;
-</span><span class="boring">        let action_remove_done_tasks = gio::ActionEntry::builder(&quot;remove-done-tasks&quot;)
-</span><span class="boring">            .activate(move |window: &amp;Self, _, _| {
-</span><span class="boring">                let tasks = window.tasks();
-</span><span class="boring">                let mut position = 0;
-</span><span class="boring">                while let Some(item) = tasks.item(position) {
-</span><span class="boring">                    // Get `TaskObject` from `glib::Object`
-</span><span class="boring">                    let task_object = item
-</span><span class="boring">                        .downcast_ref::&lt;TaskObject&gt;()
-</span><span class="boring">                        .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
+</span><span class="boring">    fn remove_done_tasks(&amp;self) {
+</span><span class="boring">        let tasks = self.tasks();
+</span><span class="boring">        let mut position = 0;
+</span><span class="boring">        while let Some(item) = tasks.item(position) {
+</span><span class="boring">            // Get `TaskObject` from `glib::Object`
+</span><span class="boring">            let task_object = item
+</span><span class="boring">                .downcast_ref::&lt;TaskObject&gt;()
+</span><span class="boring">                .expect(&quot;The object needs to be of type `TaskObject`.&quot;);
 </span><span class="boring">
-</span><span class="boring">                    if task_object.is_completed() {
-</span><span class="boring">                        tasks.remove(position);
-</span><span class="boring">                    } else {
-</span><span class="boring">                        position += 1;
-</span><span class="boring">                    }
-</span><span class="boring">                }
-</span><span class="boring">            })
-</span><span class="boring">            .build();
-</span><span class="boring">        self.add_action_entries([action_remove_done_tasks]);
+</span><span class="boring">            if task_object.is_completed() {
+</span><span class="boring">                tasks.remove(position);
+</span><span class="boring">            } else {
+</span><span class="boring">                position += 1;
+</span><span class="boring">            }
+</span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>This is how the boxed list style looks like in our app.</p>
