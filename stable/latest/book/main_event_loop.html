@@ -322,15 +322,15 @@ Every time we get a message, we want to set the sensitivity of the button accord
 However, we don't want to block the main loop while waiting for a message to receive.
 That is the whole point of the exercise after all!</p>
 <p>We solve that problem by waiting for messages in an <a href="https://rust-lang.github.io/async-book/"><code>async</code></a> block.
-This <code>async</code> block is spawned on the <code>glib</code> main loop with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn_local"><code>spawn_local</code></a></p>
+This <code>async</code> block is spawned on the <code>glib</code> main loop with <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/fn.spawn_future_local.html"><code>spawn_future_local</code></a></p>
 <blockquote>
-<p>See also <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/struct.MainContext.html#method.spawn"><code>spawn</code></a> for spawning async blocks on the main loop from outside the main thread.</p>
+<p>See also <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/fn.spawn_future.html"><code>spawn_future</code></a> for spawning async blocks on the main loop from outside the main thread.</p>
 </blockquote>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/3/main.rs">listings/main_event_loop/3/main.rs</a></p>
 <pre><code class="language-rust"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
-</span><span class="boring">use glib::{clone, MainContext};
+</span><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{gio, glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -368,8 +368,8 @@ This <code>async</code> block is spawned on the <code>glib</code> main loop with
             sender
                 .send_blocking(false)
                 .expect(&quot;The channel needs to be open.&quot;);
-            let ten_seconds = Duration::from_secs(10);
-            thread::sleep(ten_seconds);
+            let five_seconds = Duration::from_secs(5);
+            thread::sleep(five_seconds);
             // Activate the button again
             sender
                 .send_blocking(true)
@@ -377,9 +377,8 @@ This <code>async</code> block is spawned on the <code>glib</code> main loop with
         });
     });
 
-    let main_context = MainContext::default();
     // The main loop executes the asynchronous block
-    main_context.spawn_local(clone!(@weak button =&gt; async move {
+    glib::spawn_future_local(clone!(@weak button =&gt; async move {
         while let Ok(enable_button) = receiver.recv().await {
             button.set_sensitive(enable_button);
         }
@@ -409,7 +408,7 @@ Let's try <a href="https://gtk-rs.org/gtk-rs-core/stable/latest/docs/glib/fn.tim
 It returns a <a href="https://doc.rust-lang.org/std/future/trait.Future.html"><code>std::future::Future</code></a>, which means we can <code>await</code> on it within an <code>async</code> context.
 The converted code looks and behaves very similar to the multithreaded code.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/4/main.rs">listings/main_event_loop/4/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -440,8 +439,7 @@ The converted code looks and behaves very similar to the multithreaded code.</p>
     let (sender, receiver) = async_channel::bounded(1);
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
-        let main_context = MainContext::default();
-        main_context.spawn_local(clone!(@strong sender =&gt; async move {
+        glib::spawn_future_local(clone!(@strong sender =&gt; async move {
             // Deactivate the button until the operation is done
             sender.send(false).await.expect(&quot;The channel needs to be open.&quot;);
             glib::timeout_future_seconds(5).await;
@@ -450,9 +448,8 @@ The converted code looks and behaves very similar to the multithreaded code.</p>
         }));
     });
 
-    let main_context = MainContext::default();
     // The main loop executes the asynchronous block
-    main_context.spawn_local(clone!(@weak button =&gt; async move {
+    glib::spawn_future_local(clone!(@weak button =&gt; async move {
         while let Ok(enable_button) = receiver.recv().await {
             button.set_sensitive(enable_button);
         }
@@ -470,7 +467,7 @@ The converted code looks and behaves very similar to the multithreaded code.</p>
 </span><span class="boring">}</span></code></pre>
 <p>Since we are single-threaded again, we can even get rid of the channel while achieving the same result.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/5/main.rs">listings/main_event_loop/5/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -499,8 +496,7 @@ The converted code looks and behaves very similar to the multithreaded code.</p>
 </span><span class="boring">
 </span>    // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |button| {
-        let main_context = MainContext::default();
-        main_context.spawn_local(clone!(@weak button =&gt; async move {
+        glib::spawn_future_local(clone!(@weak button =&gt; async move {
             // Deactivate the button until the operation is done
             button.set_sensitive(false);
             glib::timeout_future_seconds(5).await;
@@ -592,7 +588,7 @@ In the following listing, we want to execute a synchronous function that returns
 In order to integrate it in our <code>async</code> block, we run the function in a separate thread via <code>spawn_blocking</code>.
 We can then get the return value of the function by calling <code>await</code> on the return value of <code>spawn_blocking</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/6/main.rs">listings/main_event_loop/6/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{gio, glib};
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
@@ -624,14 +620,13 @@ We can then get the return value of the function by calling <code>await</code> o
 </span><span class="boring">
 </span>    // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |button| {
-        let main_context = MainContext::default();
         // The main loop executes the asynchronous block
-        main_context.spawn_local(clone!(@weak button =&gt; async move {
+        glib::spawn_future_local(clone!(@weak button =&gt; async move {
             // Deactivate the button until the operation is done
             button.set_sensitive(false);
             let enable_button = gio::spawn_blocking(move || {
-                let ten_seconds = Duration::from_secs(10);
-                thread::sleep(ten_seconds);
+                let five_seconds = Duration::from_secs(5);
+                thread::sleep(five_seconds);
                 true
             })
             .await
@@ -668,7 +663,7 @@ We are getting a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/str
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/7/main.rs">listings/main_event_loop/7/main.rs</a></p>
 <pre><code class="language-rust"><span class="boring">use ashpd::desktop::account::UserInformation;
 </span><span class="boring">use ashpd::WindowIdentifier;
-</span><span class="boring">use glib::{clone, MainContext};
+</span><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{glib, Application, ApplicationWindow, Button};
 </span><span class="boring">
@@ -697,9 +692,8 @@ We are getting a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/str
 </span><span class="boring">
 </span>    // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |button| {
-        let main_context = MainContext::default();
         // The main loop executes the asynchronous block
-        main_context.spawn_local(clone!(@weak button =&gt; async move {
+        glib::spawn_future_local(clone!(@weak button =&gt; async move {
             // Get native of button for window identifier
             let native = button.native().expect(&quot;Need to be able to get native.&quot;);
             // Get window identifier so that the dialog will be modal to the main window
@@ -741,7 +735,7 @@ Let's add it by executing the following command</p>
 <p>As soon as the button is pressed, we want to send a <code>GET</code> request to <a href="https://www.gtk-rs.org">www.gtk-rs.org</a>.
 The response should then be sent to the main thread via a channel.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/8/main.rs">listings/main_event_loop/8/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
@@ -772,17 +766,15 @@ The response should then be sent to the main thread via a channel.</p>
 </span>    let (sender, receiver) = async_channel::bounded(1);
     // Connect to &quot;clicked&quot; signal of `button`
     button.connect_clicked(move |_| {
-        let main_context = MainContext::default();
         // The main loop executes the asynchronous block
-        main_context.spawn_local(clone!(@strong sender =&gt; async move {
+        glib::spawn_future_local(clone!(@strong sender =&gt; async move {
             let response = reqwest::get(&quot;https://www.gtk-rs.org&quot;).await;
             sender.send(response).await.expect(&quot;The channel needs to be open.&quot;);
         }));
     });
 
-    let main_context = MainContext::default();
     // The main loop executes the asynchronous block
-    main_context.spawn_local(clone!(@weak button =&gt; async move {
+    glib::spawn_future_local(async move {
         while let Ok(response) = receiver.recv().await {
             if let Ok(response) = response {
                 println!(&quot;Status: {}&quot;, response.status());
@@ -790,7 +782,7 @@ The response should then be sent to the main thread via a channel.</p>
                 println!(&quot;Could not make a `GET` request.&quot;);
             }
         }
-    }));
+    });
 <span class="boring">
 </span><span class="boring">    // Create a window
 </span><span class="boring">    let window = ApplicationWindow::builder()
@@ -816,7 +808,7 @@ Let's bite the bullet and add <code>tokio</code>:</p>
 <p>Since we already run the <code>glib</code> main loop on our main thread, we don't want to run the <code>tokio</code> runtime there.
 Let's bind it to a static variable and initialize it lazily.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/9/main.rs">listings/main_event_loop/9/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
@@ -857,9 +849,8 @@ fn main() -&gt; glib::ExitCode {
 </span><span class="boring">        }));
 </span><span class="boring">    });
 </span><span class="boring">
-</span><span class="boring">    let main_context = MainContext::default();
 </span><span class="boring">    // The main loop executes the asynchronous block
-</span><span class="boring">    main_context.spawn_local(clone!(@weak button =&gt; async move {
+</span><span class="boring">    glib::spawn_future_local(async move {
 </span><span class="boring">        while let Ok(response) = receiver.recv().await {
 </span><span class="boring">            if let Ok(response) = response {
 </span><span class="boring">                println!(&quot;Status: {}&quot;, response.status());
@@ -867,7 +858,7 @@ fn main() -&gt; glib::ExitCode {
 </span><span class="boring">                println!(&quot;Could not make a `GET` request.&quot;);
 </span><span class="boring">            }
 </span><span class="boring">        }
-</span><span class="boring">    }));
+</span><span class="boring">    });
 </span><span class="boring">
 </span><span class="boring">    // Create a window
 </span><span class="boring">    let window = ApplicationWindow::builder()
@@ -882,7 +873,7 @@ fn main() -&gt; glib::ExitCode {
 <p>The button callback stays mostly the same.
 However, we now spawn the <code>async</code> block with <code>tokio</code> rather than with <code>glib</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/main_event_loop/9/main.rs">listings/main_event_loop/9/main.rs</a></p>
-<pre><code class="language-rust"><span class="boring">use glib::{clone, MainContext};
+<pre><code class="language-rust"><span class="boring">use glib::clone;
 </span><span class="boring">use gtk::glib;
 </span><span class="boring">use gtk::prelude::*;
 </span><span class="boring">use gtk::{Application, ApplicationWindow, Button};
@@ -923,9 +914,8 @@ However, we now spawn the <code>async</code> block with <code>tokio</code> rathe
         }));
     });
 
-    let main_context = MainContext::default();
     // The main loop executes the asynchronous block
-    main_context.spawn_local(clone!(@weak button =&gt; async move {
+    glib::spawn_future_local(async move {
         while let Ok(response) = receiver.recv().await {
             if let Ok(response) = response {
                 println!(&quot;Status: {}&quot;, response.status());
@@ -933,7 +923,7 @@ However, we now spawn the <code>async</code> block with <code>tokio</code> rathe
                 println!(&quot;Could not make a `GET` request.&quot;);
             }
         }
-    }));
+    });
 <span class="boring">
 </span><span class="boring">    // Create a window
 </span><span class="boring">    let window = ApplicationWindow::builder()
