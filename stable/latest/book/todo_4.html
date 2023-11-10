@@ -184,9 +184,9 @@ We will start by adding an empty sidebar without any functionality.</p>
 <div style="text-align:center"><img src="img/todo_7_sidebar.png" alt="To-Do app with an empty sidebar"/></div>
 <p>There are a couple of steps we have to go through to get to this state.
 First, we have to replace <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ApplicationWindow.html"><code>gtk::ApplicationWindow</code></a> with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.ApplicationWindow.html"><code>adw::ApplicationWindow</code></a>.
-The only difference between those two is that <code>adw::ApplicationWindow</code> has no titlebar area.
-That comes in handy when we build up our interface with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.Leaflet.html"><code>adw::Leaflet</code></a>.
-In the screenshot above, the <code>Leaflet</code> behaves like a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Box.html"><code>gtk::Box</code></a> and contains the collection view on the left, a separator in the middle and the task view on the right.
+The main difference between those two is that <code>adw::ApplicationWindow</code> has no titlebar area.
+That comes in handy when we build up our interface with <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.NavigationSplitView.html"><code>adw::NavigationSplitView</code></a>.
+In the screenshot above, the <code>NavigationSplitView</code> adds a sidebar for the collection view to the left, while the task view occupies the space on the right.
 When using <code>adw::ApplicationWindow</code> the collection view and task view have their own <a href="https://world.pages.gitlab.gnome.org/Rust/libadwaita-rs/stable/latest/docs/libadwaita/struct.HeaderBar.html"><code>adw::HeaderBar</code></a> and the separator spans over the whole window.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/7/resources/window.ui">listings/todo/7/resources/window.ui</a></p>
 <pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
@@ -196,116 +196,127 @@ When using <code>adw::ApplicationWindow</code> the collection view and task view
   &lt;/menu&gt;
   &lt;template class=&quot;TodoWindow&quot; parent=&quot;AdwApplicationWindow&quot;&gt;
     &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;To-Do&lt;/property&gt;
-    &lt;property name=&quot;default_width&quot;&gt;650&lt;/property&gt;
-    &lt;property name=&quot;default_height&quot;&gt;550&lt;/property&gt;
+    &lt;property name=&quot;width-request&quot;&gt;360&lt;/property&gt;
+    &lt;property name=&quot;height-request&quot;&gt;200&lt;/property&gt;
+    &lt;child&gt;
+      &lt;object class=&quot;AdwBreakpoint&quot;&gt;
+        &lt;condition&gt;max-width: 500sp&lt;/condition&gt;
+        &lt;setter object=&quot;split_view&quot; property=&quot;collapsed&quot;&gt;True&lt;/setter&gt;
+      &lt;/object&gt;
+    &lt;/child&gt;
     &lt;property name=&quot;content&quot;&gt;
-      &lt;object class=&quot;AdwLeaflet&quot; id=&quot;leaflet&quot;&gt;
-        &lt;property name=&quot;can-navigate-back&quot;&gt;True&lt;/property&gt;
-        &lt;child&gt;
-          &lt;object class=&quot;GtkBox&quot;&gt;
+      &lt;object class=&quot;AdwNavigationSplitView&quot; id=&quot;split_view&quot;&gt;
+        &lt;property name=&quot;min-sidebar-width&quot;&gt;200&lt;/property&gt;
+        &lt;property name=&quot;sidebar&quot;&gt;
+          &lt;object class=&quot;AdwNavigationPage&quot;&gt;
             &lt;!--Collection view implementation--&gt;
           &lt;/object&gt;
-        &lt;/child&gt;
-        &lt;child&gt;
-          &lt;object class=&quot;AdwLeafletPage&quot;&gt;
-            &lt;property name=&quot;navigatable&quot;&gt;False&lt;/property&gt;
-            &lt;property name=&quot;child&quot;&gt;
-              &lt;object class=&quot;GtkSeparator&quot; /&gt;
-            &lt;/property&gt;
-          &lt;/object&gt;
-        &lt;/child&gt;
-        &lt;child&gt;
-          &lt;object class=&quot;GtkBox&quot;&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;content&quot;&gt;
+          &lt;object class=&quot;AdwNavigationPage&quot;&gt;
             &lt;!--Task view implementation--&gt;
           &lt;/object&gt;
-        &lt;/child&gt;
+        &lt;/property&gt;
       &lt;/object&gt;
     &lt;/property&gt;
   &lt;/template&gt;
 &lt;/interface&gt;
 </code></pre>
-<p>The <code>Leaflet</code> does not always behave like a <code>gtk::Box</code>.
-As soon as the requested size is too small to fit all children at the same time, the leaflet folds, and starts behaving like a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
+<p><code>NavigationSplitView</code> also helps with making your app <a href="https://developer.gnome.org/hig/guidelines/adaptive.html">adaptive</a>/
+As soon as the requested size is too small to fit all children at the same time, the splitview collapses, and starts behaving like a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Stack.html"><code>gtk::Stack</code></a>.
 This means that it only displays one of its children at a time.
-The property &quot;can-navigate-back&quot; controls whether gestures and shortcuts for navigating backward are enabled.
-The <code>AdwLeafletPage</code> with the <code>gtk::Separator</code> will never be displayed in the folded state since its property &quot;navigatable&quot; is set to <code>False</code>.)
-The adaptive behavior of the leaflet allows the To-Do app to work on smaller screen sizes even with the added collection view.</p>
+The adaptive behavior of the leaflet allows the To-Do app to work on smaller screen sizes (like e.g. phones) even with the added collection view.</p>
 <div style="text-align:center">
  <video autoplay muted loop>
-  <source src="vid/todo_7_leaflet.webm" type="video/webm">
+  <source src="vid/todo_7_navigation_sidebar.webm" type="video/webm">
    <p>A video which shows that reduzing the width of the app let's the sidebar collapse</p>
  </video>
 </div>
-<p>We add the necessary UI elements for the collection view, such as a header bar with a button to add a new collection, as well as the list box <code>collections_list</code> to display the collections later on.</p>
-<p>As you can see in the screencast above, the header bar also displays a close button if the leaflet is folded.
-We include this logic with an expression which can be built up in the UI file with the tag <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.Expression.html#gtkexpression-in-ui-files"><code>lookup</code></a>.</p>
+<p>We add the necessary UI elements for the collection view, such as a header bar with a button to add a new collection, as well as the list box <code>collections_list</code> to display the collections later on.
+We also add the style <a href="https://gnome.pages.gitlab.gnome.org/libadwaita/doc/1-latest/style-classes.html#sidebars">navigations-sidebar</a> to <code>collections_list</code>.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/7/resources/window.ui">listings/todo/7/resources/window.ui</a></p>
-<pre><code class="language-xml">&lt;object class=&quot;GtkBox&quot;&gt;
-  &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
-  &lt;property name=&quot;width-request&quot;&gt;200&lt;/property&gt;
-  &lt;child&gt;
-    &lt;object class=&quot;AdwHeaderBar&quot;&gt;
-      &lt;binding name=&quot;show-end-title-buttons&quot;&gt;
-        &lt;lookup name=&quot;folded&quot;&gt;leaflet&lt;/lookup&gt;
-      &lt;/binding&gt;
-      &lt;child type=&quot;start&quot;&gt;
-        &lt;object class=&quot;GtkToggleButton&quot;&gt;
-          &lt;property name=&quot;icon-name&quot;&gt;list-add-symbolic&lt;/property&gt;
-          &lt;property name=&quot;tooltip-text&quot; translatable=&quot;yes&quot;&gt;New Collection&lt;/property&gt;
-          &lt;property name=&quot;action-name&quot;&gt;win.new-collection&lt;/property&gt;
+<pre><code class="language-xml">&lt;object class=&quot;AdwNavigationPage&quot;&gt;
+  &lt;property name=&quot;title&quot; bind-source=&quot;TodoWindow&quot;
+    bind-property=&quot;title&quot; bind-flags=&quot;sync-create&quot; /&gt;
+  &lt;property name=&quot;child&quot;&gt;
+    &lt;object class=&quot;AdwToolbarView&quot;&gt;
+      &lt;child type=&quot;top&quot;&gt;
+        &lt;object class=&quot;AdwHeaderBar&quot;&gt;
+          &lt;child type=&quot;start&quot;&gt;
+            &lt;object class=&quot;GtkToggleButton&quot;&gt;
+              &lt;property name=&quot;icon-name&quot;&gt;list-add-symbolic&lt;/property&gt;
+              &lt;property name=&quot;tooltip-text&quot; translatable=&quot;yes&quot;&gt;New Collection&lt;/property&gt;
+              &lt;property name=&quot;action-name&quot;&gt;win.new-collection&lt;/property&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
         &lt;/object&gt;
       &lt;/child&gt;
-    &lt;/object&gt;
-  &lt;/child&gt;
-  &lt;child&gt;
-    &lt;object class=&quot;GtkScrolledWindow&quot;&gt;
-      &lt;property name=&quot;vexpand&quot;&gt;True&lt;/property&gt;
-      &lt;property name=&quot;child&quot;&gt;
-        &lt;object class=&quot;GtkListBox&quot; id=&quot;collections_list&quot;&gt;
-          &lt;style&gt;
-            &lt;class name=&quot;navigation-sidebar&quot; /&gt;
-          &lt;/style&gt;
+      &lt;property name=&quot;content&quot;&gt;
+        &lt;object class=&quot;GtkScrolledWindow&quot;&gt;
+          &lt;property name=&quot;child&quot;&gt;
+            &lt;object class=&quot;GtkListBox&quot; id=&quot;collections_list&quot;&gt;
+              &lt;style&gt;
+                &lt;class name=&quot;navigation-sidebar&quot; /&gt;
+              &lt;/style&gt;
+            &lt;/object&gt;
+          &lt;/property&gt;
         &lt;/object&gt;
       &lt;/property&gt;
     &lt;/object&gt;
-  &lt;/child&gt;
-&lt;/object&gt;
 </code></pre>
-<p>We also add a header bar to the task view.
-We don't have to worry about the close button here: it will always be displayed.
-However, we will need a way to go back to the collection view when the leaflet is folded.
-That is why we add <code>back_button</code> which can be used to return to the collection view and which is only visible when the leaflet is folded. </p>
+<p>We also add a header bar to the task view.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/7/resources/window.ui">listings/todo/7/resources/window.ui</a></p>
-<pre><code class="language-xml">&lt;object class=&quot;GtkBox&quot;&gt;
-  &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
-  &lt;property name=&quot;hexpand&quot;&gt;True&lt;/property&gt;
-  &lt;property name=&quot;width-request&quot;&gt;250&lt;/property&gt; 
-  &lt;child&gt;
-    &lt;object class=&quot;AdwHeaderBar&quot;&gt;
-      &lt;property name=&quot;title-widget&quot;&gt;
-        &lt;object class=&quot;AdwWindowTitle&quot; /&gt;
+<pre><code class="language-xml">&lt;object class=&quot;AdwNavigationPage&quot;&gt;
+  &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;Tasks&lt;/property&gt;
+  &lt;property name=&quot;child&quot;&gt;
+    &lt;object class=&quot;AdwToolbarView&quot;&gt;
+      &lt;child type=&quot;top&quot;&gt;
+        &lt;object class=&quot;AdwHeaderBar&quot;&gt;
+          &lt;property name=&quot;show-title&quot;&gt;False&lt;/property&gt;
+          &lt;child type=&quot;end&quot;&gt;
+            &lt;object class=&quot;GtkMenuButton&quot;&gt;
+              &lt;property name=&quot;icon-name&quot;&gt;open-menu-symbolic&lt;/property&gt;
+              &lt;property name=&quot;menu-model&quot;&gt;main-menu&lt;/property&gt;
+              &lt;property name=&quot;tooltip-text&quot; translatable=&quot;yes&quot;&gt;Main Menu&lt;/property&gt;
+            &lt;/object&gt;
+          &lt;/child&gt;
+        &lt;/object&gt;
+      &lt;/child&gt;
+      &lt;property name=&quot;content&quot;&gt;
+        &lt;object class=&quot;GtkScrolledWindow&quot;&gt;
+          &lt;property name=&quot;child&quot;&gt;
+            &lt;object class=&quot;AdwClamp&quot;&gt;
+              &lt;property name=&quot;maximum-size&quot;&gt;400&lt;/property&gt;
+              &lt;property name=&quot;tightening-threshold&quot;&gt;300&lt;/property&gt;
+              &lt;property name=&quot;child&quot;&gt;
+                &lt;object class=&quot;GtkBox&quot;&gt;
+                  &lt;property name=&quot;orientation&quot;&gt;vertical&lt;/property&gt;
+                  &lt;property name=&quot;margin-start&quot;&gt;12&lt;/property&gt;
+                  &lt;property name=&quot;margin-end&quot;&gt;12&lt;/property&gt;
+                  &lt;property name=&quot;spacing&quot;&gt;12&lt;/property&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkEntry&quot; id=&quot;entry&quot;&gt;
+                      &lt;property name=&quot;placeholder-text&quot; translatable=&quot;yes&quot;&gt;Enter a Task…&lt;/property&gt;
+                      &lt;property name=&quot;secondary-icon-name&quot;&gt;list-add-symbolic&lt;/property&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                  &lt;child&gt;
+                    &lt;object class=&quot;GtkListBox&quot; id=&quot;tasks_list&quot;&gt;
+                      &lt;property name=&quot;visible&quot;&gt;False&lt;/property&gt;
+                      &lt;property name=&quot;selection-mode&quot;&gt;none&lt;/property&gt;
+                      &lt;style&gt;
+                        &lt;class name=&quot;boxed-list&quot; /&gt;
+                      &lt;/style&gt;
+                    &lt;/object&gt;
+                  &lt;/child&gt;
+                &lt;/object&gt;
+              &lt;/property&gt;
+            &lt;/object&gt;
+          &lt;/property&gt;
+        &lt;/object&gt;
       &lt;/property&gt;
-      &lt;child type=&quot;start&quot;&gt;
-        &lt;object class=&quot;GtkButton&quot; id=&quot;back_button&quot;&gt;
-          &lt;binding name=&quot;visible&quot;&gt;
-            &lt;lookup name=&quot;folded&quot;&gt;leaflet&lt;/lookup&gt;
-          &lt;/binding&gt;
-          &lt;property name=&quot;icon-name&quot;&gt;go-previous-symbolic&lt;/property&gt;
-          &lt;property name=&quot;tooltip-text&quot; translatable=&quot;yes&quot;&gt;Back&lt;/property&gt;
-        &lt;/object&gt;
-      &lt;/child&gt;
-      &lt;child type=&quot;end&quot;&gt;
-        &lt;object class=&quot;GtkMenuButton&quot;&gt;
-          &lt;property name=&quot;icon-name&quot;&gt;open-menu-symbolic&lt;/property&gt;
-          &lt;property name=&quot;menu-model&quot;&gt;main-menu&lt;/property&gt;
-          &lt;property name=&quot;tooltip-text&quot; translatable=&quot;yes&quot;&gt;Main Menu&lt;/property&gt;
-        &lt;/object&gt;
-      &lt;/child&gt;
     &lt;/object&gt;
-  &lt;/child&gt;
-  &lt;child&gt;
-    &lt;!--This part stays the same--&gt;
-  &lt;/child&gt;
+  &lt;/property&gt;
 &lt;/object&gt;
 </code></pre>
 <p>We also have to adapt the window implementation.
@@ -752,14 +763,20 @@ We will later wire up the logic to display the correct stack page in the Rust co
   &lt;/menu&gt;
   &lt;template class=&quot;TodoWindow&quot; parent=&quot;AdwApplicationWindow&quot;&gt;
     &lt;property name=&quot;title&quot; translatable=&quot;yes&quot;&gt;To-Do&lt;/property&gt;
-    &lt;property name=&quot;default_width&quot;&gt;650&lt;/property&gt;
-    &lt;property name=&quot;default_height&quot;&gt;550&lt;/property&gt;
+    &lt;property name=&quot;width-request&quot;&gt;360&lt;/property&gt;
+    &lt;property name=&quot;height-request&quot;&gt;200&lt;/property&gt;
+    &lt;child&gt;
+      &lt;object class=&quot;AdwBreakpoint&quot;&gt;
+        &lt;condition&gt;max-width: 500sp&lt;/condition&gt;
+        &lt;setter object=&quot;split_view&quot; property=&quot;collapsed&quot;&gt;True&lt;/setter&gt;
+      &lt;/object&gt;
+    &lt;/child&gt;
     &lt;property name=&quot;content&quot;&gt;
       &lt;object class=&quot;GtkStack&quot; id=&quot;stack&quot;&gt;
         &lt;property name=&quot;transition-type&quot;&gt;crossfade&lt;/property&gt;
         &lt;child&gt;
           &lt;object class=&quot;GtkStackPage&quot;&gt;
-            &lt;property name=&quot;name&quot;&gt;empty&lt;/property&gt;
+            &lt;property name=&quot;name&quot;&gt;placeholder&lt;/property&gt;
             &lt;property name=&quot;child&quot;&gt;
               &lt;object class=&quot;GtkBox&quot;&gt;
                 &lt;!--Placeholder page implementation--&gt; 
@@ -771,7 +788,7 @@ We will later wire up the logic to display the correct stack page in the Rust co
           &lt;object class=&quot;GtkStackPage&quot;&gt;
             &lt;property name=&quot;name&quot;&gt;main&lt;/property&gt;
             &lt;property name=&quot;child&quot;&gt;
-              &lt;object class=&quot;AdwLeaflet&quot; id=&quot;leaflet&quot;&gt;
+              &lt;object class=&quot;AdwNavigationSplitView&quot; id=&quot;split_view&quot;&gt;
                 &lt;!--Main page implementation--&gt;
               &lt;/object&gt;
             &lt;/property&gt;
@@ -978,15 +995,12 @@ Its purpose will become clear in later snippets.</p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::Leaflet;
+</span><span class="boring">use adw::{prelude::*, NavigationSplitView};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
-</span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, Button, CompositeTemplate, Entry, FilterListModel, ListBox, Stack,
-</span><span class="boring">};
+</span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, FilterListModel, ListBox, Stack};
 </span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -1005,11 +1019,9 @@ pub struct Window {
     #[template_child]
     pub collections_list: TemplateChild&lt;ListBox&gt;,
     #[template_child]
-    pub leaflet: TemplateChild&lt;Leaflet&gt;,
+    pub split_view: TemplateChild&lt;NavigationSplitView&gt;,
     #[template_child]
     pub stack: TemplateChild&lt;Stack&gt;,
-    #[template_child]
-    pub back_button: TemplateChild&lt;Button&gt;,
     pub collections: OnceCell&lt;gio::ListStore&gt;,
     pub current_collection: RefCell&lt;Option&lt;CollectionObject&gt;&gt;,
     pub current_filter_model: RefCell&lt;Option&lt;FilterListModel&gt;&gt;,
@@ -1101,12 +1113,12 @@ pub struct Window {
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -1385,31 +1397,7 @@ pub struct Window {
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -1517,8 +1505,8 @@ pub struct Window {
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>As always, we want our data to be saved when we close the window.
@@ -1527,15 +1515,12 @@ Since most of the implementation is in the method <code>CollectionObject::to_col
 <pre><code class="language-rust no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::Leaflet;
+</span><span class="boring">use adw::{prelude::*, NavigationSplitView};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
-</span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, Button, CompositeTemplate, Entry, FilterListModel, ListBox, Stack,
-</span><span class="boring">};
+</span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, FilterListModel, ListBox, Stack};
 </span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -1554,11 +1539,9 @@ Since most of the implementation is in the method <code>CollectionObject::to_col
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub collections_list: TemplateChild&lt;ListBox&gt;,
 </span><span class="boring">    #[template_child]
-</span><span class="boring">    pub leaflet: TemplateChild&lt;Leaflet&gt;,
+</span><span class="boring">    pub split_view: TemplateChild&lt;NavigationSplitView&gt;,
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub stack: TemplateChild&lt;Stack&gt;,
-</span><span class="boring">    #[template_child]
-</span><span class="boring">    pub back_button: TemplateChild&lt;Button&gt;,
 </span><span class="boring">    pub collections: OnceCell&lt;gio::ListStore&gt;,
 </span><span class="boring">    pub current_collection: RefCell&lt;Option&lt;CollectionObject&gt;&gt;,
 </span><span class="boring">    pub current_filter_model: RefCell&lt;Option&lt;FilterListModel&gt;&gt;,
@@ -1648,15 +1631,12 @@ Instead of <code>setup_tasks</code> we now call <code>setup_collections</code>.<
 <pre><code class="language-rust no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::Leaflet;
+</span><span class="boring">use adw::{prelude::*, NavigationSplitView};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
-</span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, Button, CompositeTemplate, Entry, FilterListModel, ListBox, Stack,
-</span><span class="boring">};
+</span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, FilterListModel, ListBox, Stack};
 </span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -1675,11 +1655,9 @@ Instead of <code>setup_tasks</code> we now call <code>setup_collections</code>.<
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub collections_list: TemplateChild&lt;ListBox&gt;,
 </span><span class="boring">    #[template_child]
-</span><span class="boring">    pub leaflet: TemplateChild&lt;Leaflet&gt;,
+</span><span class="boring">    pub split_view: TemplateChild&lt;NavigationSplitView&gt;,
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub stack: TemplateChild&lt;Stack&gt;,
-</span><span class="boring">    #[template_child]
-</span><span class="boring">    pub back_button: TemplateChild&lt;Button&gt;,
 </span><span class="boring">    pub collections: OnceCell&lt;gio::ListStore&gt;,
 </span><span class="boring">    pub current_collection: RefCell&lt;Option&lt;CollectionObject&gt;&gt;,
 </span><span class="boring">    pub current_filter_model: RefCell&lt;Option&lt;FilterListModel&gt;&gt;,
@@ -1772,12 +1750,12 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -2056,31 +2034,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -2188,8 +2142,8 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>create_collection_row</code> takes a <code>CollectionObject</code> and builds a <a href="https://gtk-rs.org/gtk4-rs/stable/latest/docs/gtk4/struct.ListBoxRow.html"><code>gtk::ListBoxRow</code></a> from its information.</p>
@@ -2200,12 +2154,12 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -2484,31 +2438,7 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -2616,8 +2546,8 @@ To do that it uses the method <code>create_collection_row</code>.</p>
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>We also adapt <code>restore_data</code>.
@@ -2631,12 +2561,12 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -2915,31 +2845,7 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -3047,8 +2953,8 @@ We choose the first one and let the method <code>set_current_collection</code> d
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>set_current_collection</code> assures that all elements accessing tasks refer to the task model of the current collection.
@@ -3065,12 +2971,12 @@ Finally, we select the collection row.</p>
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -3349,31 +3255,7 @@ Finally, we select the collection row.</p>
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -3481,8 +3363,8 @@ Finally, we select the collection row.</p>
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Previously, we used the method <code>set_task_list_visible</code>.
@@ -3494,12 +3376,12 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -3778,31 +3660,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -3910,8 +3768,8 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><code>select_collection_row</code> assures that the row for the current collection is selected in <code>collections_list</code>.</p>
@@ -3922,12 +3780,12 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -4206,31 +4064,7 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -4338,14 +4172,13 @@ It assures that <code>tasks_list</code> is only visible if the number of tasks i
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<h2 id="leaflet-and-dialog"><a class="header" href="#leaflet-and-dialog">Leaflet and Dialog</a></h2>
-<p>Thanks to the leaflet the To-Do app folds now when we resize it to a smaller width.
-However, there isn't yet a way to navigate between the different leaflet pages.
-Let us start with the most important one: adding a new collection.</p>
+<h2 id="message-dialog"><a class="header" href="#message-dialog">Message Dialog</a></h2>
+<p>There isn't yet a way to add a collection.
+Let's implement that functionality.</p>
 <div style="text-align:center">
  <video autoplay muted loop>
   <source src="vid/todo_8_dialog.webm" type="video/webm">
@@ -4366,15 +4199,12 @@ It is a convenient way to add asynchronous actions to subclassed widgets. </p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::fs::File;
 </span><span class="boring">
-</span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::Leaflet;
+</span><span class="boring">use adw::{prelude::*, NavigationSplitView};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::subclass::InitializingObject;
 </span><span class="boring">use gtk::glib::SignalHandlerId;
-</span><span class="boring">use gtk::{
-</span><span class="boring">    gio, glib, Button, CompositeTemplate, Entry, FilterListModel, ListBox, Stack,
-</span><span class="boring">};
+</span><span class="boring">use gtk::{gio, glib, CompositeTemplate, Entry, FilterListModel, ListBox, Stack};
 </span><span class="boring">use std::cell::OnceCell;
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -4393,11 +4223,9 @@ It is a convenient way to add asynchronous actions to subclassed widgets. </p>
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub collections_list: TemplateChild&lt;ListBox&gt;,
 </span><span class="boring">    #[template_child]
-</span><span class="boring">    pub leaflet: TemplateChild&lt;Leaflet&gt;,
+</span><span class="boring">    pub split_view: TemplateChild&lt;NavigationSplitView&gt;,
 </span><span class="boring">    #[template_child]
 </span><span class="boring">    pub stack: TemplateChild&lt;Stack&gt;,
-</span><span class="boring">    #[template_child]
-</span><span class="boring">    pub back_button: TemplateChild&lt;Button&gt;,
 </span><span class="boring">    pub collections: OnceCell&lt;gio::ListStore&gt;,
 </span><span class="boring">    pub current_collection: RefCell&lt;Option&lt;CollectionObject&gt;&gt;,
 </span><span class="boring">    pub current_filter_model: RefCell&lt;Option&lt;FilterListModel&gt;&gt;,
@@ -4495,12 +4323,12 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -4779,31 +4607,7 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -4911,17 +4715,15 @@ Afterwards we navigate forward on our leaflet, which means we navigate to the ta
         self.collections().append(&amp;collection);
         self.set_current_collection(collection);
 
-        // Let the leaflet navigate to the next child
-        self.imp().leaflet.navigate(NavigationDirection::Forward);
+        // Show the content
+        self.imp().split_view.set_show_content(true);
     }
 <span class="boring">}</span></code></pre>
 <p>We also add more callbacks to <code>setup_callbacks</code>.
 Importantly, we want to filter our current task model whenever the value of the &quot;filter&quot; setting changes.
 Whenever the items of our collections change we also want to set the stack.
 This makes sure that our placeholder page is shown if there are no collections.
-When we click on an item of <code>collections_list</code>, <code>current_collection</code> should be set to the selected collection and we should then navigate to the task view.
-That is setup in <code>collections_list.connect_row_activated</code>, but we also need to setup <code>leaflet.connect_folded_notify</code> to make sure that no selection of <code>collections_list</code> items is happening in folded mode so that it just directly moves to the task view.
-Finally, we connect to a click of the <code>back_button</code> in the task view so that we can return to the collections view again in folded mode.</p>
+Finally, we assure that when we click on a row of <code>collections_list</code>, <code>current_collection</code> is set to the selected collection and the split view shows the task view.</p>
 <p>Filename: <a class=file-link href="https://github.com/gtk-rs/gtk4-rs/blob/master/book/listings/todo/8/window/imp.rs">listings/todo/8/window/mod.rs</a></p>
 <pre><code class="language-rust no_run noplayground"><span class="boring">mod imp;
 </span><span class="boring">
@@ -4929,12 +4731,12 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -5213,31 +5015,7 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
                     .downcast::&lt;CollectionObject&gt;()
                     .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
                 window.set_current_collection(selected_collection);
-                window.imp().leaflet.navigate(NavigationDirection::Forward);
-            }),
-        );
-
-        // Setup callback for folding the leaflet
-        self.imp().leaflet.connect_folded_notify(
-            clone!(@weak self as window =&gt; move |leaflet| {
-                if leaflet.is_folded() {
-                    window
-                        .imp()
-                        .collections_list
-                        .set_selection_mode(SelectionMode::None)
-                } else {
-                    window
-                        .imp()
-                        .collections_list
-                        .set_selection_mode(SelectionMode::Single);
-                    window.select_collection_row();
-                }
-            }),
-        );
-
-        self.imp().back_button.connect_clicked(
-            clone!(@weak self as window =&gt; move |_| {
-                window.imp().leaflet.navigate(NavigationDirection::Back);
+                window.imp().split_view.set_show_content(true);
             }),
         );
 <span class="boring">    }
@@ -5345,8 +5123,8 @@ Finally, we connect to a click of the <code>back_button</code> in the task view 
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Before, we called the method <code>set_stack</code>.
@@ -5358,12 +5136,12 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">
 </span><span class="boring">use adw::prelude::*;
 </span><span class="boring">use adw::subclass::prelude::*;
-</span><span class="boring">use adw::{ActionRow, MessageDialog, NavigationDirection, ResponseAppearance};
+</span><span class="boring">use adw::{ActionRow, MessageDialog, ResponseAppearance};
 </span><span class="boring">use gio::Settings;
 </span><span class="boring">use glib::{clone, Object};
 </span><span class="boring">use gtk::{
 </span><span class="boring">    gio, glib, pango, Align, CheckButton, CustomFilter, Entry, FilterListModel, Label,
-</span><span class="boring">    ListBoxRow, NoSelection, SelectionMode,
+</span><span class="boring">    ListBoxRow, NoSelection,
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">use crate::collection_object::{CollectionData, CollectionObject};
@@ -5642,31 +5420,7 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">                    .downcast::&lt;CollectionObject&gt;()
 </span><span class="boring">                    .expect(&quot;The object needs to be a `CollectionObject`.&quot;);
 </span><span class="boring">                window.set_current_collection(selected_collection);
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Forward);
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        // Setup callback for folding the leaflet
-</span><span class="boring">        self.imp().leaflet.connect_folded_notify(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |leaflet| {
-</span><span class="boring">                if leaflet.is_folded() {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::None)
-</span><span class="boring">                } else {
-</span><span class="boring">                    window
-</span><span class="boring">                        .imp()
-</span><span class="boring">                        .collections_list
-</span><span class="boring">                        .set_selection_mode(SelectionMode::Single);
-</span><span class="boring">                    window.select_collection_row();
-</span><span class="boring">                }
-</span><span class="boring">            }),
-</span><span class="boring">        );
-</span><span class="boring">
-</span><span class="boring">        self.imp().back_button.connect_clicked(
-</span><span class="boring">            clone!(@weak self as window =&gt; move |_| {
-</span><span class="boring">                window.imp().leaflet.navigate(NavigationDirection::Back);
+</span><span class="boring">                window.imp().split_view.set_show_content(true);
 </span><span class="boring">            }),
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -5774,8 +5528,8 @@ This method ensure when there is at least one collection, the &quot;main&quot; p
 </span><span class="boring">        self.collections().append(&amp;collection);
 </span><span class="boring">        self.set_current_collection(collection);
 </span><span class="boring">
-</span><span class="boring">        // Let the leaflet navigate to the next child
-</span><span class="boring">        self.imp().leaflet.navigate(NavigationDirection::Forward);
+</span><span class="boring">        // Show the content
+</span><span class="boring">        self.imp().split_view.set_show_content(true);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>And that was it!
