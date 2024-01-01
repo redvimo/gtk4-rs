@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/text_buffer.rs`."><title>text_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/text_buffer.rs`."><title>text_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -637,7 +639,7 @@
     /// The “interactive” buffer mutation functions, such as
     /// [`TextBufferExt::insert_interactive()`][crate::prelude::TextBufferExt::insert_interactive()], automatically call
     /// begin/end user action around the buffer operations they perform,
-    /// so there&#39;s no need to add extra calls if you user action consists
+    /// so there's no need to add extra calls if you user action consists
     /// solely of a single call to one of those functions.
     </span><span class="kw">fn </span>begin_user_action(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <a class="self" href="#45">self</a>.<a href="#158-166">parent_begin_user_action</a>()
@@ -952,7 +954,7 @@
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_apply_tag&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_apply_tag&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     tag_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextTag.html">ffi::GtkTextTag</a>,
     start_ptr: <span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
@@ -968,7 +970,7 @@
     )
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_begin_user_action&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_begin_user_action&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
 ) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#375">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
@@ -977,14 +979,14 @@
     <a href="#378">imp</a>.<a href="#45-47">begin_user_action</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_changed&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_changed&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#383">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#384">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#385">imp</a>.<a href="#48-50">changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_delete_range&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_delete_range&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     start_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
     end_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
@@ -1001,14 +1003,14 @@
     <span class="kw-2">*</span><a href="#393">end_ptr</a> = <span class="kw-2">*</span><a href="#399">end_copy</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_end_user_action&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_end_user_action&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#407">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#408">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#409">imp</a>.<a href="#59-61">end_user_action</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_insert_child_anchor&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_insert_child_anchor&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     iter_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
     anchor_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextChildAnchor.html">ffi::GtkTextChildAnchor</a>,
@@ -1022,7 +1024,7 @@
     <span class="kw-2">*</span><a href="#416">iter_ptr</a> = <span class="kw-2">*</span><a href="#422">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_insert_paintable&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_insert_paintable&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     iter_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
     paintable_ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkPaintable.html">gdk::ffi::GdkPaintable</a>,
@@ -1036,7 +1038,7 @@
     <span class="kw-2">*</span><a href="#430">iter_ptr</a> = <span class="kw-2">*</span><a href="#436">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_insert_text&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_insert_text&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     iter_ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
     text_ptr: <span class="kw-2">*const </span>libc::c_char,
@@ -1052,14 +1054,14 @@
     <span class="kw-2">*</span><a href="#444">iter_ptr</a> = <span class="kw-2">*</span><a href="#452">iter</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>;
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_modified_changed&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_modified_changed&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#458">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#459">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#460">imp</a>.<a href="#107-109">modified_changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_mark_deleted&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_mark_deleted&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     mark: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextMark.html">ffi::GtkTextMark</a>,
 ) {
@@ -1069,7 +1071,7 @@
     <a href="#470">imp</a>.<a href="#101-103">mark_deleted</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#467">mark</a>))
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_mark_set&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_mark_set&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     iter: <span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
     mark: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextMark.html">ffi::GtkTextMark</a>,
@@ -1080,7 +1082,7 @@
     <a href="#481">imp</a>.<a href="#104-106">mark_set</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#477">iter</a>), <span class="kw-2">&amp;</span>from_glib_borrow(<a href="#478">mark</a>))
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_paste_done&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_paste_done&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     clipboard_ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkClipboard.html">gdk::ffi::GdkClipboard</a>,
 ) {
@@ -1090,14 +1092,14 @@
     <a href="#491">imp</a>.<a href="#110-112">paste_done</a>(<span class="kw-2">&amp;</span>from_glib_borrow(<a href="#488">clipboard_ptr</a>))
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_redo&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_redo&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#496">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#497">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#498">imp</a>.<a href="#114-116">redo</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_remove_tag&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_remove_tag&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>,
     tag: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextTag.html">ffi::GtkTextTag</a>,
     start: <span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
@@ -1113,7 +1115,7 @@
     )
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_buffer_undo&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_buffer_undo&lt;T: <a href="#12-135">TextBufferImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextBuffer.html">ffi::GtkTextBuffer</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#519">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#520">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/accessible.rs`."><title>accessible.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -442,8 +444,8 @@
 // from gir-files (https://github.com/gtk-rs/gir-files)
 // DO NOT EDIT
 
-</span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
+</span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
 </span><span class="kw">use crate</span>::{<a href="at_context.rs.html#13-64">ATContext</a>, <a href="enums.rs.html#246-258">AccessiblePlatformState</a>};
 <span class="kw">use crate</span>::{<a href="enums.rs.html#366-453">AccessibleProperty</a>, <a href="enums.rs.html#588-670">AccessibleRelation</a>, <a href="enums.rs.html#803-1078">AccessibleRole</a>, <a href="enums.rs.html#1437-1484">AccessibleState</a>};
 <span class="kw">use </span>glib::{
@@ -466,7 +468,7 @@
     /// The role cannot be changed after instantiating a [`Accessible`][crate::Accessible]
     /// implementation.
     ///
-    /// The attributes are updated every time a UI element&#39;s state changes in
+    /// The attributes are updated every time a UI element's state changes in
     /// a way that should be reflected by assistive technologies. For instance,
     /// if a [`Widget`][crate::Widget] visibility changes, the [`AccessibleState::Hidden`][crate::AccessibleState::Hidden]
     /// state will also change to reflect the [`visible`][struct@crate::Widget#visible] property.
@@ -479,7 +481,7 @@
     /// Note that you can not create a top-level accessible object as of now,
     /// which means that you must always have a parent accessible object.
     /// Also note that when an accessible object does not correspond to a widget,
-    /// and it has children, whose implementation you don&#39;t control,
+    /// and it has children, whose implementation you don't control,
     /// it is necessary to ensure the correct shape of the a11y tree
     /// by calling [`AccessibleExt::set_accessible_parent()`][crate::prelude::AccessibleExt::set_accessible_parent()] and
     /// updating the sibling by [`AccessibleExt::update_next_accessible_sibling()`][crate::prelude::AccessibleExt::update_next_accessible_sibling()].
@@ -497,7 +499,7 @@
     /// # Implements
     ///
     /// [`AccessibleExt`][trait@crate::prelude::AccessibleExt], [`AccessibleExtManual`][trait@crate::prelude::AccessibleExtManual]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;GtkAccessible&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"GtkAccessible"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../gtk4/struct.Accessible.html">Accessible</a>(Interface&lt;<a href="../../../gtk4_sys/struct.GtkAccessible.html">ffi::GtkAccessible</a>, <a href="../../../gtk4_sys/struct.GtkAccessibleInterface.html">ffi::GtkAccessibleInterface</a>&gt;);
 
     <span class="kw">match fn </span>{
@@ -506,7 +508,7 @@
 }
 
 <span class="kw">impl </span><a href="#16-66">Accessible</a> {
-    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="#16-66">Accessible</a>&gt; = <span class="prelude-val">None</span>;
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="#16-66">Accessible</a>&gt; = <span class="prelude-val">None</span>;
 }
 
 <span class="kw">mod </span>sealed {
@@ -519,7 +521,7 @@
 /// # Implementors
 ///
 /// [`AboutDialog`][struct@crate::AboutDialog], [`AccessibleRange`][struct@crate::AccessibleRange], [`Accessible`][struct@crate::Accessible], [`ActionBar`][struct@crate::ActionBar], [`AppChooserButton`][struct@crate::AppChooserButton], [`AppChooserDialog`][struct@crate::AppChooserDialog], [`AppChooserWidget`][struct@crate::AppChooserWidget], [`ApplicationWindow`][struct@crate::ApplicationWindow], [`AspectFrame`][struct@crate::AspectFrame], [`Assistant`][struct@crate::Assistant], [`Box`][struct@crate::Box], [`Button`][struct@crate::Button], [`Calendar`][struct@crate::Calendar], [`CellView`][struct@crate::CellView], [`CenterBox`][struct@crate::CenterBox], [`CheckButton`][struct@crate::CheckButton], [`ColorButton`][struct@crate::ColorButton], [`ColorChooserDialog`][struct@crate::ColorChooserDialog], [`ColorChooserWidget`][struct@crate::ColorChooserWidget], [`ColorDialogButton`][struct@crate::ColorDialogButton], [`ColumnView`][struct@crate::ColumnView], [`ComboBoxText`][struct@crate::ComboBoxText], [`ComboBox`][struct@crate::ComboBox], [`Dialog`][struct@crate::Dialog], [`DragIcon`][struct@crate::DragIcon], [`DrawingArea`][struct@crate::DrawingArea], [`DropDown`][struct@crate::DropDown], [`EditableLabel`][struct@crate::EditableLabel], [`EmojiChooser`][struct@crate::EmojiChooser], [`Entry`][struct@crate::Entry], [`Expander`][struct@crate::Expander], [`FileChooserDialog`][struct@crate::FileChooserDialog], [`FileChooserWidget`][struct@crate::FileChooserWidget], [`Fixed`][struct@crate::Fixed], [`FlowBoxChild`][struct@crate::FlowBoxChild], [`FlowBox`][struct@crate::FlowBox], [`FontButton`][struct@crate::FontButton], [`FontChooserDialog`][struct@crate::FontChooserDialog], [`FontChooserWidget`][struct@crate::FontChooserWidget], [`FontDialogButton`][struct@crate::FontDialogButton], [`Frame`][struct@crate::Frame], [`GLArea`][struct@crate::GLArea], [`GridView`][struct@crate::GridView], [`Grid`][struct@crate::Grid], [`HeaderBar`][struct@crate::HeaderBar], [`IconView`][struct@crate::IconView], [`Image`][struct@crate::Image], [`InfoBar`][struct@crate::InfoBar], [`Inscription`][struct@crate::Inscription], [`Label`][struct@crate::Label], [`LevelBar`][struct@crate::LevelBar], [`LinkButton`][struct@crate::LinkButton], [`ListBase`][struct@crate::ListBase], [`ListBoxRow`][struct@crate::ListBoxRow], [`ListBox`][struct@crate::ListBox], [`ListView`][struct@crate::ListView], [`LockButton`][struct@crate::LockButton], [`MediaControls`][struct@crate::MediaControls], [`MenuButton`][struct@crate::MenuButton], [`MessageDialog`][struct@crate::MessageDialog], [`Notebook`][struct@crate::Notebook], [`Overlay`][struct@crate::Overlay], [`PageSetupUnixDialog`][struct@crate::PageSetupUnixDialog], [`Paned`][struct@crate::Paned], [`PasswordEntry`][struct@crate::PasswordEntry], [`Picture`][struct@crate::Picture], [`PopoverMenuBar`][struct@crate::PopoverMenuBar], [`PopoverMenu`][struct@crate::PopoverMenu], [`Popover`][struct@crate::Popover], [`PrintUnixDialog`][struct@crate::PrintUnixDialog], [`ProgressBar`][struct@crate::ProgressBar], [`Range`][struct@crate::Range], [`Revealer`][struct@crate::Revealer], [`ScaleButton`][struct@crate::ScaleButton], [`Scale`][struct@crate::Scale], [`Scrollbar`][struct@crate::Scrollbar], [`ScrolledWindow`][struct@crate::ScrolledWindow], [`SearchBar`][struct@crate::SearchBar], [`SearchEntry`][struct@crate::SearchEntry], [`Separator`][struct@crate::Separator], [`ShortcutLabel`][struct@crate::ShortcutLabel], [`ShortcutsGroup`][struct@crate::ShortcutsGroup], [`ShortcutsSection`][struct@crate::ShortcutsSection], [`ShortcutsShortcut`][struct@crate::ShortcutsShortcut], [`ShortcutsWindow`][struct@crate::ShortcutsWindow], [`SpinButton`][struct@crate::SpinButton], [`Spinner`][struct@crate::Spinner], [`StackPage`][struct@crate::StackPage], [`StackSidebar`][struct@crate::StackSidebar], [`StackSwitcher`][struct@crate::StackSwitcher], [`Stack`][struct@crate::Stack], [`Statusbar`][struct@crate::Statusbar], [`Switch`][struct@crate::Switch], [`TextView`][struct@crate::TextView], [`Text`][struct@crate::Text], [`ToggleButton`][struct@crate::ToggleButton], [`TreeExpander`][struct@crate::TreeExpander], [`TreeView`][struct@crate::TreeView], [`Video`][struct@crate::Video], [`Viewport`][struct@crate::Viewport], [`VolumeButton`][struct@crate::VolumeButton], [`Widget`][struct@crate::Widget], [`WindowControls`][struct@crate::WindowControls], [`WindowHandle`][struct@crate::WindowHandle], [`Window`][struct@crate::Window]
-</span><span class="kw">pub trait </span><a href="../../../gtk4/prelude/trait.AccessibleExt.html">AccessibleExt</a>: IsA&lt;<a href="#16-66">Accessible</a>&gt; + <a href="#73">sealed::Sealed</a> + <span class="lifetime">&#39;static </span>{
+</span><span class="kw">pub trait </span><a href="../../../gtk4/prelude/trait.AccessibleExt.html">AccessibleExt</a>: IsA&lt;<a href="#16-66">Accessible</a>&gt; + <a href="#73">sealed::Sealed</a> + <span class="lifetime">'static </span>{
     <span class="doccomment">/// Retrieves the accessible parent for an accessible object.
     ///
     /// This function returns `NULL` for top level widgets.
@@ -527,10 +529,10 @@
     /// # Returns
     ///
     /// the accessible parent
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_accessible_parent&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_accessible_parent&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_accessible_parent"</span>)]
+    #[doc(alias = <span class="string">"get_accessible_parent"</span>)]
     #[must_use]
     </span><span class="kw">fn </span>accessible_parent(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#16-66">Accessible</a>&gt; {
         <span class="kw">unsafe </span>{
@@ -545,8 +547,8 @@
     /// # Returns
     ///
     /// the accessible role
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_get_accessible_role&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_accessible_role&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_accessible_get_accessible_role"</span>)]
+    #[doc(alias = <span class="string">"get_accessible_role"</span>)]
     </span><span class="kw">fn </span>accessible_role(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="enums.rs.html#803-1078">AccessibleRole</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_accessible_get_accessible_role(
@@ -560,10 +562,10 @@
     /// # Returns
     ///
     /// the accessible implementation object
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_at_context&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_at_context&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_at_context"</span>)]
+    #[doc(alias = <span class="string">"get_at_context"</span>)]
     </span><span class="kw">fn </span>at_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="at_context.rs.html#13-64">ATContext</a> {
         <span class="kw">unsafe </span>{
             from_glib_full(ffi::gtk_accessible_get_at_context(
@@ -593,10 +595,10 @@
     ///
     /// ## `height`
     /// the height of the accessible object
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_bounds&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_bounds&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_bounds"</span>)]
+    #[doc(alias = <span class="string">"get_bounds"</span>)]
     </span><span class="kw">fn </span>bounds(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>x = std::mem::MaybeUninit::uninit();
@@ -628,10 +630,10 @@
     /// # Returns
     ///
     /// the first accessible child
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_first_accessible_child&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_first_accessible_child&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_first_accessible_child"</span>)]
+    #[doc(alias = <span class="string">"get_first_accessible_child"</span>)]
     #[must_use]
     </span><span class="kw">fn </span>first_accessible_child(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#16-66">Accessible</a>&gt; {
         <span class="kw">unsafe </span>{
@@ -646,10 +648,10 @@
     /// # Returns
     ///
     /// the next accessible sibling
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_next_accessible_sibling&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_next_accessible_sibling&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_next_accessible_sibling"</span>)]
+    #[doc(alias = <span class="string">"get_next_accessible_sibling"</span>)]
     #[must_use]
     </span><span class="kw">fn </span>next_accessible_sibling(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#16-66">Accessible</a>&gt; {
         <span class="kw">unsafe </span>{
@@ -672,10 +674,10 @@
     /// # Returns
     ///
     /// the value of @state for the accessible
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_get_platform_state&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_platform_state&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_get_platform_state"</span>)]
+    #[doc(alias = <span class="string">"get_platform_state"</span>)]
     </span><span class="kw">fn </span>platform_state(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <a href="enums.rs.html#246-258">AccessiblePlatformState</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gtk_accessible_get_platform_state(
@@ -688,7 +690,7 @@
     <span class="doccomment">/// Resets the accessible @property to its default value.
     /// ## `property`
     /// a [`AccessibleProperty`][crate::AccessibleProperty]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_reset_property&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_accessible_reset_property"</span>)]
     </span><span class="kw">fn </span>reset_property(<span class="kw-2">&amp;</span><span class="self">self</span>, property: <a href="enums.rs.html#366-453">AccessibleProperty</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_accessible_reset_property(
@@ -701,7 +703,7 @@
     <span class="doccomment">/// Resets the accessible @relation to its default value.
     /// ## `relation`
     /// a [`AccessibleRelation`][crate::AccessibleRelation]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_reset_relation&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_accessible_reset_relation"</span>)]
     </span><span class="kw">fn </span>reset_relation(<span class="kw-2">&amp;</span><span class="self">self</span>, relation: <a href="enums.rs.html#588-670">AccessibleRelation</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_accessible_reset_relation(
@@ -714,7 +716,7 @@
     <span class="doccomment">/// Resets the accessible @state to its default value.
     /// ## `state`
     /// a [`AccessibleState`][crate::AccessibleState]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_accessible_reset_state&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_accessible_reset_state"</span>)]
     </span><span class="kw">fn </span>reset_state(<span class="kw-2">&amp;</span><span class="self">self</span>, state: <a href="enums.rs.html#1437-1484">AccessibleState</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_accessible_reset_state(<a class="self" href="#278">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#278">state</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
@@ -734,9 +736,9 @@
     /// the parent accessible object
     /// ## `next_sibling`
     /// the sibling accessible object
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_set_accessible_parent&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_set_accessible_parent"</span>)]
     </span><span class="kw">fn </span>set_accessible_parent(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         parent: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="#16-66">Accessible</a>&gt;&gt;,
@@ -757,9 +759,9 @@
     /// is created, and it needs to be linked to a previous child.
     /// ## `new_sibling`
     /// the new next accessible sibling to set
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_10&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_10&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_accessible_update_next_accessible_sibling&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_10"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_10"</span>)))]
+    #[doc(alias = <span class="string">"gtk_accessible_update_next_accessible_sibling"</span>)]
     </span><span class="kw">fn </span>update_next_accessible_sibling(<span class="kw-2">&amp;</span><span class="self">self</span>, new_sibling: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="#16-66">Accessible</a>&gt;&gt;) {
         <span class="kw">unsafe </span>{
             ffi::gtk_accessible_update_next_accessible_sibling(
@@ -772,16 +774,16 @@
     <span class="doccomment">/// The accessible role of the given [`Accessible`][crate::Accessible] implementation.
     ///
     /// The accessible role cannot be changed once set.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;accessible-role&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"accessible-role"</span>)]
     </span><span class="kw">fn </span>set_accessible_role(<span class="kw-2">&amp;</span><span class="self">self</span>, accessible_role: <a href="enums.rs.html#803-1078">AccessibleRole</a>) {
-        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::set_property</a>(<a class="self" href="#336">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">&quot;accessible-role&quot;</span>, <a href="#336">accessible_role</a>)
+        <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectExt.html">ObjectExt::set_property</a>(<a class="self" href="#336">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>(), <span class="string">"accessible-role"</span>, <a href="#336">accessible_role</a>)
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;accessible-role&quot;</span>)]
-    </span><span class="kw">fn </span>connect_accessible_role_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_accessible_role_trampoline&lt;
+    <span class="attr">#[doc(alias = <span class="string">"accessible-role"</span>)]
+    </span><span class="kw">fn </span>connect_accessible_role_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_accessible_role_trampoline&lt;
             P: IsA&lt;<a href="#16-66">Accessible</a>&gt;,
-            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">'static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkAccessible.html">ffi::GtkAccessible</a>,
             _param_spec: glib::ffi::gpointer,
@@ -794,8 +796,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#341">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#341">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::accessible-role\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::accessible-role\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_accessible_role_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#354">f</a>),

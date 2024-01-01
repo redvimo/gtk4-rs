@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/text_view.rs`."><title>text_view.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/subclass/text_view.rs`."><title>text_view.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -683,28 +685,28 @@
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_backspace&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_backspace&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#248">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#249">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#250">imp</a>.<a href="#14-16">backspace</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_copy_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_copy_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#255">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#256">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#257">imp</a>.<a href="#18-20">copy_clipboard</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_cut_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_cut_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#262">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#263">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#264">imp</a>.<a href="#22-24">cut_clipboard</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_delete_from_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_delete_from_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>,
     type_: <a href="../../../gtk4_sys/type.GtkDeleteType.html">ffi::GtkDeleteType</a>,
     count: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
@@ -715,7 +717,7 @@
     <a href="#275">imp</a>.<a href="#26-28">delete_from_cursor</a>(from_glib(<a href="#271">type_</a>), <a href="#272">count</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_extend_selection&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_extend_selection&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>,
     granularity: <a href="../../../gtk4_sys/type.GtkTextExtendSelection.html">ffi::GtkTextExtendSelection</a>,
     location: <span class="kw-2">*const </span><a href="../../../gtk4_sys/struct.GtkTextIter.html">ffi::GtkTextIter</a>,
@@ -740,7 +742,7 @@
     <a href="#293">result</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_insert_at_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_insert_at_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>,
     text_ptr: <span class="kw-2">*const </span>libc::c_char,
 ) {
@@ -751,14 +753,14 @@
     <a href="#310">imp</a>.<a href="#40-42">insert_at_cursor</a>(<a href="#311">text</a>.as_str())
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_insert_emoji&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_insert_emoji&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#316">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#317">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#318">imp</a>.<a href="#44-46">insert_emoji</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_move_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_move_cursor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>,
     step: <a href="../../../gtk4_sys/type.GtkMovementStep.html">ffi::GtkMovementStep</a>,
     count: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
@@ -770,21 +772,21 @@
     <a href="#330">imp</a>.<a href="#48-50">move_cursor</a>(from_glib(<a href="#325">step</a>), <a href="#326">count</a>, from_glib(<a href="#327">extend_selection</a>))
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_paste_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_paste_clipboard&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#335">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#336">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#337">imp</a>.<a href="#52-54">paste_clipboard</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_set_anchor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_set_anchor&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#342">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#343">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 
     <a href="#344">imp</a>.<a href="#56-58">set_anchor</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_snapshot_layer&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_snapshot_layer&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>,
     layer: <a href="../../../gtk4_sys/type.GtkTextViewLayer.html">ffi::GtkTextViewLayer</a>,
     snapshot: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkSnapshot.html">ffi::GtkSnapshot</a>,
@@ -795,7 +797,7 @@
     <a href="#355">imp</a>.<a href="#60-62">snapshot_layer</a>(from_glib(<a href="#351">layer</a>), from_glib_none(<a href="#352">snapshot</a>))
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>text_view_toggle_overwrite&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>text_view_toggle_overwrite&lt;T: <a href="#13-67">TextViewImpl</a>&gt;(ptr: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkTextView.html">ffi::GtkTextView</a>) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#360">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
     <span class="kw">let </span>imp = <a href="#361">instance</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.InstanceStructExt.html">imp</a>();
 

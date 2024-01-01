@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/tree_store.rs`."><title>tree_store.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/tree_store.rs`."><title>tree_store.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -440,9 +442,9 @@
     /// # Returns
     ///
     /// a new [`TreeStore`][crate::TreeStore]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_newv&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;gtk_tree_store_new&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_newv"</span>)]
+    #[doc(alias = <span class="string">"gtk_tree_store_new"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>new(column_types: <span class="kw-2">&amp;</span>[<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">Type</a>]) -&gt; <span class="self">Self </span>{
         <a class="macro" href="rt.rs.html#23-35">assert_initialized_main_thread!</a>();
@@ -480,9 +482,9 @@
     ///
     /// ## `iter`
     /// An unset [`TreeIter`][crate::TreeIter] to set the new row
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_insert_with_values&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;gtk_tree_store_insert_with_valuesv&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_insert_with_values"</span>)]
+    #[doc(alias = <span class="string">"gtk_tree_store_insert_with_valuesv"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>insert_with_values(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -493,7 +495,7 @@
         <span class="kw">unsafe </span>{
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 position.unwrap_or(<span class="number">0</span>) &lt;= i32::max_value() <span class="kw">as </span>u32,
-                <span class="string">&quot;can&#39;t have more than {} rows&quot;</span>,
+                <span class="string">"can't have more than {} rows"</span>,
                 i32::max_value()
             );
             <span class="kw">let </span>n_columns =
@@ -501,13 +503,13 @@
                     <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>;
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 columns_and_values.len() &lt;= n_columns <span class="kw">as </span>usize,
-                <span class="string">&quot;got values for {} columns but only {n_columns} columns exist&quot;</span>,
+                <span class="string">"got values for {} columns but only {n_columns} columns exist"</span>,
                 columns_and_values.len(),
             );
             <span class="kw">for </span>(column, value) <span class="kw">in </span>columns_and_values {
                 <span class="macro">assert!</span>(
                     <span class="kw-2">*</span>column &lt; n_columns,
-                    <span class="string">&quot;got column {column} which is higher than the number of columns {n_columns}&quot;</span>,
+                    <span class="string">"got column {column} which is higher than the number of columns {n_columns}"</span>,
                 );
                 <span class="kw">let </span>type_ = from_glib(ffi::gtk_tree_model_get_column_type(
                     <span class="self">self</span>.upcast_ref::&lt;TreeModel&gt;().to_glib_none().<span class="number">0</span>,
@@ -515,7 +517,7 @@
                 ));
                 <span class="macro">assert!</span>(
                     Value::type_transformable(value.value_type(), type_),
-                    <span class="string">&quot;column {column} is of type {} but found value of type {type_}&quot;</span>,
+                    <span class="string">"column {column} is of type {} but found value of type {type_}"</span>,
                     value.value_type()
                 );
             }
@@ -557,8 +559,8 @@
     /// an array of integers mapping the new position
     ///   of each child to its old position before the re-ordering,
     ///   i.e. `new_order[newpos] = oldpos`
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_reorder&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_reorder"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>reorder(<span class="kw-2">&amp;</span><span class="self">self</span>, parent: <span class="kw-2">&amp;</span><a href="auto/tree_iter.rs.html#7-24">TreeIter</a>, new_order: <span class="kw-2">&amp;</span>[<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>]) {
         <span class="kw">unsafe </span>{
@@ -569,7 +571,7 @@
             <span class="kw">let </span>safe_count = <a href="#157">count</a> <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> == <a href="#155">new_order</a>.len();
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.debug_assert.html">debug_assert!</a>(
                 safe_count,
-                <span class="string">&quot;Incorrect `new_order` slice length. Expected `{count}`, found `{}`.&quot;</span>,
+                <span class="string">"Incorrect `new_order` slice length. Expected `{count}`, found `{}`."</span>,
                 new_order.len()
             );
             <span class="kw">let </span>safe_values = <a href="#155">new_order</a>.iter().<a href="https://doc.rust-lang.org/nightly/core/iter/traits/iterator/trait.Iterator.html">max</a>().map_or(<span class="bool-val">true</span>, |<span class="kw-2">&amp;</span>max| {
@@ -578,8 +580,8 @@
             });
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.debug_assert.html">debug_assert!</a>(
                 safe_values,
-                <span class="string">&quot;Some `new_order` slice values are out of range. Maximum safe value: \
-                 `{}`. The slice contents: `{new_order:?}`&quot;</span>,
+                <span class="string">"Some `new_order` slice values are out of range. Maximum safe value: \
+                 `{}`. The slice contents: `{new_order:?}`"</span>,
                 count - <span class="number">1</span>,
             );
             <span class="kw">if </span>safe_count &amp;&amp; safe_values {
@@ -605,7 +607,7 @@
     /// **⚠️ The following code is in c ⚠️**
     ///
     /// ```c
-    /// gtk_tree_store_set (store, iter, 0, &quot;Foo&quot;, -1);
+    /// gtk_tree_store_set (store, iter, 0, "Foo", -1);
     /// ```
     ///
     /// The value will be referenced by the store if it is a `G_TYPE_OBJECT`, and it
@@ -616,10 +618,10 @@
     /// Use [`TreeListModel`][crate::TreeListModel] instead
     /// ## `iter`
     /// A valid [`TreeIter`][crate::TreeIter] for the row being modified
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_set&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;gtk_tree_store_set_valuesv&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;gtk_tree_store_set_valist&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_set"</span>)]
+    #[doc(alias = <span class="string">"gtk_tree_store_set_valuesv"</span>)]
+    #[doc(alias = <span class="string">"gtk_tree_store_set_valist"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>set(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="auto/tree_iter.rs.html#7-24">TreeIter</a>, columns_and_values: <span class="kw-2">&amp;</span>[(<a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, <span class="kw-2">&amp;</span><span class="kw">dyn </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/trait.ToValue.html">ToValue</a>)]) {
         <span class="kw">unsafe </span>{
@@ -628,13 +630,13 @@
                     <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>;
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 columns_and_values.len() &lt;= n_columns <span class="kw">as </span>usize,
-                <span class="string">&quot;got values for {} columns but only {n_columns} columns exist&quot;</span>,
+                <span class="string">"got values for {} columns but only {n_columns} columns exist"</span>,
                 columns_and_values.len(),
             );
             <span class="kw">for </span>(column, value) <span class="kw">in </span>columns_and_values {
                 <span class="macro">assert!</span>(
                     <span class="kw-2">*</span>column &lt; n_columns,
-                    <span class="string">&quot;got column {column} which is higher than the number of columns {n_columns}&quot;</span>,
+                    <span class="string">"got column {column} which is higher than the number of columns {n_columns}"</span>,
                 );
                 <span class="kw">let </span>type_ = from_glib(ffi::gtk_tree_model_get_column_type(
                     <span class="self">self</span>.upcast_ref::&lt;TreeModel&gt;().to_glib_none().<span class="number">0</span>,
@@ -642,7 +644,7 @@
                 ));
                 <span class="macro">assert!</span>(
                     Value::type_transformable(value.value_type(), type_),
-                    <span class="string">&quot;column {column} is of type {type_} but found value of type {}&quot;</span>,
+                    <span class="string">"column {column} is of type {type_} but found value of type {}"</span>,
                     value.value_type()
                 );
             }
@@ -681,8 +683,8 @@
     /// Use [`TreeListModel`][crate::TreeListModel] instead
     /// ## `types`
     /// An array of `GType` types, one for each column
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_set_column_types&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_set_column_types"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>set_column_types(<span class="kw-2">&amp;</span><span class="self">self</span>, types: <span class="kw-2">&amp;</span>[<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">glib::Type</a>]) {
         <span class="kw">unsafe </span>{
@@ -709,8 +711,8 @@
     /// column number to modify
     /// ## `value`
     /// new value for the cell
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_tree_store_set_value&quot;</span>)]
-    #[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_tree_store_set_value"</span>)]
+    #[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
     </span><span class="kw">pub fn </span>set_value(<span class="kw-2">&amp;</span><span class="self">self</span>, iter: <span class="kw-2">&amp;</span><a href="auto/tree_iter.rs.html#7-24">TreeIter</a>, column: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>, value: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">Value</a>) {
         <span class="kw">unsafe </span>{
@@ -719,7 +721,7 @@
                     <span class="kw">as </span><a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>;
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 column &lt; columns,
-                <span class="string">&quot;got column {column} which is higher than the number of columns {columns}&quot;</span>,
+                <span class="string">"got column {column} which is higher than the number of columns {columns}"</span>,
             );
 
             <span class="kw">let </span>type_ = from_glib(ffi::gtk_tree_model_get_column_type(
@@ -728,7 +730,7 @@
             ));
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 Value::type_transformable(value.type_(), type_),
-                <span class="string">&quot;column {column} is of type {type_} but found value of type {}&quot;</span>,
+                <span class="string">"column {column} is of type {type_} but found value of type {}"</span>,
                 value.type_()
             );
 

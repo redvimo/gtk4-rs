@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/subclass/content_provider.rs`."><title>content_provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/subclass/content_provider.rs`."><title>content_provider.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gdk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -566,7 +568,7 @@
         mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
         stream: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a>,
         io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>,
-    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
         <a class="self" href="#50">self</a>.<a href="#242-264">parent_write_mime_type_future</a>(<a href="#51">mime_type</a>, <a href="#52">stream</a>, <a href="#53">io_priority</a>)
     }
 
@@ -648,7 +650,7 @@
             <span class="kw">let </span>parent_class = <a href="#132">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProviderClass.html">ffi::GdkContentProviderClass</a>;
             <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#133">parent_class</a>)
                 .ref_formats
-                .expect(<span class="string">&quot;no parent \&quot;ref_formats\&quot; implementation&quot;</span>);
+                .expect(<span class="string">"no parent \"ref_formats\" implementation"</span>);
             <span class="kw">let </span>ret = <a href="#134">f</a>(<span class="self"><a href="#130">self</a>
                 </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
@@ -665,7 +667,7 @@
             <span class="kw">let </span>parent_class = <a href="#149">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProviderClass.html">ffi::GdkContentProviderClass</a>;
             <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#150">parent_class</a>)
                 .ref_storable_formats
-                .expect(<span class="string">&quot;no parent \&quot;ref_storable_formats\&quot; implementation&quot;</span>);
+                .expect(<span class="string">"no parent \"ref_storable_formats\" implementation"</span>);
             <span class="kw">let </span>ret = <a href="#151">f</a>(<span class="self"><a href="#147">self</a>
                 </span>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/subclass/types/trait.ObjectSubclassExt.html">obj</a>()
                 .<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.Cast.html">unsafe_cast_ref</a>::&lt;<a href="../auto/content_provider.rs.html#13-55">ContentProvider</a>&gt;()
@@ -679,7 +681,7 @@
     <span class="attr">#[allow(clippy::type_complexity)]
     </span><span class="kw">fn </span>parent_write_mime_type_async&lt;
         Q: IsA&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/cancellable/struct.Cancellable.html">gio::Cancellable</a>&gt;,
-        R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">&#39;static</span>,
+        R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">'static</span>,
     &gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
@@ -696,23 +698,23 @@
                 .flatten();
             <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert.html">assert!</a>(
                 is_main_context_owner || has_acquired_main_context.is_some(),
-                <span class="string">&quot;Async operations only allowed if the thread is owning the MainContext&quot;
+                <span class="string">"Async operations only allowed if the thread is owning the MainContext"
             </span>);
 
             <span class="kw">let </span>data = <span class="self">Self</span>::type_data();
             <span class="kw">let </span>parent_class = <a href="#187">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProviderClass.html">ffi::GdkContentProviderClass</a>;
             <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#188">parent_class</a>)
                 .write_mime_type_async
-                .expect(<span class="string">&quot;no parent \&quot;write_mime_type_async\&quot; implementation&quot;</span>);
+                .expect(<span class="string">"no parent \"write_mime_type_async\" implementation"</span>);
             <span class="kw">let </span>finish = (<span class="kw-2">*</span><a href="#188">parent_class</a>)
                 .write_mime_type_finish
-                .expect(<span class="string">&quot;no parent \&quot;write_mime_type_finish\&quot; implementation&quot;</span>);
+                .expect(<span class="string">"no parent \"write_mime_type_finish\" implementation"</span>);
 
             <span class="kw">let </span>user_data: Box&lt;(glib::thread_guard::ThreadGuard&lt;R&gt;, <span class="kw">_</span>)&gt; =
                 Box::new((glib::thread_guard::ThreadGuard::new(<a href="#174">callback</a>), <a href="#192">finish</a>));
 
-            <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>parent_write_mime_type_async_trampoline&lt;
-                R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">&#39;static</span>,
+            <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>parent_write_mime_type_async_trampoline&lt;
+                R: FnOnce(<span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;) + <span class="lifetime">'static</span>,
             &gt;(
                 source_object_ptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GObject,
                 res: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
@@ -759,7 +761,7 @@
         mime_type: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
         stream: <span class="kw-2">&amp;</span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/gio/auto/output_stream/struct.OutputStream.html">gio::OutputStream</a>,
         io_priority: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/source/struct.Priority.html">glib::Priority</a>,
-    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">&#39;static</span>&gt;&gt; {
+    ) -&gt; Pin&lt;Box&lt;<span class="kw">dyn </span>Future&lt;Output = <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt;&gt; + <span class="lifetime">'static</span>&gt;&gt; {
         <span class="kw">let </span>stream = <a href="#245">stream</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>();
         <span class="kw">let </span>mime_type = String::from(<a href="#244">mime_type</a>);
         Box::pin(gio::GioFuture::new(
@@ -784,7 +786,7 @@
             <span class="kw">let </span>parent_class = <a href="#268">data</a>.as_ref().parent_class() <span class="kw">as </span><span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProviderClass.html">ffi::GdkContentProviderClass</a>;
             <span class="kw">let </span>f = (<span class="kw-2">*</span><a href="#269">parent_class</a>)
                 .get_value
-                .expect(<span class="string">&quot;no parent \&quot;get_value\&quot; implementation&quot;</span>);
+                .expect(<span class="string">"no parent \"get_value\" implementation"</span>);
             <span class="kw">let </span><span class="kw-2">mut </span>value = Value::from_type(<a href="#266">type_</a>);
 
             <span class="kw">let </span><span class="kw-2">mut </span>error = std::ptr::null_mut();
@@ -824,7 +826,7 @@
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_content_changed&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_content_changed&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
 ) {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#313">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
@@ -833,7 +835,7 @@
     <a href="#316">imp</a>.<a href="#14-16">content_changed</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_attach_clipboard&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_attach_clipboard&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
     clipboard_ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkClipboard.html">ffi::GdkClipboard</a>,
 ) {
@@ -844,7 +846,7 @@
     <a href="#326">imp</a>.<a href="#18-20">attach_clipboard</a>(<span class="kw-2">&amp;</span><a href="#327">clipboard</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_detach_clipboard&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_detach_clipboard&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
     clipboard_ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkClipboard.html">ffi::GdkClipboard</a>,
 ) {
@@ -855,7 +857,7 @@
     <a href="#337">imp</a>.<a href="#22-24">detach_clipboard</a>(<span class="kw-2">&amp;</span><a href="#338">clipboard</a>)
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_formats&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_formats&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
 ) -&gt; <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentFormats.html">ffi::GdkContentFormats</a> {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#344">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
@@ -864,7 +866,7 @@
     <a href="#347">imp</a>.<a href="#31-33">formats</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_storable_formats&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_storable_formats&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
 ) -&gt; <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentFormats.html">ffi::GdkContentFormats</a> {
     <span class="kw">let </span>instance = <span class="kw-2">&amp;*</span>(<a href="#353">ptr</a> <span class="kw">as </span><span class="kw-2">*mut </span>T::Instance);
@@ -873,7 +875,7 @@
     <a href="#356">imp</a>.<a href="#45-47">storable_formats</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlibPtr.html">into_glib_ptr</a>()
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_async&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_write_mime_type_async&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
     mime_type_ptr: <span class="kw-2">*const </span>libc::c_char,
     stream_ptr: <span class="kw-2">*mut </span>gio::ffi::GOutputStream,
@@ -914,7 +916,7 @@
     });
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_write_mime_type_finish(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_write_mime_type_finish(
     _ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
     res_ptr: <span class="kw-2">*mut </span>gio::ffi::GAsyncResult,
     error_ptr: <span class="kw-2">*mut *mut </span>glib::ffi::GError,
@@ -934,7 +936,7 @@
     }
 }
 
-<span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>content_provider_get_value&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
+<span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>content_provider_get_value&lt;T: <a href="#12-76">ContentProviderImpl</a>&gt;(
     ptr: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkContentProvider.html">ffi::GdkContentProvider</a>,
     value_ptr: <span class="kw-2">*mut </span>glib::gobject_ffi::GValue,
     error_ptr: <span class="kw-2">*mut *mut </span>glib::ffi::GError,

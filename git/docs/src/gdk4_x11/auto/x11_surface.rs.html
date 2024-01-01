@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-x11/src/auto/x11_surface.rs`."><title>x11_surface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4_x11" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-x11/src/auto/x11_surface.rs`."><title>x11_surface.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4_x11" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gdk4_x11/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -274,7 +276,7 @@
     /// # Implements
     ///
     /// [`trait@gdk::prelude::SurfaceExt`]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkX11Surface&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"GdkX11Surface"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../gdk4_x11/struct.X11Surface.html">X11Surface</a>(Object&lt;<a href="../../../gdk4_x11_sys/struct.GdkX11Surface.html">ffi::GdkX11Surface</a>, <a href="../../../gdk4_x11_sys/type.GdkX11SurfaceClass.html">ffi::GdkX11SurfaceClass</a>&gt;) @extends <a href="../../../gdk4/auto/surface/struct.Surface.html">gdk::Surface</a>;
 
     <span class="kw">match fn </span>{
@@ -288,8 +290,8 @@
     /// # Returns
     ///
     /// the current workspace of @self
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_get_desktop&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_desktop&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_get_desktop"</span>)]
+    #[doc(alias = <span class="string">"get_desktop"</span>)]
     </span><span class="kw">pub fn </span>desktop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="kw">unsafe </span>{ ffi::gdk_x11_surface_get_desktop(<a class="self" href="#29">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
@@ -299,8 +301,8 @@
     /// # Returns
     ///
     /// The group of this surface;
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_get_group&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_group&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_get_group"</span>)]
+    #[doc(alias = <span class="string">"get_group"</span>)]
     </span><span class="kw">pub fn </span>group(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/surface/struct.Surface.html">gdk::Surface</a>&gt; {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gdk_x11_surface_get_group(<a class="self" href="#40">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -309,7 +311,7 @@
     /// window manager that supports multiple workspaces, as described
     /// in the [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec) specification.
     /// Will not do anything if the surface is already on all workspaces.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_move_to_current_desktop&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_move_to_current_desktop"</span>)]
     </span><span class="kw">pub fn </span>move_to_current_desktop(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_move_to_current_desktop(<a class="self" href="#49">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -321,7 +323,7 @@
     /// in the [Extended Window Manager Hints](http://www.freedesktop.org/Standards/wm-spec) specification.
     /// ## `desktop`
     /// the number of the workspace to move the surface to
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_move_to_desktop&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_move_to_desktop"</span>)]
     </span><span class="kw">pub fn </span>move_to_desktop(<span class="kw-2">&amp;</span><span class="self">self</span>, desktop: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_move_to_desktop(<a class="self" href="#61">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#61">desktop</a>);
@@ -336,7 +338,7 @@
     /// embedded via the XEMBED protocol.
     /// ## `frame_sync_enabled`
     /// whether frame-synchronization should be enabled
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_frame_sync_enabled&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_frame_sync_enabled"</span>)]
     </span><span class="kw">pub fn </span>set_frame_sync_enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, frame_sync_enabled: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_frame_sync_enabled(
@@ -350,7 +352,7 @@
     /// See the ICCCM for details.
     /// ## `leader`
     /// a [`gdk::Surface`][crate::gdk::Surface]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_group&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_group"</span>)]
     </span><span class="kw">pub fn </span>set_group(<span class="kw-2">&amp;</span><span class="self">self</span>, leader: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="../../../gdk4/auto/surface/struct.Surface.html">gdk::Surface</a>&gt;) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_group(<a class="self" href="#90">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#90">leader</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -361,7 +363,7 @@
     /// display it. See the EWMH for details.
     /// ## `skips_pager`
     /// [`true`] to skip pagers
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_skip_pager_hint&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_skip_pager_hint"</span>)]
     </span><span class="kw">pub fn </span>set_skip_pager_hint(<span class="kw-2">&amp;</span><span class="self">self</span>, skips_pager: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_skip_pager_hint(
@@ -375,7 +377,7 @@
     /// display it. See the EWMH for details.
     /// ## `skips_taskbar`
     /// [`true`] to skip taskbars
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_skip_taskbar_hint&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_skip_taskbar_hint"</span>)]
     </span><span class="kw">pub fn </span>set_skip_taskbar_hint(<span class="kw-2">&amp;</span><span class="self">self</span>, skips_taskbar: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_skip_taskbar_hint(
@@ -396,7 +398,7 @@
     /// to create toplevel surfaces.
     /// ## `variant`
     /// the theme variant to export
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_theme_variant&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_theme_variant"</span>)]
     </span><span class="kw">pub fn </span>set_theme_variant(<span class="kw-2">&amp;</span><span class="self">self</span>, variant: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_theme_variant(<a class="self" href="#136">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#136">variant</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -407,7 +409,7 @@
     /// See the ICCCM for details.
     /// ## `urgent`
     /// [`true`] to indicate urgenct attention needed
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_urgency_hint&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_urgency_hint"</span>)]
     </span><span class="kw">pub fn </span>set_urgency_hint(<span class="kw-2">&amp;</span><span class="self">self</span>, urgent: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_urgency_hint(<a class="self" href="#147">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#147">urgent</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
@@ -420,7 +422,7 @@
     /// received for this surface.  This property may be used by the window
     /// manager to alter the focus, stacking, and/or placement behavior of
     /// surfaces when they are mapped depending on whether the new surface
-    /// was created by a user action or is a &quot;pop-up&quot; surface activated by a
+    /// was created by a user action or is a "pop-up" surface activated by a
     /// timer or some other event.
     ///
     /// Note that this property is automatically updated by GDK, so this
@@ -428,7 +430,7 @@
     /// events bypassing GDK.
     /// ## `timestamp`
     /// An XServer timestamp to which the property should be set
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_user_time&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_user_time"</span>)]
     </span><span class="kw">pub fn </span>set_user_time(<span class="kw-2">&amp;</span><span class="self">self</span>, timestamp: <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_user_time(<a class="self" href="#168">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#168">timestamp</a>);
@@ -442,7 +444,7 @@
     /// Property name, will be interned as an X atom
     /// ## `value`
     /// Property value, or [`None`] to delete
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_surface_set_utf8_property&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_surface_set_utf8_property"</span>)]
     </span><span class="kw">pub fn </span>set_utf8_property(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, value: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_surface_set_utf8_property(

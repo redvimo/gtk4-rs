@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/entry_buffer.rs`."><title>entry_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/entry_buffer.rs`."><title>entry_buffer.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -240,7 +242,7 @@
     /// # Returns
     ///
     /// A new [`EntryBuffer`][crate::EntryBuffer] object.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_new&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_new"</span>)]
     </span><span class="kw">pub fn </span>new(initial_chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoOptionalGStr.html">IntoOptionalGStr</a>) -&gt; <span class="self">Self </span>{
         <a class="macro" href="rt.rs.html#23-35">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{
@@ -259,7 +261,7 @@
         {
             <span class="kw">let </span>x = <span class="macro-nonterminal">$e</span>;
             <span class="macro">assert!</span>(x <span class="kw">as </span>usize &lt;= u16::max_value() <span class="kw">as </span>usize,
-                <span class="string">&quot;Unexpected value exceeding `u16` range&quot;</span>);
+                <span class="string">"Unexpected value exceeding `u16` range"</span>);
             x <span class="kw">as </span>u16
         }
     )
@@ -272,8 +274,8 @@
 <span class="comment">// rustdoc-stripper-ignore-next
 </span><span class="doccomment">/// Trait containing manually implemented methods of
 /// [`EntryBuffer`](crate::EntryBuffer).
-</span><span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.EntryBufferExtManual.html">EntryBufferExtManual</a>: <a href="#45">sealed::Sealed</a> + IsA&lt;<a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a>&gt; + <span class="lifetime">&#39;static </span>{
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_delete_text&quot;</span>)]
+</span><span class="kw">pub trait </span><a href="../../gtk4/prelude/trait.EntryBufferExtManual.html">EntryBufferExtManual</a>: <a href="#45">sealed::Sealed</a> + IsA&lt;<a href="auto/entry_buffer.rs.html#12-70">EntryBuffer</a>&gt; + <span class="lifetime">'static </span>{
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_delete_text"</span>)]
     </span><span class="kw">fn </span>delete_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, n_chars: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
             <a class="macro" href="#34-43">to_u16!</a>(ffi::gtk_entry_buffer_delete_text(
@@ -284,14 +286,14 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_bytes&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_bytes&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_get_bytes"</span>)]
+    #[doc(alias = <span class="string">"get_bytes"</span>)]
     </span><span class="kw">fn </span>bytes(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> {
         <span class="kw">unsafe </span>{ ffi::gtk_entry_buffer_get_bytes(<a class="self" href="#66">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) <span class="kw">as _ </span>}
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_length&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_length&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_get_length"</span>)]
+    #[doc(alias = <span class="string">"get_length"</span>)]
     </span><span class="kw">fn </span>length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
             <a class="macro" href="#34-43">to_u16!</a>(ffi::gtk_entry_buffer_get_length(
@@ -300,8 +302,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_max_length&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_max_length&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_get_max_length"</span>)]
+    #[doc(alias = <span class="string">"get_max_length"</span>)]
     </span><span class="kw">fn </span>max_length(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">match </span>ffi::gtk_entry_buffer_get_max_length(<a class="self" href="#82">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) {
@@ -311,8 +313,8 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_get_text&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_text&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_get_text"</span>)]
+    #[doc(alias = <span class="string">"get_text"</span>)]
     </span><span class="kw">fn </span>text(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">GString</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gtk_entry_buffer_get_text(
@@ -321,7 +323,7 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_insert_text&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_insert_text"</span>)]
     </span><span class="kw">fn </span>insert_text(<span class="kw-2">&amp;</span><span class="self">self</span>, position: <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a> {
         <span class="kw">unsafe </span>{
             <a href="#102">chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|chars| {
@@ -335,10 +337,10 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_max_length&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_set_max_length"</span>)]
     </span><span class="kw">fn </span>set_max_length(<span class="kw-2">&amp;</span><span class="self">self</span>, max_length: <span class="prelude-ty">Option</span>&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>&gt;) {
         <span class="kw">unsafe </span>{
-            <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_ne.html">assert_ne!</a>(max_length, <span class="prelude-val">Some</span>(<span class="number">0</span>), <span class="string">&quot;Zero maximum length not supported&quot;</span>);
+            <a class="macro" href="https://doc.rust-lang.org/nightly/core/macro.assert_ne.html">assert_ne!</a>(max_length, <span class="prelude-val">Some</span>(<span class="number">0</span>), <span class="string">"Zero maximum length not supported"</span>);
             ffi::gtk_entry_buffer_set_max_length(
                 <a class="self" href="#116">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>,
                 <a href="#116">max_length</a>.unwrap_or(<span class="number">0</span>) <span class="kw">as </span>c_int,
@@ -346,7 +348,7 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;gtk_entry_buffer_set_text&quot;</span>)]
+    <span class="attr">#[doc(alias = <span class="string">"gtk_entry_buffer_set_text"</span>)]
     </span><span class="kw">fn </span>set_text(<span class="kw-2">&amp;</span><span class="self">self</span>, chars: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">IntoGStr</a>) {
         <span class="kw">unsafe </span>{
             <a href="#127">chars</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/trait.IntoGStr.html">run_with_gstr</a>(|chars| {

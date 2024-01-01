@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/constraint_layout.rs`."><title>constraint_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/constraint_layout.rs`."><title>constraint_layout.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../src-files.js"></script><script defer src="../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -228,7 +230,7 @@
 <span class="kw">impl </span><a href="auto/constraint_layout.rs.html#8-182">ConstraintLayout</a> {
     <span class="doccomment">/// Creates a list of constraints from a VFL description.
     ///
-    /// The Visual Format Language, VFL, is based on Apple&#39;s AutoLayout [VFL](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html).
+    /// The Visual Format Language, VFL, is based on Apple's AutoLayout [VFL](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/VisualFormatLanguage.html).
     ///
     /// The `views` dictionary is used to match [`ConstraintTarget`][crate::ConstraintTarget]
     /// instances to the symbolic view name inside the VFL.
@@ -240,30 +242,30 @@
     ///                               (&lt;superview&gt;&lt;connection&gt;)?
     ///                               &lt;view&gt;(&lt;connection&gt;&lt;view&gt;)*
     ///                               (&lt;connection&gt;&lt;superview&gt;)?
-    ///               &lt;orientation&gt; = &#39;H&#39; | &#39;V&#39;
-    ///                 &lt;superview&gt; = &#39;|&#39;
-    ///                &lt;connection&gt; = &#39;&#39; | &#39;-&#39; &lt;predicateList&gt; &#39;-&#39; | &#39;-&#39;
+    ///               &lt;orientation&gt; = 'H' | 'V'
+    ///                 &lt;superview&gt; = '|'
+    ///                &lt;connection&gt; = '' | '-' &lt;predicateList&gt; '-' | '-'
     ///             &lt;predicateList&gt; = &lt;simplePredicate&gt; | &lt;predicateListWithParens&gt;
     ///           &lt;simplePredicate&gt; = &lt;metricName&gt; | &lt;positiveNumber&gt;
-    ///   &lt;predicateListWithParens&gt; = &#39;(&#39; &lt;predicate&gt; (&#39;,&#39; &lt;predicate&gt;)* &#39;)&#39;
-    ///                 &lt;predicate&gt; = (&lt;relation&gt;)? &lt;objectOfPredicate&gt; (&lt;operatorList&gt;)? (&#39;@&#39; &lt;priority&gt;)?
-    ///                  &lt;relation&gt; = &#39;==&#39; | &#39;&lt;=&#39; | &#39;&gt;=&#39;
-    ///         &lt;objectOfPredicate&gt; = &lt;constant&gt; | &lt;viewName&gt; | (&#39;.&#39; &lt;attributeName&gt;)?
-    ///                  &lt;priority&gt; = &lt;positiveNumber&gt; | &#39;required&#39; | &#39;strong&#39; | &#39;medium&#39; | &#39;weak&#39;
+    ///   &lt;predicateListWithParens&gt; = '(' &lt;predicate&gt; (',' &lt;predicate&gt;)* ')'
+    ///                 &lt;predicate&gt; = (&lt;relation&gt;)? &lt;objectOfPredicate&gt; (&lt;operatorList&gt;)? ('@' &lt;priority&gt;)?
+    ///                  &lt;relation&gt; = '==' | '&lt;=' | '&gt;='
+    ///         &lt;objectOfPredicate&gt; = &lt;constant&gt; | &lt;viewName&gt; | ('.' &lt;attributeName&gt;)?
+    ///                  &lt;priority&gt; = &lt;positiveNumber&gt; | 'required' | 'strong' | 'medium' | 'weak'
     ///                  &lt;constant&gt; = &lt;number&gt;
     ///              &lt;operatorList&gt; = (&lt;multiplyOperator&gt;)? (&lt;addOperator&gt;)?
-    ///          &lt;multiplyOperator&gt; = [ &#39;*&#39; | &#39;/&#39; ] &lt;positiveNumber&gt;
-    ///               &lt;addOperator&gt; = [ &#39;+&#39; | &#39;-&#39; ] &lt;positiveNumber&gt;
+    ///          &lt;multiplyOperator&gt; = [ '*' | '/' ] &lt;positiveNumber&gt;
+    ///               &lt;addOperator&gt; = [ '+' | '-' ] &lt;positiveNumber&gt;
     ///                  &lt;viewName&gt; = [A-Za-z_]([A-Za-z0-9_]*) // A C identifier
     ///                &lt;metricName&gt; = [A-Za-z_]([A-Za-z0-9_]*) // A C identifier
-    ///             &lt;attributeName&gt; = &#39;top&#39; | &#39;bottom&#39; | &#39;left&#39; | &#39;right&#39; | &#39;width&#39; | &#39;height&#39; |
-    ///                               &#39;start&#39; | &#39;end&#39; | &#39;centerX&#39; | &#39;centerY&#39; | &#39;baseline&#39;
+    ///             &lt;attributeName&gt; = 'top' | 'bottom' | 'left' | 'right' | 'width' | 'height' |
+    ///                               'start' | 'end' | 'centerX' | 'centerY' | 'baseline'
     ///            &lt;positiveNumber&gt; // A positive real number parseable by g_ascii_strtod()
     ///                    &lt;number&gt; // A real number parseable by g_ascii_strtod()
     /// ```
     ///
     /// **Note**: The VFL grammar used by GTK is slightly different than the one
-    /// defined by Apple, as it can use symbolic values for the constraint&#39;s
+    /// defined by Apple, as it can use symbolic values for the constraint's
     /// strength instead of numeric values; additionally, GTK allows adding
     /// simple arithmetic operations inside predicates.
     ///
@@ -320,15 +322,15 @@
     ///
     /// the list of
     ///   [`Constraint`][crate::Constraint] instances that were added to the layout
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_constraint_layout_add_constraints_from_descriptionv&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;gtk_constraint_layout_add_constraints_from_description&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;add_constraints_from_descriptionv&quot;</span>)]
-    </span><span class="kw">pub fn </span>add_constraints_from_description&lt;<span class="lifetime">&#39;a</span>, W: IsA&lt;<a href="auto/widget.rs.html#18-847">Widget</a>&gt;&gt;(
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_constraint_layout_add_constraints_from_descriptionv"</span>)]
+    #[doc(alias = <span class="string">"gtk_constraint_layout_add_constraints_from_description"</span>)]
+    #[doc(alias = <span class="string">"add_constraints_from_descriptionv"</span>)]
+    </span><span class="kw">pub fn </span>add_constraints_from_description&lt;<span class="lifetime">'a</span>, W: IsA&lt;<a href="auto/widget.rs.html#18-847">Widget</a>&gt;&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         lines: <span class="kw">impl </span><a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/collections/strv/trait.IntoStrV.html">IntoStrV</a>,
         hspacing: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
         vspacing: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>,
-        views: <span class="kw">impl </span>IntoIterator&lt;Item = (<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>W)&gt;,
+        views: <span class="kw">impl </span>IntoIterator&lt;Item = (<span class="kw-2">&amp;</span><span class="lifetime">'a </span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, <span class="kw-2">&amp;</span><span class="lifetime">'a </span>W)&gt;,
     ) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<a href="auto/constraint.rs.html#8-98">Constraint</a>&gt;, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>err = std::ptr::null_mut();

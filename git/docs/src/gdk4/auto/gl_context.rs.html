@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/gl_context.rs`."><title>gl_context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4/src/auto/gl_context.rs`."><title>gl_context.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gdk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -675,16 +677,16 @@
 // DO NOT EDIT
 </span><span class="attr">#![allow(deprecated)]
 
-#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+#[cfg(feature = <span class="string">"v4_6"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
 </span><span class="kw">use </span><a href="flags.rs.html#464-477"><span class="kw">crate</span>::GLAPI</a>;
 <span class="kw">use crate</span>::{<a href="display.rs.html#17-94">Display</a>, <a href="draw_context.rs.html#8-44">DrawContext</a>, <a href="surface.rs.html#17-128">Surface</a>};
-<span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
 </span><span class="kw">use </span>glib::signal::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a>};
 <span class="kw">use </span>glib::{<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/prelude/index.html">prelude</a>::<span class="kw-2">*</span>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/index.html">translate</a>::<span class="kw-2">*</span>};
-<span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
+<span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+#[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
 </span><span class="kw">use </span><a href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html">std::boxed::Box</a> <span class="kw">as </span>Box_;
 
 <a class="macro" href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html">glib::wrapper! </a>{
@@ -705,7 +707,7 @@
     /// Support for [`GLContext`][crate::GLContext] is platform-specific and context creation
     /// can fail, returning [`None`] context.
     ///
-    /// A [`GLContext`][crate::GLContext] has to be made &quot;current&quot; in order to start using
+    /// A [`GLContext`][crate::GLContext] has to be made "current" in order to start using
     /// it, otherwise any OpenGL call will be ignored.
     ///
     /// ## Creating a new OpenGL context
@@ -782,7 +784,7 @@
     /// # Implements
     ///
     /// [`GLContextExt`][trait@crate::prelude::GLContextExt], [`DrawContextExt`][trait@crate::prelude::DrawContextExt], [`DrawContextExtManual`][trait@crate::prelude::DrawContextExtManual]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkGLContext&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"GdkGLContext"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../gdk4/struct.GLContext.html">GLContext</a>(Object&lt;<a href="../../../gdk4_sys/struct.GdkGLContext.html">ffi::GdkGLContext</a>&gt;) @extends <a href="draw_context.rs.html#8-44">DrawContext</a>;
 
     <span class="kw">match fn </span>{
@@ -791,13 +793,13 @@
 }
 
 <span class="kw">impl </span><a href="#18-119">GLContext</a> {
-    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">&#39;static </span><a href="#18-119">GLContext</a>&gt; = <span class="prelude-val">None</span>;
+    <span class="kw">pub const </span>NONE: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><span class="lifetime">'static </span><a href="#18-119">GLContext</a>&gt; = <span class="prelude-val">None</span>;
 
     <span class="doccomment">/// Clears the current [`GLContext`][crate::GLContext].
     ///
     /// Any OpenGL call after this function returns will be ignored
     /// until [`GLContextExt::make_current()`][crate::prelude::GLContextExt::make_current()] is called.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_clear_current&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_clear_current"</span>)]
     </span><span class="kw">pub fn </span>clear_current() {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{
@@ -810,8 +812,8 @@
     /// # Returns
     ///
     /// the current [`GLContext`][crate::GLContext]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_current&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_current&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_current"</span>)]
+    #[doc(alias = <span class="string">"get_current"</span>)]
     </span><span class="kw">pub fn </span>current() -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#18-119">GLContext</a>&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gdk_gl_context_get_current()) }
@@ -828,16 +830,16 @@
 /// # Implementors
 ///
 /// [`GLContext`][struct@crate::GLContext]
-</span><span class="kw">pub trait </span><a href="../../../gdk4/prelude/trait.GLContextExt.html">GLContextExt</a>: IsA&lt;<a href="#18-119">GLContext</a>&gt; + <a href="#150">sealed::Sealed</a> + <span class="lifetime">&#39;static </span>{
+</span><span class="kw">pub trait </span><a href="../../../gdk4/prelude/trait.GLContextExt.html">GLContextExt</a>: IsA&lt;<a href="#18-119">GLContext</a>&gt; + <a href="#150">sealed::Sealed</a> + <span class="lifetime">'static </span>{
     <span class="doccomment">/// Gets the allowed APIs set via gdk_gl_context_set_allowed_apis().
     ///
     /// # Returns
     ///
     /// the allowed APIs
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_gl_context_get_allowed_apis&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_allowed_apis&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
+    #[doc(alias = <span class="string">"gdk_gl_context_get_allowed_apis"</span>)]
+    #[doc(alias = <span class="string">"get_allowed_apis"</span>)]
     </span><span class="kw">fn </span>allowed_apis(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="flags.rs.html#464-477">GLAPI</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_get_allowed_apis(
@@ -853,10 +855,10 @@
     /// # Returns
     ///
     /// the currently used API
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_gl_context_get_api&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_api&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
+    #[doc(alias = <span class="string">"gdk_gl_context_get_api"</span>)]
+    #[doc(alias = <span class="string">"get_api"</span>)]
     </span><span class="kw">fn </span>api(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="flags.rs.html#464-477">GLAPI</a> {
         <span class="kw">unsafe </span>{ from_glib(ffi::gdk_gl_context_get_api(<a class="self" href="#188">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -868,8 +870,8 @@
     /// # Returns
     ///
     /// [`true`] if debugging is enabled
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_debug_enabled&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_debug_enabled&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_debug_enabled"</span>)]
+    #[doc(alias = <span class="string">"get_debug_enabled"</span>)]
     </span><span class="kw">fn </span>is_debug_enabled(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_get_debug_enabled(
@@ -883,8 +885,8 @@
     /// # Returns
     ///
     /// a [`Display`][crate::Display]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_display&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_display&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_display"</span>)]
+    #[doc(alias = <span class="string">"get_display"</span>)]
     </span><span class="kw">fn </span>display(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="display.rs.html#17-94">Display</a>&gt; {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_gl_context_get_display(
@@ -900,8 +902,8 @@
     /// # Returns
     ///
     /// [`true`] if the context should be forward-compatible
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_forward_compatible&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_forward_compatible&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_forward_compatible"</span>)]
+    #[doc(alias = <span class="string">"get_forward_compatible"</span>)]
     </span><span class="kw">fn </span>is_forward_compatible(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_get_forward_compatible(
@@ -925,8 +927,8 @@
     ///
     /// ## `minor`
     /// return location for the minor version to request
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_required_version&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_required_version&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_required_version"</span>)]
+    #[doc(alias = <span class="string">"get_required_version"</span>)]
     </span><span class="kw">fn </span>required_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>major = std::mem::MaybeUninit::uninit();
@@ -953,10 +955,10 @@
     /// # Returns
     ///
     /// [`None`]
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_4&quot;</span>, deprecated = <span class="string">&quot;Since 4.4&quot;</span>)]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"v4_4"</span>, deprecated = <span class="string">"Since 4.4"</span>)]
     #[allow(deprecated)]
-    #[doc(alias = <span class="string">&quot;gdk_gl_context_get_shared_context&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_shared_context&quot;</span>)]
+    #[doc(alias = <span class="string">"gdk_gl_context_get_shared_context"</span>)]
+    #[doc(alias = <span class="string">"get_shared_context"</span>)]
     #[must_use]
     </span><span class="kw">fn </span>shared_context(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="#18-119">GLContext</a>&gt; {
         <span class="kw">unsafe </span>{
@@ -971,8 +973,8 @@
     /// # Returns
     ///
     /// a [`Surface`][crate::Surface]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_surface&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_surface&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_surface"</span>)]
+    #[doc(alias = <span class="string">"get_surface"</span>)]
     </span><span class="kw">fn </span>surface(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="surface.rs.html#17-128">Surface</a>&gt; {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_gl_context_get_surface(
@@ -988,8 +990,8 @@
     /// [`true`] if the [`GLContext`][crate::GLContext] is using an OpenGL ES profile;
     /// [`false`] if other profile is in use of if the @self has not yet
     /// been realized.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_use_es&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_use_es&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_use_es"</span>)]
+    #[doc(alias = <span class="string">"get_use_es"</span>)]
     </span><span class="kw">fn </span>uses_es(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_get_use_es(
@@ -1010,8 +1012,8 @@
     ///
     /// ## `minor`
     /// return location for the minor version
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_get_version&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_version&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_get_version"</span>)]
+    #[doc(alias = <span class="string">"get_version"</span>)]
     </span><span class="kw">fn </span>version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>major = std::mem::MaybeUninit::uninit();
@@ -1045,7 +1047,7 @@
     /// # Returns
     ///
     /// [`true`] if the GL context is in legacy mode
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_is_legacy&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_is_legacy"</span>)]
     </span><span class="kw">fn </span>is_legacy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_is_legacy(
@@ -1072,9 +1074,9 @@
     /// # Returns
     ///
     /// [`true`] if the two GL contexts are compatible.
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_gl_context_is_shared&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_4"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_4"</span>)))]
+    #[doc(alias = <span class="string">"gdk_gl_context_is_shared"</span>)]
     </span><span class="kw">fn </span>is_shared(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="kw">impl </span>IsA&lt;<a href="#18-119">GLContext</a>&gt;) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{
             from_glib(ffi::gdk_gl_context_is_shared(
@@ -1085,7 +1087,7 @@
     }
 
     <span class="doccomment">/// Makes the @self the current one.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_make_current&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_make_current"</span>)]
     </span><span class="kw">fn </span>make_current(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_make_current(<a class="self" href="#417">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -1099,7 +1101,7 @@
     /// # Returns
     ///
     /// [`true`] if the context is realized
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_realize&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_realize"</span>)]
     </span><span class="kw">fn </span>realize(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;(), <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/error/struct.Error.html">glib::Error</a>&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>error = std::ptr::null_mut();
@@ -1122,9 +1124,9 @@
     /// By default, all APIs are allowed.
     /// ## `apis`
     /// the allowed APIs
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_gl_context_set_allowed_apis&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
+    #[doc(alias = <span class="string">"gdk_gl_context_set_allowed_apis"</span>)]
     </span><span class="kw">fn </span>set_allowed_apis(<span class="kw-2">&amp;</span><span class="self">self</span>, apis: <a href="flags.rs.html#464-477">GLAPI</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_set_allowed_apis(<a class="self" href="#456">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#456">apis</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
@@ -1140,7 +1142,7 @@
     /// calling this function.
     /// ## `enabled`
     /// whether to enable debugging in the context
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_set_debug_enabled&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_set_debug_enabled"</span>)]
     </span><span class="kw">fn </span>set_debug_enabled(<span class="kw-2">&amp;</span><span class="self">self</span>, enabled: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_set_debug_enabled(
@@ -1161,7 +1163,7 @@
     /// this function.
     /// ## `compatible`
     /// whether the context should be forward-compatible
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_set_forward_compatible&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_set_forward_compatible"</span>)]
     </span><span class="kw">fn </span>set_forward_compatible(<span class="kw-2">&amp;</span><span class="self">self</span>, compatible: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_set_forward_compatible(
@@ -1184,7 +1186,7 @@
     /// the major version to request
     /// ## `minor`
     /// the minor version to request
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_set_required_version&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_set_required_version"</span>)]
     </span><span class="kw">fn </span>set_required_version(<span class="kw-2">&amp;</span><span class="self">self</span>, major: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, minor: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_set_required_version(<a class="self" href="#516">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#516">major</a>, <a href="#516">minor</a>);
@@ -1207,20 +1209,20 @@
     /// ## `use_es`
     /// whether the context should use OpenGL ES instead of OpenGL,
     ///   or -1 to allow auto-detection
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_gl_context_set_use_es&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_gl_context_set_use_es"</span>)]
     </span><span class="kw">fn </span>set_use_es(<span class="kw-2">&amp;</span><span class="self">self</span>, use_es: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_gl_context_set_use_es(<a class="self" href="#539">self</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html">as_ref</a>().<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#539">use_es</a>);
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;allowed-apis&quot;</span>)]
-    </span><span class="kw">fn </span>connect_allowed_apis_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_allowed_apis_trampoline&lt;
+    <span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
+    #[doc(alias = <span class="string">"allowed-apis"</span>)]
+    </span><span class="kw">fn </span>connect_allowed_apis_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_allowed_apis_trampoline&lt;
             P: IsA&lt;<a href="#18-119">GLContext</a>&gt;,
-            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>,
+            F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">'static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkGLContext.html">ffi::GdkGLContext</a>,
             _param_spec: glib::ffi::gpointer,
@@ -1233,8 +1235,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#548">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#548">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::allowed-apis\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::allowed-apis\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_allowed_apis_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#561">f</a>),
@@ -1242,11 +1244,11 @@
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_6&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_6&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;api&quot;</span>)]
-    </span><span class="kw">fn </span>connect_api_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_api_trampoline&lt;P: IsA&lt;<a href="#18-119">GLContext</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[cfg(feature = <span class="string">"v4_6"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_6"</span>)))]
+    #[doc(alias = <span class="string">"api"</span>)]
+    </span><span class="kw">fn </span>connect_api_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_api_trampoline&lt;P: IsA&lt;<a href="#18-119">GLContext</a>&gt;, F: Fn(<span class="kw-2">&amp;</span>P) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkGLContext.html">ffi::GdkGLContext</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1258,8 +1260,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#576">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#576">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::api\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::api\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_api_trampoline::&lt;<span class="self">Self</span>, F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#586">f</a>),

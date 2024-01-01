@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/drop_target.rs`."><title>drop_target.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gtk4/src/auto/drop_target.rs`."><title>drop_target.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gtk4" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gtk4/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -890,7 +892,7 @@
     ///     GDK_TYPE_PIXBUF,
     ///   }, 2);
     ///
-    ///   g_signal_connect (target, &quot;drop&quot;, G_CALLBACK (on_drop), self);
+    ///   g_signal_connect (target, "drop", G_CALLBACK (on_drop), self);
     ///   gtk_widget_add_controller (GTK_WIDGET (self), GTK_EVENT_CONTROLLER (target));
     /// }
     /// ```
@@ -912,7 +914,7 @@
     /// over an ongoing drop, the [`DropTargetAsync`][crate::DropTargetAsync] object gives you
     /// this ability.
     ///
-    /// While a pointer is dragged over the drop target&#39;s widget and the drop
+    /// While a pointer is dragged over the drop target's widget and the drop
     /// has not been rejected, that widget will receive the
     /// [`StateFlags::DROP_ACTIVE`][crate::StateFlags::DROP_ACTIVE] state, which can be used to style the widget.
     ///
@@ -1072,7 +1074,7 @@
     /// # Implements
     ///
     /// [`EventControllerExt`][trait@crate::prelude::EventControllerExt], [`trait@glib::ObjectExt`]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;GtkDropTarget&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"GtkDropTarget"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../gtk4/struct.DropTarget.html">DropTarget</a>(Object&lt;<a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>, <a href="../../../gtk4_sys/type.GtkDropTargetClass.html">ffi::GtkDropTargetClass</a>&gt;) @extends <a href="event_controller.rs.html#13-64">EventController</a>;
 
     <span class="kw">match fn </span>{
@@ -1094,7 +1096,7 @@
     /// # Returns
     ///
     /// the new [`DropTarget`][crate::DropTarget]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_new&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_new"</span>)]
     </span><span class="kw">pub fn </span>new(type_: <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/types/struct.Type.html">glib::types::Type</a>, actions: <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a>) -&gt; <a href="#14-247">DropTarget</a> {
         <a class="macro" href="../rt.rs.html#23-35">assert_initialized_main_thread!</a>();
         <span class="kw">unsafe </span>{
@@ -1118,8 +1120,8 @@
     /// # Returns
     ///
     /// the actions that this drop target supports
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_get_actions&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_actions&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_get_actions"</span>)]
+    #[doc(alias = <span class="string">"get_actions"</span>)]
     </span><span class="kw">pub fn </span>actions(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> {
         <span class="kw">unsafe </span>{ from_glib(ffi::gtk_drop_target_get_actions(<a class="self" href="#289">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1131,10 +1133,10 @@
     /// # Returns
     ///
     /// The current drop
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gtk_drop_target_get_current_drop&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_current_drop&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_4"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_4"</span>)))]
+    #[doc(alias = <span class="string">"gtk_drop_target_get_current_drop"</span>)]
+    #[doc(alias = <span class="string">"get_current_drop"</span>)]
     </span><span class="kw">pub fn </span>current_drop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>&gt; {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_drop_target_get_current_drop(<a class="self" href="#304">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1150,10 +1152,10 @@
     /// # Returns
     ///
     /// The current drop
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_4&quot;</span>, deprecated = <span class="string">&quot;Since 4.4&quot;</span>)]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"v4_4"</span>, deprecated = <span class="string">"Since 4.4"</span>)]
     #[allow(deprecated)]
-    #[doc(alias = <span class="string">&quot;gtk_drop_target_get_drop&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_drop&quot;</span>)]
+    #[doc(alias = <span class="string">"gtk_drop_target_get_drop"</span>)]
+    #[doc(alias = <span class="string">"get_drop"</span>)]
     </span><span class="kw">pub fn </span>drop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>&gt; {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_drop_target_get_drop(<a class="self" href="#323">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1165,8 +1167,8 @@
     /// # Returns
     ///
     /// the supported data formats
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_get_formats&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_formats&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_get_formats"</span>)]
+    #[doc(alias = <span class="string">"get_formats"</span>)]
     </span><span class="kw">pub fn </span>formats(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/content_formats/struct.ContentFormats.html">gdk::ContentFormats</a>&gt; {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_drop_target_get_formats(<a class="self" href="#336">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1176,8 +1178,8 @@
     /// # Returns
     ///
     /// [`true`] if drop data should be preloaded
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_get_preload&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_preload&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_get_preload"</span>)]
+    #[doc(alias = <span class="string">"get_preload"</span>)]
     </span><span class="kw">pub fn </span>is_preload(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> {
         <span class="kw">unsafe </span>{ from_glib(ffi::gtk_drop_target_get_preload(<a class="self" href="#347">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1187,8 +1189,8 @@
     /// # Returns
     ///
     /// The current drop data
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_get_value&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_value&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_get_value"</span>)]
+    #[doc(alias = <span class="string">"get_value"</span>)]
     </span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/value/struct.Value.html">glib::Value</a>&gt; {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gtk_drop_target_get_value(<a class="self" href="#358">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -1201,7 +1203,7 @@
     /// This function should be used when delaying the decision
     /// on whether to accept a drag or not until after reading
     /// the data.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_reject&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_reject"</span>)]
     </span><span class="kw">pub fn </span>reject(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_drop_target_reject(<a class="self" href="#371">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -1211,7 +1213,7 @@
     <span class="doccomment">/// Sets the actions that this drop target supports.
     /// ## `actions`
     /// the supported actions
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_set_actions&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_set_actions"</span>)]
     </span><span class="kw">pub fn </span>set_actions(<span class="kw-2">&amp;</span><span class="self">self</span>, actions: <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_drop_target_set_actions(<a class="self" href="#381">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#381">actions</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
@@ -1221,7 +1223,7 @@
     <span class="doccomment">/// Sets whether data should be preloaded on hover.
     /// ## `preload`
     /// [`true`] to preload drop data
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gtk_drop_target_set_preload&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gtk_drop_target_set_preload"</span>)]
     </span><span class="kw">pub fn </span>set_preload(<span class="kw-2">&amp;</span><span class="self">self</span>, preload: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) {
         <span class="kw">unsafe </span>{
             ffi::gtk_drop_target_set_preload(<a class="self" href="#391">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#391">preload</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.IntoGlib.html">into_glib</a>());
@@ -1250,12 +1252,12 @@
     /// # Returns
     ///
     /// [`true`] if @drop is accepted
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;accept&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_accept&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="attr">#[doc(alias = <span class="string">"accept"</span>)]
+    </span><span class="kw">pub fn </span>connect_accept&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         f: F,
     ) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>accept_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> + <span class="lifetime">&#39;static</span>&gt;(
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>accept_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/drop/struct.Drop.html">gdk::Drop</a>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             drop: <span class="kw-2">*mut </span><a href="../../../gdk4_sys/struct.GdkDrop.html">gdk::ffi::GdkDrop</a>,
             f: glib::ffi::gpointer,
@@ -1267,8 +1269,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#422">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#421">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;accept\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"accept\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     accept_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#433">f</a>),
@@ -1288,13 +1290,13 @@
     ///
     /// Preferred action for this drag operation or 0 if
     ///   dropping is not supported at the current @x,@y location.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;enter&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_enter&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="attr">#[doc(alias = <span class="string">"enter"</span>)]
+    </span><span class="kw">pub fn </span>connect_enter&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         f: F,
     ) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>enter_trampoline&lt;
-            F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">&#39;static</span>,
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>enter_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">'static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             x: libc::c_double,
@@ -1308,8 +1310,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#460">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#459">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;enter\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"enter\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     enter_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#474">f</a>),
@@ -1321,9 +1323,9 @@
     ///
     /// Its main purpose it to undo things done in
     /// [`enter`][struct@crate::DropTarget#enter].
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;leave&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_leave&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>leave_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="attr">#[doc(alias = <span class="string">"leave"</span>)]
+    </span><span class="kw">pub fn </span>connect_leave&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>leave_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             f: glib::ffi::gpointer,
         ) {
@@ -1334,8 +1336,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#491">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#491">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;leave\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"leave\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     leave_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#500">f</a>),
@@ -1353,13 +1355,13 @@
     ///
     /// Preferred action for this drag operation or 0 if
     ///   dropping is not supported at the current @x,@y location.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;motion&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_motion&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">&#39;static</span>&gt;(
+    </span><span class="attr">#[doc(alias = <span class="string">"motion"</span>)]
+    </span><span class="kw">pub fn </span>connect_motion&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">'static</span>&gt;(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         f: F,
     ) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>motion_trampoline&lt;
-            F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">&#39;static</span>,
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>motion_trampoline&lt;
+            F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.f64.html">f64</a>) -&gt; <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a> + <span class="lifetime">'static</span>,
         &gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             x: libc::c_double,
@@ -1373,8 +1375,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#525">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#524">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;motion\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"motion\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     motion_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#539">f</a>),
@@ -1382,9 +1384,9 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;actions&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_actions_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_actions_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">"actions"</span>)]
+    </span><span class="kw">pub fn </span>connect_actions_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_actions_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1396,8 +1398,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#552">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#552">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::actions\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::actions\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_actions_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#562">f</a>),
@@ -1405,11 +1407,11 @@
         }
     }
 
-    <span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;current-drop&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_current_drop_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_current_drop_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[cfg(feature = <span class="string">"v4_4"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_4"</span>)))]
+    #[doc(alias = <span class="string">"current-drop"</span>)]
+    </span><span class="kw">pub fn </span>connect_current_drop_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_current_drop_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1421,8 +1423,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#577">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#577">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::current-drop\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::current-drop\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_current_drop_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#587">f</a>),
@@ -1430,10 +1432,10 @@
         }
     }
 
-    <span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_4&quot;</span>, deprecated = <span class="string">&quot;Since 4.4&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;drop&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_drop_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_drop_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[cfg_attr(feature = <span class="string">"v4_4"</span>, deprecated = <span class="string">"Since 4.4"</span>)]
+    #[doc(alias = <span class="string">"drop"</span>)]
+    </span><span class="kw">pub fn </span>connect_drop_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_drop_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1445,8 +1447,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#601">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#601">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::drop\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::drop\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_drop_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#611">f</a>),
@@ -1454,9 +1456,9 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;preload&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_preload_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_preload_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">"preload"</span>)]
+    </span><span class="kw">pub fn </span>connect_preload_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_preload_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1468,8 +1470,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#624">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#624">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::preload\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::preload\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_preload_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#634">f</a>),
@@ -1477,9 +1479,9 @@
         }
     }
 
-    <span class="attr">#[doc(alias = <span class="string">&quot;value&quot;</span>)]
-    </span><span class="kw">pub fn </span>connect_value_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">&#39;static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
-        <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn </span>notify_value_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">&#39;static</span>&gt;(
+    <span class="attr">#[doc(alias = <span class="string">"value"</span>)]
+    </span><span class="kw">pub fn </span>connect_value_notify&lt;F: Fn(<span class="kw-2">&amp;</span><span class="self">Self</span>) + <span class="lifetime">'static</span>&gt;(<span class="kw-2">&amp;</span><span class="self">self</span>, f: F) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/struct.SignalHandlerId.html">SignalHandlerId</a> {
+        <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn </span>notify_value_trampoline&lt;F: Fn(<span class="kw-2">&amp;</span><a href="#14-247">DropTarget</a>) + <span class="lifetime">'static</span>&gt;(
             this: <span class="kw-2">*mut </span><a href="../../../gtk4_sys/struct.GtkDropTarget.html">ffi::GtkDropTarget</a>,
             _param_spec: glib::ffi::gpointer,
             f: glib::ffi::gpointer,
@@ -1491,8 +1493,8 @@
             <span class="kw">let </span>f: Box_&lt;F&gt; = Box_::new(<a href="#647">f</a>);
             <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/signal/fn.connect_raw.html">connect_raw</a>(
                 <a class="self" href="#647">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/object/trait.ObjectType.html">as_ptr</a>() <span class="kw">as </span><span class="kw-2">*mut </span><span class="kw">_</span>,
-                <span class="string">b&quot;notify::value\0&quot;</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
-                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">&quot;C&quot; </span><span class="kw">fn</span>()&gt;(
+                <span class="string">b"notify::value\0"</span>.as_ptr() <span class="kw">as </span><span class="kw-2">*const </span><span class="kw">_</span>,
+                <span class="prelude-val">Some</span>(std::mem::transmute::&lt;<span class="kw">_</span>, <span class="kw">unsafe extern </span><span class="string">"C" </span><span class="kw">fn</span>()&gt;(
                     notify_value_trampoline::&lt;F&gt; <span class="kw">as </span><span class="kw-2">*const </span>(),
                 )),
                 Box_::into_raw(<a href="#657">f</a>),
@@ -1511,9 +1513,9 @@
 </span><span class="doccomment">/// A [builder-pattern] type to construct [`DropTarget`] objects.
 ///
 /// [builder-pattern]: https://doc.rust-lang.org/1.0.0/style/ownership/builders.html
-</span><span class="attr">#[must_use = <span class="string">&quot;The builder must be built to be used&quot;</span>]
+</span><span class="attr">#[must_use = <span class="string">"The builder must be built to be used"</span>]
 </span><span class="kw">pub struct </span><a href="../../../gtk4/builders/struct.DropTargetBuilder.html">DropTargetBuilder</a> {
-    builder: glib::object::ObjectBuilder&lt;<span class="lifetime">&#39;static</span>, <a href="#14-247">DropTarget</a>&gt;,
+    builder: glib::object::ObjectBuilder&lt;<span class="lifetime">'static</span>, <a href="#14-247">DropTarget</a>&gt;,
 }
 
 <span class="kw">impl </span><a href="#681-683">DropTargetBuilder</a> {
@@ -1526,14 +1528,14 @@
     <span class="doccomment">/// The `GdkDragActions` that this drop target supports.
     </span><span class="kw">pub fn </span>actions(<span class="self">self</span>, actions: <a href="../../../gdk4/auto/flags/struct.DragAction.html">gdk::DragAction</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#693">self</a>.builder.property(<span class="string">&quot;actions&quot;</span>, <a href="#693">actions</a>),
+            builder: <a class="self" href="#693">self</a>.builder.property(<span class="string">"actions"</span>, <a href="#693">actions</a>),
         }
     }
 
     <span class="doccomment">/// The [`gdk::ContentFormats`][crate::gdk::ContentFormats] that determine the supported data formats.
     </span><span class="kw">pub fn </span>formats(<span class="self">self</span>, formats: <span class="kw-2">&amp;</span><a href="../../../gdk4/auto/content_formats/struct.ContentFormats.html">gdk::ContentFormats</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#700">self</a>.builder.property(<span class="string">&quot;formats&quot;</span>, <a href="#700">formats</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()),
+            builder: <a class="self" href="#700">self</a>.builder.property(<span class="string">"formats"</span>, <a href="#700">formats</a>.<a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html">clone</a>()),
         }
     }
 
@@ -1557,14 +1559,14 @@
     /// so enabling it there is free.
     </span><span class="kw">pub fn </span>preload(<span class="self">self</span>, preload: <a href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#724">self</a>.builder.property(<span class="string">&quot;preload&quot;</span>, <a href="#724">preload</a>),
+            builder: <a class="self" href="#724">self</a>.builder.property(<span class="string">"preload"</span>, <a href="#724">preload</a>),
         }
     }
 
     <span class="doccomment">/// The name for this controller, typically used for debugging purposes.
     </span><span class="kw">pub fn </span>name(<span class="self">self</span>, name: <span class="kw">impl </span>Into&lt;<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a>&gt;) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
-            builder: <a class="self" href="#731">self</a>.builder.property(<span class="string">&quot;name&quot;</span>, <a href="#731">name</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
+            builder: <a class="self" href="#731">self</a>.builder.property(<span class="string">"name"</span>, <a href="#731">name</a>.<a href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html">into</a>()),
         }
     }
 
@@ -1573,7 +1575,7 @@
         <span class="self">Self </span>{
             builder: <span class="self"><a href="#738">self</a>
                 </span>.builder
-                .property(<span class="string">&quot;propagation-limit&quot;</span>, <a href="#738">propagation_limit</a>),
+                .property(<span class="string">"propagation-limit"</span>, <a href="#738">propagation_limit</a>),
         }
     }
 
@@ -1582,13 +1584,13 @@
         <span class="self">Self </span>{
             builder: <span class="self"><a href="#747">self</a>
                 </span>.builder
-                .property(<span class="string">&quot;propagation-phase&quot;</span>, <a href="#747">propagation_phase</a>),
+                .property(<span class="string">"propagation-phase"</span>, <a href="#747">propagation_phase</a>),
         }
     }
 
     <span class="comment">// rustdoc-stripper-ignore-next
     </span><span class="doccomment">/// Build the [`DropTarget`].
-    </span><span class="attr">#[must_use = <span class="string">&quot;Building the object from the builder is usually expensive and is not expected to have side effects&quot;</span>]
+    </span><span class="attr">#[must_use = <span class="string">"Building the object from the builder is usually expensive and is not expected to have side effects"</span>]
     </span><span class="kw">pub fn </span>build(<span class="self">self</span>) -&gt; <a href="#14-247">DropTarget</a> {
         <a class="self" href="#758">self</a>.builder.build()
     }

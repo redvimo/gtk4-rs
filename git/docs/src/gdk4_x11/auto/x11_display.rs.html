@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-x11/src/auto/x11_display.rs`."><title>x11_display.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-9ee3a5e31a2afa3e.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4_x11" data-themes="" data-resource-suffix="" data-rustdoc-version="1.76.0-nightly (4cb3beec8 2023-11-18)" data-channel="nightly" data-search-js="search-83dad86cfc406332.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../../../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../../../static.files/src-script-3280b574d94e47b4.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-f06f02fd918e3bb3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `gdk4-x11/src/auto/x11_display.rs`."><title>x11_display.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-bf502f66ec635d5d.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="gdk4_x11" data-themes="" data-resource-suffix="" data-rustdoc-version="1.77.0-nightly (e51e98dde 2023-12-31)" data-channel="nightly" data-search-js="search-c17e98913a53b3b7.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-f2adc0d6ca4d09fb.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-0b2e2def73e61cbe.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-04d5337699b92874.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]-->
 <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", checkDocsLatestStable);
 
@@ -71,7 +71,9 @@
 </script>
 
 
-<nav class="sidebar"></nav><main><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../../../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<nav class="sidebar"><div class="src-sidebar-title">
+            <h2>Files</h2></div></nav><div class="sidebar-resizer"></div>
+    <main><nav class="sub"><form class="search-form"><span></span><div id="sidebar-button" tabindex="-1"><a href="../../../gdk4_x11/all.html" title="show sidebar"></a></div><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" tabindex="-1"><a href="../../../help.html" title="help">?</a></div><div id="settings-menu" tabindex="-1"><a href="../../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -556,7 +558,7 @@
     ///
     /// When handlers to this signal return [`true`], no other handlers will be
     /// invoked. In particular, the default handler for this function is
-    /// GDK&#39;s own event handling mechanism, so by returning [`true`] for an event
+    /// GDK's own event handling mechanism, so by returning [`true`] for an event
     /// that GDK expects to translate, you may break GDK and/or GTK+ in
     /// interesting ways. You have been warned.
     ///
@@ -604,7 +606,7 @@
     /// # Implements
     ///
     /// [`trait@gdk::prelude::DisplayExt`]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;GdkX11Display&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"GdkX11Display"</span>)]
     </span><span class="kw">pub struct </span><a href="../../../gdk4_x11/struct.X11Display.html">X11Display</a>(Object&lt;<a href="../../../gdk4_x11_sys/struct.GdkX11Display.html">ffi::GdkX11Display</a>, <a href="../../../gdk4_x11_sys/type.GdkX11DisplayClass.html">ffi::GdkX11DisplayClass</a>&gt;) @extends <a href="../../../gdk4/auto/display/struct.Display.html">gdk::Display</a>;
 
     <span class="kw">match fn </span>{
@@ -613,7 +615,7 @@
 }
 
 <span class="kw">impl </span><a href="#9-75">X11Display</a> {
-    <span class="comment">//#[doc(alias = &quot;gdk_x11_display_broadcast_startup_message&quot;)]
+    <span class="comment">//#[doc(alias = "gdk_x11_display_broadcast_startup_message")]
     //pub fn broadcast_startup_message(&amp;self, message_type: &amp;str, : /*Unknown conversion*//*Unimplemented*/Basic: VarArgs) {
     //    unsafe { TODO: call ffi:gdk_x11_display_broadcast_startup_message() }
     //}
@@ -629,7 +631,7 @@
     /// # Returns
     ///
     /// X error code or 0 on success
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_error_trap_pop&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_error_trap_pop"</span>)]
     </span><span class="kw">pub fn </span>error_trap_pop(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a> {
         <span class="kw">unsafe </span>{ ffi::gdk_x11_display_error_trap_pop(<a class="self" href="#95">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
@@ -638,7 +640,7 @@
     /// Does not block to see if an error occurred; merely records the
     /// range of requests to ignore errors for, and ignores those errors
     /// if they arrive asynchronously.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_error_trap_pop_ignored&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_error_trap_pop_ignored"</span>)]
     </span><span class="kw">pub fn </span>error_trap_pop_ignored(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_error_trap_pop_ignored(<a class="self" href="#104">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -650,7 +652,7 @@
     /// the application. Use gdk_x11_display_error_trap_pop() or
     /// gdk_x11_display_error_trap_pop_ignored()to lift a trap pushed
     /// with this function.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_error_trap_push&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_error_trap_push"</span>)]
     </span><span class="kw">pub fn </span>error_trap_push(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_error_trap_push(<a class="self" href="#116">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -665,8 +667,8 @@
     ///
     /// The default group leader surface
     /// for @self
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_get_default_group&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_default_group&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_get_default_group"</span>)]
+    #[doc(alias = <span class="string">"get_default_group"</span>)]
     </span><span class="kw">pub fn </span>default_group(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../gdk4/auto/surface/struct.Surface.html">gdk::Surface</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_x11_display_get_default_group(
@@ -686,10 +688,10 @@
     ///
     /// ## `minor`
     /// return location for the EGL minor version
-    </span><span class="attr">#[cfg(feature = <span class="string">&quot;v4_4&quot;</span>)]
-    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">&quot;v4_4&quot;</span>)))]
-    #[doc(alias = <span class="string">&quot;gdk_x11_display_get_egl_version&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_egl_version&quot;</span>)]
+    </span><span class="attr">#[cfg(feature = <span class="string">"v4_4"</span>)]
+    #[cfg_attr(docsrs, doc(cfg(feature = <span class="string">"v4_4"</span>)))]
+    #[doc(alias = <span class="string">"gdk_x11_display_get_egl_version"</span>)]
+    #[doc(alias = <span class="string">"get_egl_version"</span>)]
     </span><span class="kw">pub fn </span>egl_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>major = std::mem::MaybeUninit::uninit();
@@ -718,8 +720,8 @@
     ///
     /// ## `minor`
     /// return location for the GLX minor version
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_get_glx_version&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_glx_version&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_get_glx_version"</span>)]
+    #[doc(alias = <span class="string">"get_glx_version"</span>)]
     </span><span class="kw">pub fn </span>glx_version(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;(<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>major = std::mem::MaybeUninit::uninit();
@@ -751,8 +753,8 @@
     ///
     /// the primary monitor, or any monitor if no
     ///   primary monitor is configured by the user
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_get_primary_monitor&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_primary_monitor&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_get_primary_monitor"</span>)]
+    #[doc(alias = <span class="string">"get_primary_monitor"</span>)]
     </span><span class="kw">pub fn </span>primary_monitor(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="../../../gdk4/auto/monitor/struct.Monitor.html">gdk::Monitor</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_x11_display_get_primary_monitor(
@@ -766,8 +768,8 @@
     /// # Returns
     ///
     /// the [`X11Screen`][crate::X11Screen]
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_get_screen&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_screen&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_get_screen"</span>)]
+    #[doc(alias = <span class="string">"get_screen"</span>)]
     </span><span class="kw">pub fn </span>screen(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="x11_screen.rs.html#12-26">X11Screen</a> {
         <span class="kw">unsafe </span>{ from_glib_none(ffi::gdk_x11_display_get_screen(<a class="self" href="#233">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
     }
@@ -780,10 +782,10 @@
     /// # Returns
     ///
     /// the startup notification ID for @self
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
-    #[doc(alias = <span class="string">&quot;gdk_x11_display_get_startup_notification_id&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_startup_notification_id&quot;</span>)]
+    #[doc(alias = <span class="string">"gdk_x11_display_get_startup_notification_id"</span>)]
+    #[doc(alias = <span class="string">"get_startup_notification_id"</span>)]
     </span><span class="kw">pub fn </span>startup_notification_id(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a> {
         <span class="kw">unsafe </span>{
             from_glib_none(ffi::gdk_x11_display_get_startup_notification_id(
@@ -800,8 +802,8 @@
     /// # Returns
     ///
     /// the timestamp of the last user interaction
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_get_user_time&quot;</span>)]
-    #[doc(alias = <span class="string">&quot;get_user_time&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_get_user_time"</span>)]
+    #[doc(alias = <span class="string">"get_user_time"</span>)]
     </span><span class="kw">pub fn </span>user_time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <a href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a> {
         <span class="kw">unsafe </span>{ ffi::gdk_x11_display_get_user_time(<a class="self" href="#267">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>) }
     }
@@ -810,7 +812,7 @@
     /// To ungrab the display again, use gdk_x11_display_ungrab().
     ///
     /// gdk_x11_display_grab()/gdk_x11_display_ungrab() calls can be nested.
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_grab&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_grab"</span>)]
     </span><span class="kw">pub fn </span>grab(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_grab(<a class="self" href="#276">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -831,7 +833,7 @@
     ///   to unset a previously set value
     /// ## `size`
     /// the cursor size to use, or 0 to keep the previous size
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_set_cursor_theme&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_set_cursor_theme"</span>)]
     </span><span class="kw">pub fn </span>set_cursor_theme(<span class="kw-2">&amp;</span><span class="self">self</span>, theme: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;, size: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_set_cursor_theme(
@@ -848,7 +850,7 @@
     /// environment variable, but in some cases (such as the application not
     /// being launched using exec()) it can come from other sources.
     ///
-    /// If the ID contains the string &quot;_TIME&quot; then the portion following that
+    /// If the ID contains the string "_TIME" then the portion following that
     /// string is taken to be the X11 timestamp of the event that triggered
     /// the application to be launched and the GDK current event time is set
     /// accordingly.
@@ -862,9 +864,9 @@
     /// Using `Gdk::Toplevel::set_startup_id()` is sufficient
     /// ## `startup_id`
     /// the startup notification ID (must be valid utf8)
-    </span><span class="attr">#[cfg_attr(feature = <span class="string">&quot;v4_10&quot;</span>, deprecated = <span class="string">&quot;Since 4.10&quot;</span>)]
+    </span><span class="attr">#[cfg_attr(feature = <span class="string">"v4_10"</span>, deprecated = <span class="string">"Since 4.10"</span>)]
     #[allow(deprecated)]
-    #[doc(alias = <span class="string">&quot;gdk_x11_display_set_startup_notification_id&quot;</span>)]
+    #[doc(alias = <span class="string">"gdk_x11_display_set_startup_notification_id"</span>)]
     </span><span class="kw">pub fn </span>set_startup_notification_id(<span class="kw-2">&amp;</span><span class="self">self</span>, startup_id: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_set_startup_notification_id(
@@ -883,7 +885,7 @@
     /// to later user configuration changes.
     /// ## `scale`
     /// The new scale value
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_set_surface_scale&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_set_surface_scale"</span>)]
     </span><span class="kw">pub fn </span>set_surface_scale(<span class="kw-2">&amp;</span><span class="self">self</span>, scale: <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_set_surface_scale(<a class="self" href="#349">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>, <a href="#349">scale</a>);
@@ -909,7 +911,7 @@
     /// ## `ctext`
     /// location to store newly
     ///   allocated data for the property
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_string_to_compound_text&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_string_to_compound_text"</span>)]
     </span><span class="kw">pub fn </span>string_to_compound_text(<span class="kw-2">&amp;</span><span class="self">self</span>, str: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; (<a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, <a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;) {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>encoding = std::ptr::null();
@@ -935,7 +937,7 @@
 
     <span class="doccomment">/// Ungrab @self after it has been grabbed with
     /// gdk_x11_display_grab().
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_ungrab&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_ungrab"</span>)]
     </span><span class="kw">pub fn </span>ungrab(<span class="kw-2">&amp;</span><span class="self">self</span>) {
         <span class="kw">unsafe </span>{
             ffi::gdk_x11_display_ungrab(<a class="self" href="#401">self</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>);
@@ -958,7 +960,7 @@
     ///
     /// ## `ctext`
     /// location to store the data of the result
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_utf8_to_compound_text&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_utf8_to_compound_text"</span>)]
     </span><span class="kw">pub fn </span>utf8_to_compound_text(<span class="kw-2">&amp;</span><span class="self">self</span>, str: <span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <span class="prelude-ty">Option</span>&lt;(<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/gstring/struct.GString.html">glib::GString</a>, <a href="https://doc.rust-lang.org/nightly/std/primitive.i32.html">i32</a>, Vec&lt;<a href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;)&gt; {
         <span class="kw">unsafe </span>{
             <span class="kw">let </span><span class="kw-2">mut </span>encoding = std::ptr::null();
@@ -995,7 +997,7 @@
     /// # Returns
     ///
     /// The new display
-    </span><span class="attr">#[doc(alias = <span class="string">&quot;gdk_x11_display_open&quot;</span>)]
+    </span><span class="attr">#[doc(alias = <span class="string">"gdk_x11_display_open"</span>)]
     </span><span class="kw">pub fn </span>open(display_name: <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span><a href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;<a href="../../../gdk4/auto/display/struct.Display.html">gdk::Display</a>&gt; {
         <span class="macro">assert_initialized_main_thread!</span>();
         <span class="kw">unsafe </span>{ from_glib_full(ffi::gdk_x11_display_open(<a href="#461">display_name</a>.<a href="https://gtk-rs.org/gtk-rs-core/git/docs/glib/translate/trait.ToGlibPtr.html">to_glib_none</a>().<span class="number">0</span>)) }
