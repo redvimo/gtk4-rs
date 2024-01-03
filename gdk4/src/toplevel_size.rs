@@ -7,9 +7,11 @@ use glib::translate::*;
 glib::wrapper! {
 
 #[doc(alias = "GdkToplevelSize")]
-    pub struct ToplevelSize(BoxedInline<ffi::GdkToplevelSize>);
+    pub struct ToplevelSize(Boxed<ffi::GdkToplevelSize>);
 
     match fn {
+        copy => |ptr| glib::gobject_ffi::g_boxed_copy(ffi::gdk_toplevel_size_get_type(), ptr as *mut _) as *mut ffi::GdkToplevelSize,
+        free => |ptr| glib::gobject_ffi::g_boxed_free(ffi::gdk_toplevel_size_get_type(), ptr as *mut _),
         type_ => || ffi::gdk_toplevel_size_get_type(),
     }
 
@@ -24,7 +26,7 @@ impl ToplevelSize {
             let mut bounds_height = std::mem::MaybeUninit::uninit();
 
             ffi::gdk_toplevel_size_get_bounds(
-                self.to_glib_none().0 as *mut _,
+                self.as_ptr(),
                 bounds_width.as_mut_ptr(),
                 bounds_height.as_mut_ptr(),
             );
